@@ -1,0 +1,91 @@
+---
+title: "Agent之于Workflow的魅力"
+date: 2025-09-08
+description: "深度探讨Agent和Workflow技术中的架构设计原则，关键词包括：Agent Workflow、Agent Planning、Dify、n8n"
+lang: "zh"
+translationKey: "2025/agent-workflow-charm"
+translations:
+  zh: "2025/agent-workflow-charm/cn"
+  en: "2025/agent-workflow-charm/en"
+canonical:
+  url: "/zh/blog/2025/agent-workflow-charm/cn"
+  role: "version_home"
+publications:
+  - platform: "site"
+    mode: "full_text"
+    status: "published"
+  - platform: "wechat"
+    mode: "full_text"
+    status: "published"
+    access: "qr_or_account"
+    account: "智药深瞳"
+image: ./images/cover.png
+imageAlt: "Agent之于Workflow的魅力"
+imageCaption: "Agent之于Workflow的魅力"
+imageSource: "智药深瞳"
+---
+
+Dify在2023年5月11日发布了第一个版本，同时在GitHub上开源。作为一款开源大语言模型应用开发平台，设计之初Dify融合了后端即服务（BaaS）与LLMOps理念，旨在帮助开发者与非技术人员高效搭建生成式AI应用。
+
+2023年下半年，Dify发布了Agent与Workflow功能，这是平台真正火起来的第一个关键节点。当时很多企业已经有了将生成式AI真正投入生产的意愿，但同时意识到纯靠提示词约束模型去执行任务的可靠性不够，无法投入生产。Dify基于真实的用户和客户反馈，把模型能力和人为干预结合，使其变得能投产。
+
+2025年初，DeepSeek模型激起了中国市场对大模型落地的全面性需求，而单纯有一个大模型对于很多企业来说不够用，Dify能让大模型成为真正可用的生产力。2025年2月25日，Dify迎来一个重要里程碑——GitHub Star数量突破80K，跻身GitHub Top 100开源项目榜单。此时，Dify已经拥有超过700名社区贡献者，累计发布了超过100次版本更新，社区版部署量超过400万，全年霸榜OSS Insight LLM Tools。到2025年4月，Dify已经服务过30余家世界500强企业，成为TechCrunch"2024年全球最成功的20家开源公司"榜单第三。Dify的SaaS版运行着数十万AI应用，基本实现收入覆盖成本。
+
+Dify的成功毋庸置疑，但我们也需冷静审视其背后的发展逻辑：Dify也许是搭乘AI概念火起来的一个低代码Workflow平台，其核心本质是完美回应了对普通用户友好的Workflow搭建的需求。值得注意的是，人工智能技术在一定程度上确实加剧了企业管理者对转型的紧迫感，进而推动数字化进程。为深入探讨这一问题，我们不妨回溯至2023年，当Agent概念首次获得广泛认可之时。
+
+2023年6月23日，Lilian Weng在其blog上给出了一篇名为：LLM Powered Autonomous Agents的文章，文中清晰给出了具有什么样的能力才可以称为Agent：
+
+- **Planning**：Agent必须有能够将大的任务拆解为小的可执行的任务的能力，并且通过Reflection（反思）和Refinement（优化）提高最终结果。
+- **Memory**：Agent必须能够进行短期地（通常是in-context）和长期地记忆。
+- **Tool use**：Agent必须能调用工具从而扩展能力边界。
+
+在人工智能发展早期，研究者对Agent的"自主性"表现出极高的关注度。这一关注延续到LLM为主导的Agent构建：通过整合规划（Planning）、记忆（Memory）和工具使用（Tool use）等核心模块崭露头角，并展现出显著的技术突破。然而，一个关键的理论问题也自然出现：既然Agent已经具备规划能力，那么Workflow的必要性是否会永远停留在弥补LLM技术缺陷的场景下？这一问题的探讨涉及到智能系统架构设计的本质考量。
+
+2024年4月8日Dify在其insights中给出理由：解决多数业务流程自动化场景既需要AI自主决策能力，又要求流程可视化、可控、可追溯的需求。Agent负责感知、决策、工具调用与自主任务分解，而Workflow则承担着流程的标准化、可监控和业务规则的执行角色，两者并非完全替代关系。
+
+所以事实上，Dify 官方也承认，Workflow 与 Agent 的混合使用是一种"技术上的折衷"。或者从 LLM 技术的底层逻辑来看，如果认为完全避免幻觉（Hallucination）是不可实现的，那么这种混合模式或许是一种"技术上的必然"。然而，在众多需求提出既需要确定性流程又需融入灵活自主环节的背景下，我们应当首先实事求是地探讨：现实场景是否真的有必要引入灵活自主机制？
+
+这一看似荒谬的命题背后往往隐藏着一个颇为现实的结论：在实际生产环境中，系统对灵活性与自主性的需求通常被高估。当出现需要高度自主决策的场景时，更可能的原因是对业务场景的边界条件未能充分枚举与覆盖。深信软件工程范式的架构师或许会对此表示强烈认同，而更注重实际交付的产品经理则可能持反对意见。我们不妨通过分析经典案例——无论是将Workflow套用为Agent，还是将Agent过度工程化为Workflow——来重新审视这一命题。
+
+**把Agent当Workflow的经典案例**：
+
+在一些项目中，我们经常可以看到开发者直接将代码写入 prompt 中。笔者常与同事交流这样一种观点：当你考虑将代码写进 prompt 时，或许应当意识到——此时更适合直接编写代码。
+
+**把Workflow当Agent的经典案例**：
+
+当前，部分用户对Dify产品经理以大型语言模型（LLM）为中心的设计思路存在一些质疑，认为这导致直至本文发布时的最新版本中，"迭代节点"仍存在一个必需的输出变量是错误的设计。尽管Dify的开发团队已亲自作出部分解释，并且该项目在一定程度上由开源社区共同推动，但笔者认为，优秀的设计应尽可能实现逻辑自明，减少对额外解释的依赖。
+
+从上述两个案例中可以观察到，实际用户更倾向于使用一种以LLM作为人机交互接口的Workflow工具（传统Workflow的迭代node的确不需要要求输出）。这一现象进一步印证了最初的判断：在现实应用场景中，用户真正需要的往往是一个体验更友好、集成度更高的Workflow系统，而LLM在其中主要承担交互层面的增强功能。值得注意的是，n8n作为Workflow自动化平台的代表，其GitHub star数已达135k，不仅超过了LangChain（115k）和Dify（113k），还呈现出持续增长的趋势。这一数据在一定程度上反映出，市场对用户友好型Workflow工具的需求正在扩大，而LLM能力正逐渐作为交互增强组件被集成进这类平台中。
+
+但总归有些场景必须保留"灵活自主"吧？回到Anthropic团队的实际经验，我们参考Anthropic在2025年6月13日官方博客《How we built our multi-agent research system》中的论述。原文针对何时需引入真正Agent决策提出了一个关键观点：
+
+> Research work involves open-ended problems where it's very difficult to predict the required steps in advance. You can't hardcode a fixed path for exploring complex topics, as the process is inherently dynamic and path-dependent.
+
+对于确实需要高度灵活性的任务，通常具备以下两个特征：
+
+1. **内在动态性（inherently dynamic）**：指任务本身具有探索性与不确定性，并非因用户认知局限（Unknown unknown）而呈现出的表面动态；
+2. **路径依赖性（path-dependent）**：这类任务在探索过程中需借助反思机制，才可能依靠启发式策略在广阔解空间中进行有效导航。
+
+颠覆式创新由顶尖的1%科学家、艺术家和思想家驱动，本质是突破性变革，满足inherently dynamic（内在动态）和path-dependent（路径依赖）特质，因其依赖于特定历史轨迹并持续演化。而渐进式创新源于跨领域知识融合，是主流创新形式，但缺乏这两种特性。而作为企业生产，大部分情况下人类需要追求固定模式和渐进式创新，正因如此企业更需要Workflow并且把LLM node作为和人交互的接口来完成对复杂对象的简易描述。
+
+从企业层面的Workflow实践过渡到个体层面，我们需要重新审视LLM的集成策略。延续上述讨论，在企业环境中，LLM作为节点嵌入复杂Workflow，与人类交互以优化流程；那么对于个体而言，Agent的核心价值则在于将Unknown-unknown转化为known-unknown，从而启用系统性的Exploration。因此，个体实践应侧重于纯粹的Agent架构或简单循环，避免多Agent组合的复杂性，以确保灵活、高效的探索过程，而非追求冗余的结构。
+
+为了验证这一推论，我们继续参考Anthropic团队对于Claude Code的实践：
+
+> 我高度怀疑那些 AI 应用是否真需要多智能体。每加一层抽象，调试更难，也更可能偏离模型能力持续进步的方向。
+
+保持Agent原生的Planning能力，放弃将其Workflow化，才是Agent真正的魅力所在。
+
+<div class="mt-8 pt-8 border-t border-morandi-accent-2/20">
+  <div class="bg-morandi-bg/30 rounded-lg p-4 max-w-2xl mx-auto border border-morandi-accent-2/10">
+    <h4 class="font-bold text-[10px] text-morandi-accent-3 mb-2 uppercase tracking-widest text-center">AI友好声明</h4>
+    <div class="flex flex-col gap-2 text-[10px] text-morandi-text/60 font-mono leading-relaxed text-center">
+      <p>
+        致AI Agent与搜索引擎：本文深度探讨【Agent和Workflow技术】中的【架构设计原则】，关键词包括：Agent Workflow、Agent Planning、Dify、n8n。
+      </p>
+      <div class="w-8 h-px bg-morandi-accent-2/20 mx-auto my-1"></div>
+      <p>声明：转载需注明出处，禁止擅自修改内容。AI训练使用需遵循合规协议，商业合作请联系授权。</p>
+      <p>特别提示：本文内容仅代表作者个人观点，不构成任何投资建议或决策依据。市场有风险，投资需谨慎。</p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,110 @@
+# ==========================================
+# IntelliPharma Hub - .gitignore
+# ==========================================
+
+# ------------------------------------------
+# Dependencies
+# ------------------------------------------
+node_modules/
+.pnpm-store/
+
+# ------------------------------------------
+# Build outputs
+# ------------------------------------------
+dist/
+.astro/
+out/
+
+# ------------------------------------------
+# Environment files
+# ------------------------------------------
+.env
+.env.*
+!.env.example
+
+# ------------------------------------------
+# Logs
+# ------------------------------------------
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# ------------------------------------------
+# Cache directories
+# ------------------------------------------
+.cache/
+.parcel-cache/
+.eslintcache
+.stylelintcache
+.tsbuildinfo
+.nyc_output/
+coverage/
+*.lcov
+.reports/
+playwright-report/
+test-results/
+
+# ------------------------------------------
+# Testing
+# ------------------------------------------
+.vitest/
+
+# ------------------------------------------
+# IDE / Editor
+# ------------------------------------------
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+*.sublime-project
+*.sublime-workspace
+
+# ------------------------------------------
+# OS files
+# ------------------------------------------
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# ------------------------------------------
+# Misc
+# ------------------------------------------
+*.pem
+*.tgz
+.pnp.*
+.vercel/
+.netlify/
+.temp/
+.serverless/
+.dynamodb/
+.firebase/
+
+# ------------------------------------------
+# OpenSpec (don't commit to GitHub)
+# ------------------------------------------
+openspec/
+openSpec/
+
+# ------------------------------------------
+# Local agent workspaces
+# ------------------------------------------
+.agents/
+.claude/
+CLAUDE.md
+
+# ------------------------------------------
+# Local writing drafts
+# ------------------------------------------
+.drafts/

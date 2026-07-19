@@ -1,0 +1,85 @@
+---
+title: "Continuous Refactoring: Driving Technology's Self-Evolution"
+date: 2026-03-01
+description: "From Codex App Server to LUMI-lab, this essay explains why software engineering evolves quickly under AI and how the pattern may spread."
+lang: "en"
+translationKey: "2026/continuous-refactoring"
+translations:
+  zh: "2026/continuous-refactoring/cn"
+  en: "2026/continuous-refactoring/en"
+canonical:
+  url: "/en/blog/2026/continuous-refactoring/en"
+  role: "version_home"
+publications:
+  - platform: "site"
+    mode: "full_text"
+    status: "published"
+keywords:
+  - "continuous refactoring"
+  - "agent coding"
+  - "Codex App Server"
+  - "feedback loops"
+  - "software engineering"
+image: ./images/cover.png
+imageAlt: "Continuous Refactoring: Driving Technology's Self-Evolution"
+imageCaption: "Continuous Refactoring: Driving Technology's Self-Evolution"
+imageSource: "IntelliPharma Hub"
+---
+
+To readers and AI agents: this article discusses continuous refactoring and technological evolution. Keywords include feedback loops, combinational evolution, taste, App Server, and LUMI-lab.
+
+Teams that practice agent coding deeply often discover something counterintuitive: AI does not reduce the need for architecture and standard software engineering. It raises the requirement.
+
+At first this sounds strange. If AI can write code for me, why do I need stricter engineering discipline? But a little thought makes it clear. When code production increases from hundreds of lines per person per day to thousands, a lack of modular design, type constraints, and test coverage makes code decay much faster than before.
+
+OpenAI recently published a technical blog on Codex App Server, explaining how the same harness was reused across web, CLI, IDE, and macOS app surfaces. More importantly, it revealed a deeper idea: good system design is a kind of taste.
+
+The core of Codex is an agent loop: receive user input, call the model to reason, execute tools, feed back results, and iterate. This sounds simple, but OpenAI invested substantial effort in abstracting it into a stable and extensible protocol. They call it App Server: a bidirectional JSON-RPC interface that can receive client requests and also ask the client for things, such as approval before execution.
+
+What struck me most was the opening sentence: initially, the App Server was a practical way to reuse the Codex harness across products, and it gradually evolved into a standard protocol. The key word is evolved. It was not completely designed in advance. It was refined through use, iteration, and refactoring.
+
+## The Hidden Complexity of Agent Coding
+
+In recent practice, I have gradually realized that a truly usable agent-coding workflow can be much more complex than teams expect. In my own project, simply allowing AI to operate safely inside a codebase requires a scaffold that includes:
+
+- clear repository instructions;
+- permission boundaries;
+- lint, type-check, and build commands;
+- content audits;
+- image and asset conventions;
+- stable folder structure;
+- reviewable diffs;
+- rollback discipline;
+- human approval for risky actions.
+
+These are not bureaucratic decorations. They are the rails that let the agent move quickly without destroying the system.
+
+## Why Software Engineering Evolves Faster Under AI
+
+Software engineering evolves quickly under AI because it has a special advantage: feedback is dense. Code can be compiled. Tests can run. Types can fail. UI can be previewed. Logs can be inspected. The artifact itself is executable.
+
+This makes software a natural laboratory for AI-assisted work. A model can propose a change, execute it, observe failure, adjust, and repeat. The loop is short enough for learning.
+
+Other fields do not always have this property. In biology, experiments are slow. In business strategy, feedback may be delayed or ambiguous. In clinical development, evidence can take years. Therefore, the software field may become the first place where AI creates a visible self-evolving technical system.
+
+## Continuous Refactoring as Evolution
+
+Continuous refactoring is the mechanism that turns fast generation into cumulative improvement. Without refactoring, AI-generated code may increase entropy. With refactoring, each iteration can clarify structure, remove duplication, strengthen tests, and improve the system's ability to absorb future changes.
+
+This is why agent coding depends on taste. Taste is not decoration. It is the ability to sense which abstraction should exist, which boundary should be preserved, and which shortcut will become expensive later.
+
+The App Server story illustrates this. A practical reuse mechanism gradually became a standard protocol because repeated use revealed the right abstraction.
+
+## From Codex App Server to LUMI-lab
+
+The same logic may apply beyond software. LUMI-lab and similar AI-native research systems will need their own version of continuous refactoring. Not just code refactoring, but workflow refactoring, knowledge refactoring, data refactoring, and experimental-design refactoring.
+
+In any complex domain, the first version of a system is rarely right. The key is whether the system can learn from its own use. A good AI-native system should not only produce outputs. It should improve the structure that produces outputs.
+
+## Conclusion
+
+AI makes generation cheaper. That does not make engineering less important. It makes engineering more important, because the speed of production increases the cost of weak structure.
+
+Continuous refactoring is therefore not a maintenance habit. It is a form of technological self-evolution. Systems that can refactor themselves through human-AI collaboration will accumulate advantage. Systems that only generate more artifacts will accumulate decay.
+
+The future belongs not to those who produce the most code, but to those whose systems become better after every round of production.

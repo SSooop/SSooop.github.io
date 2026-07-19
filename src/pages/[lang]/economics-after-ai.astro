@@ -1,0 +1,117 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import StructuredData from '../../components/StructuredData.astro';
+import AtlasField from '../../components/AtlasField.astro';
+import { useTranslations, type SupportedLocale } from '../../i18n/ui';
+import { getPageBreadcrumbs } from '../../utils/structuredData';
+
+export function getStaticPaths() {
+  return [{ params: { lang: 'en' } }, { params: { lang: 'zh' } }];
+}
+
+const lang: SupportedLocale = Astro.params.lang === 'zh' ? 'zh' : 'en';
+const t = useTranslations(lang);
+
+const copy = {
+  en: {
+    eyebrow: 'Online Book',
+    title: 'Economics After AI',
+    description: 'An online book outline on economics after AI.',
+    parts: [
+      {
+        number: 'Part 1',
+        title: 'A Map of Economics',
+      },
+      {
+        number: 'Part 2',
+        title: 'The Philosophy of Economics',
+      },
+      {
+        number: 'Part 3',
+        title: 'Growth-Circulation Economics in Practice',
+      },
+    ],
+  },
+  zh: {
+    eyebrow: '在线书',
+    title: 'AI 时代的经济学',
+    description: '一本关于 AI 时代经济学思考的在线书框架。',
+    parts: [
+      {
+        number: '第一部分',
+        title: '经济学概览',
+      },
+      {
+        number: '第二部分',
+        title: '经济学哲学',
+      },
+      {
+        number: '第三部分',
+        title: '增长—循环经济学实践',
+      },
+    ],
+  },
+}[lang];
+
+const breadcrumbSchema = getPageBreadcrumbs(copy.title, lang);
+---
+
+<Layout title={`${copy.title} | ${t('home.name')}`} lang={lang} description={copy.description}>
+  <StructuredData data={breadcrumbSchema} type="BreadcrumbList" />
+
+  <main class="relative min-h-screen overflow-hidden px-5 py-24 md:px-10 md:py-28 lg:px-14">
+    <AtlasField class="absolute inset-0 h-full w-full opacity-65" variant="circulation" />
+    <div class="relative z-10 mx-auto max-w-[1500px]">
+      <header
+        class="grid gap-8 border-b border-[color:var(--atlas-line)] pb-16 lg:grid-cols-12 lg:items-end"
+      >
+        <div class="lg:col-span-3">
+          <p class="atlas-kicker text-track-economics">P02 / {copy.eyebrow}</p>
+          <p class="atlas-credit mt-5 max-w-xs">
+            {
+              lang === 'zh'
+                ? '智能改变生产，循环决定结果。'
+                : 'Intelligence changes production. Circulation determines outcomes.'
+            }
+          </p>
+        </div>
+        <h1
+          class="text-atlas-ink font-serif text-6xl leading-[0.9] md:text-8xl lg:col-span-9 lg:text-9xl"
+        >
+          {copy.title}
+        </h1>
+      </header>
+
+      <div
+        class="mt-6 flex items-center justify-between gap-6 border-b border-[color:var(--atlas-line)] pb-6"
+      >
+        <p class="atlas-kicker">
+          {lang === 'zh' ? '经济循环图 / 01—03' : 'CIRCULATION MAP / 01—03'}
+        </p>
+        <span class="bg-track-economics h-2 w-2 rounded-full"></span>
+      </div>
+
+      <section
+        class="grid border-t border-[color:var(--atlas-line-strong)] md:grid-cols-3"
+        aria-label={copy.title}
+      >
+        {
+          copy.parts.map((part, index) => (
+            <article class="group hover:bg-track-economics-surface relative flex min-h-[28rem] flex-col justify-between overflow-hidden border-b border-[color:var(--atlas-line)] p-6 transition-colors md:border-r md:last:border-r-0">
+              <div class="flex items-center justify-between gap-5">
+                <span class="text-track-economics font-mono text-xs tracking-widest uppercase">
+                  {part.number}
+                </span>
+                <span class="text-track-economics/20 font-serif text-7xl">0{index + 1}</span>
+              </div>
+              <div>
+                <span class="bg-track-economics mb-6 block h-2 w-2 rounded-full transition-transform group-hover:scale-[1.8]" />
+                <h2 class="text-atlas-ink font-serif text-4xl leading-none">{part.title}</h2>
+              </div>
+            </article>
+          ))
+        }
+      </section>
+    </div>
+  </main>
+</Layout>

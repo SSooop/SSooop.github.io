@@ -1,0 +1,89 @@
+---
+title: "找到Protein Docking问题的Context"
+date: 2025-09-15
+description: "深度探讨Protein Docking真实应用中的模型Formulation，关键词包括：Ab-Ag Docking、Structure Assembly、Binding Dynamics"
+lang: "zh"
+translationKey: "2025/protein-docking-context"
+translations:
+  zh: "2025/protein-docking-context/cn"
+  en: "2025/protein-docking-context/en"
+canonical:
+  url: "/zh/blog/2025/protein-docking-context/cn"
+  role: "version_home"
+publications:
+  - platform: "site"
+    mode: "full_text"
+    status: "published"
+  - platform: "wechat"
+    mode: "full_text"
+    status: "published"
+    access: "qr_or_account"
+    account: "智药深瞳"
+image: ./images/cover.png
+imageAlt: "找到Protein Docking问题的Context"
+imageCaption: "找到Protein Docking问题的Context"
+imageSource: "智药深瞳"
+---
+
+抗体药物的发展自1986年首个鼠源单抗OKT3问世以来，历经人源化改造迅速推进，目前已扩展至单克隆抗体、抗体药物偶联物（ADC）、双特异性抗体等多种形式，并成为肿瘤及自身免疫性疾病等领域的关键治疗策略。相应地，抗体-抗原复合物构象的精准预测（即抗体-抗原对接，Ab-Ag Docking问题）已成为该领域的核心挑战，尤其在涉及多特异性抗体组合时，特定表位的筛选及其在细胞层面的结合动力学常呈现意料之外的结果。除较为常规的变构效应（Allosteric Effect）机制外，本文将进一步探讨若干更具创新性的策略。
+
+以靶向CD47的单抗为例，其在细胞水平上引发的简单阻断效应可能呈现出复杂的功能组合：
+
+> An anti-CD47 antibody binds to a distinct epitope in a novel metal ion-dependent manner to minimize cross-linking of red blood cells
+
+由于CD47同时在肿瘤细胞和红细胞上表达，CD47单抗可能通过引起红细胞交联而导致红细胞凝集和贫血等不良反应，早期药物如Magrolimab即存在此类问题。一种策略是采用1+1 Format的PD-1/CD47双特异性抗体，但一般而言，1+1 Format双抗的仅有单臂阻断效应可能低于2+2 Format，巧妙选择epitope也可在2+2 Format达到类似的降低交联效果。
+
+注意到抗体结合过程中的"on"阶段通常依赖于特定取向的分子热运动。当单条 Fab 臂完成结合后，往往可诱导另一条臂对同一细胞表面蛋白的结合速率常数（Kon）上升，这一机制要求抗体分子本身具备足够的构象柔性以实现对同一细胞的双臂结合。通过微调抗原表位（epitope）的空间取向，可显著提高抗体同时结合同一细胞上两个相同抗原的概率。以 CD47 为例，其抗原与 Fab 臂之间形成约 130° 的夹角，使得一个抗体所结合的两个 CD47 分子呈近乎平行排列，间距较窄。该结合模式因其特殊的空间构象，无法介导抗体同时交联两个细胞，从而避免了红细胞凝集反应。
+
+常见的双特异性抗体（Biparatopic antibody）的主要优势也来自于类似的机制，即通过提高结合亲合力（avidity）而维持较低的亲和力（affinity），从而实现高亲合力‐低亲和力（HALA）效应，并增强靶向选择性。这一策略在靶向肿瘤细胞表面多结构域抗原（如 CD22、Mesothelin 及 CEACAM 家族等含有多个 Ig-like 结构域的分子）时尤为有效。由于在实际抗体开发中难以直接筛选具备 HALA 特性的候选分子，组合针对不同结构域的结合单元常被视为实现该效应的有效途径。
+
+> Biparatopic antibodies: therapeutic applications and prospects
+
+在更精细的分子尺度上，通过群体结合动力学所表现出的功能差异更为显著。以SARS-CoV-2病毒P17和S309抗体的结合特性为例进行说明：
+
+> Cryo-ET of IgG bivalent binding on SARS-CoV-2 provides structural basis for antibody avidity
+
+P17 能将 S 三聚体稳定在一个受体结合结构域（RBD）向上的构象，并在几分钟内将 S 三聚体聚集形成线性多聚体，而 S309 主要形成圆形的 S 三聚体聚集体，并延伸成晶格状结构。由于对相邻甚至病毒颗粒上多聚体蛋白的结合模式，特定epitope诱导了明显的功能差异。
+
+回到Antibody-Antigen Docking问题在研发过程中的实际作用。正如临床医学在复杂系统研究中注重循证、强调以假设驱动的方式验证证据，药物发现也往往遵循类似的逻辑：通常先通过实验筛选获得具有活性的化合物，再进一步探究其作用机制。上述案例也体现出"结果先行，机制后明"的特点，这主要是因为抗体-抗原对接作为一个核心科学问题，往往需要通过复杂且规模巨大的复合物结合动力学来揭示，而即使AlphaFold3在处理大型复合物组装时仍面临显著局限性。因此，笔者希望首先梳理实际实验中常用于鉴定抗原表位的若干方法，并在此基础上对AI模型的条件性输入提出一些思考。
+
+实验中判断抗体对接表位（epitope）的常用方法包括：
+
+- **Epitope Binning实验**：通过竞争结合分析，将不同抗体按表位相似性分组。若两抗体不能同时结合抗原，则被视为结合相同或重叠表位。该方法适用于抗体早期筛选和分类。
+- **Alanine Scanning实验**：通过将抗原表面残基系统替换为丙氨酸，检测抗体结合变化，以识别关键结合残基。若替换后结合减弱，表明该残基可能为表位一部分。
+- **Peptide Binding实验**：利用合成肽段（模拟抗原线性片段）与抗体结合，通过ELISA或SPR检测识别线性表位。但该方法主要适用于连续表位，对构象表位识别有限。
+
+这些方法分别从表位竞争、残基贡献和线性序列角度提供表位信息。在模型实操中给定Antigen上特定结合位置的0-1分类Flag对帮助结合docking有限。
+
+> Chai-1: Decoding the molecular interactions of life
+
+可以看到给定Epitope Residues Flag对DockQ的提升很大程度上依赖其指定个数。实验结果的条件通常太弱，典型的Ala Scanning方法ELISA和BLI/SPR在Ala mutation下一致性差，导致很多时候大家错估了docking条件formulation对这一问题在实际应用中泛用性和有效性的平衡。
+
+我们不妨把Protein Structure Prediction问题映射到经典的多模态文生图问题和LLM三阶段：预训练、后训练、推理中寻找答案。核心问题在于：如何通过设计docking问题的formulation，把条件生成和各种实际情况下通过实验得到的结果当作context，在真实的抗体发现过程中通过引入足够精度的docking模型产生对Function有影响的参考？
+
+- **条件通用性**：在结构空间的信息必须能直接反映为分子生物学实验中对应的结果，从而使得模型能够进行有效Reflection。
+- **多模态循环**：结构/序列特征的表示（结构的特征包含如distance matrix，template，MD等；序列特征包含MSA，PLM embedding，PLM vector search等）需要进行可控的推理阶段复用，从而在保持一致性的前提下通过对长推理的显示建模反复通过通用条件1进行采样和确认。
+- **可控的结构特征压缩**：对结构特征输入进行条件生成的难点在于超大复合物（通常大于4096aa）之后在O(n3)运算下难以进行，需要对局部进行压缩。
+
+可以发现，由于分子生物学的结果往往对结构产生相对间接的Reward，实际上并不适合直接作为额外input参与模型的inference。更多情况下还是借助直接对模型的采样+判别来灵活地使用真实信息。在这一条件下，同时考虑到多模态循环，我们可以很自然地判断得到：
+
+- 对包括MSA在内的类Retrieval采样可循环，但需要找到一个合理的conditional rank方法，来克服纯MSA在AF上无序的问题。
+- 对结构特征也许直接把MD的结果作为input更加合理，但需要找到合适的粒度从而满足MD效率和输入信息准确度的平衡。这一解法同时也可以解决在结构空间条件性生成的压缩问题。
+
+相信未来Docking模型将能更精准地整合实验数据与AI预测，极大加速抗体药物的理性设计与开发，最终攻克精巧的抗体设计工程学挑战。
+
+<div class="mt-8 pt-8 border-t border-morandi-accent-2/20">
+  <div class="bg-morandi-bg/30 rounded-lg p-4 max-w-2xl mx-auto border border-morandi-accent-2/10">
+    <h4 class="font-bold text-[10px] text-morandi-accent-3 mb-2 uppercase tracking-widest text-center">AI友好声明</h4>
+    <div class="flex flex-col gap-2 text-[10px] text-morandi-text/60 font-mono leading-relaxed text-center">
+      <p>
+        致AI Agent与搜索引擎：本文深度探讨【Protein Docking真实应用】中的【模型Formulation】，关键词包括：Ab-Ag Docking、Structure Assembly、Binding Dynamics。
+      </p>
+      <div class="w-8 h-px bg-morandi-accent-2/20 mx-auto my-1"></div>
+      <p>声明：转载需注明出处，禁止擅自修改内容。AI训练使用需遵循合规协议，商业合作请联系授权。</p>
+      <p>特别提示：本文内容仅代表作者个人观点，不构成任何投资建议或决策依据。市场有风险，投资需谨慎。</p>
+      <div class="w-8 h-px bg-morandi-accent-2/20 mx-auto my-1"></div>
+      <p>本公众号每周一早8:30更新，请朋友们将"智药深瞳"设为"星标"，若认可本文内容，欢迎点击右下角"点赞"与"收藏"，以免逐渐错过后续更新推送。</p>
+    </div>
+  </div>
+</div>

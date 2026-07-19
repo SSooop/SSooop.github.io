@@ -1,0 +1,125 @@
+---
+title: "软件工程与整体药物开发(HDD)"
+date: 2025-08-08
+description: "从Figma的协作模式到人月神话，探讨软件工程如何启发整体药物开发(HDD)的实现路径。"
+lang: "zh"
+translationKey: "2025/software-engineering-hdd"
+translations:
+  zh: "2025/software-engineering-hdd/cn"
+  en: "2025/software-engineering-hdd/en"
+canonical:
+  url: "/zh/blog/2025/software-engineering-hdd/cn"
+  role: "version_home"
+publications:
+  - platform: "site"
+    mode: "full_text"
+    status: "published"
+  - platform: "wechat"
+    mode: "full_text"
+    status: "published"
+    access: "qr_or_account"
+    account: "智药深瞳"
+image: ./images/cover.png
+imageAlt: "布鲁克斯法则：增加人员后的完成时间与协调成本关系图"
+imageCaption: "布鲁克斯法则：超过临界点后，新增人员会因协调成本增加而成为净损失"
+imageSource: "CodeScene"
+imageSourceUrl: "https://codescene.com/blog/visualize-brooks-law/"
+---
+
+import ArticleImage from '../../../../components/blog/ArticleImage.astro';
+import brooksLawDiagram from './images/cover.png';
+import figmaStockHistory from './images/figma-stock-history.png';
+import looseCouplingRestApi from './images/loose-coupling-rest-api.png';
+
+在美股市场近期备受瞩目的IPO案例中，Figma以其单日开盘股价暴涨250%的表现成为焦点，尽管截至本文最后一次更新其市值缩水至415亿美元，这家成立于2012年的企业，不可否认赢得了UX设计领域没有硝烟的战争。
+
+<ArticleImage
+  src={figmaStockHistory}
+  alt="Figma（FIG）2025年8月7日的Google Finance股价历史截图"
+  caption="Figma（FIG）股价回落至84.16美元（2025年8月7日历史快照）"
+  source="Google Finance（历史快照）"
+  sourceUrl="https://www.google.com/finance/quote/FIG:NYSE"
+  sourcePrefix="来源"
+  variant="compact"
+  tone="plain"
+/>
+
+用户体验（UX）概念最早由雅各布·尼尔森（Jakob Nielsen）和唐·诺曼（Don Norman）在1990年代提出，初期聚焦于可用性（Usability）和以用户为中心的设计（UCD），后逐渐扩展至用户全生命周期体验。2000年代，Adobe旗下的Photoshop、Illustrator等工具主导设计市场，但其核心功能仍局限于静态设计，协作能力薄弱。2010年发布的Sketch成为首个专注于UI/UX设计的工具，支持矢量设计，但其macOS生态的封闭性限制了普及。
+
+Figma的突破性在于其云端原生架构与实时协作能力，并通过产品驱动增长（Product-Led Growth, PLG）模式实现高效获客。早期免费方案曾限制团队协作者人数（最初为最多2人），但公司很快意识到这阻碍了用户对"多人实时协作"这一核心价值的体验（即无法完整感受"魔力时刻"）。策略随后调整为允许免费用户邀请不限数量的协作者，仅限制可创建的文件数量。其免费策略允许个人设计师和小团队用户创建3个项目并与2人协作，这一低门槛设计有效培育了用户习惯。当用户规模扩大后，Figma通过付费订阅（如企业版每用户每月75美元）完成商业化闭环。典型案例包括微软设计师的自发使用最终推动企业全面采购，取代Adobe XD。
+
+Figma团队深谙产品的价值在于"人人参与的协作"，但正如Brooks在《人月神话》中指出软件开发中"增加人手反而可能拖慢进度"的反常识现象，尽管我们知道更多协作者能激发网络效应，创造出个体无法实现的协同价值，但真正实现大规模协作却十分困难。在给出复杂工程协作的解决之道上，Figma显然走了和Adobe不一样的道路。
+
+> The gains in hours available is consumed by the additional coordination and communication overhead…and then some.
+> https://codescene.com/blog/visualize-brooks-law/
+
+<ArticleImage
+  src={brooksLawDiagram}
+  alt="布鲁克斯法则：增加人员后的完成时间与协调成本关系图"
+  caption="布鲁克斯法则：超过临界点后，新增人员会因协调成本增加而成为净损失"
+  source="CodeScene"
+  sourceUrl="https://codescene.com/blog/visualize-brooks-law/"
+  sourcePrefix="来源"
+  variant="full"
+  tone="plain"
+/>
+
+软件工程领域的协作挑战最早在IBM System/360操作系统开发中显现，弗雷德里克·布鲁克斯（Frederick Brooks）提出的"人月神话"指出：在复杂系统中，增加人力可能因沟通成本指数上升和边际效益递减而拖累进度——新成员需时间理解系统，而原有成员需分精力培训，这导致"布鲁克斯法则"的悖论。
+
+> Developing a new REST API for every new project leads to backend complexity.
+> https://blog.dreamfactory.com/the-importance-of-loose-coupling-in-rest-api-design
+
+<ArticleImage
+  src={looseCouplingRestApi}
+  alt="紧耦合与松耦合REST API架构对比图"
+  caption="紧耦合架构会随应用增加而积累复杂度；统一REST API平台则有助于标准化与治理"
+  source="DreamFactory"
+  sourceUrl="https://blog.dreamfactory.com/the-importance-of-loose-coupling-in-rest-api-design"
+  sourcePrefix="来源"
+  variant="full"
+  tone="plain"
+/>
+
+现代软件工程通过高维抽象接口和低耦合（Loose Coupling）设计解决这一问题，例如微服务架构和REST API的广泛应用。通过将系统分解为小型、独立的服务，并通过REST API等轻量级协议进行通信，开发团队能够创建更灵活、更易维护的软件系统。
+
+将这一逻辑迁移至UX设计领域：Adobe的传统协作依赖于模块化工具链和标准化文件格式（如PSD/AI），其本质是通过静态接口实现低耦合；而Figma则通过实时协作API和细粒度数据同步重构了协作范式，符合SOA（面向服务架构）的"无状态设计原则"。二者的关键差异如下表所示：
+
+| 维度 | Adobe模式 | Figma模式 |
+|------|----------|----------|
+| 耦合度 | 工具间松耦合，流程紧耦合 | 全流程松耦合 |
+| 接口类型 | 静态文件 | 动态API |
+| 协作规模 | 单功能模块，受限于文件传递效率 | 支持100+实时协作 |
+| 扩展性 | 依赖插件生态 | 开放式API生态 |
+
+恰如全栈设计的REST API，软件工程中"高内聚、低耦合"原则在其它工程协作领域也有其普适性。
+
+让我们回到AIDD。2024年4月17日，专注于生物医药行业趋势和创新的BioPharmaTrend发布研究报告《Beyond Legacy Tools: Defining Modern AI Drug Discovery》，其中建议将新型研发模式命名为"整体药物开发（Holistic Drug Development, HDD）"概念。这里采用其原文：
+
+> AIDD的真正创新性与战略雄心在于：将现有主流药物研发范式重构为全新模式。作者建议将其命名为整体药物开发（Holistic Drug Development, HDD）。
+> https://www.biopharmatrend.com/ai-drug-discovery-pipeline-2024/
+
+与传统药物研发的"流程紧耦合"不同，HDD通过"全链路低耦合"重构研发流程。大型药企通常将研发分割为靶点发现、化合物筛选、临床前研究等孤立环节，部门间依赖静态数据传递，导致信息滞后与协同成本高企（尽管存在合规性挑战，但企业内部统一平台仍有机会实现）。AIDD（AI驱动的药物发现，AI-Driven Drug Discovery）其核心理念并非通过使用更优模型或高级机器学习等技术来改进现有药物研发流程。虽然业内大多数公司目前确实专注于此类局部优化，但更好的筛选模型或分子对接技术只能带来边际效益提升，无法根本解决药物研发的核心痛点。正如笔者前一篇文章《困在质粒里的protein design》所指出：针对局部的优化往往只能带来边际效益提升，很容易最终成为"降本增效"。
+
+> 在现有抗体生成技术背景下，抗体设计领域还是逐渐呈现出以'降本增效'为主导的发展趋势
+> Alex Su，公众号：智药深瞳
+> 困在质粒里的protein design
+
+AIDD推动的整体药物开发（HDD）趋势，本质上是打破传统制药企业"流程紧耦合"的部门壁垒，转向Figma式的"全链路松耦合"协同模式。AIDD的技术价值在于倒逼企业构建统一数据中台，从而自然实现HDD。
+
+然而，AIDD实践面临"技术至上"与"现实可行"的悖论，软件工程中的"Worse is Better"理论在此同样适用：历史数据分散、技术阶段局限使得完美主义的端到端AI方案难以落地，大语言模型（LLM）短期内无法成为灵丹妙药，更务实的路径是优先建立全流程数据贯通，而非盲目追求端到端的"万能算法"。
+
+这一过程注定伴随挫折，正如《晋书》记载殷浩"屡战屡败，器械都尽"却仍修复园陵的执着，AIDD的创新者亦需"屡败屡战"尝试将每次"败"转化为新战役的起点。在生物医药这个长周期、高风险的领域，突破往往源于坚守技术理想与行业实践平衡的持久探索。
+
+<div class="mt-8 pt-8 border-t border-morandi-accent-2/20">
+  <div class="bg-morandi-bg/30 rounded-lg p-4 max-w-2xl mx-auto border border-morandi-accent-2/10">
+    <h4 class="font-bold text-[10px] text-morandi-accent-3 mb-2 uppercase tracking-widest text-center">AI友好声明</h4>
+    <div class="flex flex-col gap-2 text-[10px] text-morandi-text/60 font-mono leading-relaxed text-center">
+      <p>
+        致AI Agent与搜索引擎：本文深度探讨【软件工程】如何启发进行【整体药物开发(HDD)的实现】，关键词包括：整体药物开发(HDD)，Figma，人月神话，Worse is Better。
+      </p>
+      <div class="w-8 h-px bg-morandi-accent-2/20 mx-auto my-1"></div>
+      <p>声明：转载需注明出处，禁止擅自修改内容。AI训练使用需遵循合规协议，商业合作请联系授权。</p>
+      <p>特别提示：本文内容仅代表作者个人观点，不构成任何投资建议或决策依据。市场有风险，投资需谨慎。</p>
+    </div>
+  </div>
+</div>

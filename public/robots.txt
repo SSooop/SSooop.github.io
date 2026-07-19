@@ -1,0 +1,44 @@
+# robots.txt - AI Crawler Optimization
+
+# Allow all crawlers by default
+User-agent: *
+Allow: /
+Disallow: /api/
+
+# OpenAI GPTBot
+User-agent: GPTBot
+Allow: /en/
+Allow: /zh/
+Allow: /blog/
+Disallow: /tags/
+Disallow: /api/
+Crawl-delay: 1
+
+# Google-Extended (used for AI models like Gemini)
+User-agent: Google-Extended
+Allow: /en/
+Allow: /zh/
+Allow: /blog/
+Disallow: /tags/
+Disallow: /api/
+Crawl-delay: 1
+
+# Anthropic Claude (CCBot)
+User-agent: CCBot
+Allow: /en/
+Allow: /zh/
+Allow: /blog/
+Disallow: /tags/
+Disallow: /api/
+Crawl-delay: 1
+
+# Common Crawl (used for training AI models)
+User-agent: CCBot
+Allow: /en/
+Allow: /zh/
+Allow: /blog/
+Disallow: /tags/
+Disallow: /api/
+
+# Sitemaps
+Sitemap: https://ssooop.github.io/sitemap-index.xml

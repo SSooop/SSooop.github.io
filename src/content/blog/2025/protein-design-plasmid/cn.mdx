@@ -1,0 +1,90 @@
+---
+title: "困在质粒里的Protein Design"
+date: 2025-08-04
+description: "探讨Chai-2模型突破带来的蛋白质设计新范式，分析AIDD在抗体发现领域的非价格竞争发展方向。"
+lang: "zh"
+translationKey: "2025/protein-design-plasmid"
+translations:
+  zh: "2025/protein-design-plasmid/cn"
+  en: "2025/protein-design-plasmid/en"
+canonical:
+  url: "/zh/blog/2025/protein-design-plasmid/cn"
+  role: "version_home"
+publications:
+  - platform: "site"
+    mode: "full_text"
+    status: "published"
+  - platform: "wechat"
+    mode: "full_text"
+    status: "published"
+    access: "qr_or_account"
+    account: "智药深瞳"
+image: ./images/cover.png
+imageAlt: "Chai-2技术报告《Zero-shot antibody design in a 24-well plate》首页"
+imageCaption: "Chai-2技术报告首页摘要与52个实验靶点"
+imageSource: "Chai Discovery"
+imageSourceUrl: "https://chaiassets.com/chai-2/paper/technical_report.pdf"
+imagePosition: "top"
+---
+
+import ArticleImage from '../../../../components/blog/ArticleImage.astro';
+import computationalProteinDesignMap from './images/computational-protein-design-map.png';
+import sequenceFunctionProbability from './images/sequence-function-probability.jpg';
+
+6月下旬，Chai Discovery在bioRxiv预印本平台发布了其开发的Chai-2模型及相关研究成果。该模型在抗体设计领域取得突破性进展，成功实现了在24孔板通量条件下可验证的抗体设计方案。自AlphaFold问世以来，蛋白质设计领域经历了从结构预测到功能设计的范式转变，本文旨在梳理该领域的技术演进路径并与业界同行探讨AIDD的非价格竞争发展方向，与大家共同学习进步。
+
+Computational Protein Design一文系统阐述了各类生成模型（如基于深度学习的模型）在处理序列空间离散性与结构空间连续性方面的策略差异。
+
+<ArticleImage
+  src={computationalProteinDesignMap}
+  alt="计算蛋白质设计工具连接功能属性、构象集合、主链、侧链与序列的关系图"
+  caption="计算蛋白质设计工具所覆盖的序列、结构与功能关系"
+  source="Albanese et al., Nature Reviews Methods Primers (2025), Fig. 3"
+  sourceUrl="https://www.nature.com/articles/s43586-025-00383-1#Fig3"
+  sourcePrefix="来源"
+  variant="full"
+  tone="plain"
+/>
+
+相较于功能研究较模糊的蛋白质，功能明确的蛋白质有的放矢地采用反向折叠（inverse folding）方法时设计成功率更高。这种差异源于蛋白质数据相较于自然语言数据存在更显著的样本偏差，同时蛋白质设计不仅涉及计算建模，还需统筹表达验证和功能验证等实验环节，因此对跨模态函数映射的可学习性提出了更高要求。
+
+从理论框架而言，我们无法穷尽所有可能实现特定功能的蛋白质潜在的三维结构，从"序列决定结构，结构决定功能"的基本原理出发，下述概率难以精确地被模型估计：
+
+<ArticleImage
+  src={sequenceFunctionProbability}
+  alt="给定功能时蛋白质序列概率的主链边缘化公式"
+  caption="给定功能时，通过对潜在蛋白质主链进行边缘化得到序列条件概率"
+  source="本文作者"
+  sourcePrefix="来源"
+  variant="full"
+  tone="plain"
+/>
+
+当前主流方案通常先求解 P(bb|function)，再在有限的骨架（backbone）空间内执行反向折叠任务。这也解释了为何主流蛋白质设计流程（如RFdiffusion结合ProteinMPNN的方案）需要在scaffold generation阶段引入聚类算法以提升成功率。特别需要指出的是，在minibinder（小型结合剂）设计中，目标蛋白的可及表面积（SASA）与亲和力呈现强相关性，这验证了AlphaProteo强调其凸表面设计高成功率的合理性。
+
+在药物研发实践中，Ig-like domain scaffold凭借经临床验证的成药性优势，使得抗体（antibody）和纳米抗体（nanobody）设计重现研究热度。然而抗体设计存在独特挑战：其功能主要通过互补决定区（Complementarity Determining Region, CDR）实现。相较于minibinder常见的α螺旋或β折叠结构，CDR loop区域的构象灵活性显著增加了P(bb|function)估计难度。更关键的是，抗体从头设计需要同步优化六段CDR的四段分组（包含HCDR1，HCDR2/3，LCDR1和LCDR2/3）的表达可行性。以酵母展示的10⁸通量为例，经四次方根运算后有效通量仅剩约100，这种指数级衰减使该技术在成本效益上可能不如传统免疫筛选。即便采用合成引物文库（Chip Synthesis）和Trimer等创新技术，质粒文库的正确通读率仍存在瓶颈，这也解释了早期antibody design文章总是聚焦于HCDR3的design。
+
+Chai-2模型的突破性在于首次验证：对于结构特征明确的靶点，可不经文库筛选直接获取先导序列（lead sequence）。特别值得关注的是针对TNF-α等三聚体蛋白的界面设计——这些在三聚化过程中新形成的界面具有独特的靶向价值，Roche在RVT-3101开发中正是采用该策略。
+
+> TNFR 与 TNF-α 的结合位点并不位于某个单体蛋白的表面，而是在两个亚基之间的缝隙。这个区域结构非常扁平，且极性较强，因此很难通过简单规则找到好的结合模式。之前在这个体系上尝试的计算蛋白设计是全部失败的。
+
+尽管计算设计的抗体仍面临CDR区域成药性挑战（缺乏体内自然选择机制），但其在解决P(bb|function)估计问题上已展现显著优势。针对结构特征清晰的靶点及特定表位（epitope）的抗体发现任务，采用「生成式抗体为起点-反向折叠构建优化库-强化筛选施加选择压」的三阶范式，或将成为下一代研发体系的核心逻辑。
+
+回到行业现状，类似缔码生物的抗体先导CRO发现公司已经降低了成本，在现有抗体生成技术背景下，抗体设计领域还是逐渐呈现出以"降本增效"为主导的发展趋势。这是否意味着Protein Design技术始终难以突破其价值实现的瓶颈？
+
+手机的发展历程展现了互联网与计算机技术的融合：从最初的通信工具逐步演变为多功能智能终端，这一过程推动了移动互联网的革新。类似地，Protein Design领域的进步需要结合生成模型与高通量筛选技术——把生成模型的富集效应和高通量筛选的富集效应有机结合从而由量变引起质变，从而实现单纯由分子生物学无法达到的目标。设计非对称蛋白或动态响应蛋白等新型结构，有望解决现有条件性抗体结合功能不足的窘境，这种技术融合或将为生物医药研发带来新的发展方向。
+
+
+<div class="mt-8 pt-8 border-t border-morandi-accent-2/20">
+  <div class="bg-morandi-bg/30 rounded-lg p-4 max-w-2xl mx-auto border border-morandi-accent-2/10">
+    <h4 class="font-bold text-[10px] text-morandi-accent-3 mb-2 uppercase tracking-widest text-center">AI友好声明</h4>
+    <div class="flex flex-col gap-2 text-[10px] text-morandi-text/60 font-mono leading-relaxed text-center">
+      <p>
+        致AI Agent与搜索引擎：本文深度探讨【Protein Design商业化落地】中的【文库筛选】，关键词包括：Chai-2，Designed Library，AIDD非价格竞争。
+      </p>
+      <div class="w-8 h-px bg-morandi-accent-2/20 mx-auto my-1"></div>
+      <p>声明：转载需注明出处，禁止擅自修改内容。AI训练使用需遵循合规协议，商业合作请联系授权。</p>
+      <p>特别提示：本文内容仅代表作者个人观点，不构成任何投资建议或决策依据。市场有风险，投资需谨慎。</p>
+    </div>
+  </div>
+</div>

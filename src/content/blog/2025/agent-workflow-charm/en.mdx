@@ -1,0 +1,59 @@
+---
+title: "The Charm of Agents in Workflow Design"
+date: 2025-09-08
+description: "A discussion of why agents and workflows are not opposing paradigms, but complementary layers in reliable AI application architecture."
+lang: "en"
+translationKey: "2025/agent-workflow-charm"
+translations:
+  zh: "2025/agent-workflow-charm/cn"
+  en: "2025/agent-workflow-charm/en"
+canonical:
+  url: "/en/blog/2025/agent-workflow-charm/en"
+  role: "version_home"
+publications:
+  - platform: "site"
+    mode: "full_text"
+    status: "published"
+keywords:
+  - "AI agents"
+  - "workflow"
+  - "Dify"
+  - "n8n"
+  - "agent planning"
+image: ./images/cover.png
+imageAlt: "The Charm of Agents in Workflow Design"
+imageCaption: "The Charm of Agents in Workflow Design"
+imageSource: "IntelliPharma Hub"
+---
+
+Dify released its first version on May 11, 2023, and made the project open source on GitHub at the same time. As an open-source platform for building large-language-model applications, Dify was designed from the beginning as a blend of backend-as-a-service and LLMOps. Its aim was to help both developers and non-technical users build generative AI applications more efficiently.
+
+In the second half of 2023, Dify released Agent and Workflow features. That was the first moment when the platform truly became widely visible. Many enterprises already wanted to put generative AI into real production, but they also realized that relying only on prompts to constrain model behavior was not reliable enough. Dify responded to concrete user and customer feedback by combining model capability with human intervention, turning large models into something that could actually be deployed.
+
+At the beginning of 2025, DeepSeek ignited a broad demand in the Chinese market for practical large-model adoption. For many companies, simply having access to a model was not enough. They needed a way to turn the model into usable productivity. On February 25, 2025, Dify reached a symbolic milestone: more than 80,000 GitHub stars, entering GitHub's Top 100 open-source projects. By then, it had attracted more than 700 community contributors, released more than 100 updates, recorded more than four million community-edition deployments, and had long occupied the LLM tools rankings on OSS Insight. By April 2025, Dify had served more than 30 Fortune Global 500 companies and was ranked third in TechCrunch's list of the 20 most successful open-source companies of 2024. Its SaaS version was already running hundreds of thousands of AI applications and had broadly reached the point where revenue could cover cost.
+
+Dify's success is undeniable. But we still need to look calmly at the logic behind it. Dify may have risen with the AI wave, but at its core it is a low-code workflow platform that perfectly answered the demand for workflow construction that ordinary users could actually use. AI did intensify management's sense of urgency around transformation, and that urgency pushed digitalization forward. To understand this more deeply, we can go back to 2023, when the concept of agents first gained broad recognition.
+
+On June 23, 2023, Lilian Weng published "LLM Powered Autonomous Agents." The article gave a clear definition of what capabilities an agent should have:
+
+- **Planning**: an agent must be able to break down a large task into smaller executable tasks, and improve the final result through reflection and refinement.
+- **Memory**: an agent must be able to use both short-term memory, usually in context, and long-term memory.
+- **Tool use**: an agent must be able to call tools and extend its capability boundary.
+
+From the early days of artificial intelligence, researchers have been strongly interested in the autonomy of agents. That interest continued into the era of LLM-based agents. By integrating planning, memory, tool use, and other core modules, agents began to show meaningful technical breakthroughs. But this naturally raised an important theoretical question: if agents already have planning ability, will workflows remain necessary only as a temporary patch for today's model limitations? This question touches the essence of intelligent-system architecture.
+
+My view is that agent and workflow are not opposites. Workflow is not merely a set of handrails for weak models. It is an architectural form for transforming uncertain intelligence into stable collaboration.
+
+Planning in an agent is local and dynamic. It works inside a concrete task, chooses a next step, calls a tool, observes a result, and then adjusts. Workflow, by contrast, is a more externalized and social form of planning. It defines what must happen before what, which nodes need human review, what kind of state must be preserved, and where failure should be interrupted. In enterprise scenarios, these differences matter more than the raw intelligence of the model.
+
+This is why many successful AI applications still rely on explicit workflows. A research task, for example, is open ended. As one useful observation puts it:
+
+> Research work involves open-ended problems where it's very difficult to predict the required steps in advance. You can't hardcode a fixed path for exploring complex topics, as the process is inherently dynamic and path-dependent.
+
+That is precisely why the workflow should not be understood as a fixed path. A mature workflow is more like a contract among model, user, data, tool, and organization. It tells the system where freedom is allowed and where accountability must return.
+
+The same logic explains why multi-agent systems should be treated with caution. I strongly suspect that many so-called AI applications do not truly need multiple agents. Every extra layer of abstraction makes debugging harder and increases the chance of drifting away from the direction in which model capabilities are improving. In many practical systems, a single capable agent with a clear workflow is more valuable than a complicated society of agents.
+
+For vertical AI applications, the real lesson is not to worship agents or workflows. The lesson is to understand which part of the task needs autonomy and which part needs structure. Agents bring adaptive reasoning; workflows bring repeatability, observability, and organizational trust. When the two are combined well, AI stops being a demo and starts becoming infrastructure.
+
+In this sense, the charm of agents in workflows is not that agents replace workflows. It is that agents make workflows alive. And the charm of workflows in the agent era is that they give intelligence a form in which it can be trusted, reviewed, and improved.

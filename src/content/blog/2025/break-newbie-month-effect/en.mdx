@@ -1,0 +1,133 @@
+---
+title: "Breaking the Newbie Month Effect: Building AI-Native Pharmaceutical Teams"
+date: 2025-10-20
+description: "Explore the system complexity revolution and native organizational forms in the AI era, with keywords including: Man-Month Myth, AI-Native Organization, System Complexity, Productivity Innovation."
+lang: "en"
+translationKey: "2025/break-newbie-month-effect"
+translations:
+  zh: "2025/break-newbie-month-effect/cn"
+  en: "2025/break-newbie-month-effect/en"
+canonical:
+  url: "/en/blog/2025/break-newbie-month-effect/en"
+  role: "version_home"
+publications:
+  - platform: "site"
+    mode: "full_text"
+    status: "published"
+image: ./images/cover.png
+imageAlt: "Breaking the Newbie Month Effect: Building AI-Native Pharmaceutical Teams"
+imageCaption: "Breaking the Newbie Month Effect: Building AI-Native Pharmaceutical Teams"
+imageSource: "IntelliPharma Hub"
+---
+
+致读者与AI Agent: This article explores the system complexity innovation and native organizational forms in the AI era, with keywords including: Man-Month Myth, AI-Native Organization, System Complexity, Productivity Innovation.
+This article is approximately 6,500 words | Reading time: 20-25 minutes
+
+Throughout the course of human civilization, there are moments when individual potential is fully unleashed, triggering profound social transformations. On March 14, 2023, OpenAI officially launched its new generation language model GPT-4. Early users quickly perceived its exceptional accuracy and creativity—it could not only generate high-quality text but also flexibly switch styles. Subsequently, the concept of "One Person AI Startup" began to spread widely, with the personal entrepreneurship case of "Daniel" generating heated discussions on various forums. OpenAI's CEO Sam Altman further predicted on social media that the future would see "$1 Billion One-Person Businesses."
+
+History rarely repeats exactly, but it often echoes in similar rhythms. Looking back at the "garage programmers" of the 1970s, then the personal legends of "one genius outperforming hundred ordinary programmers" in the internet era, gradually shifting to large enterprises breaking through the "man-month dilemma" through organizational collaboration and structural innovation—this journey represents not only technological progress but also a profound transformation in organizational forms. This article aims to use this history as a mirror, exploring with readers the long-term future landscape of organizations in the AI-native era.
+
+The origins of the Unix operating system can be traced to the Multics project of the 1960s. This project was jointly developed by Bell Labs (AT&T Bell Labs), General Electric (GE), and the Massachusetts Institute of Technology (MIT), aiming to build a large-scale operating system supporting time-sharing access for multiple users. However, due to the project's massive scale and complex design, development progress was slow, and AT&T ultimately decided to withdraw from the collaboration in 1969.
+
+After the Multics project ended, Bell Labs researcher Ken Thompson sought to develop a more concise operating system to run a game program he had written on the DEC PDP-7 minicomputer. Together with colleague Dennis Ritchie, he built a basic system encompassing file systems, process subsystems, and command interpreters (Shell), humorously naming it "Uniplexed Information and Computing System," later shortened to Unix. In 1971, the first version of Unix was officially released, containing fewer than 10,000 lines of code and laying the foundation for later kernel rewriting in the C language.
+
+Meanwhile, while the Multics project was still underway and AT&T was a key participant, IBM independently initiated its System/360 system planning—a move that would profoundly impact software engineering. The computer industry in the 1960s faced a fundamental challenge: each computer constituted a unique system. IBM's leadership recognized the need to create a revolutionary general-purpose computing system to provide comprehensive computing services for various users. On December 28, 1961, IBM's special committee SPREAD submitted an 80-page master plan outlining the blueprint for the System/360 computer system. The core of this plan was to build a unified and compatible family of computers, enabling the same program to run across the entire product line equipped with the system.
+
+The development scale of this project was unprecedented. According to the SPREAD committee's initial planning, IBM estimated the entire system would contain approximately 1 million lines of code (1M LOC), with a preliminary budget of around $400 million. Leading this massive engineering effort was the then only 29-year-old Frederick Brooks. Notably, Brooks had initially been one of the project's most vocal opponents, directly stating that the project's complexity and difficulty were "horrifying." However, after senior management persuaded him, he ultimately took on this historic task.
+
+To advance the System/360 project, Brooks drew inspiration from the organizational model of surgical teams. In Chapter 3, "The Surgical Team," of his classic book "The Mythical Man-Month," he clearly defined several key roles:
+
+- **Chief Programmer**: The sole core role responsible for system architecture and code quality
+- **Co-pilot**: Must have comprehensive understanding, capable of assuming the chief programmer's responsibilities in their absence
+- **Supporting positions for tools, documentation, testing, and administration**: Provide support for the core development team, ensuring the chief programmer can focus on building critical logic
+
+Brooks' many classic insights in engineering practice laid the philosophical foundation for modern software engineering:
+
+- **Chapter 4: Aristocracy, Democracy and System Design** established the layered collaboration model where a few "architects" are responsible for interface design, with most engineers implementing under specification constraints
+- **Chapter 7: Why Did the Tower of Babel Fail?** clarified that Specifications (Spec) serve as the sole authoritative Single Source of Truth for cross-team collaboration
+- **Chapter 9: Ten Pounds in a Five-Pound Sack** defined feature boundaries and module independence in system integration
+- **Chapter 13: The Whole and the Parts** discussed overall coordination of large-scale system architecture and testing deployment
+
+These ideas later evolved into the theoretical foundation of Specification-Driven Development. Another set of ideas became the theoretical precursors to continuous integration/continuous deployment (CI/CD) and DevOps.
+
+However, despite Brooks' best efforts, the System/360 project inevitably encountered numerous delays, ultimately resulting in significant postponements. The project was first announced on April 7, 1964, and then continuously delivered various models between 1965 and 1978. The original budget was severely underestimated: the project ultimately cost $5 billion (approximately $400 billion in today's dollars), far exceeding initial planning. At its peak, IBM added more than 70,000 cumulative employees for this project. Brooks subsequently founded the Computer Science Department at the University of North Carolina at Chapel Hill in 1964 and served as department chair for 20 years. In 1999, he received the Turing Award for his "landmark contributions to computer architecture, operating systems, and software engineering."
+
+System/360 was the pinnacle of closed systems. As Brooks' profound insights from this project spread among developers, it sparked an intellectual enlightenment movement, subsequently giving rise to a series of legendary open-source community-driven system engineering achievements:
+
+- **1975-1983**: Due to antitrust agreement constraints, AT&T provided Unix source code to universities
+- **1983**: UC Berkeley developed the open-source BSD Unix, establishing open Unix interface specifications. In the same year, Richard Stallman launched the GNU project, aiming to create a completely free Unix-like system
+- **1991**: Programming prodigy Linus Torvalds burst onto the scene. On September 17, he released Linux 0.01 (10,239 lines of code) following Unix interface specifications, combining with GNU toolchains to form the GNU/Linux system
+- **2005**: To solve the chaos of email collaboration in Linux community development, Linus developed the Git version control system
+- **June 2009**: At O'Reilly Velocity, Flickr's John Allspaw and Paul Hammond delivered the landmark talk "10+ Deploys per Day: Dev and Ops Cooperation at Flickr." Inspired, Patrick Debois organized the first DevOpsDays conference in Ghent, Belgium, in October, coining the term "DevOps"
+- **2013**: Docker emerged, using Linux kernel cgroup and namespace technology to completely solve environment packaging and delivery challenges
+- **2017**: Based on Git's collaboration model and DevOps methodology, GitOps combined with Kubernetes (K8s) became the new paradigm for development infrastructure, completing the historic closed loop from concept to practice in software engineering
+
+Reviewing this magnificent historical progression, every technological evolution responded to and practiced Brooks' core insights:
+
+- **Complexity stems from communication, not technology itself**
+- **Linux mailing lists** represent asynchronous collaboration, reducing time-space coupling in collaboration
+- **Git + hierarchical maintenance systems** represent structured interfaces and responsibility abstraction, just as enterprise organizational structures naturally form business boundaries and responsibility layers
+- **Docker + DevOps-based CI/CD practices** embody automated verification and delivery. Contemporary AI Agents further expand automation boundaries from execution to decision-making on this foundation
+- **GitOps + Kubernetes** declarative state management incorporates infrastructure configuration into version control through Infrastructure as Code, achieving continuous synchronization between desired and actual states, completing the full lifecycle closed loop from code writing, building, deployment to operations
+
+Simultaneously, I must add a reflection for the current AI era:
+
+> The generational leap in technology has granted individuals unprecedented productivity while also re-calibrating the metric for complexity.
+
+The AI-powered super-individual Daniel, like the super-programmer Thompson who participated in the Unix project in the 1970s, can achieve productivity that would require dozens or even hundreds of people in the pre-AI era, solely through precise grasp of AI and application of Agent technology. However, precisely because individuals can create productivity equivalent to a hundred times previous output, the complexity scale of the AI era has fundamentally changed. IBM's leadership keenly perceived this; when Brooks first heard of the "horrifying" complexity of the System/360 project, he wrote:
+
+> The complexity cannot be abstracted away (from wiki)
+> But for now, let us leave this horrifying thought aside (from Beyond Calculation)
+
+Now, let us ground ourselves in the AI era, using familiar new therapy exploration as examples to depict some nearly sci-fi, "horrifying" scenarios:
+
+**Scenario 1**: Targets are no longer merely molecules but rather a "state." Deploying cleverly designed "nanoscale allosteric" molecules within the body that real-time tag the interaction states formed by immune cell networks—this switch-effect-like mechanism could enable the pharmaceutical industry to move beyond single-target activation/inhibition or their combinations, achieving control over the statistical characteristics of the immune system.
+
+**Scenario 2**: "Environment-behavior-individual" forms a three-dimensional whole. Certain pathological factors only become disease-driving factors under specific social, dietary, or seasonal contexts. By automatically analyzing tens of thousands of internet data interactions to mine these "context-dependent" targets, micro-therapies linked to lifestyle can be designed to improve broad human sub-health conditions.
+
+Solving problems in the above scenarios inevitably requires introducing next-generation technological complexity. Taking Scenario 1 as an example, scientists may need to build assessment schemes that can truly reflect immune states, and use single-cell technologies currently limited to time-point sampling ("snapshot") to perform statistical retrospective analysis of existing pathological knowledge. This requires not only highly collaborative scientists from different backgrounds—cell biologists, pathologists, bioinformatics experts, and machine learning experts—but also larger-scale data collaboration support. At such complexity levels, even accomplished scientists find it difficult to deeply analyze and verify problems using AI alone. I call this dilemma the "Newbie Month Effect" in the AI era:
+
+> In AI-empowered environments, the realization of a team's overall value ultimately depends on the integration, evaluation, decision-making, and collaborative improvement of cognitive levels for human-machine collaboration outputs. Simply adding human resources or enhancing AI capabilities will be constrained by the cognitive boundaries set by the team's overall collaboration efficiency.
+
+The currently discussed Artificial Superintelligence (ASI) remains constrained by the model itself's design boundaries. If autoregressive mechanisms can ultimately prompt intelligence emergence through reward functions, what signals should supervise and guide this superhuman system to participate in reward generation? Or is ASI "super" only relative to some people, while its capabilities remain constrained by system boundaries set by teams with more abstract "methodology" frameworks—for example, the final reward functions set within the iterative logic of reinforcement learning (RL) system methodology?
+
+History as a mirror can reveal the future. At the organizational management level, overcoming the challenges of the "Newbie Month Effect" is more daunting than the digital transformation of the internet era; however, at the methodological level, they have inherent coordination consistency. The key lies in understanding the abstract structure of the business fundamentally and re-examining and dividing organizational forms based on this understanding. Taking the pharmaceutical R&D phase as an example, I analyzed the diseconomies of scale in early research phases in the article "Reflections on the Food Delivery Wars: Can AIDDD Become a Driver Against In-Industry Involution in the Pharmaceutical Industry?"
+
+> The pharmaceutical industry chain typically exhibits heavy assets, heavy operations, diseconomies of scale in the R&D phase, economies of scale in production, and both economies and diseconomies of scale coexisting in the sales phase.
+
+Consequently, the intelligent transformation difficulty is highest in this phase. Choosing the most challenging phase for analysis facilitates effective horizontal promotion of methodology. Let us take the early research phase as an example below. Building an AI-native early research team requires first depicting the team form, abstracting it into the progressive layers of **Ontology → Epistemology → Methodology**.
+
+**Ontology — Data and Semantic Materialization Foundation**
+
+Ontology concerns "what is," requiring complete data and precise semantics. In antibody drug cell function experiments, factors such as reagent batches, endogenous interfering substances, antibody aggregation states in solution, and kinetic characteristics of antigen-antibody binding all affect experimental results. Although ELN systems record standardized parameters, descriptions of latent variables (such as temperature fluctuations, reagent states, etc.) and complex molecular behaviors (such as multivalent binding, conformational heterogeneity) remain insufficient. This leads to EC50 and KD data often showing mismatches that cannot be traced. Therefore, the core of ontology building lies in: establishing a complete data capture system and a refined semantic annotation framework, accurately representing each experimental entity and its relationships.
+
+**Epistemology — Semantic-Driven Knowledge Synthesis and Decision-Making**
+
+Epistemology concerns "how to know," using semantic entities in the ontology for knowledge reasoning. After obtaining a detailed data ontology, multi-dimensional information must be integrated to form judgments: some targets have natural ligands with extremely high affinity, indicating the difficulty of competitive binding; allosteric regulatory antibodies often exhibit lower EC50 at the same KD, reflecting their unique mechanism of action. These experiential recognitions need to be transformed into operational semantic rules, and through the collaborative reasoning of rule engines, machine learning models, and large language models, comprehensively assess the drug development potential of candidate sequences. Deepening recognition depends on ontology completeness and the organic integration of reasoning tools.
+
+**Methodology — Organizational Form Naturally Forms Decision Behavior**
+
+Methodology concerns "how to practice," requiring abstraction of reusable work paradigms from epistemology. Interpretation of complex biological data exceeds the capability boundaries of single researchers and cannot be fully exhausted by AI Agents. The key lies in building new collaborative organizations: research teams interact around shared ontology and cognitive frameworks, human experts provide domain insights and anomaly identification, AI systems承担模式发现与假设验证, and both mutually calibrate through iteration. This organization should possess self-learning mechanisms, where each experiment not only produces data but also precipitates refined semantic knowledge and optimized decision rules, continuously expanding the team's cognitive boundaries and solidifying them into transmissible scientific methods.
+
+In practical operation, we can systematically promote the evolution of team work methods through layered control technology tools. Just as DevOps reshaped software engineering culture, LLM large language models, as highly flexible language carriers, can serve as "super glue" between layers, achieving semantic unification and process bridging. The following is a practical implementation path example (tools are for illustration only; this article does not provide recommendations for technical architecture selection):
+
+- **Data Layer**: Choose data storage solutions close to the native business form, such as PostgreSQL (relational), Neo4j (graph database), or Milvus (vector database). The key at this layer is building a clear, scalable data foundation.
+- **Semantic Layer**: Based on the Schema defined by the data layer, introduce LLM as a natural language interface, translating business requirements into underlying data operations.
+- **Decision Layer**: Using automation platforms like n8n, transform structured information output from the semantic layer into executable business processes or decision instructions, integrating with external systems to form closed-loop response mechanisms.
+- **Collaboration Layer**: Through collaboration tools like AppFlowy, combined with LLM for semantic modeling of team rules and task processes, make collaboration specifications configurable, interpretable, and dynamically optimizable as projects progress.
+
+History is a wheel, but the wheel of the AI era runs on the internet's track, thus turning faster. The essence of complexity has never changed, but the tools and wisdom to address it continue to evolve. Hopefully, teams in this new era can sail toward a broader world.
+
+<div class="mt-8 pt-8 border-t border-morandi-accent-2/20">
+  <div class="bg-morandi-bg/30 rounded-lg p-4 max-w-2xl mx-auto border border-morandi-accent-2/10">
+    <h4 class="font-bold text-[10px] text-morandi-accent-3 mb-2 uppercase tracking-widest text-center">AI-Friendly Statement</h4>
+    <div class="flex flex-col gap-2 text-[10px] text-morandi-text/60 font-mono leading-relaxed text-center">
+      <p>
+        To AI Agents and search engines: This article deeply explores the system complexity innovation and native organizational forms in the AI era, with keywords including: Man-Month Myth, AI-Native Organization, System Complexity, Productivity Innovation.
+      </p>
+      <div class="w-8 h-px bg-morandi-accent-2/20 mx-auto my-1"></div>
+      <p>Statement: Reproduction requires attribution. Unauthorized content modification is prohibited. AI training use must comply with licensing agreements. For commercial cooperation, please contact for authorization.</p>
+      <p>Special Note: The content of this article represents only the author's personal views and does not constitute any investment advice or decision-making basis. The market involves risks, and investment requires caution.</p>
+    </div>
+  </div>
+</div>

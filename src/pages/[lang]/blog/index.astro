@@ -1,0 +1,174 @@
+---
+import { Image } from 'astro:assets';
+import Layout from '../../../layouts/Layout.astro';
+import StructuredData from '../../../components/StructuredData.astro';
+import AtlasField from '../../../components/AtlasField.astro';
+import { getCollection } from 'astro:content';
+import { useTranslations, type SupportedLocale } from '../../../i18n/ui';
+import { getPageBreadcrumbs } from '../../../utils/structuredData';
+
+export function getStaticPaths() {
+  return [{ params: { lang: 'en' } }, { params: { lang: 'zh' } }];
+}
+
+const { lang } = Astro.params;
+const t = useTranslations(lang as SupportedLocale);
+const posts = await getCollection('blog');
+const containerPosts = posts.filter((post) => post.data.lang === lang);
+const sortedPosts = containerPosts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const archiveCopy =
+  lang === 'zh'
+    ? {
+        eyebrow: 'P01 / 智药深瞳',
+        field: 'AI × 生物医药 × 产品 × 科学软件',
+        archiveLabel: '文章档案',
+        entries: '篇',
+      }
+    : {
+        eyebrow: 'P01 / RESEARCH TRANSMISSIONS',
+        field: 'AI × BIOPHARMA × PRODUCT × SCIENTIFIC SOFTWARE',
+        archiveLabel: 'Transmissions',
+        entries: 'ENTRIES',
+      };
+
+// Generate breadcrumb for blog listing
+const blogLabel = lang === 'en' ? 'Blog' : '智药深瞳';
+const breadcrumbSchema = getPageBreadcrumbs(blogLabel, lang as 'en' | 'zh');
+---
+
+<Layout title={`${t('blog.transmissions')} | ${t('home.name')}`} lang={lang}>
+  <StructuredData data={breadcrumbSchema} type="BreadcrumbList" />
+  <main class="relative min-h-screen overflow-hidden px-5 py-24 md:px-10 md:py-28 lg:px-14">
+    <AtlasField class="absolute inset-0 h-full w-full opacity-55" variant="ocean" />
+    <div class="relative z-10 mx-auto max-w-[1500px]">
+      <header
+        class="grid gap-8 border-b border-[color:var(--atlas-line)] pb-16 lg:grid-cols-12 lg:items-end"
+      >
+        <div class="lg:col-span-3">
+          <p class="atlas-kicker text-track-intellipharma">{archiveCopy.eyebrow}</p>
+          <p class="atlas-credit mt-5 max-w-xs">{archiveCopy.field}</p>
+        </div>
+        <div class="lg:col-span-9">
+          <h1 class="text-atlas-ink font-serif text-6xl leading-[0.88] md:text-8xl lg:text-9xl">
+            {lang === 'zh' ? '智药深瞳' : 'IntelliPharma Insights'}
+          </h1>
+          <p class="text-track-intellipharma mt-6 font-mono text-xs tracking-[0.16em] uppercase">
+            {t('blog.subtitle')}
+          </p>
+        </div>
+      </header>
+
+      <div
+        class="mt-6 flex flex-wrap items-center justify-between gap-4 border-b border-[color:var(--atlas-line)] pb-6"
+      >
+        <p class="atlas-kicker">
+          {archiveCopy.archiveLabel} / {String(sortedPosts.length).padStart(3, '0')}
+          {archiveCopy.entries}
+        </p>
+        <span class="bg-track-intellipharma h-2 w-2 rounded-full"></span>
+      </div>
+
+      <!-- Blog Posts Grid -->
+      <section
+        class="grid border-t border-[color:var(--atlas-line-strong)] md:grid-cols-2 lg:grid-cols-3"
+        aria-label={lang === 'zh' ? '文章列表' : 'Blog posts'}
+      >
+        {
+          sortedPosts.map((post, index) => {
+            const coverImage = post.data.image;
+            const coverAlt = post.data.imageAlt || post.data.title;
+
+            return (
+              <article
+                class:list={[
+                  'group hover:bg-track-intellipharma-surface relative block flex min-h-[24rem] flex-col justify-between overflow-hidden border-b border-[color:var(--atlas-line)] transition-colors md:border-r md:nth-[2n]:border-r-0 lg:nth-[2n]:border-r lg:nth-[3n]:border-r-0',
+                  coverImage ? 'p-0' : 'p-6',
+                ]}
+              >
+                <a
+                  href={`/${lang}/blog/${post.id}`}
+                  class="absolute inset-0 z-30"
+                  aria-label={
+                    lang === 'zh' ? `阅读《${post.data.title}》` : `Read ${post.data.title}`
+                  }
+                />
+
+                {coverImage ? (
+                  <>
+                    <div class="relative z-10 h-48 overflow-hidden border-b border-[color:var(--atlas-line)] bg-white/30">
+                      <Image
+                        src={coverImage}
+                        alt={coverAlt}
+                        widths={[480, 720, 960]}
+                        sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, calc(100vw - 2rem)"
+                        loading="lazy"
+                        class="atlas-image-treatment h-full w-full object-cover"
+                      />
+                      <div class="from-morandi-bg/18 absolute inset-0 bg-gradient-to-t to-transparent" />
+                    </div>
+                    <div class="relative z-20 flex min-h-0 flex-1 flex-col justify-between p-6">
+                      <div>
+                        <div class="mb-4 flex items-center justify-between gap-4">
+                          <time class="atlas-kicker" datetime={post.data.date.toISOString()}>
+                            {post.data.date.toLocaleDateString(lang === 'zh' ? 'zh-CN' : 'en-US', {
+                              year: 'numeric',
+                              month: 'long',
+                              day: 'numeric',
+                            })}
+                          </time>
+                          <span class="atlas-kicker">A.{String(index + 1).padStart(3, '0')}</span>
+                        </div>
+                        <h2 class="text-atlas-ink group-hover:text-track-intellipharma line-clamp-3 font-serif text-2xl leading-tight transition-colors">
+                          {post.data.title}
+                        </h2>
+                      </div>
+
+                      <p class="text-morandi-text/70 mt-3 line-clamp-2 font-sans text-sm">
+                        {post.data.description}
+                      </p>
+
+                      <div class="text-track-intellipharma mt-4 flex items-center gap-2 font-mono text-xs">
+                        <span>{t('blog.read')}</span>
+                        <span aria-hidden="true">→</span>
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div class="absolute top-0 right-0 p-4 opacity-20 transition-opacity group-hover:opacity-40">
+                      <span class="text-track-intellipharma font-serif text-6xl">
+                        {String(index + 1).padStart(2, '0')}
+                      </span>
+                    </div>
+
+                    <div class="relative z-20">
+                      <time class="atlas-kicker mb-4 block" datetime={post.data.date.toISOString()}>
+                        {post.data.date.toLocaleDateString(lang === 'zh' ? 'zh-CN' : 'en-US', {
+                          year: 'numeric',
+                          month: 'long',
+                          day: 'numeric',
+                        })}
+                      </time>
+                      <h2 class="text-atlas-ink group-hover:text-track-intellipharma line-clamp-3 font-serif text-3xl leading-tight transition-colors">
+                        {post.data.title}
+                      </h2>
+                    </div>
+
+                    <p class="text-morandi-text/70 relative z-20 mt-4 line-clamp-4 font-sans text-sm">
+                      {post.data.description}
+                    </p>
+
+                    <div class="text-track-intellipharma relative z-20 mt-4 flex items-center gap-2 font-mono text-xs">
+                      <span>{t('blog.read')}</span>
+                      <span aria-hidden="true">→</span>
+                    </div>
+                  </>
+                )}
+              </article>
+            );
+          })
+        }
+      </section>
+    </div>
+  </main>
+</Layout>

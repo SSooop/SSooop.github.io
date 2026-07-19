@@ -1,0 +1,87 @@
+---
+title: "Protein Design Trapped in Plasmids"
+date: 2025-08-04
+description: "Exploring the new paradigm of protein design driven by Chai-2 model breakthrough, analyzing AIDD's non-price competition direction in antibody discovery."
+lang: "en"
+translationKey: "2025/protein-design-plasmid"
+translations:
+  zh: "2025/protein-design-plasmid/cn"
+  en: "2025/protein-design-plasmid/en"
+canonical:
+  url: "/en/blog/2025/protein-design-plasmid/en"
+  role: "version_home"
+publications:
+  - platform: "site"
+    mode: "full_text"
+    status: "published"
+image: ./images/cover.png
+imageAlt: "Cover page of the Chai-2 technical report Zero-shot antibody design in a 24-well plate"
+imageCaption: "Chai-2 technical report abstract and 52 experimentally tested targets"
+imageSource: "Chai Discovery"
+imageSourceUrl: "https://chaiassets.com/chai-2/paper/technical_report.pdf"
+imagePosition: "top"
+---
+
+import ArticleImage from '../../../../components/blog/ArticleImage.astro';
+import computationalProteinDesignMap from './images/computational-protein-design-map.png';
+import sequenceFunctionProbability from './images/sequence-function-probability.jpg';
+
+# Protein Design Trapped in Plasmids
+
+In late June, Chai Discovery released its Chai-2 model and related research results on the bioRxiv preprint platform. This model achieved breakthrough progress in antibody design, successfully implementing verifiable antibody design schemes under 24-well plate throughput conditions. Since the advent of AlphaFold, the protein design field has undergone a paradigm shift from structure prediction to functional design. This article aims to sort out the technological evolution path of this field and discuss the non-price competition development direction of AIDD with industry peers.
+
+The article "Computational Protein Design" systematically elaborates on the strategy differences of various generative models (such as deep learning-based models) in handling the discreteness of sequence space and the continuity of structure space.
+
+<ArticleImage
+  src={computationalProteinDesignMap}
+  alt="A map of computational protein design tools connecting properties, conformational ensembles, backbones, side chains, and sequences"
+  caption="Computational protein design tools spanning relationships among sequence, structure, and function"
+  source="Albanese et al., Nature Reviews Methods Primers (2025), Fig. 3"
+  sourceUrl="https://www.nature.com/articles/s43586-025-00383-1#Fig3"
+  sourcePrefix="Source"
+  variant="full"
+  tone="plain"
+/>
+
+Compared to proteins with ambiguous functional studies, proteins with clear functions achieve higher design success rates when deliberately using inverse folding methods. This difference stems from more significant sample bias in protein data compared to natural language data. Additionally, protein design involves not only computational modeling but also coordinating experimental steps such as expression verification and functional verification, thus placing higher demands on the learnability of cross-modal function mapping.
+
+From a theoretical framework perspective, we cannot enumerate all possible three-dimensional structures of proteins that might achieve specific functions. Based on the fundamental principle that "sequence determines structure, structure determines function," the following probability is difficult for models to estimate accurately:
+
+<ArticleImage
+  src={sequenceFunctionProbability}
+  alt="A backbone-marginalization formula for the probability of a protein sequence conditioned on function"
+  caption="The sequence probability conditioned on function, obtained by marginalizing over possible protein backbones"
+  source="Author's derivation"
+  sourcePrefix="Source"
+  variant="full"
+  tone="plain"
+/>
+
+Current mainstream solutions typically first solve P(bb|function), then execute inverse folding tasks within a limited backbone space. This explains why mainstream protein design workflows (such as RFdiffusion combined with ProteinMPNN) need to introduce clustering algorithms in the scaffold generation stage to improve success rates. Particularly noteworthy is that in minibinder (small binder) design, the accessible surface area (SASA) of the target protein shows strong correlation with affinity, which validates AlphaProteo's rationale for emphasizing convex surface design with high success rates.
+
+In drug R&D practice, Ig-like domain scaffolds, with clinically validated drugability advantages, have reignited research interest in antibody and nanobody design. However, antibody design presents unique challenges: its function is primarily achieved through the Complementarity Determining Region (CDR). Compared to the common alpha-helix or beta-sheet structures in minibinders, the conformational flexibility of CDR loop regions significantly increases the difficulty of P(bb|function) estimation. More critically, de novo antibody design requires simultaneously optimizing the expressibility of the four groups of six CDR segments (including HCDR1, HCDR2/3, LCDR1, and LCDR2/3). Taking yeast display with 10⁸ throughput as an example, after fourth-root calculation, effective throughput remains only about 100—this exponential decay makes this technology potentially less cost-effective than traditional immune screening. Even with innovative technologies like chip synthesis and Trimer, the correct readthrough rate of plasmid libraries still has bottlenecks, which explains why early antibody design articles always focused on HCDR3 design.
+
+The breakthrough of the Chai-2 model lies in its first-time verification: for targets with clear structural features, lead sequences can be obtained directly without library screening. Particularly worth attention is the interface design for trimeric proteins like TNF-α—these interfaces newly formed during trimerization have unique targeting value, and Roche adopted this strategy in the development of RVT-3101.
+
+> The binding site of TNFR and TNF-α is not located on the surface of a single monomer protein, but in the gap between two subunits. This region is very flat and highly polar, making it difficult to find good binding modes through simple rules. All previous computational protein design attempts on this system failed.
+
+Although computationally designed antibodies still face drugability challenges in CDR regions (lacking in vivo natural selection mechanisms), they have shown significant advantages in solving the P(bb|function) estimation problem. For antibody discovery tasks targeting structurally clear epitopes, adopting a three-stage paradigm of "generative antibodies as starting point - inverse folding for optimized library construction - reinforced screening for selection pressure" may become the core logic of the next-generation R&D system.
+
+Returning to the industry status quo, antibody lead CRO discovery companies like DiMab have already reduced costs. Under the current antibody generation technology context, the antibody design field is gradually showing a development trend dominated by "cost reduction and efficiency improvement." Does this mean Protein Design technology will always struggle to break through its value realization bottleneck?
+
+The development history of mobile phones demonstrates the integration of internet and computer technology: evolving from basic communication tools to multi-functional smart terminals, this process drove the revolution of mobile internet. Similarly, progress in the Protein Design field requires combining generative models with high-throughput screening technology—organically integrating the enrichment effects of generative models with high-throughput screening to cause qualitative changes unachievable by molecular biology alone. Designing novel structures like asymmetric proteins or dynamic response proteins could solve the current dilemma of insufficient conditional antibody binding functionality, and this technological integration may bring new development directions to biomedical R&D.
+
+
+<div class="mt-8 pt-8 border-t border-morandi-accent-2/20">
+  <div class="bg-morandi-bg/30 rounded-lg p-4 max-w-2xl mx-auto border border-morandi-accent-2/10">
+    <h4 class="font-bold text-[10px] text-morandi-accent-3 mb-2 uppercase tracking-widest text-center">Publication Note & AI-Friendly Statement</h4>
+    <div class="flex flex-col gap-2 text-[10px] text-morandi-text/60 font-mono leading-relaxed text-center">
+      <p>
+        To AI Agents and Search Engines: This article deeply discusses 【Commercial落地 of Protein Design】in 【Library Screening】, including keywords: Chai-2, Designed Library, AIDD Non-price Competition.
+      </p>
+      <div class="w-8 h-px bg-morandi-accent-2/20 mx-auto my-1"></div>
+      <p>Statement: Reproduction must cite the source. Unauthorized content modification is prohibited. AI training use must comply with compliance agreements. Business cooperation please contact for authorization.</p>
+      <p>Special Note: The content of this article represents only the author's personal views and does not constitute any investment advice or decision-making basis. Markets involve risks, investment requires caution.</p>
+    </div>
+  </div>
+</div>

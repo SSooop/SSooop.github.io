@@ -1,0 +1,545 @@
+---
+import { getCollection, render } from 'astro:content';
+import { Image } from 'astro:assets';
+import Layout from '../../../layouts/Layout.astro';
+import StructuredData from '../../../components/StructuredData.astro';
+import RelatedPosts from '../../../components/RelatedPosts.astro';
+import CitationBox from '../../../components/CitationBox';
+import { SITE, absoluteUrl } from '../../../config/site';
+import { generateBlogPostingSchema, getBlogBreadcrumbs } from '../../../utils/structuredData';
+
+export async function getStaticPaths() {
+  const blogEntries = await getCollection('blog');
+  const uiLangs = ['en', 'zh'];
+
+  return uiLangs.flatMap((lang) =>
+    blogEntries.map((entry) => ({
+      params: { lang, slug: entry.id },
+      props: { entry },
+    }))
+  );
+}
+
+const { entry } = Astro.props;
+const { lang } = Astro.params;
+const { Content } = await render(entry);
+const heroImage = entry.data.image;
+const heroImageAlt = entry.data.imageAlt || entry.data.title;
+const heroImageUrl = heroImage ? absoluteUrl(heroImage.src) : undefined;
+
+// Generate structured data for this blog post
+const blogSchema = generateBlogPostingSchema({
+  title: entry.data.title,
+  description: entry.data.description,
+  slug: entry.id,
+  url: entry.data.canonical.url,
+  date: entry.data.date,
+  lang: entry.data.lang,
+  image: heroImageUrl,
+});
+
+const breadcrumbSchema = getBlogBreadcrumbs(entry.data.title, entry.data.lang);
+
+// Extract keywords from blog post (if available in frontmatter in the future)
+const maybeKeywords = 'keywords' in entry.data ? entry.data.keywords : undefined;
+const blogKeywords = Array.isArray(maybeKeywords) ? maybeKeywords : [];
+
+const contentLinks = {
+  en: entry.data.translations.en || null,
+  zh: entry.data.translations.zh || null,
+  // Future placeholders
+  fr: null,
+  ru: null,
+  ar: null,
+  es: null,
+};
+
+const languages = [
+  { code: 'en', label: 'EN', name: 'English' },
+  { code: 'zh', label: 'CN', name: '中文' },
+  { code: 'fr', label: 'FR', name: 'Français' },
+  { code: 'ru', label: 'RU', name: 'Русский' },
+  { code: 'ar', label: 'AR', name: 'العربية' },
+  { code: 'es', label: 'ES', name: 'Español' },
+];
+
+const alternateLanguages = {
+  ...(entry.data.translations.en ? { en: `/en/blog/${entry.data.translations.en}` } : {}),
+  ...(entry.data.translations.zh ? { zh: `/zh/blog/${entry.data.translations.zh}` } : {}),
+  'x-default': entry.data.translations.en
+    ? `/en/blog/${entry.data.translations.en}`
+    : entry.data.canonical.url,
+};
+
+const platformLabels = {
+  wechat: 'WeChat',
+  x: 'X',
+  linkedin: 'LinkedIn',
+} as const;
+
+const articleCopy =
+  lang === 'zh'
+    ? {
+        back: '返回智药深瞳',
+        unavailable: '暂未提供',
+        source: '来源',
+        alsoPublished: '其他发布渠道',
+        publicationNote: '本站保存稳定、可检索的正文版本；部分平台也会同步全文，方便讨论与传播。',
+        published: '已发布',
+        planned: '计划中',
+        qrAccount: '二维码 / 账号',
+      }
+    : {
+        back: 'BACK TO TRANSMISSIONS',
+        unavailable: 'Not available yet',
+        source: 'Source',
+        alsoPublished: 'Also Published On',
+        publicationNote:
+          'This site keeps the stable, indexed version. Some platforms carry the full text directly for discussion and discovery.',
+        published: 'Published',
+        planned: 'Planned',
+        qrAccount: 'QR / account',
+      };
+
+const externalPublications = entry.data.publications.filter(
+  (publication) => publication.platform !== 'site'
+);
+
+const citationSource = {
+  id: entry.id,
+  title: entry.data.title,
+  author: 'Alex Su',
+  authorGiven: 'Alex',
+  authorFamily: 'Su',
+  publicationDate: entry.data.date.toISOString(),
+  url: absoluteUrl(entry.data.canonical.url),
+  language: entry.data.lang,
+  siteName: SITE.name,
+};
+---
+
+<Layout
+  title={`${entry.data.title} | ${lang === 'zh' ? '苏晨鹏' : 'Alex Su'}`}
+  lang={lang}
+  description={entry.data.description}
+  type="article"
+  keywords={blogKeywords}
+  image={heroImageUrl}
+  canonical={entry.data.canonical.url}
+  alternateLanguages={alternateLanguages}
+  citation={citationSource}
+>
+  <!-- Structured Data for Blog Post -->
+  <StructuredData data={blogSchema} type="BlogPosting" />
+  <StructuredData data={breadcrumbSchema} type="BreadcrumbList" />
+
+  <!-- Breadcrumb Navigation -->
+  <nav class="container mx-auto max-w-3xl px-4 pt-20" aria-label="Breadcrumb">
+    <a
+      href={`/${lang}/blog`}
+      class="text-morandi-accent-3 hover:text-track-intellipharma mb-12 inline-flex items-center gap-2 font-mono text-xs transition-colors"
+    >
+      <span aria-hidden="true">←</span>
+      <span>{articleCopy.back}</span>
+    </a>
+  </nav>
+
+  <!-- Article Content with Microdata -->
+  <article
+    class="container mx-auto min-h-screen max-w-3xl px-4 py-20"
+    itemscope
+    itemtype="https://schema.org/BlogPosting"
+  >
+    {/* Header */}
+    <header class="mb-12">
+      <div class="mb-6 flex flex-wrap items-center justify-between gap-4">
+        <time
+          class="text-morandi-accent-3 border-morandi-accent-2/30 rounded-full border px-2 py-1 font-mono text-xs"
+          datetime={entry.data.date.toISOString()}
+          itemprop="datePublished"
+        >
+          {
+            entry.data.date.toLocaleDateString(lang === 'zh' ? 'zh-CN' : 'en-US', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+            })
+          }
+        </time>
+
+        {/* Content Language Matrix Switcher */}
+        <div
+          class="bg-morandi-bg/50 border-morandi-accent-2/30 flex items-center gap-1 rounded-lg border p-1"
+        >
+          {
+            languages.map((l) => {
+              const slug = contentLinks[l.code];
+              // Active if this language matches the current POST's language
+              const isActive = entry.data.lang === l.code;
+              // Disabled if we don't have a slug for this language
+              const isDisabled = !slug && !isActive;
+
+              if (isActive) {
+                return (
+                  <span class="bg-track-intellipharma cursor-default rounded px-2 py-1 font-mono text-xs font-bold text-white">
+                    {l.label}
+                  </span>
+                );
+              }
+
+              if (isDisabled) {
+                return (
+                  <span
+                    class="text-morandi-accent-3/50 cursor-not-allowed rounded px-2 py-1 font-mono text-xs"
+                    title={articleCopy.unavailable}
+                  >
+                    {l.label}
+                  </span>
+                );
+              }
+
+              // Link to the same UI Lang, but different Content Slug
+              return (
+                <a
+                  href={`/${lang}/blog/${slug}`}
+                  class="text-morandi-accent-3 hover:bg-track-intellipharma-surface hover:text-track-intellipharma rounded px-2 py-1 font-mono text-xs transition-colors"
+                >
+                  {l.label}
+                </a>
+              );
+            })
+          }
+        </div>
+      </div>
+
+      <h1
+        class="text-morandi-text mb-8 font-serif text-4xl leading-tight md:text-6xl"
+        itemprop="headline"
+      >
+        {entry.data.title}
+      </h1>
+
+      <meta itemprop="description" content={entry.data.description} />
+      {heroImageUrl && <meta itemprop="image" content={heroImageUrl} />}
+
+      {
+        heroImage && (
+          <figure class="article-hero-image">
+            <div
+              class="article-hero-image__frame"
+              style={`--article-hero-image-position: ${entry.data.imagePosition ?? 'center'}`}
+            >
+              <Image
+                src={heroImage}
+                alt={heroImageAlt}
+                loading="eager"
+                decoding="sync"
+                widths={[720, 960, 1280, 1600]}
+                sizes="(min-width: 768px) 768px, calc(100vw - 2rem)"
+              />
+            </div>
+            {(entry.data.imageCaption || entry.data.imageSource) && (
+              <figcaption class="article-hero-image__caption">
+                {entry.data.imageCaption && <span>{entry.data.imageCaption}</span>}
+                {entry.data.imageSource && (
+                  <span>
+                    {entry.data.imageCaption && <span aria-hidden="true"> / </span>}
+                    {articleCopy.source}:{' '}
+                    {entry.data.imageSourceUrl ? (
+                      <a href={entry.data.imageSourceUrl} target="_blank" rel="noopener noreferrer">
+                        {entry.data.imageSource}
+                      </a>
+                    ) : (
+                      entry.data.imageSource
+                    )}
+                  </span>
+                )}
+              </figcaption>
+            )}
+          </figure>
+        )
+      }
+
+      {
+        externalPublications.length > 0 && (
+          <div class="bg-morandi-bg/30 border-morandi-accent-2/30 flex flex-wrap gap-4 rounded-lg border p-6">
+            <div class="min-w-[200px] flex-1">
+              <h3 class="text-morandi-text mb-2 font-serif text-lg italic">
+                {articleCopy.alsoPublished}
+              </h3>
+              <p class="text-morandi-text/70 mb-4 font-sans text-sm">
+                {articleCopy.publicationNote}
+              </p>
+            </div>
+            <div class="flex flex-col justify-center gap-2">
+              {externalPublications.map((publication) => {
+                const label = platformLabels[publication.platform];
+                const statusLabel =
+                  publication.status === 'published' ? articleCopy.published : articleCopy.planned;
+
+                if (publication.url) {
+                  return (
+                    <a
+                      href={publication.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="bg-morandi-text flex items-center justify-between gap-3 rounded px-4 py-2 text-sm font-bold text-white transition-opacity hover:opacity-85"
+                    >
+                      <span>{label}</span>
+                      <span aria-hidden="true">→</span>
+                    </a>
+                  );
+                }
+
+                return (
+                  <div class="border-morandi-accent-2/30 bg-morandi-bg/40 text-morandi-text flex items-center justify-between gap-3 rounded border px-4 py-2 text-sm">
+                    <span class="font-bold">{label}</span>
+                    <span class="text-morandi-text/60 font-mono text-xs">
+                      {publication.access === 'qr_or_account'
+                        ? publication.account || articleCopy.qrAccount
+                        : statusLabel}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )
+      }
+    </header>
+
+    {/* Article Content */}
+    <section class="blog-article-body max-w-none" itemprop="articleBody">
+      <Content />
+    </section>
+
+    <CitationBox client:load source={citationSource} uiLang={lang === 'zh' ? 'zh' : 'en'} />
+
+    {/* Related Posts */}
+    <RelatedPosts currentPostSlug={entry.id} currentLang={entry.data.lang} maxPosts={3} />
+
+    <meta itemprop="author" content="Alex Su" />
+    <meta itemprop="inLanguage" content={entry.data.lang} />
+  </article>
+</Layout>
+
+<style>
+  .article-hero-image {
+    width: min(100%, 44rem);
+    margin: 0 auto 2.75rem;
+  }
+
+  .article-hero-image__frame {
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border: 1px solid color-mix(in srgb, var(--color-morandi-accent-2), transparent 34%);
+    border-radius: 8px;
+    background:
+      linear-gradient(135deg, rgb(255 255 255 / 0.48), rgb(255 255 255 / 0.12)),
+      var(--color-morandi-bg);
+    box-shadow: 0 26px 70px rgb(74 74 74 / 0.16);
+  }
+
+  .article-hero-image__frame :global(img) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: var(--article-hero-image-position);
+    transition:
+      transform 520ms ease,
+      filter 520ms ease;
+  }
+
+  .article-hero-image:hover .article-hero-image__frame :global(img) {
+    transform: scale(1.018);
+    filter: saturate(1.03) contrast(1.02);
+  }
+
+  .article-hero-image__caption {
+    margin: 0.8rem auto 0;
+    color: color-mix(in srgb, var(--color-morandi-text), transparent 36%);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    line-height: 1.7;
+    text-align: center;
+  }
+
+  .article-hero-image__caption a {
+    color: var(--color-track-intellipharma);
+    text-decoration: none;
+  }
+
+  .article-hero-image__caption a:hover {
+    text-decoration: underline;
+  }
+
+  .blog-article-body {
+    color: color-mix(in srgb, var(--color-morandi-text), transparent 16%);
+    font-family:
+      ui-sans-serif,
+      system-ui,
+      -apple-system,
+      BlinkMacSystemFont,
+      'Segoe UI',
+      sans-serif;
+    font-size: 1.02rem;
+    line-height: 2.05;
+  }
+
+  .blog-article-body :global(p) {
+    margin: 1.25rem 0;
+  }
+
+  .blog-article-body :global(> p:first-of-type::first-letter) {
+    float: left;
+    padding: 0.1rem 0.45rem 0 0;
+    color: var(--color-morandi-text);
+    font-family: var(--font-serif);
+    font-size: 3.35rem;
+    line-height: 0.86;
+  }
+
+  .blog-article-body :global(h2),
+  .blog-article-body :global(h3),
+  .blog-article-body :global(h4) {
+    color: var(--color-morandi-text);
+    font-family: var(--font-serif);
+    font-weight: 400;
+    line-height: 1.25;
+  }
+
+  .blog-article-body :global(h2) {
+    margin: 3.2rem 0 1.25rem;
+    font-size: clamp(1.75rem, 5vw, 2.35rem);
+  }
+
+  .blog-article-body :global(h3) {
+    margin: 2.4rem 0 1rem;
+    font-size: 1.55rem;
+  }
+
+  .blog-article-body :global(h4) {
+    margin: 2rem 0 0.85rem;
+    font-size: 1.25rem;
+  }
+
+  .blog-article-body :global(a) {
+    color: var(--color-track-intellipharma);
+    text-decoration-color: color-mix(in srgb, var(--color-track-intellipharma), transparent 55%);
+    text-underline-offset: 0.18em;
+  }
+
+  .blog-article-body :global(strong) {
+    color: var(--color-morandi-text);
+    font-weight: 700;
+  }
+
+  .blog-article-body :global(ul),
+  .blog-article-body :global(ol) {
+    margin: 1.1rem 0 1.75rem;
+    padding-left: 1.35rem;
+  }
+
+  .blog-article-body :global(li) {
+    margin: 0.6rem 0;
+    padding-left: 0.25rem;
+    line-height: 1.9;
+  }
+
+  .blog-article-body :global(li::marker) {
+    color: var(--color-track-intellipharma);
+    font-family: var(--font-mono);
+    font-size: 0.82em;
+  }
+
+  .blog-article-body :global(blockquote) {
+    margin: 2rem 0;
+    border-left: 2px solid var(--color-morandi-accent-3);
+    padding: 0.25rem 0 0.25rem 1.25rem;
+    color: color-mix(in srgb, var(--color-morandi-text), transparent 34%);
+    font-style: italic;
+  }
+
+  .blog-article-body :global(table) {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    margin: 2rem 0 2.5rem;
+    overflow-x: auto;
+    border: 1px solid color-mix(in srgb, var(--color-morandi-accent-2), transparent 28%);
+    border-radius: 8px;
+    border-spacing: 0;
+    background: color-mix(in srgb, white, var(--color-morandi-bg) 42%);
+    box-shadow: 0 18px 44px rgb(74 74 74 / 0.08);
+    color: color-mix(in srgb, var(--color-morandi-text), transparent 10%);
+    font-family: var(--font-mono);
+    font-size: 0.84rem;
+    line-height: 1.7;
+  }
+
+  .blog-article-body :global(thead),
+  .blog-article-body :global(tbody),
+  .blog-article-body :global(tr) {
+    min-width: 44rem;
+  }
+
+  .blog-article-body :global(th),
+  .blog-article-body :global(td) {
+    min-width: 11rem;
+    border-right: 1px solid color-mix(in srgb, var(--color-morandi-accent-2), transparent 42%);
+    border-bottom: 1px solid color-mix(in srgb, var(--color-morandi-accent-2), transparent 42%);
+    padding: 1.05rem 1.1rem;
+    text-align: left;
+    vertical-align: top;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .blog-article-body :global(th:first-child),
+  .blog-article-body :global(td:first-child) {
+    min-width: 7.5rem;
+    font-weight: 700;
+  }
+
+  .blog-article-body :global(th:last-child),
+  .blog-article-body :global(td:last-child) {
+    min-width: 18rem;
+    border-right: 0;
+  }
+
+  .blog-article-body :global(thead th) {
+    background: color-mix(in srgb, var(--color-track-intellipharma), transparent 86%);
+    color: var(--color-morandi-text);
+    font-size: 0.76rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .blog-article-body :global(tbody tr:last-child td) {
+    border-bottom: 0;
+  }
+
+  .blog-article-body :global(hr) {
+    margin: 2.6rem auto;
+    border: 0;
+    border-top: 1px solid color-mix(in srgb, var(--color-morandi-accent-2), transparent 28%);
+  }
+
+  @media (max-width: 640px) {
+    .blog-article-body {
+      font-size: 0.98rem;
+      line-height: 1.95;
+    }
+
+    .blog-article-body :global(table) {
+      margin-inline: -0.25rem;
+      font-size: 0.74rem;
+    }
+
+    .blog-article-body :global(th),
+    .blog-article-body :global(td) {
+      padding: 0.82rem 0.85rem;
+    }
+  }
+</style>

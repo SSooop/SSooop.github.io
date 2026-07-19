@@ -1,0 +1,156 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import StructuredData from '../../components/StructuredData.astro';
+import AtlasField from '../../components/AtlasField.astro';
+import { profiles } from '../../config/profiles';
+import { useTranslations, type SupportedLocale } from '../../i18n/ui';
+import * as FA from 'react-icons/fa';
+import * as SI from 'react-icons/si';
+import { getPageBreadcrumbs } from '../../utils/structuredData';
+
+export function getStaticPaths() {
+  return [{ params: { lang: 'en' } }, { params: { lang: 'zh' } }];
+}
+
+const lang: SupportedLocale = Astro.params.lang === 'zh' ? 'zh' : 'en';
+const t = useTranslations(lang);
+
+// Generate breadcrumb for social page
+const socialLabel = lang === 'en' ? 'Social' : '社交';
+const breadcrumbSchema = getPageBreadcrumbs(socialLabel, lang);
+
+// Philosophy Text
+const philosophy = {
+  en: 'I believe that thoughts should not be confined to a single platform. Through connections across different mediums, I aim to profile a fuller, more authentic self.',
+  zh: '思考不该困在一个平台里。不同媒介留下不同侧面，它们彼此连接，才逐渐拼出一个更真实、也更完整的我。',
+};
+
+const socialCopy =
+  lang === 'zh'
+    ? {
+        eyebrow: 'N01 / 公开网络',
+        field: '分布式身份 / 开放连接',
+        title: '公开网络',
+        nodes: '外部节点',
+        node: '节点',
+      }
+    : {
+        eyebrow: 'N01 / PUBLIC NETWORK',
+        field: 'DISTRIBUTED IDENTITY / OPEN CHANNELS',
+        title: 'Network',
+        nodes: 'EXTERNAL NODES',
+        node: 'NODE',
+      };
+
+const zhProfileCopy: Record<string, { desc: string; action: string }> = {
+  WeChat: { desc: '公众号 / 日常思考', action: '扫码关注' },
+  LinkedIn: { desc: '职业经历与行业连接', action: '查看主页' },
+  X: { desc: '短消息与即时更新', action: '前往关注' },
+  'Google Scholar': { desc: '论文与学术工作', action: '查看学术主页' },
+  GitHub: { desc: '代码与公开项目', action: '查看代码' },
+};
+---
+
+<Layout title={`${lang === 'zh' ? '社交网络' : 'Social Media'} | ${t('home.name')}`} lang={lang}>
+  <StructuredData data={breadcrumbSchema} type="BreadcrumbList" />
+
+  <main class="relative min-h-screen overflow-hidden px-5 py-24 md:px-10 md:py-28 lg:px-14">
+    <AtlasField class="absolute inset-0 h-full w-full opacity-50" variant="ocean" />
+    <div class="relative z-10 mx-auto max-w-[1500px]">
+      <!-- Header / Philosophy -->
+      <header
+        class="grid gap-8 border-b border-[color:var(--atlas-line)] pb-16 lg:grid-cols-12 lg:items-end"
+      >
+        <div class="lg:col-span-3">
+          <p class="atlas-kicker">{socialCopy.eyebrow}</p>
+          <p class="atlas-credit mt-5">{socialCopy.field}</p>
+        </div>
+        <div class="lg:col-span-9">
+          <h1 class="text-atlas-ink font-serif text-7xl leading-[0.86] md:text-9xl">
+            {socialCopy.title}
+          </h1>
+          <p class="text-atlas-ink/70 mt-8 max-w-3xl text-lg leading-relaxed md:text-xl">
+            {philosophy[lang]}
+          </p>
+        </div>
+      </header>
+
+      <div
+        class="mt-6 flex items-center justify-between gap-6 border-b border-[color:var(--atlas-line)] pb-6"
+      >
+        <p class="atlas-kicker">
+          {socialCopy.nodes} / {String(profiles.length).padStart(2, '0')}
+        </p>
+        <span class="bg-atlas-signal h-2 w-2 rounded-full"></span>
+      </div>
+
+      <!-- Profile Grid -->
+      <section
+        class="grid border-t border-[color:var(--atlas-line-strong)] md:grid-cols-2 lg:grid-cols-3"
+        aria-label="Social media profiles"
+      >
+        {
+          profiles.map((profile) => {
+            const Icon = FA[profile.icon] || SI[profile.icon];
+            const localizedProfile = lang === 'zh' ? zhProfileCopy[profile.name] : undefined;
+            const cardContent = (
+              <>
+                <div class="relative z-10 flex h-full flex-col justify-between gap-10">
+                  <div
+                    class="text-atlas-ink/70 group-hover:text-atlas-signal mb-2 text-4xl transition-colors"
+                    aria-hidden="true"
+                  >
+                    {Icon && <Icon />}
+                  </div>
+
+                  <div class="mt-auto">
+                    <p class="atlas-kicker mb-4">
+                      {socialCopy.node} / {profile.name.toUpperCase()}
+                    </p>
+                    <h3 class="text-atlas-ink mb-2 font-serif text-4xl">{profile.name}</h3>
+                    <p class="text-atlas-ink/55 font-mono text-xs uppercase">
+                      {localizedProfile?.desc || profile.desc}
+                    </p>
+                  </div>
+
+                  {profile.name === 'WeChat' ? (
+                    <div class="mt-4 w-fit border border-[color:var(--atlas-line)] bg-white p-2">
+                      <img
+                        src="/wechat-qr.jpg"
+                        alt="WeChat QR code"
+                        class="h-24 w-24 object-contain"
+                      />
+                    </div>
+                  ) : (
+                    <span class="text-atlas-ink/60 group-hover:text-atlas-signal mt-4 border-b border-[color:var(--atlas-line)] pb-1 font-mono text-xs transition-colors">
+                      {localizedProfile?.action || profile.action} <span aria-hidden="true">→</span>
+                    </span>
+                  )}
+                </div>
+              </>
+            );
+
+            return profile.url ? (
+              <a
+                href={profile.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="group relative block min-h-80 overflow-hidden border-b border-[color:var(--atlas-line)] p-7 transition-colors hover:bg-white/25 md:border-r md:nth-[2n]:border-r-0 lg:nth-[2n]:border-r lg:nth-[3n]:border-r-0"
+                aria-label={`Visit ${profile.name}`}
+              >
+                {cardContent}
+              </a>
+            ) : (
+              <div
+                class="group relative block min-h-80 overflow-hidden border-b border-[color:var(--atlas-line)] p-7 md:border-r md:nth-[2n]:border-r-0 lg:nth-[2n]:border-r lg:nth-[3n]:border-r-0"
+                aria-label={profile.name}
+              >
+                {cardContent}
+              </div>
+            );
+          })
+        }
+      </section>
+    </div>
+  </main>
+</Layout>

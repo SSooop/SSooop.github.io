@@ -1,0 +1,239 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import StructuredData from '../../components/StructuredData.astro';
+import AtlasField from '../../components/AtlasField.astro';
+import SpecimenImage from '../../components/SpecimenImage.astro';
+import { useTranslations, type SupportedLocale } from '../../i18n/ui';
+import { getPageBreadcrumbs } from '../../utils/structuredData';
+import { visualAssets } from '../../config/visualAssets';
+
+export function getStaticPaths() {
+  return [{ params: { lang: 'en' } }, { params: { lang: 'zh' } }];
+}
+
+const lang: SupportedLocale = Astro.params.lang === 'zh' ? 'zh' : 'en';
+const t = useTranslations(lang);
+const projectsLabel = lang === 'zh' ? '项目' : 'Projects';
+const breadcrumbSchema = getPageBreadcrumbs(projectsLabel, lang);
+
+const copy = {
+  en: {
+    eyebrow: 'Projects',
+    title:
+      'An open collection of long-horizon projects across biopharma, economics after AI, and planetary ecosystem engineering.',
+    intro:
+      'This page gathers the work I want to keep durable and inspectable: a bilingual thinking surface for AI and biopharma, an online book for economic reasoning after AI, and a long-horizon research outline for engineered planetary habitability.',
+    open: 'Open',
+    read: 'Read',
+    status: {
+      active: 'Active',
+      evolving: 'Evolving',
+      research: 'Research',
+    },
+    projects: [
+      {
+        track: 'Track 01',
+        name: 'IntelliPharma Insights',
+        status: 'active',
+        description:
+          'The current writing and knowledge system for AI drug discovery, scientific software, and pharmaceutical product strategy.',
+        tags: ['AI pharma', 'Research writing', 'Bilingual'],
+        href: `/${lang}/blog`,
+        action: 'Read essays',
+        accent: 'var(--color-track-intellipharma)',
+        surface: 'var(--color-track-intellipharma-surface)',
+      },
+      {
+        track: 'Track 02',
+        name: 'Economics After AI',
+        status: 'evolving',
+        description:
+          'An evolving online book on economics after AI: schools of thought, the philosophy of economic claims, and a growth-centered framework for social reproduction.',
+        tags: ['Economics', 'AI society', 'Online book'],
+        href: `/${lang}/economics-after-ai`,
+        action: 'Open book',
+        accent: 'var(--color-track-economics)',
+        surface: 'var(--color-track-economics-surface)',
+      },
+      {
+        track: 'Track 03',
+        name: 'Gaia Project',
+        status: 'research',
+        description:
+          'A long-horizon research concept for turning humanity into a multi-planet species through AI protein design, synthetic biology, controlled evolution, and artificial ecosystems.',
+        tags: ['Synthetic biology', 'Terraforming', 'Planetary ecology'],
+        href: `/${lang}/gaia-project`,
+        action: 'Open outline',
+        accent: 'var(--color-track-gaia)',
+        surface: 'var(--color-track-gaia-surface)',
+      },
+    ],
+  },
+  zh: {
+    eyebrow: '项目',
+    title: '一些值得长期投入，也愿意持续公开的项目。',
+    intro:
+      '这里不预设项目清单。智药深瞳、经济学与盖亚计划，只是此刻正在生长的枝条；新的问题出现时，新的方向也会随之展开。',
+    open: '打开',
+    read: '阅读',
+    status: {
+      active: '进行中',
+      evolving: '演进中',
+      research: '研究中',
+    },
+    projects: [
+      {
+        track: '项目 01',
+        name: '智药深瞳',
+        status: 'active',
+        description: '当前主要的写作与知识系统，持续记录 AI 药物发现、科学软件与制药产品策略。',
+        tags: ['AI 制药', '研究写作', '双语内容'],
+        href: `/${lang}/blog`,
+        action: '阅读文章',
+        accent: 'var(--color-track-intellipharma)',
+        surface: 'var(--color-track-intellipharma-surface)',
+      },
+      {
+        track: '项目 02',
+        name: 'AI 时代的经济学',
+        status: 'evolving',
+        description:
+          '一本持续写作的在线书，围绕 AI 生产力、社会再生产与增长循环，系统梳理经济学流派、经济学哲学与新的制度想象。',
+        tags: ['经济学', 'AI 社会', '在线书稿'],
+        href: `/${lang}/economics-after-ai`,
+        action: '打开书稿',
+        accent: 'var(--color-track-economics)',
+        surface: 'var(--color-track-economics-surface)',
+      },
+      {
+        track: '项目 03',
+        name: '盖亚计划',
+        status: 'research',
+        description:
+          '一个面向多行星物种的长期研究构想：通过 AI 蛋白设计、合成生物学、控制演化与人工生态系统，探索生物驱动的行星改造能力。',
+        tags: ['合成生物学', '星体生态改造', '行星生态'],
+        href: `/${lang}/gaia-project`,
+        action: '打开大纲',
+        accent: 'var(--color-track-gaia)',
+        surface: 'var(--color-track-gaia-surface)',
+      },
+    ],
+  },
+}[lang];
+---
+
+<Layout title={`${projectsLabel} | ${t('home.name')}`} lang={lang} description={copy.intro}>
+  <StructuredData data={breadcrumbSchema} type="BreadcrumbList" />
+
+  <main class="relative min-h-screen overflow-hidden px-5 py-24 md:px-10 md:py-28 lg:px-14">
+    <AtlasField class="absolute inset-0 h-full w-full opacity-55" variant="forest" />
+    <div class="relative z-10 mx-auto max-w-[1500px]">
+      <header
+        class="grid gap-10 border-b border-[color:var(--atlas-line)] pb-16 lg:grid-cols-12 lg:items-end"
+      >
+        <div class="lg:col-span-7">
+          <p class="atlas-kicker mb-5">
+            {lang === 'zh' ? '公开项目档案 / 持续更新' : 'OPEN PROJECT FIELD / GROWING ARCHIVE'}
+          </p>
+          <h1
+            class="text-atlas-ink max-w-5xl font-serif text-5xl leading-[0.98] md:text-7xl lg:text-8xl"
+          >
+            {copy.title}
+          </h1>
+          <p class="text-atlas-ink/70 mt-8 max-w-3xl text-lg leading-loose">{copy.intro}</p>
+        </div>
+        <div class="relative h-80 lg:col-span-5 lg:h-[30rem]">
+          <SpecimenImage
+            src={visualAssets.rainforest.src}
+            alt={visualAssets.rainforest.alt[lang]}
+            label={visualAssets.rainforest.label[lang]}
+            credit={visualAssets.rainforest.credit}
+            sourceUrl={visualAssets.rainforest.sourceUrl}
+            index={lang === 'zh' ? '生态样地 / 03' : 'FIELD / 03'}
+            class="inset-0"
+            position="absolute"
+          />
+          <div class="atlas-panel absolute -bottom-6 -left-6 z-20 hidden max-w-56 p-4 md:block">
+            <p class="atlas-kicker">{lang === 'zh' ? '尺度索引' : 'Scale register'}</p>
+            <p class="text-atlas-ink mt-3 font-serif text-2xl">
+              {lang === 'zh' ? '分子 / 社会 / 星体' : 'Molecule / Society / Planet'}
+            </p>
+          </div>
+        </div>
+      </header>
+
+      <div
+        class="mt-6 flex flex-wrap items-center justify-between gap-4 border-b border-[color:var(--atlas-line)] pb-6"
+      >
+        <p class="atlas-kicker">
+          {lang === 'zh' ? '项目档案 / 正在生长' : `${copy.eyebrow} / ACTIVE PROJECTS`}
+        </p>
+        <p class="atlas-kicker">
+          {lang === 'zh' ? '档案状态 / 公开' : 'ARCHIVE STATUS / OPEN'}
+        </p>
+      </div>
+
+      <section
+        class="grid border-t border-[color:var(--atlas-line-strong)] lg:grid-cols-3"
+        aria-label={projectsLabel}
+      >
+        {
+          copy.projects.map((project) => {
+            const isExternal = project.href?.startsWith('http');
+
+            return (
+              <article
+                class="relative flex min-h-[30rem] flex-col justify-between overflow-hidden border-b border-[color:var(--atlas-line)] p-6 transition-colors hover:bg-white/25 lg:border-r lg:last:border-r-0"
+                style={`--project-accent: ${project.accent}; --project-surface: ${project.surface};`}
+              >
+                <div
+                  class="pointer-events-none absolute -top-24 -right-24 h-72 w-72 rounded-full bg-[color:var(--project-surface)] blur-3xl"
+                  aria-hidden="true"
+                />
+                <div>
+                  <div class="relative z-10 mb-5 flex items-start justify-between gap-4">
+                    <span class="font-mono text-[10px] tracking-widest text-[color:var(--project-accent)] uppercase">
+                      {project.track}
+                    </span>
+                    <span class="border border-[color:var(--atlas-line)] px-2 py-1 font-mono text-[10px] text-[color:var(--project-accent)] uppercase">
+                      {copy.status[project.status]}
+                    </span>
+                  </div>
+                  <div class="relative z-10">
+                    <span class="mb-6 block h-2 w-2 rounded-full bg-[color:var(--project-accent)]" />
+                    <h2 class="text-atlas-ink font-serif text-4xl leading-none md:text-5xl">
+                      {project.name}
+                    </h2>
+                    <p class="text-atlas-ink/70 mt-6 max-w-2xl leading-loose">
+                      {project.description}
+                    </p>
+                  </div>
+                </div>
+
+                <div class="relative z-10 mt-8">
+                  <div class="mb-5 flex flex-wrap gap-2">
+                    {project.tags.map((tag) => (
+                      <span class="text-atlas-ink/65 border border-[color:var(--atlas-line)] px-2 py-1 font-mono text-[10px]">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                  {project.href && (
+                    <a
+                      href={project.href}
+                      target={isExternal ? '_blank' : undefined}
+                      rel={isExternal ? 'noopener noreferrer' : undefined}
+                      class="inline-flex border-b border-[color:var(--project-accent)] pb-1 font-mono text-xs font-bold text-[color:var(--project-accent)] uppercase transition-opacity hover:opacity-75"
+                    >
+                      {project.action || copy.open} →
+                    </a>
+                  )}
+                </div>
+              </article>
+            );
+          })
+        }
+      </section>
+    </div>
+  </main>
+</Layout>

@@ -1,0 +1,131 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import StructuredData from '../../components/StructuredData.astro';
+import { useTranslations, type SupportedLocale } from '../../i18n/ui';
+import { getPageBreadcrumbs } from '../../utils/structuredData';
+
+export function getStaticPaths() {
+  return [{ params: { lang: 'en' } }, { params: { lang: 'zh' } }];
+}
+
+const lang: SupportedLocale = Astro.params.lang === 'zh' ? 'zh' : 'en';
+const t = useTranslations(lang);
+const aboutLabel = lang === 'zh' ? '关于我' : 'About';
+const breadcrumbSchema = getPageBreadcrumbs(aboutLabel, lang);
+
+const copy = {
+  en: {
+    eyebrow: 'About',
+    title:
+      'AI-native scientist and engineer working at the edge of software, cognition, and drug discovery.',
+    intro:
+      'I build and write around systems that help experts reason better: AI-native research workflows, scientific software, and product forms for the pharmaceutical industry.',
+    note: 'This site is the canonical home for my long-form thinking. Social platforms are used for conversation, distribution, and faster feedback loops.',
+    focusTitle: 'Current Focus',
+    principlesTitle: 'Operating Principles',
+    contactTitle: 'Connect',
+    contactBody:
+      'For collaboration, technical discussion, or writing conversations, the social page keeps the active public channels in one place.',
+    contactLink: 'Open network page',
+    focus: [
+      'AI-native R&D systems for biology and pharmaceutical workflows',
+      'Scientific software that reduces coordination cost for expert teams',
+      'Public bilingual writing about AI, drug discovery, and product strategy',
+    ],
+    principles: [
+      'Treat writing as durable infrastructure, not only a feed update',
+      'Design tools around judgment, context, and expert agency',
+      'Keep bilingual knowledge connected through stable canonical URLs',
+    ],
+  },
+  zh: {
+    eyebrow: '关于',
+    title: '在软件、认知与药物发现交界处工作的 AI 原生科学家与工程师。',
+    intro:
+      '我关注能够帮助专家更好推理的系统：AI 原生科研流程、科学软件，以及面向制药行业的新产品形态。',
+    note: '这个网站是我长文思考的 canonical home。社交平台用于讨论、分发与更快的反馈循环。',
+    focusTitle: '当前关注',
+    principlesTitle: '工作原则',
+    contactTitle: '连接',
+    contactBody: '合作、技术讨论或写作交流，可以从社交页面找到当前有效的公开渠道。',
+    contactLink: '打开社交页面',
+    focus: [
+      '面向生物学与制药流程的 AI 原生研发系统',
+      '降低专家团队协作成本的科学软件',
+      '围绕 AI、药物发现与产品策略的双语公共写作',
+    ],
+    principles: [
+      '把写作视作长期基础设施，而不只是信息流更新',
+      '围绕判断力、上下文与专家能动性设计工具',
+      '用稳定 canonical URL 连接双语知识',
+    ],
+  },
+}[lang];
+---
+
+<Layout title={`${aboutLabel} | ${t('home.name')}`} lang={lang} description={copy.intro}>
+  <StructuredData data={breadcrumbSchema} type="BreadcrumbList" />
+
+  <main class="container mx-auto min-h-screen max-w-5xl px-4 py-20 md:py-28">
+    <header class="mb-16 max-w-4xl">
+      <p class="text-morandi-accent-3 mb-4 font-mono text-xs tracking-widest uppercase">
+        {copy.eyebrow}
+      </p>
+      <h1 class="text-morandi-text font-serif text-4xl leading-tight md:text-6xl">
+        {copy.title}
+      </h1>
+      <p class="text-morandi-text/75 mt-8 max-w-3xl font-sans text-lg leading-loose">
+        {copy.intro}
+      </p>
+      <p class="text-morandi-text/60 mt-4 max-w-3xl font-sans text-base leading-loose">
+        {copy.note}
+      </p>
+    </header>
+
+    <section class="grid gap-10 md:grid-cols-[0.9fr_1.1fr]" aria-label={copy.focusTitle}>
+      <div>
+        <h2 class="text-morandi-text mb-5 font-serif text-3xl italic">{copy.focusTitle}</h2>
+        <div class="border-morandi-accent-2/40 border-l pl-5">
+          {
+            copy.focus.map((item) => (
+              <p class="text-morandi-text/75 mb-5 font-sans text-base leading-loose">{item}</p>
+            ))
+          }
+        </div>
+      </div>
+
+      <div>
+        <h2 class="text-morandi-text mb-5 font-serif text-3xl italic">
+          {copy.principlesTitle}
+        </h2>
+        <div class="grid gap-3">
+          {
+            copy.principles.map((item, index) => (
+              <article class="border-morandi-accent-2/30 bg-morandi-bg/40 rounded-lg border p-5">
+                <span class="text-morandi-accent-3 mb-3 block font-mono text-xs">
+                  {String(index + 1).padStart(2, '0')}
+                </span>
+                <p class="text-morandi-text/80 font-sans leading-relaxed">{item}</p>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="border-morandi-accent-2/30 mt-16 border-t pt-10">
+      <div class="flex flex-col justify-between gap-6 md:flex-row md:items-end">
+        <div class="max-w-2xl">
+          <h2 class="text-morandi-text mb-3 font-serif text-3xl italic">{copy.contactTitle}</h2>
+          <p class="text-morandi-text/70 font-sans leading-loose">{copy.contactBody}</p>
+        </div>
+        <a
+          href={`/${lang}/social`}
+          class="bg-morandi-text inline-flex items-center justify-center rounded px-5 py-3 font-mono text-xs font-bold text-white transition-opacity hover:opacity-85"
+        >
+          {copy.contactLink} →
+        </a>
+      </div>
+    </section>
+  </main>
+</Layout>

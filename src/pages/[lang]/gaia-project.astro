@@ -1,0 +1,140 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import StructuredData from '../../components/StructuredData.astro';
+import AtlasField from '../../components/AtlasField.astro';
+import SpecimenImage from '../../components/SpecimenImage.astro';
+import { useTranslations, type SupportedLocale } from '../../i18n/ui';
+import { getPageBreadcrumbs } from '../../utils/structuredData';
+import { visualAssets } from '../../config/visualAssets';
+
+export function getStaticPaths() {
+  return [{ params: { lang: 'en' } }, { params: { lang: 'zh' } }];
+}
+
+const lang: SupportedLocale = Astro.params.lang === 'zh' ? 'zh' : 'en';
+const t = useTranslations(lang);
+
+const copy = {
+  en: {
+    eyebrow: 'Research Outline',
+    title: 'Gaia Project',
+    description: 'A research outline for biological planetary transformation.',
+    stages: [
+      {
+        number: 'Stage 1',
+        title: 'Synthetic Biology',
+      },
+      {
+        number: 'Stage 2',
+        title: 'Planet Search and Space Transformation',
+      },
+      {
+        number: 'Stage 3',
+        title: 'Ecosystem Design',
+      },
+      {
+        number: 'Stage 4',
+        title: 'Controlled Evolution',
+      },
+      {
+        number: 'Stage 5',
+        title: 'Planetary Transformation',
+      },
+    ],
+  },
+  zh: {
+    eyebrow: '研究大纲',
+    title: '盖亚计划',
+    description: '一个面向生物驱动行星改造的研究大纲。',
+    stages: [
+      {
+        number: '阶段一',
+        title: '合成生物学阶段',
+      },
+      {
+        number: '阶段二',
+        title: '行星搜索与太空改造',
+      },
+      {
+        number: '阶段三',
+        title: '生态系统设计',
+      },
+      {
+        number: '阶段四',
+        title: '控制演化',
+      },
+      {
+        number: '阶段五',
+        title: '改造行星',
+      },
+    ],
+  },
+}[lang];
+
+const breadcrumbSchema = getPageBreadcrumbs(copy.title, lang);
+---
+
+<Layout title={`${copy.title} | ${t('home.name')}`} lang={lang} description={copy.description}>
+  <StructuredData data={breadcrumbSchema} type="BreadcrumbList" />
+
+  <main class="relative min-h-screen overflow-hidden px-5 py-24 md:px-10 md:py-28 lg:px-14">
+    <AtlasField class="absolute inset-0 h-full w-full opacity-60" variant="forest" />
+    <div class="relative z-10 mx-auto max-w-[1500px]">
+      <header
+        class="grid gap-10 border-b border-[color:var(--atlas-line)] pb-16 lg:grid-cols-12 lg:items-end"
+      >
+        <div class="lg:col-span-6">
+          <p class="atlas-kicker text-track-gaia mb-6">P03 / {copy.eyebrow}</p>
+          <h1 class="text-atlas-ink font-serif text-6xl leading-[0.9] md:text-8xl lg:text-9xl">
+            {copy.title}
+          </h1>
+          <p class="text-atlas-ink/65 mt-8 max-w-xl text-lg leading-relaxed">
+            {
+              lang === 'zh'
+                ? '把生命从被动适应环境的存在，转变为能够设计环境的行星级基础设施。'
+                : 'Turning life from an organism that adapts to environments into planetary infrastructure that can design them.'
+            }
+          </p>
+        </div>
+        <SpecimenImage
+          src={visualAssets.corals.src}
+          alt={visualAssets.corals.alt[lang]}
+          label={visualAssets.corals.label[lang]}
+          credit={visualAssets.corals.credit}
+          sourceUrl={visualAssets.corals.sourceUrl}
+          index={lang === 'zh' ? '生态系统 / 03' : 'ECOSYSTEM / 03'}
+          class="h-80 lg:col-span-6 lg:h-[28rem]"
+        />
+      </header>
+
+      <div
+        class="mt-6 flex items-center justify-between gap-6 border-b border-[color:var(--atlas-line)] pb-6"
+      >
+        <p class="atlas-kicker">
+          {lang === 'zh' ? '星体生态改造 / 阶段 01—05' : 'PLANETARY TRANSFORMATION / STAGE 01—05'}
+        </p>
+        <span class="bg-track-gaia h-2 w-2 rounded-full"></span>
+      </div>
+
+      <section
+        class="grid border-t border-[color:var(--atlas-line-strong)] md:grid-cols-2 lg:grid-cols-5"
+        aria-label={copy.title}
+      >
+        {
+          copy.stages.map((stage, index) => (
+            <article class="group hover:bg-track-gaia-surface relative flex min-h-80 flex-col justify-between overflow-hidden border-b border-[color:var(--atlas-line)] p-5 transition-colors md:border-r md:nth-[2n]:border-r-0 lg:min-h-[30rem] lg:last:border-r-0 lg:nth-[2n]:border-r">
+              <span class="text-track-gaia font-mono text-xs tracking-widest uppercase">
+                {stage.number}
+              </span>
+              <div>
+                <span class="text-track-gaia/20 mb-6 block font-serif text-6xl">0{index + 1}</span>
+                <span class="bg-track-gaia mb-5 block h-2 w-2 rounded-full transition-transform group-hover:scale-[1.8]" />
+                <h2 class="text-atlas-ink font-serif text-3xl leading-none">{stage.title}</h2>
+              </div>
+            </article>
+          ))
+        }
+      </section>
+    </div>
+  </main>
+</Layout>

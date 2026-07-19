@@ -1,0 +1,47 @@
+IntelliPharma Hub License and Copyright Notice
+
+Required Notice: Copyright (c) 2026 Alex Su / SSooop.
+
+PUBLIC VISIBILITY
+
+This repository is a publicly visible personal website. Public access to its source does not
+make the repository an open-source project and does not grant rights beyond those stated below.
+
+SOFTWARE
+
+Software authored for this repository, including source code, build configuration, scripts, and
+the original user-interface implementation, is licensed under the PolyForm Noncommercial License
+1.0.0:
+
+https://polyformproject.org/licenses/noncommercial/1.0.0/
+
+The required notice above must be preserved with copies of the software. Commercial use requires
+separate written permission from Alex Su. Third-party dependencies remain subject to their own
+licenses and notices.
+
+ORIGINAL EDITORIAL AND BRAND CONTENT
+
+Unless a file says otherwise, essays, translations, drafts, original illustrations and
+photographs, logos, signatures, and personal-brand materials authored or owned by Alex Su are
+copyright (c) Alex Su. All rights are reserved. No republication, commercial use, or commercial
+AI-training permission is granted for that content by this repository license.
+
+THIRD-PARTY MATERIALS
+
+Images, quotations, screenshots, data, trademarks, and other materials credited to third parties
+are excluded from both the PolyForm software license and Alex Su's copyright claim. They remain
+subject to the rights, licenses, attribution requirements, and permitted-use rules of their
+respective owners or sources.
+
+A source citation or local copy is an attribution and provenance record. It does not transfer
+ownership and does not grant downstream users permission to reuse that material. Before reusing a
+third-party asset, verify the source terms and obtain any permission required for the intended use.
+See THIRD_PARTY_ASSETS.md for repository-specific handling rules.
+
+NO WARRANTY
+
+To the extent permitted by law, the repository and its contents are provided as is, without
+warranty. Nothing in this notice limits rights that apply independently under applicable law.
+
+For commercial licensing, republication, rights questions, or a correction/removal request,
+contact the author through the repository's public contact channels.

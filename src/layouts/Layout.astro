@@ -1,0 +1,133 @@
+---
+import '../styles/global.css';
+
+import SocialFooter from '../components/SocialFooter';
+import StructuredData from '../components/StructuredData.astro';
+import MetaTags from '../components/MetaTags.astro';
+
+import { useTranslations, type SupportedLocale } from '../i18n/ui';
+import { generateWebSiteSchema, generatePersonSchema } from '../utils/structuredData';
+import type { CitationMeta } from '../utils/citation';
+
+interface Props {
+  title: string;
+  lang?: SupportedLocale;
+  description?: string;
+  image?: string;
+  type?: 'website' | 'article';
+  keywords?: string[];
+  canonical?: string;
+  alternateLanguages?: Record<string, string>;
+  citation?: CitationMeta;
+}
+
+const {
+  title,
+  lang = 'en',
+  description,
+  image,
+  type,
+  keywords,
+  canonical,
+  alternateLanguages: alternateLanguagesOverride,
+  citation,
+} = Astro.props;
+
+const currentPath = Astro.url.pathname;
+const targetLang = lang === 'en' ? 'zh' : 'en';
+
+// Replace /en/ with /zh/ or vice versa
+// We assume the path always starts with /en or /zh due to middleware or structure,
+// but we just need to swap the first segment if it matches or prepend if missing (though we are in [lang] structure now).
+// A robust way for this structure:
+const segments = currentPath.split('/').filter(Boolean);
+if (segments[0] === 'en' || segments[0] === 'zh') {
+  segments[0] = targetLang;
+} else {
+  segments.unshift(targetLang);
+}
+const targetPath = '/' + segments.join('/');
+const isHome = currentPath === `/${lang}/` || currentPath === `/${lang}`;
+
+const t = useTranslations(lang as SupportedLocale);
+const pageTitle = title === 'Alex Su | Digital Space' ? t('meta.title') : title; // Hack to allow specific titles but default to localized home title
+const pageDescription = description || t('meta.desc');
+
+// Generate alternate language links for hreflang
+const defaultAlternateLanguages = {
+  en: currentPath.replace(/^\/zh\//, '/en/').replace(/^\/en\//, '/en/'),
+  zh: currentPath.replace(/^\/en\//, '/zh/').replace(/^\/zh\//, '/zh/'),
+  'x-default': currentPath.replace(/^\/zh\//, '/en/').replace(/^\/en\//, '/en/'),
+};
+const alternateLanguages = alternateLanguagesOverride || defaultAlternateLanguages;
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" />
+
+    <!-- Meta Tags -->
+    <MetaTags
+      title={pageTitle}
+      description={pageDescription}
+      image={image}
+      type={type}
+      keywords={keywords}
+      canonical={canonical || currentPath}
+      alternateLanguages={alternateLanguages}
+      lang={lang}
+      citation={citation}
+    />
+
+    <!-- Preconnect for Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Structured Data -->
+    <StructuredData data={generateWebSiteSchema(lang)} type="WebSite" />
+    <StructuredData data={generatePersonSchema(lang)} type="Person" />
+  </head>
+  <body
+    class="selection:bg-site-neutral-hover flex min-h-screen flex-col overflow-x-hidden selection:text-white"
+  >
+    <!-- Global Controls - Navigation -->
+    <nav
+      class="fixed top-5 right-5 z-50 flex items-center border border-[color:var(--atlas-line)] bg-[color:color-mix(in_srgb,var(--color-morandi-bg)_86%,transparent)] font-mono text-[10px] tracking-[0.14em] uppercase shadow-[0_12px_36px_rgb(35_38_36/0.08)] backdrop-blur-md md:top-7 md:right-7"
+      aria-label={lang === 'zh' ? '语言与导航' : 'Language and navigation'}
+    >
+      {
+        !isHome && (
+          <a
+            href={`/${lang}/`}
+            class="text-atlas-ink hover:bg-atlas-ink border-r border-[color:var(--atlas-line)] px-3 py-2 transition-colors hover:text-white"
+            aria-label={lang === 'zh' ? '返回首页' : 'Go to home page'}
+          >
+            {lang === 'zh' ? '首页' : 'HOME'}
+          </a>
+        )
+      }
+      <a
+        href={targetPath}
+        class="text-atlas-ink hover:bg-atlas-signal px-3 py-2 transition-colors hover:text-white"
+        aria-label={`Switch to ${lang === 'en' ? 'Chinese' : 'English'} language`}
+      >
+        {lang === 'en' ? 'CN' : 'EN'}
+      </a>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-1">
+      <slot />
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      <SocialFooter client:visible lang={lang} t={t} />
+    </footer>
+  </body>
+</html>

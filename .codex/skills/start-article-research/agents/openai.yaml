@@ -1,0 +1,7 @@
+interface:
+  display_name: '开始文章构思与研究'
+  short_description: '启动 Writer Studio，并将构思、证据、反例与待决问题沉淀为本地研究记录'
+  default_prompt: 'Use $start-article-research to begin this article, open Writer Studio, and preserve our important discussion and research locally.'
+
+policy:
+  allow_implicit_invocation: true

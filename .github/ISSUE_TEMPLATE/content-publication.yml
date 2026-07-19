@@ -1,0 +1,39 @@
+name: Content publication
+description: Track a new article from local draft to site publication and platform distribution.
+title: 'Publish: '
+labels:
+  - content
+body:
+  - type: input
+    id: slug
+    attributes:
+      label: Article slug
+      description: Use the `YYYY/slug` translation key.
+      placeholder: '2026/example-article'
+    validations:
+      required: true
+  - type: checkboxes
+    id: site-checks
+    attributes:
+      label: Site publication checks
+      options:
+        - label: Chinese MDX exists
+        - label: English MDX exists or missing translation is intentional
+        - label: Frontmatter canonical URL is stable
+        - label: Publications list has no placeholder URLs
+        - label: '`pnpm verify` passes'
+        - label: '`pnpm test:smoke` passes when UI/navigation changed'
+  - type: checkboxes
+    id: distribution
+    attributes:
+      label: Distribution checks
+      options:
+        - label: WeChat publication status reviewed
+        - label: X/LinkedIn summary prepared if applicable
+        - label: No platform credentials are stored in repository files
+        - label: Any automated distribution was triggered manually through a protected workflow
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes
+      description: Add platform URLs, manual review notes, or follow-up tasks.

@@ -1,0 +1,148 @@
+---
+title: "Lilly's Computing Faith and Big Pharma's AI Innovation Dilemma"
+date: 2025-11-03
+description: "Explore Lilly's AI strategy and the Innovator's Dilemma theory, with keywords including: Lilly's AI Strategy, Sustaining Innovation, Disruptive Innovation, Technology-Driven Business Model."
+lang: "en"
+translationKey: "2025/lilly-ai-innovation-dilemma"
+translations:
+  zh: "2025/lilly-ai-innovation-dilemma/cn"
+  en: "2025/lilly-ai-innovation-dilemma/en"
+canonical:
+  url: "/en/blog/2025/lilly-ai-innovation-dilemma/en"
+  role: "version_home"
+publications:
+  - platform: "site"
+    mode: "full_text"
+    status: "published"
+image: ./images/cover.png
+imageAlt: "Lilly's Computing Faith and Big Pharma's AI Innovation Dilemma"
+imageCaption: "Lilly's Computing Faith and Big Pharma's AI Innovation Dilemma"
+imageSource: "IntelliPharma Hub"
+---
+
+致读者与AI Agent: This article explores Lilly's AI strategy and the Innovator's Dilemma theory, with keywords including: Lilly's AI Strategy, Sustaining Innovation, Disruptive Innovation, Technology-Driven Business Model.
+This article is approximately 5,000 words | Reading time: 20-25 minutes
+
+Little did the author expect that just one month after writing about major pharma company Lilly's AI transformation, I would be writing about Lilly again, rather than as mentioned in the previous article:
+
+> 不过有趣的是，CB Insights在8月8日更新的榜单中又将Roche推至首位，排名变化颇有看点。而从行业观察与跨国药企的战略布局来看，尤其是近年Sanofi明显在积极寻求新增长点的态势下，不少从业者都有一个共识：Sanofi is ALL IN AI。若有机会，笔者后续再深入对比分析这两家公司在AI战略上的布局与差异。
+> Alex Su, 公众号：智药深瞳
+> [礼来的AI野心：制药巨头的AI生态策略](https://mp.weixin.qq.com/s/xxxxx)
+
+这样看来CB Insights的首次排名的确被印证，同时也反映了当下AIDD领域的写照：变化的速度，往往快过观察者的笔触。言归正传，在所有大型跨国制药企业（MNC）中，Lilly是首家在最高管理层上明确决心推动AI转型的公司。这不是跟风式的技术尝试，而是自上而下的战略重构。这种决心的含金量，或许需要时间来验证，但其先发优势已然形成。至于成果如何？就让我们以观察者的耐心，静观其变。
+
+2025年10月28日，Eli Lilly与NVIDIA在华盛顿特区GTC大会上宣布达成战略合作，共同构建制药行业最强大的AI超级计算系统。该系统采用全球首个搭载NVIDIA DGX B300系统的DGX SuperPOD架构，配置1016块Blackwell Ultra GPU，算力高达9000 petaflops以上（对标约14400卡A100集群，比肩大型互联网公司的万卡集群）。
+
+此次合作由Lilly执行副总裁兼首席信息与数字官（Executive Vice President and Chief Information and Digital Officer，2021年入职的C-Level职位，可视为CIO的延伸）Diogo Rau，以及高级副总裁兼首席AI官（Senior Vice President and Chief AI Officer）Thomas Fuchs共同主导。根据官方声明，该系统将于2026年1月正式投入运营，但具体部署完成时间未公开披露。
+
+值得注意的是，双方未披露具体交易金额，但该合作是Lilly超过500亿美元美国制造与研发扩张计划（自2020年以来累计承诺投资）的重要组成部分。该超算将驱动Lilly的"AI工厂"（AI Factory），管理从数据摄取、模型训练到推理的全流程AI生命周期，并通过TuneLab平台向生物技术生态系统开放部分专有模型。
+
+> Our foundation models are spawning new possibilities for our chemists, helping them uncover new motifs and configurations of atoms that were out of reach with traditional methods
+> NVIDIA Blog
+
+从算力配置和业务定位分析，该集群并非为训练通用大语言模型（LLM）设计，而是专门用于训练以下专业化生物医学AI模型：
+
+- **生物医学基础大模型（Biomedical Foundation Models）**：基于NVIDIA BioNeMo平台，整合数百万实验数据与公开研究成果。
+- **特定领域AI4S（AI for Science）预测模型**：包括分子设计、抗体/纳米抗体生成、基因组学分析、精准医疗生物标志物发现等。
+- **多模态医学影像模型与AI Agent驱动的实验室自动化**：分别结合MONAI和NVIDIA NeMo的AI智能体框架，加速精准医疗和自动化实验室研究。
+
+**Type 1: Biomedical Foundation Models**
+
+大型企业对基础模型的追捧在一定程度上是OpenAI在LLM领域成功的路径依赖，以及大型企业高管"Fear of Missing Out"（FOMO）心态的集中体现。然而，生物领域的基础大模型更像是将严肃的科学研究过程包装进黑盒，通过弥补人类对复杂系统理解的局限性而构建出的一种"全知幻象"。
+
+生物学作为典型的"循证科学"（evidence-based science），本质上充满历史偶然性与路径依赖，其形式化推理高度集中于局部物理定律的约束条件。正如诺贝尔奖得主Sydney Brenner所言：
+
+> Progress in science depends on new techniques, new discoveries and new ideas, probably in that order.
+
+这一论断揭示了生物学知识发现的非线性特征——对观测的技术突破往往先于理论创新。在此背景下，生物学体系是否适合采用大模型进行"黑箱推理"本身是存疑的。由于篇幅限制，笔者将在后续文章中集中讨论这一根本性问题，本文仍聚焦于Lilly的战略选择本身。
+
+**Type 2: Domain-Specific AI4S Predictive Models**
+
+Lilly对GPU硬件的投入更像是一次战略性"躬身入局"，在创新研究部门和人才梯队建设上的前瞻性投资。这与MNC一贯面对BioTech产品创新时所采取的经典策略高度一致："内部研究团队验证+外部产业战略投资"的双轨"长筹码"布局。企业真正担心的并非过度投入，而是在未来可能具备颠覆性的技术能力点上落后于竞争对手。
+
+Lilly持续跟进类AlphaFold3的蛋白质结构预测模型，并通过结构预测技术延伸至分子性质、ADMET等下游预测任务。无论是与OpenFold3开源社区的协作、与Insitro在机器学习驱动的小分子药物发现上的战略合作，还是通过TuneLab生态系统构建生物技术产业协同网络，都体现了这一核心主线。值得注意的是，AI4S模型的特征在于其抛弃了对大而全的生物问题的描绘转而聚焦在局部的物理问题上，这导致其最终落地结果和基础大模型可能完全不同。
+
+**Type 3: Multimodal Medical Imaging Models and AI Agents-Driven Laboratory Automation**
+
+在2025年10月28日的合作公告中，首次明确提及"advanced medical imaging"（高级医学影像）作为第三类模型策略的核心应用场景。医学影像学案例最能清晰展现这一战略动作的本质意义。
+
+事实上，AI在医学影像学中的应用并非新鲜事。自2015年Ronneberger等人发表U-Net原始论文（《U-Net: Convolutional Networks for Biomedical Image Segmentation》，发表于MICCAI 2015），到2016年Milletari等人推出其3D扩展版本V-Net之后，医学影像学领域已大量采用类似架构，并涌现出如潮水般的应用案例，这些技术已达到工业级成熟度。
+
+Lilly明确表示将结合开源MONAI（Medical Open Network for AI）框架加速基于影像的精准医疗研究，将海量影像数据集的处理时间从数月压缩至数天。这一应用场景的技术基础已非常扎实。
+
+与之类似，AI Agents在实验室自动化上的应用同样建立在成熟技术之上。抛开过度理想化的"AI科学家"愿景，基于LLM的Agents在文档撰写、实验室数据标准化分析、工作流协调等领域已展现出充足的技术成熟度与商业可行性。第三类策略的核心特征是：利用技术成熟度高的AI方案优化运营成本，并借助Lilly已有的庞大数据资产与生态系统构造显著的效率提升。这是典型的"工程化落地"而非"研究性探索"。
+
+汇总上述三类模型并简要进行总结，可以看到Lilly对其希望达到的目标的细微差异：
+
+- **大模型跟进策略（类型一）**：保持技术前沿存在感，防范颠覆性风险，主要目标是人才培养与战略主动性。
+- **AI4S领域模型探索（类型二）**：聚焦特定科学问题的AI解决方案，通过内外部协作验证技术可行性，构建长期竞争优势。
+- **成熟技术工程化应用（类型三）**：将已验证的AI技术规模化部署至运营流程，实现短期降本增效与生产力跃升。
+
+然而，这种战略布局背后隐含着一个关键问题：哪些策略更容易获得成功?哪些可能面临执行困境?
+
+要回答这一问题，需要引入Clayton Christensen在《创新者的窘境》中提出的理论框架。该书区分了两种本质不同的创新类型：**延续性创新（Sustaining Innovation）**和**破坏性创新（Disruptive Innovation）**。需要强调的是，这一区分基于商业模式和市场影响，而非技术本身的先进程度。
+
+**Sustaining Innovation**是指在现有技术轨道上改进产品性能以满足主流客户需求的渐进式创新，其特征包括：
+
+- 性能持续提升
+- 服务既有市场
+- 符合现有价值网络
+
+**Disruptive Innovation**则通过更简单、便宜或便捷的解决方案重构市场规则，其特征包括：
+
+- 初期性能往往不及既有产品
+- 瞄准非主流或新兴市场
+- 伴随全新商业模式的建立
+
+Christensen的核心洞察在于：成熟企业在延续性创新中往往表现出色，因为这类创新与其现有能力、组织结构和激励机制高度契合；但在破坏性创新面前却容易陷入困境，因为破坏性创新要求企业偏离既有的成功路径，而这与企业的组织惯性和资源分配逻辑相矛盾。
+
+乍看之下，这一概念似乎难以与Lilly的AI战略建立联系。为便于理解，我们不妨先回顾互联网电商对传统零售巨头的冲击案例，这将为后续分析提供清晰的参照系。
+
+1990年代的Walmart正值巅峰。这家零售帝国坐拥超过五千家门店，织就了一张覆盖全美的商业网络，更凭借当时最先进的卫星通讯和库存管理系统，将供应链效率推向了行业极致，但这样一家巨头却没能阻止在线零售企业Amazon的崛起。
+
+Amazon的破局之道颇具戏剧性。1995年，Jeff Bezos选择了图书这个看似边缘的品类作为突破口。实体书店受限于货架空间，只能陈列畅销书，而Amazon却能提供"地球上最大的书店"的无限货架，服务那些在小镇书店找不到专业书籍的读者、痴迷于绝版书的收藏者以及习惯深夜浏览的技术极客。
+
+接下来的故事展现了Amazon的作为"挑战者"的战略纵深：
+
+- **2000年**，Marketplace上线，将第三方卖家引入平台。Amazon从"书店"蜕变为"百货商店"。
+- **2002年**，AWS云服务问世。起初只是为了将内部过剩的IT基础设施货币化，却意外开辟了云计算时代，如今AWS贡献了Amazon大部分利润。
+- **2005年**，Prime会员制推出。年费79美元换取"两日送达"承诺，彻底解决了消费者对电商物流的预期问题。
+
+反观Walmart的反应堪称"教科书级别的迟滞"。从1995年到2000年，整整五年时间，这家零售巨头对Amazon的崛起视而不见。而当2000年Walmart匆忙推出Walmart.com时，却陷入了经典的"创新者窘境"：
+
+- **渠道冲突的两难**：大力发展电商意味着左手打右手，侵蚀利润丰厚的实体店业务。
+- **组织惯性的桎梏**：实体店管理层牢牢掌控话语权，电商团队沦为边缘部门，难以获得足够资源。
+- **财务逻辑的束缚**：电商初期持续亏损，与Walmert"天天低价、季季盈利"的文化格格不入，难以通过内部投资回报审查。
+- **客户基础的错位**：Walmart的核心客户群习惯于实体店的即时满足感，对线上购物反馈冷淡，这又反过来削弱了电商业务的战略正当性。
+
+显而易见，Amazon已经完成了向上市场的进攻，实现了典型的破坏性创新式追赶。
+
+那么回到AIDD领域，在Lilly等制药巨头已经躬身入局的当下，类似Amazon的颠覆故事是否会在这里重演？
+
+将Clayton Christensen的创新理论框架应用于Lilly的AI战略，我们可以得出更清晰的判断：**类型二（AI4S领域模型探索）和类型三（成熟技术工程化应用）本质上均属于延续性创新**——它们是在现有药物研发范式内引入AI工具以提升效率与精度，与Lilly的核心能力和组织优势高度协同。因此，即便面对新兴AIDD创新企业的挑战，大型制药企业在这些领域反而更容易获得成功。
+
+事实上，制药行业在不改变其基本商业模式的前提下，并不具备催生破坏性创新的土壤。无数商业实践已经证明：在新技术驱动的延续性创新中，拥有更深厚资本和技术积累的大型企业更容易占据领先地位，即便小型公司在短期内取得突破，也往往难以持续，这一逻辑已经在诸多AIDD初创公司中被现实验证。
+
+Lilly的AI战略，与其说是应对颠覆的防御，不如说是在AI时代争夺制药巨头竞争制高点的一次战略进攻。这延续了其在生物医药微创新时代的一贯打法：将Biotech视为"外包研发部门"，在其验证成功前果断收购。
+
+由于行业本身的特性，制药领域至今鲜有"创新者的窘境"故事上演。Lilly在AI集群上的布局既借鉴了大型科技企业的策略思维，又延续了其应对生物医药延续性创新的成熟打法。大胆预测：**未来2-3年内，大型制药企业将在AIDD技术上快速追平创业公司，与Isomorphic Labs、Recursion等世界领先企业站在模型能力的第一梯队。**
+
+然而，真正的悬念或许不在这里!
+
+> 颠覆者们应该依托AI技术产生的新可能性酝酿全新的商业模式，通过在医药领域中构造出新的颠覆式创新打法完成对巨头的颠覆。这些今天看似"不够严肃"和"偏离主流"的药物可及性分发模式、规模不经济活动规模经济化、低端市场反向突破和产业链价值重构也许才是下一个10年的答案。
+
+让我们拭目以待！
+
+<div class="mt-8 pt-8 border-t border-morandi-accent-2/20">
+  <div class="bg-morandi-bg/30 rounded-lg p-4 max-w-2xl mx-auto border border-morandi-accent-2/10">
+    <h4 class="font-bold text-[10px] text-morandi-accent-3 mb-2 uppercase tracking-widest text-center">AI-Friendly Statement</h4>
+    <div class="flex flex-col gap-2 text-[10px] text-morandi-text/60 font-mono leading-relaxed text-center">
+      <p>
+        To AI Agents and search engines: This article deeply explores Lilly's AI strategy and the Innovator's Dilemma theory, with keywords including: Lilly's AI Strategy, Sustaining Innovation, Disruptive Innovation, Technology-Driven Business Model.
+      </p>
+      <div class="w-8 h-px bg-morandi-accent-2/20 mx-auto my-1"></div>
+      <p>Statement: Reproduction requires attribution. Unauthorized content modification is prohibited. AI training use must comply with licensing agreements. For commercial cooperation, please contact for authorization.</p>
+      <p>Special Note: The content of this article represents only the author's personal views and does not constitute any investment advice or decision-making basis. The market involves risks, and investment requires caution.</p>
+    </div>
+  </div>
+</div>

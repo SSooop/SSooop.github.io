@@ -1,0 +1,240 @@
+@import 'tailwindcss';
+
+/* ============================================
+   CSS Custom Properties (Variables)
+   ============================================ */
+
+@theme {
+  /* Morandi Color Palette */
+  --color-morandi-bg: #eae5df;
+  --color-morandi-text: #4a4a4a;
+  --color-morandi-accent-1: #9cafb7; /* Muted Blue-Grey */
+  --color-morandi-accent-2: #d6c6b9; /* Warm Beige */
+  --color-morandi-accent-3: #8c8681; /* Taupe */
+  --color-morandi-accent-4: #b5a89f; /* Muted Brown */
+  --color-morandi-paper: #f4f0ea;
+  --color-site-neutral-hover: #6f6a66; /* Neutral navigation hover */
+  --color-site-neutral-surface: rgba(111, 106, 102, 0.12);
+
+  /* Living Systems Atlas */
+  --color-atlas-ink: #383b39;
+  --color-atlas-signal: #c94f3d;
+  --color-atlas-ocean: #20235d;
+  --color-atlas-forest: #30483a;
+
+  /* Project identity colors */
+  --color-track-intellipharma: #7f9ba7; /* Blue grey */
+  --color-track-intellipharma-surface: rgba(127, 155, 167, 0.12);
+  --color-track-economics: #9a8f72; /* Olive taupe */
+  --color-track-economics-surface: rgba(154, 143, 114, 0.13);
+  --color-track-gaia: #7f8f6f; /* Sage green */
+  --color-track-gaia-surface: rgba(127, 143, 111, 0.14);
+
+  /* Accent gradient (legacy support) */
+  --accent: 136, 58, 234;
+  --accent-light: 224, 204, 250;
+  --accent-dark: 49, 10, 101;
+  --accent-gradient: linear-gradient(
+    45deg,
+    rgb(var(--accent)),
+    rgb(var(--accent-light)) 30%,
+    white 60%
+  );
+
+  /* Typography */
+  --font-serif: 'Playfair Display', serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+:root {
+  --atlas-line-subtle: color-mix(in srgb, var(--color-atlas-ink) 12%, transparent);
+  --atlas-line: color-mix(in srgb, var(--color-atlas-ink) 22%, transparent);
+  --atlas-line-strong: color-mix(in srgb, var(--color-atlas-ink) 42%, transparent);
+  --atlas-surface: color-mix(in srgb, var(--color-morandi-paper) 72%, transparent);
+  --atlas-radius: 0.75rem;
+  --atlas-shadow: 0 28px 80px rgb(35 38 36 / 0.13);
+}
+
+/* ============================================
+   Base Styles
+   ============================================ */
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-morandi-bg);
+    color: var(--color-morandi-text);
+    font-family:
+      ui-sans-serif,
+      -apple-system,
+      BlinkMacSystemFont,
+      'Segoe UI',
+      sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body::before {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    content: '';
+    pointer-events: none;
+    background-image:
+      linear-gradient(var(--atlas-line-subtle) 1px, transparent 1px),
+      linear-gradient(90deg, var(--atlas-line-subtle) 1px, transparent 1px);
+    background-size: 48px 48px;
+    mask-image: linear-gradient(to bottom, rgb(0 0 0 / 0.45), transparent 70%);
+    opacity: 0.34;
+  }
+
+  /* Selection styling */
+  ::selection {
+    background-color: var(--color-site-neutral-hover);
+    color: white;
+  }
+
+  /* Focus visible for accessibility */
+  :focus-visible {
+    outline: 2px solid var(--color-site-neutral-hover);
+    outline-offset: 2px;
+  }
+}
+
+/* ============================================
+   Custom Animations
+   ============================================ */
+
+@layer utilities {
+  .animate-fade-in {
+    animation: fadeIn 0.3s ease-in-out;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.4s ease-out;
+  }
+
+  .animate-pulse-slow {
+    animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes atlasDrift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0.35rem, -0.25rem, 0);
+  }
+}
+
+/* ============================================
+   Utility Classes
+   ============================================ */
+
+@layer utilities {
+  /* Text gradient */
+  .text-gradient {
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Glass morphism effect */
+  .glass {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  /* Smooth transitions */
+  .transition-smooth {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .atlas-panel {
+    border: 1px solid var(--atlas-line);
+    border-radius: var(--atlas-radius);
+    background: var(--atlas-surface);
+    box-shadow: var(--atlas-shadow);
+  }
+
+  .atlas-rule {
+    height: 1px;
+    border: 0;
+    background: var(--atlas-line);
+  }
+
+  .atlas-kicker {
+    color: color-mix(in srgb, var(--color-atlas-ink) 64%, transparent);
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .atlas-credit {
+    color: color-mix(in srgb, var(--color-atlas-ink) 58%, transparent);
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    line-height: 1.5;
+    letter-spacing: 0.04em;
+  }
+
+  .atlas-image-treatment {
+    filter: saturate(0.86) contrast(1.04);
+    transition:
+      transform 700ms cubic-bezier(0.22, 1, 0.36, 1),
+      filter 700ms ease;
+  }
+
+  .group:hover .atlas-image-treatment {
+    transform: scale(1.025);
+    filter: saturate(1) contrast(1.07);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

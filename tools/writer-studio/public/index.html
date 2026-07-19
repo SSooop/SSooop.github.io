@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light" />
+    <title>Writer Studio · IntelliPharma Hub</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <header class="brand">
+          <div class="brand-mark" aria-hidden="true">IP</div>
+          <div>
+            <p class="eyebrow">INTELLIPHARMA HUB</p>
+            <h1>Writer Studio</h1>
+          </div>
+        </header>
+
+        <button class="new-draft-button" id="new-draft-button" type="button">
+          <span aria-hidden="true">＋</span> 新建文章草稿
+        </button>
+
+        <div class="sidebar-section-heading">
+          <span>本地草稿</span>
+          <span class="count" id="draft-count">0</span>
+        </div>
+        <nav class="draft-list" id="draft-list" aria-label="草稿列表"></nav>
+
+        <footer class="local-notice">
+          <span class="status-dot" aria-hidden="true"></span>
+          <div>
+            <strong>仅限本机</strong>
+            <p>草稿保存在 .drafts/blog</p>
+          </div>
+        </footer>
+      </aside>
+
+      <main class="workspace">
+        <header class="topbar">
+          <div class="document-heading">
+            <p id="document-path">选择一篇草稿开始写作</p>
+            <h2 id="document-title">Writer Studio</h2>
+          </div>
+          <div class="topbar-actions">
+            <span class="save-status" id="save-status">准备就绪</span>
+            <button
+              class="button secondary"
+              id="save-button"
+              type="button"
+              title="保存当前文件（Ctrl+S）"
+              disabled
+            >
+              保存
+            </button>
+            <button
+              class="button codex"
+              id="draft-skill-button"
+              type="button"
+              title="查看当前文章的 Skill 调用"
+              disabled
+            >
+              使用 $draft-from-outline
+            </button>
+            <button class="button secondary" id="validate-button" type="button" disabled>
+              检查文章
+            </button>
+            <button class="button primary" id="publish-button" type="button" disabled>
+              发布到站点
+            </button>
+          </div>
+        </header>
+
+        <section class="stage-bar" aria-label="文章任务阶段">
+          <div class="stage-heading">
+            <span>单篇文章任务</span>
+            <span id="sync-status">等待选择任务</span>
+          </div>
+          <div class="stage-list" id="stage-list"></div>
+        </section>
+
+        <section class="editor-toolbar" aria-label="编辑器工具栏">
+          <div class="section-tabs" role="tablist" aria-label="任务文件">
+            <button class="section-tab active" data-section="outline" role="tab" type="button">
+              1 提纲
+            </button>
+            <span class="workflow-arrow" aria-hidden="true">→</span>
+            <button class="section-tab" data-section="style" role="tab" type="button">
+              2 本篇风格
+            </button>
+            <span class="workflow-arrow" aria-hidden="true">→</span>
+            <button class="section-tab" data-section="article" role="tab" type="button">
+              3 正文
+            </button>
+          </div>
+          <div class="language-tabs hidden" role="tablist" aria-label="文章语言">
+            <button class="language-tab active" data-language="cn" role="tab" type="button">
+              中文
+            </button>
+            <button class="language-tab" data-language="en" role="tab" type="button">
+              English
+            </button>
+          </div>
+          <div class="view-tabs" role="group" aria-label="显示方式">
+            <button class="view-tab active" data-view="split" type="button">并排</button>
+            <button class="view-tab" data-view="write" type="button">专注写作</button>
+            <button class="view-tab" data-view="preview" type="button">网页预览</button>
+          </div>
+        </section>
+
+        <section class="empty-state" id="empty-state">
+          <div class="empty-symbol" aria-hidden="true">文</div>
+          <h2>在浏览器里安静地写作</h2>
+          <p>选择左侧示例草稿，或者创建一篇新文章。Codex 对文件的修改会在这里自动显示。</p>
+        </section>
+
+        <section class="writing-area hidden" id="writing-area">
+          <div class="editor-pane">
+            <div class="pane-heading">
+              <span id="editor-label">MDX 源文</span>
+              <span id="editor-stats">0 字</span>
+            </div>
+            <textarea
+              id="editor"
+              spellcheck="true"
+              aria-label="文章 MDX 编辑器"
+              placeholder="从这里开始写作……"
+            ></textarea>
+          </div>
+          <div class="preview-pane">
+            <div class="pane-heading">
+              <span id="preview-label">阅读预览</span>
+              <span>自动更新</span>
+            </div>
+            <iframe id="preview" title="文章网页预览" sandbox=""></iframe>
+            <details class="asset-panel hidden" id="asset-panel">
+              <summary>
+                <span>正文图片</span>
+                <span id="asset-summary">0 张 · 上传与插入</span>
+              </summary>
+              <div class="asset-panel-content">
+                <div class="asset-intro">
+                  <div>
+                    <p class="eyebrow">IN-BODY ASSETS</p>
+                    <h3>随正文处理图片</h3>
+                    <p>图片不再是独立阶段；从这里上传素材，并直接插入当前语言的正文。</p>
+                  </div>
+                  <button class="button secondary" id="upload-button" type="button">
+                    上传图片
+                  </button>
+                  <input
+                    id="asset-input"
+                    type="file"
+                    accept="image/avif,image/gif,image/jpeg,image/png,image/webp"
+                    hidden
+                  />
+                </div>
+                <div class="asset-grid" id="asset-grid"></div>
+              </div>
+            </details>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <dialog id="new-draft-dialog">
+      <form id="new-draft-form">
+        <div class="dialog-heading">
+          <div>
+            <p class="eyebrow">NEW DRAFT</p>
+            <h2>创建文章草稿</h2>
+          </div>
+          <button class="icon-button" id="close-dialog" type="button" aria-label="关闭">×</button>
+        </div>
+        <label>
+          文章标题
+          <input name="title" required autocomplete="off" placeholder="例如：AI 制药中的产品边界" />
+        </label>
+        <div class="form-row">
+          <label>
+            年份
+            <input name="year" required inputmode="numeric" pattern="\d{4}" />
+          </label>
+          <label>
+            日期
+            <input name="date" required type="date" />
+          </label>
+        </div>
+        <label>
+          Slug
+          <input
+            name="slug"
+            required
+            pattern="[a-z0-9]+(?:-[a-z0-9]+)*"
+            placeholder="article-slug"
+          />
+        </label>
+        <label>
+          SEO 描述
+          <textarea name="description" rows="3" placeholder="一句话概括文章的核心观点"></textarea>
+        </label>
+        <div class="dialog-actions">
+          <button class="button secondary" id="cancel-dialog" type="button">取消</button>
+          <button class="button primary" type="submit">创建草稿</button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog class="result-dialog" id="result-dialog">
+      <div class="dialog-heading">
+        <div>
+          <p class="eyebrow">ARTICLE CHECK</p>
+          <h2 id="result-title">检查结果</h2>
+        </div>
+        <button class="icon-button" id="close-result" type="button" aria-label="关闭">×</button>
+      </div>
+      <div id="result-content"></div>
+      <div class="dialog-actions">
+        <button class="button primary" id="confirm-result" type="button">知道了</button>
+      </div>
+    </dialog>
+
+    <dialog class="result-dialog" id="skill-dialog">
+      <div class="dialog-heading">
+        <div>
+          <p class="eyebrow">CODEX SKILL</p>
+          <h2>从提纲生成正文初稿</h2>
+        </div>
+        <button class="icon-button" id="close-skill" type="button" aria-label="关闭">×</button>
+      </div>
+      <p class="skill-explanation">
+        Writer Studio 已保存当前提纲与本篇风格。请在当前 Codex 任务中使用下面这个项目
+        Skill；它会从本地读取研究记录，而不会把整段提示词藏在按钮里。
+      </p>
+      <code class="skill-command" id="skill-command"></code>
+      <div class="dialog-actions">
+        <button class="button secondary" id="copy-skill" type="button">复制 Skill 调用</button>
+        <button class="button primary" id="confirm-skill" type="button">知道了</button>
+      </div>
+    </dialog>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>

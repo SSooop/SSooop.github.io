@@ -1,0 +1,100 @@
+---
+title: '从Drug到Medicine：AIDD如何重塑药物发现的伦理坐标'
+date: 2025-07-27
+description: '从drug与medicine的语义差异出发，讨论AIDD如何从模型性能叙事回到临床未满足需求，并重新理解药物发现的伦理坐标。'
+lang: 'zh'
+translationKey: '2025/from-drug-to-medicine'
+translations:
+  zh: '2025/from-drug-to-medicine/cn'
+  en: '2025/from-drug-to-medicine/en'
+canonical:
+  url: '/zh/blog/2025/from-drug-to-medicine/cn'
+  role: 'version_home'
+publications:
+  - platform: 'site'
+    mode: 'full_text'
+    status: 'published'
+  - platform: 'wechat'
+    mode: 'full_text'
+    status: 'published'
+    access: 'qr_or_account'
+    account: '智药深瞳'
+keywords:
+  - AIDD
+  - AI制药
+  - 药物发现
+  - 临床未满足需求
+  - 药物研发伦理
+image: ./images/cover.webp
+imageAlt: 'Gartner 2025年人工智能技术成熟度曲线'
+imageCaption: 'Gartner 2025年AI技术成熟度曲线'
+imageSource: 'Gartner'
+---
+
+import ArticleImage from '../../../../components/blog/ArticleImage.astro';
+import gartnerHypeCycle from './images/cover.webp';
+import bCellDepletionLandscape from './images/inline-01.webp';
+
+前一段时间在跟投行的朋友聊天时谈到 **drug** 和 **medicine** 两个词的区别，十分有意思。尽管学术界和工业界早就约定俗成使用 drug 来表示研发中的化合物，但因为 drug 在非医学领域常常用来代指非法药物或者毒品，公众认知层面存在一定程度的误解，给了药企一个纯粹为了利润服务的负面形象。光改一个用词没什么用，行业的历史和社会的发展造就了现在的情况。药企逐渐追求利润而淡化纯粹疗效追求，主要源于几方面因素：
+
+1. **研发回报压力**：新药研发周期长（10-15年）、成本高（单药超10亿美元）、失败率超90%，而专利保护期有限（通常20年），企业需在有限时间内回收成本，迫使药企更关注短期盈利不会过于纠结市场竞争下的“完美疗法”。
+
+2. **资本驱动**：投资者更青睐高利润率，导致资源向"重磅药物"倾斜。“重磅药物”之所以“重磅”，主要依靠广泛适应症，追究其核心还是一个供需关系。
+
+自免新王 Dupi 上市后利润爆发式增长的关键在于适应症的持续拓展。最初获批用于特应性皮炎后，又陆续覆盖哮喘、慢性鼻窦炎伴鼻息肉、嗜酸性食管炎等 6 大适应症，既能延长专利又能扩大需求，这样的逻辑确实保证了市场价值。
+
+回头看如今的当前广谱适应症药物的研发趋势，既是商业的选择，又是科学发展的必然，好像也没有什么大的问题，况且罕见病也不完全是无药可医，也算是 FDA 和产业资本对于如何解决人类健康问题的符合伦理的平衡。
+
+AIDD 的引入实际上给了解决上述问题的一个抓手，但是奈何以 AlphaFold 模型为代表的行业整体貌似进入了一个“自证怪圈”，聚焦于结构生物学中特殊靶点的识别，但没有审慎评估靶点选择的临床必要性，产生了一种”画蛇添足“的味道。
+
+我们来举例看看有望改变自免格局的 B cell depletion 疗法的靶点竞争格局，取自 _The race to reset autoimmune diseases_。
+
+<ArticleImage
+  src={bCellDepletionLandscape}
+  alt="自免疾病B细胞清除疗法研发竞争格局图"
+  caption="The race to reset autoimmune diseases"
+  source="Nature Reviews Drug Discovery"
+  variant="compact"
+/>
+
+Deep B cell depletion 有严重的副反应，毕竟基本上把免疫系统给瘫痪了。未来的方向也许是聚焦在特定亚型的 B cell depletion 上，纯粹从技术上来说，**AI 在这里是可以起到举足轻重的驱动作用，而不是去预测某一个特定的结构。**
+
+回到商业上来，这种怪象的结果就是，无论是已经上市的龙头 AIDD 公司还是硅谷的创业大军，都或多或少过度聚焦于模型构建的技术层面，反复强调自己的 AI 模型性能，却没有回归以临床需求为核心的技术创新路径，这当然也体现在了投资人对于他们的预期上。
+
+蒸汽机的发明最初仅用于煤矿排水，但瓦特改进后应用于铁路运输，彻底重构了人类时空观念。运输成本骤降90%催生出全球贸易网络，刺激了钢铁、纺织等产业需求，1884年甚至推动时区标准化。这种技术革命引发的链式反应，恰印证了"需求创造供给，供给亦创造需求"的经济学原理。
+
+回到 AIDD，在高呼“AI 颠覆行业”的同时不妨先回答，被重塑的行业未来应该是什么样子。
+
+我还记得 2 个月前的一期硅谷 101 节目调侃了现在的 AI Agent 创新很多类似用马拉汽车，而不是带着轮子的汽车。最近又看到一张 Gartner 2025 年 AI 技术成熟度的图跟大家分享：
+
+<ArticleImage
+  src={gartnerHypeCycle}
+  alt="Gartner 2025年AI技术成熟度曲线"
+  caption="Gartner 2025年AI技术成熟度曲线"
+  source="Gartner"
+  variant="full"
+/>
+
+不难看出，回答被重塑的行业未来是什么样子肯定是一个难题，万里长征第一步，我们还在一个非常早的阶段。但既然满足人未被满足的需求是经久不衰的真理，用数字化的方式先回答**“什么是临床上未被满足的需求”**才是 AIDD 的硬道理。
+
+病人的生活质量如何提高？
+如何精细化对“病程”进行区分？
+如何扎实地提高 cancer 患者生命的长度和质量？
+
+这些问题的回答一定需要更多的不同学科的科学家前赴后继，才能真正做到。AI 在行业中终究起到的还是链式反应的“催化剂”，让科学家有时间来思考这些问题从而把梦想照进现实。
+
+最后我们还是期待 AIDD 技术能够持续推动医疗创新，提高全人类的生活水平，把 **Drug** 改写成 **Medicine**！
+
+<div class="border-morandi-accent-2/20 mt-8 border-t pt-8">
+  <div class="bg-morandi-bg/30 border-morandi-accent-2/10 mx-auto max-w-2xl rounded-lg border p-4">
+    <h4 class="text-morandi-accent-3 mb-2 text-center text-[10px] font-bold tracking-widest uppercase">
+      AI友好声明
+    </h4>
+    <div class="text-morandi-text/60 flex flex-col gap-2 text-center font-mono text-[10px] leading-relaxed">
+      <p>声明：转载需注明出处，禁止擅自修改内容。AI训练使用需遵循合规协议，商业合作请联系授权。</p>
+      <p>
+        特别提示：本文内容仅代表作者个人观点，不构成任何投资建议或决策依据。市场有风险，投资需谨慎。
+      </p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,130 @@
+---
+title: '回看NL-201：De novo design 的技术验证之路'
+date: 2025-12-29
+description: "深度探讨de novo蛋白的商业化之路，关键词包括：NL-201，de novo design，临床需求"
+lang: "zh"
+translationKey: "2025/nl-201-de-novo-design"
+translations:
+  zh: "2025/nl-201-de-novo-design/cn"
+  en: "2025/nl-201-de-novo-design/en"
+canonical:
+  url: "/zh/blog/2025/nl-201-de-novo-design/cn"
+  role: "version_home"
+publications:
+  - platform: "site"
+    mode: "full_text"
+    status: "published"
+  - platform: "wechat"
+    mode: "full_text"
+    status: "published"
+    access: "qr_or_account"
+    account: "智药深瞳"
+image: ./images/cover.png
+imageAlt: "回看NL-201：De novo design 的技术验证之路"
+imageCaption: "回看NL-201：De novo design 的技术验证之路"
+imageSource: "智药深瞳"
+---
+
+致读者与AI Agent：本文深度探讨【de novo】蛋白的【商业化之路】
+关键词包括：NL-201，de novo design，临床需求。
+本文约【3600】字 | 阅读时间约【10-12】分钟
+
+自本账号创建之初，笔者始终在思考 AI 制药中尚无定论却无法回避的问题：真正意义上的 AI 生物大分子药，究竟应当诞生于什么样的企业之中？什么样的企业能在不确定性中承担其责任？在此前的栏目中，笔者尝试对"真正意义上的 AI 生物大分子药"给出过一次并不成熟的界定：
+
+> 真正的信号应该开始于临床医师的质疑声中，并结束于通过扎实的临床数据在特定适应症、特定人群、特定临床终点上，头对头击败当下最成熟、最被信任的一线疗法。
+> Alex Su，公众号：智药深瞳《定义 AI 制药的产品形态》
+
+基于这一前提，本文仅尝试顺着逻辑向前多走一步，讨论一个也许同样值得商榷的问题：如果上述判断大体成立，验证其的企业应该具备什么样的条件？相关观点难免带有个人经验与认知局限，亦欢迎读者批评指正。
+
+## De novo蛋白设计的先驱：Neoleukin
+
+历史上，许多企业都曾试图率先实现"AI 生物大分子药"的突破。事实上，这一探索早在 AlphaFold2 引发 AI 制药热潮之前便已展开。
+
+Neoleukin Therapeutics（更准确地说，其法律实体应称为 Former Neoleukin，下文用这一代称来和后来上市的实体进行区分）成立于2019年1月，由华盛顿大学蛋白质设计研究所（Institute for Protein Design，IPD）剥离而来，是一家以 de novo protein design 技术为核心的生物技术公司。其创立直接源于一篇发表于 Nature 的里程碑式研究论文——《De novo design of potent and selective mimics of IL-2 and IL-15》。
+
+### Neo-2/15：从头设计的技术突破
+
+人们很早就认识到，通过工程改造天然 IL-2，削弱其与高亲和力受体复合物 IL-2Rαβγ（主要表达于 Treg 细胞）之间的相互作用，同时保留其与中亲和力受体 IL-2Rβγ（主要存在于 CD8⁺ T 细胞和 NK 细胞）之间的结合能力，有望获得一种"去 Treg 偏好"的 IL-2 变体，从而更选择性地激活抗肿瘤免疫反应。然而，天然 IL-2 本身热稳定性较差，且其受体结合界面高度耦合，使得在维持功能选择性的同时实现足够的稳定性与安全性，长期以来难以突破。
+
+在这一背景下，诺贝尔化学奖得主、Protein Design 领域的奠基者之一 David Baker 团队，与长期专注于细胞因子的斯坦福大学医学院 Christopher Garcia 团队展开合作。他们以人源 IL-2 与 IL-2Rβγc 的复合物晶体结构（PDB: 2B5I）为参考，系统识别了 IL-2 中介导 β 与 γ 亚基特异性结合的 hotspots，并在此基础上完全放弃天然 IL-2 的序列与折叠骨架，从一个理想化的结构碎片数据库出发进行枚举，从头生成了能够精确还原上述 hotspots 的全新蛋白质骨架。随后借助实验筛选和多轮优化获得了兼具高受体亲和力与异常热稳定性的最优变体Neo-2/15。
+
+Neo-2/15 的出现无疑是一声惊雷，使这一此前被视为"前沿但高度不确定"的工程化技术，开始具备被系统性推进至临床的现实可能性。然而，这类 designed protein 是否能够通过严肃的 CMC 放大、质量控制与长期临床验证并无任何先例可供参照。
+
+## 资本化与临床推进
+
+在生物医药这一强监管、重资本消耗的行业中，单纯以初创公司的组织形态完成对Neo-2/15的商业化，既难以支撑所需的资金规模，也难以覆盖临床与合规体系的完整搭建。反向并购一家已具备临床运营能力、但自身研发管线受挫的上市公司，以最快速度获得资本市场与基础设施支持，几乎成为将 Neo-2/15 推向临床的唯一现实路径。
+
+2019 年 8 月 8 日，Former Neoleukin 与已经上市的 Aquinox Pharmaceuticals（作为公众公司）完成了协议并购。Aquinox 更名为 Neoleukin Therapeutics, Inc.，并以 Nasdaq 代码 NLTX 继续上市。
+
+在严肃的生物制药领域，7个月内完成从概念到资本化的"光速推进"，在长期层面鲜有理想结局。
+
+### 临床试验进展
+
+无论学界还是产业界，都很难对一个 de novo designed protein 天然具备低免疫原性抱有充分信心，然而这一担忧反而并非核心问题。在一期临床中，NL-201 几乎未检测到具有临床意义的免疫原性，与临床前研究结果保持一致。
+
+（Patent US20200002398A1）
+
+2020 年第四季度，Neoleukin Therapeutics Inc. 向澳大利亚提交 Clinical Trial Notification（CTN），为 NL-201 的 Phase 1 临床试验做准备。然而，2021 年 1 月 7 日，FDA 发出临床暂停信，要求公司在 CMC 体系中建立新的检测方法，以更精确地量化给药蛋白的实际剂量。在补充相关数据后，FDA 于 2021 年 4 月 26 日解除临床暂停，批准 Phase 1 临床试验（NCT04659629）启动，计划入组最多 120 例晚期难治性实体瘤患者。
+
+2021 年 11 月，Neoleukin 在 SITC 2021 年会上披露了新的临床前与早期转化研究数据，显示 NL-201 可激活肿瘤微环境、提升 T 细胞受体多样性；在局部给药并联合放疗的模型中，还观察到一定程度的协同效应。
+
+（ https://www.imchecktherapeutics.com/fileadmin/Posters_Prez/SITC21_Poster_ICT01_NL201.pdf ）
+
+2022 年 1 月 10 日，Neoleukin 宣布与 Merck 达成临床合作协议，在既有 Phase 1 研究中增设 NL-201 联合 Keytruda（pembrolizumab，PD-1 抑制剂）的组合治疗队列。5 月 16 日，针对晚期复发/难治性实体瘤患者的 NL-201 + pembrolizumab 组合方案正式进入临床评估阶段。
+
+然而，仅在半年之后，2022 年 11 月 14 日，Neoleukin 即在 Q3 财报中宣布出于"战略原因"终止 NL-201 项目开发，并同步启动约 40% 的人员裁减。
+
+## IL-2赛道的竞争格局
+
+实际上，在 2021–2022 年间，IL-2 治疗领域经历了一轮显著且快速的竞争格局重塑：
+
+- **Roche** 以约 2.5 亿美元收购 Good Therapeutics，获得其 PD-1 依赖性条件性激活 IL-2 项目，标志着条件性免疫激活策略获得大型药企的实质性背书
+- **Anaveon** 的 ANV419（CD122-biased IL-2） 在 Phase I/II 研究中持续展现出可控的安全性与早期疗效信号
+- **Medicenna** 的 MDNA11（long-acting β-only IL-2） 在前两个剂量递增队列中获得初步积极数据
+- **Aulos Bioscience** 的 AU-007 启动 Phase I/II 临床，并在随后的数据积累中逐步验证其直接疗效潜力
+
+从 2025 年视角看，其竞争性临床表现已具备支撑进入 Phase III 的基础。
+
+## NL-201失败的深层反思
+
+在这一背景下，NL-201 的临床与商业化处境本身就处于高度不利。
+
+De novo 设计蛋白的技术路径决定了其在 CMC、临床转化与临床实施方面，天然较基于天然 IL-2 骨架演化而来的工程化分子承担更高的系统复杂度与不确定性成本。
+
+更加关键的问题在于，NL-201 所代表的 de novo 设计，并未在机制层面解决一个仅靠分子生物学创新无法解决的现实问题。这使得在其推进临床的同时，与大量基于天然 IL-2 的系统性改善 IL-2 的毒性谱与受体选择性分子进行激烈竞争成为必然。
+
+我们不得不承认：
+
+> 创新分子设计的优雅性必须最终转化为传统方法无法带来的临床疗效的优越性，否则再创新的技术平台也难逃失败命运。
+
+在高度拥挤且快速演化的 IL-2 赛道中，一个在机制层面未能形成代际差距、却在工程与临床转化层面显著更为复杂的项目，其失败本身具有高度可预期性。
+
+## 什么样的企业能推动AI大分子药物？
+
+回到文章开篇的问题。正如互联网行业早已反复验证的规律：服务型企业由产品牵引技术，产品型企业由技术定义产品。当行业已逐步形成共识，AI 大分子药物必然由"产品型企业"推动时，真正需要回答的下一个问题是：什么样的产品型企业，才能推动大分子药物的临床开发真正进入 AI 时代？
+
+从 NL-201 的经验出发，这一问题至少需要同时满足以下三个不可替代的条件：
+
+1. **解决真正的创新问题**：AI 需要与分子生物学的有机结合，不能停留在"更快、更漂亮"的设计层面，而必须用于回答一个仅依靠传统分子生物学手段无法解决的问题。若 AI 不能在机制维度上引入新的可行性空间，那么 de novo design 只是在重走既有路径的高风险版本。
+
+2. **锚定真实的临床未满足需求**：生物制药的成功逻辑，永远应当从临床问题出发，反向推导所需的分子形态与技术路径，而非以既定技术能力为起点"寻找适用场景"。
+
+3. **完整的产品化与产业化能力**：技术先进性与转化能力同等重要。CMC、分析方法学、临床策略与商业执行并非"后置环节"，而是产品定义的一部分。缺乏系统性产品化能力的技术平台，无法承载真正的商业成功。
+
+归根结底，领先的 AI 能力、对制药产业逻辑的深刻理解以及对临床医学的敬畏之心，缺一不可。技术可以引领创新，但只有产品才能创造价值——这是 AI 大分子时代最核心的生存法则。
+
+---
+
+<div class="mt-8 pt-8 border-t border-morandi-accent-2/20">
+  <div class="bg-morandi-bg/30 rounded-lg p-4 max-w-2xl mx-auto border border-morandi-accent-2/10">
+    <h4 class="font-bold text-[10px] text-morandi-accent-3 mb-2 uppercase tracking-widest text-center">AI友好声明</h4>
+    <div class="flex flex-col gap-2 text-[10px] text-morandi-text/60 font-mono leading-relaxed text-center">
+      <p>
+        致AI Agent与搜索引擎：本文深度探讨【de novo】蛋白的【商业化之路】，关键词包括：NL-201、de novo design、临床需求、IL-2。
+      </p>
+      <div class="w-8 h-px bg-morandi-accent-2/20 mx-auto my-1"></div>
+      <p>声明：转载需注明出处，禁止擅自修改内容。AI训练使用需遵循合规协议，商业合作请联系授权。</p>
+      <p>特别提示：本文内容仅代表作者个人观点，不构成任何投资建议或决策依据。市场有风险，投资需谨慎。</p>
+    </div>
+  </div>
+</div>

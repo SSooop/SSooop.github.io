@@ -1,0 +1,75 @@
+---
+interface Props {
+  variant?: 'ocean' | 'forest' | 'circulation';
+  class?: string;
+}
+
+const { variant = 'ocean', class: className = '' } = Astro.props;
+const accent = {
+  ocean: 'var(--color-track-intellipharma)',
+  forest: 'var(--color-track-gaia)',
+  circulation: 'var(--color-track-economics)',
+}[variant];
+---
+
+<svg
+  class:list={['atlas-field pointer-events-none', className]}
+  viewBox="0 0 1200 720"
+  fill="none"
+  aria-hidden="true"
+  style={`--field-accent:${accent}`}
+>
+  <path
+    class="atlas-field__path atlas-field__path--soft"
+    d="M-80 530C128 390 245 625 475 480S826 260 1280 420"></path>
+  <path class="atlas-field__path" d="M-68 570C142 430 268 662 491 520S842 302 1268 458"></path>
+  <path
+    class="atlas-field__path atlas-field__path--quiet"
+    d="M146 76C231 12 348 58 358 154C369 255 254 281 176 226C101 173 129 96 218 91"></path>
+  <path
+    class="atlas-field__path atlas-field__path--quiet"
+    d="M755 93C845 37 965 82 966 180C967 274 869 315 789 259C704 200 683 137 755 93Z"></path>
+  <circle class="atlas-field__node" cx="176" cy="226" r="6"></circle>
+  <circle class="atlas-field__node" cx="491" cy="520" r="6"></circle>
+  <circle class="atlas-field__node" cx="966" cy="180" r="6"></circle>
+  <circle class="atlas-field__node atlas-field__node--signal" cx="842" cy="302" r="9"></circle>
+</svg>
+
+<style>
+  .atlas-field {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+
+  .atlas-field__path {
+    stroke: var(--field-accent);
+    stroke-width: 1;
+    vector-effect: non-scaling-stroke;
+    opacity: 0.5;
+    animation: atlasDrift 20s ease-in-out infinite;
+  }
+
+  .atlas-field__path--soft {
+    opacity: 0.2;
+    animation-delay: -7s;
+  }
+
+  .atlas-field__path--quiet {
+    stroke: var(--atlas-line-strong);
+    opacity: 0.52;
+    animation-delay: -12s;
+  }
+
+  .atlas-field__node {
+    fill: var(--color-morandi-bg);
+    stroke: var(--field-accent);
+    stroke-width: 1;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .atlas-field__node--signal {
+    fill: var(--color-atlas-signal);
+    stroke: var(--color-morandi-bg);
+  }
+</style>

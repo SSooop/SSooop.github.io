@@ -1,0 +1,123 @@
+---
+/**
+ * MetaTags Component - Comprehensive SEO & Social Meta Tags
+ *
+ * Supports:
+ * - Core SEO meta tags (title, description, robots)
+ * - Open Graph meta tags (og:title, og:description, og:image, og:type, og:url)
+ * - Twitter Card meta tags (twitter:card, twitter:title, twitter:description, twitter:image)
+ * - Canonical URLs
+ * - hreflang tags for multilingual content
+ * - Favicon and app icon links
+ * - Viewport and theme-color meta tags
+ */
+
+import { absoluteUrl } from '../config/site';
+
+interface MetaTagProps {
+  title: string;
+  description: string;
+  image?: string;
+  type?: 'website' | 'article';
+  keywords?: string[];
+  canonical?: string;
+  alternateLanguages?: Record<string, string>; // { 'en': '/en/...', 'zh': '/zh/...', 'x-default': '/en/...' }
+  noindex?: boolean;
+  lang?: string;
+  citation?: CitationMeta;
+}
+
+interface CitationMeta {
+  title: string;
+  author: string;
+  publicationDate: string;
+  url: string;
+  language: 'en' | 'zh';
+}
+
+const {
+  title,
+  description,
+  image = absoluteUrl('/og-image.png'),
+  type = 'website',
+  keywords = [],
+  canonical,
+  alternateLanguages = {},
+  noindex = false,
+  lang = 'en',
+  citation,
+} = Astro.props as MetaTagProps;
+
+const fullUrl = canonical ? absoluteUrl(canonical) : absoluteUrl(Astro.url.pathname);
+const citationUrl = citation ? absoluteUrl(citation.url) : fullUrl;
+const citationDate = citation ? new Date(citation.publicationDate).toISOString().slice(0, 10) : '';
+const citationLanguage = citation?.language === 'zh' ? 'zh-CN' : 'en-US';
+
+// Generate keywords meta content
+const keywordsContent = keywords.length > 0 ? keywords.join(', ') : undefined;
+
+// Twitter Card type
+const twitterCardType = type === 'article' ? 'summary_large_image' : 'summary';
+---
+
+<!-- Primary Meta Tags -->
+<title>{title}</title>
+<meta name="title" content={title} />
+<meta name="description" content={description} />
+{keywordsContent && <meta name="keywords" content={keywordsContent} />}
+{noindex && <meta name="robots" content="noindex, nofollow" />}
+{!noindex && <meta name="robots" content="index, follow" />}
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content={type} />
+<meta property="og:url" content={fullUrl} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={image} />
+<meta property="og:locale" content={lang === 'zh' ? 'zh_CN' : 'en_US'} />
+
+<!-- Twitter -->
+<meta property="twitter:card" content={twitterCardType} />
+<meta property="twitter:url" content={fullUrl} />
+<meta property="twitter:title" content={title} />
+<meta property="twitter:description" content={description} />
+<meta property="twitter:image" content={image} />
+
+<!-- Canonical URL -->
+<link rel="canonical" href={fullUrl} />
+
+{
+  type === 'article' && citation && (
+    <>
+      <meta name="citation_title" content={citation.title} />
+      <meta name="citation_author" content={citation.author} />
+      <meta name="citation_publication_date" content={citationDate} />
+      <meta name="citation_online_date" content={citationDate} />
+      <meta name="citation_language" content={citationLanguage} />
+      <meta name="citation_public_url" content={citationUrl} />
+      <meta name="DC.title" content={citation.title} />
+      <meta name="DC.creator" content={citation.author} />
+      <meta name="DC.date" content={citationDate} />
+      <meta name="DC.identifier" content={citationUrl} />
+      <meta name="DC.language" content={citationLanguage} />
+    </>
+  )
+}
+
+<!-- Alternate Language Links (hreflang) -->
+{
+  Object.entries(alternateLanguages).map(([langCode, langPath]) => (
+    <link rel="alternate" hreflang={langCode} href={absoluteUrl(langPath)} />
+  ))
+}
+
+<!-- Favicon and App Icons -->
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+<!-- Viewport and Theme -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="theme-color" content="#1a1a1a" />
+
+<!-- Additional SEO -->
+<meta name="author" content="Alex Su" />
+<meta name="generator" content={Astro.generator} />

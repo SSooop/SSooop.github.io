@@ -1,0 +1,54 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "timezone": "Asia/Shanghai",
+  "schedule": ["before 9am on monday"],
+  "labels": ["dependencies"],
+  "dependencyDashboard": true,
+  "prConcurrentLimit": 5,
+  "rangeStrategy": "bump",
+  "packageRules": [
+    {
+      "description": "Group Astro and content pipeline packages.",
+      "matchPackageNames": ["/^astro$/", "/^@astrojs\\//"],
+      "groupName": "astro ecosystem"
+    },
+    {
+      "description": "Group React runtime packages.",
+      "matchPackageNames": [
+        "/^react$/",
+        "/^react-dom$/",
+        "/^@types/react/",
+        "qrcode.react",
+        "react-icons"
+      ],
+      "groupName": "react ecosystem"
+    },
+    {
+      "description": "Group Tailwind and build tooling.",
+      "matchPackageNames": ["/^tailwindcss$/", "/^@tailwindcss\\//", "sharp"],
+      "groupName": "styling and assets"
+    },
+    {
+      "description": "Group linting, formatting, and TypeScript tooling.",
+      "matchPackageNames": [
+        "/^@eslint\\//",
+        "/^eslint/",
+        "/^prettier/",
+        "globals",
+        "typescript",
+        "typescript-eslint"
+      ],
+      "groupName": "quality tooling"
+    },
+    {
+      "description": "Group GitHub Actions updates.",
+      "matchManagers": ["github-actions"],
+      "groupName": "github actions"
+    }
+  ],
+  "lockFileMaintenance": {
+    "enabled": true,
+    "schedule": ["before 9am on monday"]
+  }
+}

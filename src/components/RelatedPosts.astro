@@ -1,0 +1,83 @@
+---
+/**
+ * RelatedPosts Component
+ *
+ * Displays related blog posts based on language or manual curation
+ */
+
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+
+interface Props {
+  currentPostSlug: string;
+  currentLang: 'en' | 'zh';
+  maxPosts?: number;
+}
+
+const { currentPostSlug, currentLang, maxPosts = 3 } = Astro.props as Props;
+
+// Get all posts
+const allPosts = await getCollection('blog');
+
+// Filter posts by current language, excluding current post
+const relatedPosts = allPosts
+  .filter((post) => post.id !== currentPostSlug && post.data.lang === currentLang)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, maxPosts);
+
+if (relatedPosts.length === 0) {
+  // Don't render if no related posts
+  return null;
+}
+---
+
+{
+  relatedPosts.length > 0 && (
+    <aside class="border-morandi-accent-2/30 mt-16 border-t pt-8" aria-label="Related posts">
+      <h2 class="text-morandi-text mb-6 font-serif text-2xl">
+        {currentLang === 'en' ? 'Related Posts' : '相关文章'}
+      </h2>
+      <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {relatedPosts.map((post) => {
+          const coverImage = post.data.image;
+          const coverAlt = post.data.imageAlt || post.data.title;
+
+          return (
+            <a
+              href={`/${currentLang}/blog/${post.id}`}
+              class="group border-morandi-accent-2/20 bg-morandi-bg/20 hover:bg-track-intellipharma-surface block overflow-hidden rounded border transition-all hover:-translate-y-0.5 hover:shadow-md"
+            >
+              {coverImage && (
+                <div class="border-morandi-accent-2/20 aspect-[16/9] overflow-hidden border-b">
+                  <Image
+                    src={coverImage}
+                    alt={coverAlt}
+                    widths={[360, 560, 720]}
+                    sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, calc(100vw - 2rem)"
+                    loading="lazy"
+                    class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.025]"
+                  />
+                </div>
+              )}
+              <div class="p-6">
+                <time class="text-morandi-accent-3 mb-2 block font-mono text-xs">
+                  {post.data.date.toLocaleDateString(currentLang === 'zh' ? 'zh-CN' : 'en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                  })}
+                </time>
+                <h3 class="text-morandi-text group-hover:text-track-intellipharma mb-2 line-clamp-2 font-serif text-lg transition-colors">
+                  {post.data.title}
+                </h3>
+                <p class="text-morandi-text/70 line-clamp-3 font-sans text-sm">
+                  {post.data.description}
+                </p>
+              </div>
+            </a>
+          );
+        })}
+      </div>
+    </aside>
+  )
+}
