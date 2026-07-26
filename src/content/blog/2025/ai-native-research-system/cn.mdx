@@ -19,11 +19,18 @@ publications:
     status: "published"
     access: "qr_or_account"
     account: "智药深瞳"
-image: ./images/cover.png
-imageAlt: "设计AI原生的Research体系"
-imageCaption: "设计AI原生的Research体系"
-imageSource: "智药深瞳"
+image: ./images/multi-omics-integration.png
+imageAlt: "以大象比喻生物学增强子研究的多源证据整合示意图"
+imageCaption: "增强子研究需要整合序列、细胞类型、三维构象、扰动实验与体内验证等多种观测维度"
+imageSource: "Gerstein Lab / Yale"
+imageSourceUrl: "http://files2.gersteinlab.org/public-docs/2022/03.01/MG_lectures/22m7--cbb752-MG-spr22-multi-omics.pdf"
+imagePosition: center
 ---
+
+import ArticleImage from '../../../../components/blog/ArticleImage.astro';
+import agentTrends2025 from './images/agent-trends-2025.webp';
+import aiNativeResearchCollaboration from './images/ai-native-research-collaboration.png';
+import multiOmicsIntegration from './images/multi-omics-integration.png';
 
 2025年8月7日万众瞩目的GPT-5发布，一时间掀起了AGI评价的"冰火两重天"——OpenAI宣称其具备"博士级推理"，却被用户吐槽"跑分≠体验"吐槽大会。尤其是发布会当天准备的演示slides上大秀一波"52>69=30"的名场面，确实难评。
 
@@ -32,6 +39,17 @@ imageSource: "智药深瞳"
 究其核心原因，是公众对于AGI的预期在GPT-5发布前后发生了重大转变，当人们意识到所谓的"令人昏厥"的智能只是一种炒作方法，传统的互联网所谓市场占有率，用户习惯和营销策略又回到了人们视野中。而Google作为拥有超大用户群体和应用生态的巨头毋庸置疑已经占尽了应用层的优势。其被低估的潜力爆发，生态优势在未来的AI竞争中将全面释放。
 
 让我们回到商业化的角度，2025年被视为 "AI Agent商业化元年" ，其发展呈现出多路径并行的格局。从技术架构来看，单体智能体追求"大而全"的任务执行能力，多智能体协作系统则以分工、协作和专业化优势应对复杂场景，而轻量化任务管理型智能体则凭借高效、低资源消耗的特性，在特定场景中表现突出。下图展示了2025上半年AI Agent应用趋势，不难看出：
+
+<ArticleImage
+  src={agentTrends2025}
+  alt="2025年AI Agent趋势信息图，展示语音智能体、Agentic RAG、智能体协议、计算机使用智能体、编程智能体与深度研究智能体"
+  caption="2025年AI Agent趋势：Voice、Agentic RAG、协议、CUA、Coding与Deep Research"
+  source="Rakesh Gohel / LinkedIn"
+  sourceUrl="https://www.linkedin.com/posts/rakeshgohel01_ai-agent-trends-have-drastically-changed-activity-7343981787842297858-PJkS/"
+  sourcePrefix="来源"
+  variant="full"
+  tone="plain"
+/>
 
 - **Voice Agents**：语音交互革新，希望颠覆基于文本的传统人机交互模式。
 - **Agent RAG**：聚焦企业级服务，尤其是企业内部新的查询模式。
@@ -53,12 +71,28 @@ imageSource: "智药深瞳"
 
 这种二元性恰恰揭示了AI Scientist的终极定位：它不应是取代人类的"思考者"，而应成为连接跨领域科学家的"语义桥梁"，在保持各学科表达规范的同时构建知识融通的高速通道。这种定位自然引向一个根本性问题：究竟该如何设计AI原生的Research系统？
 
-（示意图：想象中使用Gemini 2.5 Flash生成的AI Native Reseach System（ANRS））
+<ArticleImage
+  src={aiNativeResearchCollaboration}
+  alt="AI Agent连接基因组学、生物信息学、分子生物学、蛋白质工程、结构生物学、细胞生物学、药物发现与人类科学家的协作体系示意图"
+  caption="AI Agent与不同领域人类科学家的协作模型：增强复杂研究的系统化能力，而非取代科学家"
+  source="智药深瞳（AI生成）"
+  sourcePrefix="来源"
+  variant="compact"
+  tone="plain"
+/>
 
 我们想象这样一种情形：AI通过Natural Language作为载体与人类科学家进行交互，众多领域的人类科学家通过AI进行全人类范围内的思想的深度整合和广泛融合。在已有成熟研究范式的领域，人工智能可自动化实现研究模式的复现与扩展，从而在取得关键突破后迅速扩大研究规模，形成超越个体科学家认知能力的系统性研究能力。因此，现有research的范式需要被颠覆，应该匹配AI的长处而不是人的长处（有可能将来的多组学就是如此），尝试对复杂问题推理模式进行探索和穷尽，从而使得人类科学家"间接"地掌握超出其能力范围的认知。
 
-Integration for elements
-http://files2.gersteinlab.org/public-docs/2022/03.01/MG_lectures/22m7--cbb752-MG-spr22-multi-omics.pdf
+<ArticleImage
+  src={multiOmicsIntegration}
+  alt="以大象比喻生物学增强子研究的多源证据整合示意图，涵盖序列、细胞类型、三维构象、MPRA、CRISPR筛选与体内验证"
+  caption="增强子研究需要整合序列、细胞类型、三维构象、扰动实验与体内验证等多种观测维度"
+  source="Gerstein Lab / Yale"
+  sourceUrl="http://files2.gersteinlab.org/public-docs/2022/03.01/MG_lectures/22m7--cbb752-MG-spr22-multi-omics.pdf"
+  sourcePrefix="来源"
+  variant="full"
+  tone="plain"
+/>
 
 在科学探索的征途上，Agent将与人类科学家携手，融合多领域智慧，超越局部认知的局限，共同揭开复杂系统的全貌。这场协作必将突破"盲人摸象"的困境，迈向更全面、深刻的认知新境界。
 

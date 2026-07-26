@@ -20,11 +20,18 @@ keywords:
   - "Ab-Ag docking"
   - "binding dynamics"
   - "structure assembly"
-image: ./images/cover.png
-imageAlt: "Finding the Context of Protein Docking"
-imageCaption: "Finding the Context of Protein Docking"
-imageSource: "IntelliPharma Hub"
+image: ./images/protein-docking-context-architecture.png
+imageAlt: "An AI-native context-conditioned protein docking architecture combining physical evidence, evolutionary information, structural generation, and experimental feedback"
+imageCaption: "Context is sampled, compressed, decoded, and re-ranked rather than appended as a static model input"
+imageSource: "IntelliPharma Hub (author original, redrawn in PowerPoint)"
+imagePosition: center
 ---
+
+import ArticleImage from '../../../../components/blog/ArticleImage.astro';
+import biparatopicAntibodyMechanisms from './images/biparatopic-antibody-mechanisms.jpg';
+import sarsCov2P17BivalentBinding from './images/sars-cov2-p17-bivalent-binding.jpg';
+import chai1DockingRestraints from './images/chai-1-docking-restraints.png';
+import proteinDockingContextArchitecture from './images/protein-docking-context-architecture.png';
 
 Since the first murine monoclonal antibody OKT3 appeared in 1986, antibody therapeutics have advanced through humanization and expanded into monoclonal antibodies, antibody-drug conjugates, bispecific antibodies, and other forms. They are now central therapeutic strategies in oncology, autoimmune disease, and other fields. As a result, accurate prediction of antibody-antigen complex conformations, the Ab-Ag docking problem, has become a core challenge.
 
@@ -50,6 +57,16 @@ Another relevant paper is:
 
 > Biparatopic antibodies: therapeutic applications and prospects.
 
+<ArticleImage
+  src={biparatopicAntibodyMechanisms}
+  alt="Mechanisms of biparatopic antibodies including cis and trans avidity, pathway inhibition, receptor clustering, immune effector function, and lysosomal trafficking"
+  caption="Biparatopic mechanisms range from cis/trans avidity to receptor clustering, effector function, and lysosomal trafficking"
+  source="Niquille, Fitzgerald & Gera / mAbs"
+  sourceUrl="https://pmc.ncbi.nlm.nih.gov/articles/PMC10936611/"
+  variant="compact"
+  tone="plain"
+/>
+
 At a more refined molecular scale, functional differences from population-level binding dynamics become even more significant.
 
 ## SARS-CoV-2 and Bivalent Binding
@@ -60,6 +77,16 @@ The binding of SARS-CoV-2 spike and antibodies such as S309 provides a useful ex
 
 Here, the binding question is not just whether an antibody can dock to an antigen. It is whether the geometry of the antigen arrangement, antibody flexibility, epitope accessibility, and spatial organization allow bivalent binding under realistic biological conditions.
 
+<ArticleImage
+  src={sarsCov2P17BivalentBinding}
+  alt="Cryo-electron tomography showing eleven bivalent P17-IgG binding modes between SARS-CoV-2 spike trimers and higher-order assembly on virions"
+  caption="P17-IgG links neighboring spike trimers through multiple bivalent modes and reshapes higher-order assembly on the virion"
+  source="Nature Communications"
+  sourceUrl="https://www.nature.com/articles/s41467-026-71631-5"
+  variant="compact"
+  tone="plain"
+/>
+
 This is why protein docking cannot be understood only as a static structural prediction problem.
 
 ## What Context Should Docking Models Capture?
@@ -69,6 +96,26 @@ In practical drug discovery, docking should be formulated according to the actua
 The model formulation should follow the biological question.
 
 For AI tools such as Chai-1 and other molecular-interaction models, the value lies not only in predicting a complex structure. It lies in helping researchers reason about which structural possibilities matter. A model that outputs several plausible conformations without connecting them to function may still leave the experimental team uncertain.
+
+<ArticleImage
+  src={chai1DockingRestraints}
+  alt="Chai-1 antibody-antigen DockQ success rates under contact and epitope-residue restraints"
+  caption="Chai-1 results show that explicit epitope-residue restraints substantially improve antibody-antigen DockQ success rates"
+  source="Chai Discovery / Chai-1 Technical Report"
+  sourceUrl="https://chaiassets.com/chai-1/paper/technical_report_v1.pdf"
+  variant="full"
+  tone="plain"
+/>
+
+<ArticleImage
+  src={proteinDockingContextArchitecture}
+  alt="A closed-loop context-conditioned protein docking architecture with separate physical and evolutionary encoders, MMDiT fusion, structural decoding, and discriminator feedback"
+  caption="An AI-native docking system keeps physical and evolutionary context in a recurrent generation-and-feedback loop"
+  source="IntelliPharma Hub (author original, redrawn in PowerPoint)"
+  variant="full"
+  aspect="16:9"
+  tone="plain"
+/>
 
 ## Conclusion
 

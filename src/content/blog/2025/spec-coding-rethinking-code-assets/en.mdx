@@ -22,9 +22,18 @@ keywords:
   - "software abstraction"
 image: ./images/cover.png
 imageAlt: "The Anti-Consensus of Spec Coding: When Code Is No Longer the Core Asset"
-imageCaption: "The Anti-Consensus of Spec Coding: When Code Is No Longer the Core Asset"
-imageSource: "IntelliPharma Hub"
+imageCaption: "From rapid prototypes to verifiable, maintainable software systems"
+imageSource: "ULAM LABS"
+imageSourceUrl: "https://www.ulam.io/software-services/mvp-rescue/"
 ---
+
+import ArticleImage from '../../../../components/blog/ArticleImage.astro';
+import vibeCodingRescue from './images/vibe-coding-rescue.png';
+import specKitStarHistory from './images/spec-kit-star-history.png';
+import agenticCodingRevisions from './images/agentic-coding-revisions.png';
+import specKitTestFirst from './images/spec-kit-test-first.png';
+import solVerFramework from './images/sol-ver-framework.png';
+import specKitComplianceGates from './images/spec-kit-compliance-gates.png';
 
 On February 2, 2025, Andrej Karpathy posted an important observation about AI programming on X and systematically introduced the concept of vibe coding.
 
@@ -34,13 +43,20 @@ The concept quickly attracted attention. Its appeal is that it lets developers p
 2. **Natural-language interaction**: natural language becomes the unified interface, breaking the barrier of traditional programming languages and changing the human-machine collaboration paradigm.
 3. **Acceptance of code redundancy**: in rapid prototyping, code can be somewhat redundant or suboptimal. Speed matters more than quality, especially for throwaway weekend projects and proofs of concept.
 
-## The Rise and Decline of Vibe Coding
-
 With the spread of vibe coding, many startups emerged around this idea. Base44 was especially striking. From founding to acquisition, the company lasted only six months and was ultimately sold for $80 million. This showed how strongly capital chased the trend.
 
 But problems soon appeared. A natural-language, intuition-driven interaction mode is inherently weak at precise requirement description. For long-term projects, this can damage stability, team collaboration, and maintainability. Companies dedicated to repairing the legacy of vibe-coded projects, such as Ulam Labs, have already begun to appear.
 
-## The Rise of Spec Coding
+<ArticleImage
+  src={vibeCodingRescue}
+  alt="ULAM LABS Vibe Coding Rescue service page"
+  caption="Once rapidly generated prototypes move toward production, code quality, architecture, security, and maintainability return as central concerns"
+  source="ULAM LABS"
+  sourceUrl="https://www.ulam.io/software-services/mvp-rescue/"
+  variant="wide"
+  aspect="16:9"
+  tone="ink"
+/>
 
 Spec coding emerged as a response. Its core idea is that natural language alone is not enough. Requirements must be structured into specifications that can guide models, tests, implementation, and review.
 
@@ -48,9 +64,36 @@ In this paradigm, the human no longer only says "make me an app." The human defi
 
 Spec coding therefore shifts the center of gravity. The asset is no longer just code. It is the specification that expresses intent.
 
-## Spec Kit: Official Entry
+<div class="my-10 overflow-x-auto rounded-lg border border-morandi-accent-2/30 bg-white/60 px-6 py-7 text-center shadow-sm">
+  <math
+    display="block"
+    aria-label="Specification Layer generates Implementation Layer, which verifies Behavior Trace, which monitors Specification Feedback"
+    class="mx-auto text-[0.82rem] text-morandi-text sm:text-[0.9rem]"
+  >
+    <mrow>
+      <mtext>Specification Layer</mtext>
+      <mover><mo stretchy="true">⟶</mo><mtext>generate</mtext></mover>
+      <mtext>Implementation Layer</mtext>
+      <mover><mo stretchy="true">⟶</mo><mtext>verify</mtext></mover>
+      <mtext>Behavior Trace</mtext>
+      <mover><mo stretchy="true">⟶</mo><mtext>monitor</mtext></mover>
+      <mtext>Specification Feedback</mtext>
+    </mrow>
+  </math>
+</div>
 
 When official tools such as Spec Kit appeared, the idea became more explicit. The software-development process began to move from prompt-driven generation toward spec-driven execution. This is not a rejection of AI coding. It is a maturation of AI coding.
+
+<ArticleImage
+  src={specKitStarHistory}
+  alt="GitHub Spec Kit star growth after launch"
+  caption="Spec Kit quickly attracted developer attention after its 2025 release"
+  source="Star History"
+  sourceUrl="https://www.star-history.com/#github/spec-kit&Date"
+  variant="wide"
+  aspect="auto"
+  tone="paper"
+/>
 
 The better the model becomes at generating code, the more important it becomes to define what should be generated. In the past, code was expensive and specifications were often treated as secondary documentation. In the AI era, code becomes cheaper and executable intent becomes more valuable.
 
@@ -60,13 +103,46 @@ The first anti-consensus is that code itself may no longer be the core moat. Thi
 
 The barrier may become product judgment, architecture, data, workflow understanding, domain knowledge, and the ability to define good specifications. Bad code can be regenerated. Bad product thinking cannot.
 
+<ArticleImage
+  src={agenticCodingRevisions}
+  alt="Distribution of changed files, added lines, and deleted lines in revised Agentic and Human PRs"
+  caption="Revision-cost distributions for Agentic PRs and Human PRs (Figure 6)"
+  source="Watanabe et al., On the Use of Agentic Coding"
+  sourceUrl="https://arxiv.org/abs/2509.14745"
+  variant="wide"
+  aspect="auto"
+  tone="paper"
+/>
+
 For industry AI applications, this is even more important. The value is not in producing code faster, but in translating domain complexity into a form that AI and software systems can execute.
 
 ## Anti-Consensus 2: Test-Driven Development Becomes More Important
 
 The second anti-consensus is that test-driven development becomes more important, not less. If AI can generate code quickly, the limiting factor becomes verification. Tests express expected behavior. They protect the system from silent drift.
 
+<ArticleImage
+  src={specKitTestFirst}
+  alt="The Test-First Imperative in GitHub Spec Kit's official documentation"
+  caption="Spec Kit defines the test-first principle as NON-NEGOTIABLE"
+  source="GitHub Spec Kit"
+  sourceUrl="https://github.com/github/spec-kit/blob/main/spec-driven.md#article-iii-test-first-imperative"
+  variant="wide"
+  aspect="auto"
+  tone="paper"
+/>
+
 In traditional engineering, writing tests sometimes felt slower than writing code. In agent coding, code is cheap and mistakes are fast. Tests become the anchor.
+
+<ArticleImage
+  src={solVerFramework}
+  alt="The SOL-VER self-play framework jointly generates code solutions and unit tests"
+  caption="SOL-VER iteratively improves one model in its solver and verifier roles (Figure 1)"
+  source="Lin et al., Learning to Solve and Verify"
+  sourceUrl="https://arxiv.org/abs/2502.14948"
+  variant="wide"
+  aspect="auto"
+  tone="paper"
+/>
 
 ## Anti-Consensus 3: Redefining Over-Engineering
 
@@ -74,7 +150,16 @@ The third anti-consensus is that over-engineering needs to be redefined. In the 
 
 Clear types, modular boundaries, acceptance tests, permission systems, and explicit specs may look like extra work. But when code generation accelerates, these structures prevent entropy. The question is not whether engineering is heavy. The question is whether the structure helps AI and humans collaborate safely.
 
-## Conclusion
+<ArticleImage
+  src={specKitComplianceGates}
+  alt="GitHub Spec Kit pre-implementation gates for simplicity and anti-abstraction"
+  caption="Spec Kit requires explicit justification for project count and additional abstraction"
+  source="GitHub Spec Kit"
+  sourceUrl="https://github.com/github/spec-kit/blob/main/spec-driven.md#4-constitutional-compliance-through-gates"
+  variant="wide"
+  aspect="auto"
+  tone="paper"
+/>
 
 Vibe coding was an important breakthrough because it revealed the power of natural-language programming. But for professional systems, vibe alone is not enough. Spec coding may become the more durable paradigm.
 

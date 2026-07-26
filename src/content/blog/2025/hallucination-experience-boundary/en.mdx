@@ -1,30 +1,41 @@
 ---
-title: "Expanding the Boundary of Experience Through Hallucination"
+title: 'Expanding the Boundary of Experience Through Hallucination'
 date: 2025-09-22
-description: "A reflection on hallucination, AlphaGo, and whether AI-generated deviations can expand scientific experience rather than merely create errors."
-lang: "en"
-translationKey: "2025/hallucination-experience-boundary"
+description: 'A reflection on hallucination, AlphaGo, and whether AI-generated deviations can expand scientific experience rather than merely create errors.'
+lang: 'en'
+translationKey: '2025/hallucination-experience-boundary'
 translations:
-  zh: "2025/hallucination-experience-boundary/cn"
-  en: "2025/hallucination-experience-boundary/en"
+  zh: '2025/hallucination-experience-boundary/cn'
+  en: '2025/hallucination-experience-boundary/en'
 canonical:
-  url: "/en/blog/2025/hallucination-experience-boundary/en"
-  role: "version_home"
+  url: '/en/blog/2025/hallucination-experience-boundary/en'
+  role: 'version_home'
 publications:
-  - platform: "site"
-    mode: "full_text"
-    status: "published"
+  - platform: 'site'
+    mode: 'full_text'
+    status: 'published'
 keywords:
-  - "hallucination"
-  - "AI for science"
-  - "AlphaGo"
-  - "research paradigms"
-  - "empirical software"
-image: ./images/cover.png
-imageAlt: "Expanding the Boundary of Experience Through Hallucination"
-imageCaption: "Expanding the Boundary of Experience Through Hallucination"
-imageSource: "IntelliPharma Hub"
+  - 'hallucination'
+  - 'AI for science'
+  - 'AlphaGo'
+  - 'research paradigms'
+  - 'empirical software'
+image: ./images/hallucination-experience-boundary.png
+imageAlt: 'A closed loop that turns observed results into empirical and counter-empirical hypotheses, then returns them to verification'
+imageCaption: 'Creative hallucination can expand experience only when it becomes a falsifiable prediction and returns to evidence.'
+imageSource: 'IntelliPharma Hub (original diagram, redrawn in PowerPoint)'
+imagePosition: center
 ---
+
+import ArticleImage from '../../../../components/blog/ArticleImage.astro';
+import eraEmpiricalSoftwareOverview from './images/era-empirical-software-overview.png';
+import eraPuctAlgorithm from './images/era-puct-algorithm.png';
+import eraPuctSelectionFormula from './images/era-puct-selection-formula.png';
+import eraCovidForecastLeaderboard from './images/era-covid-forecast-leaderboard.png';
+import alphaGoTrainingPipeline from './images/alphago-training-pipeline.jpg';
+import rlLearningPlanningActing from './images/rl-learning-planning-acting.png';
+import deepDreamCreativeHallucination from './images/deepdream-creative-hallucination.jpg';
+import hallucinationExperienceBoundary from './images/hallucination-experience-boundary.png';
 
 On September 8, DeepMind released a preprint on arXiv titled "An AI system to help scientists write expert-level empirical software." It is impressive that, amid the rapid development of AI agents, DeepMind continues to focus on foundational questions in AI for Science. In an earlier article on AI-native research systems, I wrote:
 
@@ -42,11 +53,61 @@ Looking back, that period feels distant and strangely suggestive. In a 2024 inte
 
 AI then became visible to everyone. Large models, protein-structure prediction, generative design, coding agents, and scientific copilots all made one thing clear: AI does not only automate known procedures. It can also expose unfamiliar solution spaces.
 
+<ArticleImage
+  src={eraEmpiricalSoftwareOverview}
+  alt="ERA feeds a scorable problem and research ideas to an LLM, executes code in a sandbox, and improves a tree of candidate solutions"
+  caption="ERA's core loop: research ideas enter the prompt, code is executed in a sandbox, and tree search expands candidate solutions."
+  source="Google DeepMind / Nature"
+  sourceUrl="https://www.nature.com/articles/s41586-026-10658-6"
+  variant="full"
+  tone="plain"
+/>
+
+<ArticleImage
+  src={eraPuctAlgorithm}
+  alt="PUCT tree-search pseudocode from the ERA paper, covering initialization, selection, execution, expansion, and backpropagation"
+  caption="ERA's PUCT search balances the measured rank of candidate programs with an exploration bonus."
+  source="Lu et al. / An AI system to help scientists write expert-level empirical software"
+  sourceUrl="https://arxiv.org/abs/2509.06503"
+  variant="full"
+  tone="plain"
+/>
+
+<ArticleImage
+  src={eraPuctSelectionFormula}
+  alt="ERA PUCT node-selection equation combining RankScore and a visit-count exploration term"
+  caption="The selection rule exploits high-ranking programs while assigning more weight to under-visited branches."
+  source="Lu et al. / arXiv:2509.06503"
+  sourceUrl="https://arxiv.org/abs/2509.06503"
+  variant="wide"
+  tone="plain"
+/>
+
 ## Algorithm, Environment, and Prior
 
 Reinforcement learning contains three important elements: the algorithm, the environment, and the prior. AlphaGo's success did not come from hallucination in the everyday sense. It came from a system that could explore possibilities within a well-defined environment and then test them rigorously.
 
+<ArticleImage
+  src={eraCovidForecastLeaderboard}
+  alt="Rolling weighted interval score differences between ERA COVID-19 hospitalization forecasts and the CDC Hub ensemble"
+  caption="Rolling COVID-19 forecasting evaluation: red cells indicate better performance than the CDC Hub ensemble."
+  source="Google DeepMind / Nature"
+  sourceUrl="https://www.nature.com/articles/s41586-026-10658-6"
+  variant="full"
+  tone="plain"
+/>
+
 This is the key distinction. An unexpected move is not valuable because it is strange. It is valuable because the environment can judge it. In Go, the board, rules, and outcome provide feedback. The model can explore beyond human habit while remaining anchored to verification.
+
+<ArticleImage
+  src={alphaGoTrainingPipeline}
+  alt="AlphaGo training pipeline for supervised and reinforcement policy networks and the value network"
+  caption="The original AlphaGo first learned a supervised policy from expert games, then improved policy and value networks through self-play."
+  source="Silver et al. / Nature"
+  sourceUrl="https://www.nature.com/articles/nature16961"
+  variant="full"
+  tone="plain"
+/>
 
 ## The Challenge of the Real World
 
@@ -56,6 +117,16 @@ This is why hallucination in research is dangerous. A model may invent reference
 
 But the danger does not mean the phenomenon has no value. Scientific creativity often begins as a departure from inherited experience. The problem is how to connect departure with verification.
 
+<ArticleImage
+  src={rlLearningPlanningActing}
+  alt="Relationship among value and policy, experience, and model through acting, model learning, planning, and direct reinforcement learning"
+  caption="Experience can update value and policy directly, or train a model that feeds planning."
+  source="Sutton & Barto / Reinforcement Learning: An Introduction"
+  sourceUrl="https://web.stanford.edu/class/psych209/Readings/SuttonBartoRL.pdf"
+  variant="compact"
+  tone="plain"
+/>
+
 ## The Experience Boundary of Large Language Models
 
 Large language models learn from human text. Their experience boundary is shaped by the distribution of what has already been written. They are powerful at recombination and analogy, but they do not automatically know which recombination corresponds to reality.
@@ -63,6 +134,17 @@ Large language models learn from human text. Their experience boundary is shaped
 When a model hallucinates, it sometimes crosses the boundary of documented experience. Most of the time, this is useless or wrong. Occasionally, however, the deviation may point toward a question that humans have not framed clearly enough.
 
 The task is not to celebrate hallucination. It is to design systems that can separate creative variation from false assertion.
+
+<ArticleImage
+  src={deepDreamCreativeHallucination}
+  alt="A colorful architectural dreamscape generated by DeepDream from random visual noise"
+  caption="DeepDream amplifies internal priors into visible structure, revealing both over-interpretation and generative space beyond recorded experience."
+  source="Michael Tyka / Google (National Geographic)"
+  sourceUrl="https://www.nationalgeographic.com/magazine/article/explore-dream-mapping"
+  variant="full"
+  aspect="16:9"
+  tone="plain"
+/>
 
 ## Redefining Creative Hallucination
 
@@ -83,6 +165,16 @@ In this form, hallucination becomes closer to exploration than misinformation.
 The researcher's role may therefore change. Instead of producing every hypothesis manually, scientists may increasingly design environments where AI can generate many possibilities and where verification systems can filter them. The scientist becomes a designer of search spaces, evidence standards, and intervention logic.
 
 This is similar to what happened in Go. Human players did not become irrelevant after AlphaGo. They learned to interpret, test, and absorb AI's unfamiliar moves. In science, the challenge is harder because the rules are not closed. But the direction may be similar.
+
+<ArticleImage
+  src={hallucinationExperienceBoundary}
+  alt="A loop that generates empirical and counter-empirical hypotheses from observed results and returns them to falsifiable verification"
+  caption="A research loop for creative hallucination: both empirical and counter-empirical hypotheses must pass a verification gate before they can update evidence."
+  source="IntelliPharma Hub (original diagram, redrawn in PowerPoint)"
+  variant="full"
+  aspect="16:9"
+  tone="plain"
+/>
 
 ## Conclusion
 

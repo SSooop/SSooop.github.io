@@ -1,34 +1,45 @@
 ---
-title: "从Hallucination中拓宽经验的边界"
+title: '从Hallucination中拓宽经验的边界'
 date: 2025-09-22
-description: "深度探讨LLM的Hallucination现象的研究范式之思，关键词包括：Hallucination、Reinforcement Learning、Experience"
-lang: "zh"
-translationKey: "2025/hallucination-experience-boundary"
+description: '深度探讨LLM的Hallucination现象的研究范式之思，关键词包括：Hallucination、Reinforcement Learning、Experience'
+lang: 'zh'
+translationKey: '2025/hallucination-experience-boundary'
 translations:
-  zh: "2025/hallucination-experience-boundary/cn"
-  en: "2025/hallucination-experience-boundary/en"
+  zh: '2025/hallucination-experience-boundary/cn'
+  en: '2025/hallucination-experience-boundary/en'
 canonical:
-  url: "/zh/blog/2025/hallucination-experience-boundary/cn"
-  role: "version_home"
+  url: '/zh/blog/2025/hallucination-experience-boundary/cn'
+  role: 'version_home'
 publications:
-  - platform: "site"
-    mode: "full_text"
-    status: "published"
-  - platform: "wechat"
-    mode: "full_text"
-    status: "published"
-    access: "qr_or_account"
-    account: "智药深瞳"
-image: ./images/cover.png
-imageAlt: "从Hallucination中拓宽经验的边界"
-imageCaption: "从Hallucination中拓宽经验的边界"
-imageSource: "智药深瞳"
+  - platform: 'site'
+    mode: 'full_text'
+    status: 'published'
+  - platform: 'wechat'
+    mode: 'full_text'
+    status: 'published'
+    access: 'qr_or_account'
+    account: '智药深瞳'
+image: ./images/hallucination-experience-boundary.png
+imageAlt: '从观测结果出发生成经验内与反经验假设，并通过验证反馈更新证据边界的闭环架构'
+imageCaption: '创造性幻觉只有在转化为可证伪预测、重新回到证据时，才可能拓宽经验的边界'
+imageSource: '智药深瞳（作者原创，PowerPoint重绘）'
+imagePosition: center
 ---
+
+import ArticleImage from '../../../../components/blog/ArticleImage.astro';
+import eraEmpiricalSoftwareOverview from './images/era-empirical-software-overview.png';
+import eraPuctAlgorithm from './images/era-puct-algorithm.png';
+import eraPuctSelectionFormula from './images/era-puct-selection-formula.png';
+import eraCovidForecastLeaderboard from './images/era-covid-forecast-leaderboard.png';
+import alphaGoTrainingPipeline from './images/alphago-training-pipeline.jpg';
+import rlLearningPlanningActing from './images/rl-learning-planning-acting.png';
+import deepDreamCreativeHallucination from './images/deepdream-creative-hallucination.jpg';
+import hallucinationExperienceBoundary from './images/hallucination-experience-boundary.png';
 
 9月8日，DeepMind在arXiv上发布了一篇题为《An AI system to help scientists write expert-level empirical software》的预印本论文。不得不感叹DeepMind在当下AI智能体快速发展的背景下，仍能持续关注AI for Science的基础性问题。笔者之前的文章曾探讨过AI原生科研系统的构建问题：
 
 > 现有research的范式需要被颠覆，应该匹配AI的长处而不是人的长处，尝试对复杂问题推理模式进行探索和穷尽，从而使得人类科学家"间接"地掌握超出其能力范围的认知。
-> *——Alex Su，公众号：智药深瞳《设计AI原生的Research体系》*
+> _——Alex Su，公众号：智药深瞳《设计AI原生的Research体系》_
 
 进一步地笔者希望就该问题进一步讨论，重新思考一些现有体系下被忽视的问题：Hallucination是否没有被予以正确的关注，以及其能否成为重构研究范式的钥匙？与读者朋友共勉。
 
@@ -37,7 +48,7 @@ imageSource: "智药深瞳"
 人类最早开始向AI学习，大概要追溯到AlphaGo首次击败李世石之时——转眼居然已经是2016年的事了。在这几年里，围棋棋手逐渐从以往依赖个人风格与直觉，转向了对AI招法的学习与理解。比如过去几乎无人采用的"点三三"（一种布局策略，在前AlphaGo时代被认为易于防守但难以展开，这一经验后来被AI的实践所改变），如今几乎出现在每一盘棋局中。以现在的视角回看当初，那段时光恍如隔世，其间更迭又颇堪玩味。2024年41岁的李世石接受《纽约时报》的采访时回忆了这段往事：
 
 > "输给人工智能，从某种意义上说，意味着我的整个世界都坍塌了。我无法适应它，我以为人工智能总有一天会打败人类，我只是觉得它还没到来。"
-> *——[The New York Times](https://www.nytimes.com/2024/07/10/world/asia/lee-saedol-go-ai.html)*
+> _——[The New York Times](https://www.nytimes.com/2024/07/10/world/asia/lee-saedol-go-ai.html)_
 
 接着AI的发展被全世界的每一个人都看到了：
 
@@ -55,7 +66,40 @@ imageSource: "智药深瞳"
 
 在应对此类复杂场景时，LLM为处理过程提供了方法论基础，具体方式是将可量化的评估任务及相关研究思路以Prompt形式输入模型，进而生成代码以构建实证研究所需的软件工具。该实证软件本身的优化则通过基于PUCT（Predictor + Upper Confidence bound applied to Trees）框架的树搜索（Tree Search）算法实现。
 
+<ArticleImage
+  src={eraEmpiricalSoftwareOverview}
+  alt="ERA实证软件系统将可评分问题与研究思路输入LLM，由代码沙盒执行并通过候选代码树持续改进"
+  caption="ERA的基本闭环：研究问题与思路进入Prompt，LLM在代码沙盒中执行，再通过树搜索扩展候选解"
+  source="Google DeepMind / Nature"
+  sourceUrl="https://www.nature.com/articles/s41586-026-10658-6"
+  sourcePrefix="来源"
+  variant="full"
+  tone="plain"
+/>
+
+<ArticleImage
+  src={eraPuctAlgorithm}
+  alt="ERA论文中的UCB树搜索PUCT算法伪代码，包含初始化、节点选择、执行、扩展与回传步骤"
+  caption="ERA使用的PUCT树搜索：在候选程序的性能排名与探索奖励之间选择下一次执行节点"
+  source="Lu et al. / An AI system to help scientists write expert-level empirical software"
+  sourceUrl="https://arxiv.org/abs/2509.06503"
+  sourcePrefix="来源"
+  variant="full"
+  tone="plain"
+/>
+
 在T>1时，每一轮叶子节点通过一个沙盒运行生成出的代码来得到一个得分，这里应用下面的公式来达到RL中常见的Exploration and Exploitation Balance。
+
+<ArticleImage
+  src={eraPuctSelectionFormula}
+  alt="ERA的PUCT节点选择公式，由RankScore与访问次数驱动的探索奖励组成"
+  caption="PUCT节点选择公式：RankScore负责利用已知高分路径，访问次数项鼓励探索较少访问的候选节点"
+  source="Lu et al. / arXiv:2509.06503"
+  sourceUrl="https://arxiv.org/abs/2509.06503"
+  sourcePrefix="来源"
+  variant="wide"
+  tone="plain"
+/>
 
 **RankScore**评估当前T中所有评估节点的归一化排名，倾向于选择已知性能比较好的程序，代表Exploitation。最后一项代表跟Ntotal的一次根号成正比的罚分，鼓励模型对访问次数较少的节点做更高权重从而尝试新路径Exploration。
 
@@ -66,9 +110,31 @@ imageSource: "智药深瞳"
 
 Google的研究方法在CDC官方集成模型的加权区间分数（WIS）评估中超越其他系统位居首位，彰显了人工智能系统在解决可量化评分问题方面的显著能力。然而，正如作者指出，该系统的应用前提是科学问题能够被明确界定且可量化评估的指标任务，而真实科研环境中如何制定有效的评估标准本身即是一项重大挑战，我们需要进一步讨论在此类情境中的应对之法。
 
+<ArticleImage
+  src={eraCovidForecastLeaderboard}
+  alt="ERA COVID-19住院预测模型相对CDC集成基线的滚动WIS差值热力图"
+  caption="COVID-19住院预测的滚动评估：红色代表相对CDC Hub集成模型更优，ERA方案在多个预测周保持领先"
+  source="Google DeepMind / Nature"
+  sourceUrl="https://www.nature.com/articles/s41586-026-10658-6"
+  sourcePrefix="来源"
+  variant="full"
+  tone="plain"
+/>
+
 ## 强化学习三要素：算法、环境、先验
 
 回顾最早的AlphaGo论文可以看到，初代AlphaGo中的SL policy network是通过人类专家棋局训练得到的。根据原文描述，该模型基于6-9段棋手的16万局对弈数据，以当前棋盘布局预测下一步的落子概率，从而构建了一个先验策略（prior）。从今天的视角看，这一先验并非必要，后续的AlphaZero也证实了这一点。若从强化学习的三大要素——算法、环境与先验来进行分析，可归结于以下原因：
+
+<ArticleImage
+  src={alphaGoTrainingPipeline}
+  alt="AlphaGo策略网络与价值网络的训练流程及神经网络架构示意图"
+  caption="初代AlphaGo的训练管线：先由人类专家棋局训练监督策略网络，再通过自我对弈训练强化策略与价值网络"
+  source="Silver et al. / Nature"
+  sourceUrl="https://www.nature.com/articles/nature16961"
+  sourcePrefix="来源"
+  variant="full"
+  tone="plain"
+/>
 
 - **环境**：围棋任务与一般可评分任务在本质上是相似的，其环境能够通过明确的胜负规则提供精确的Reward信号
 - **先验**：围棋的复杂度并不如想象中那样高。尽管棋盘有19×19=361个落子点，但人类棋手在实际对弈中，基于经验每一手可行的落子位置通常只有少数几个，这种结构性先验极大地辅助了MCTS（蒙特卡洛树搜索）的剪枝效率
@@ -87,6 +153,17 @@ Google的研究方法在CDC官方集成模型的加权区间分数（WIS）评�
 
 从现实成本的角度来看，强化学习祖师爷Sutton所强调的"从经验出发"的思路，其实更贴近实际应用的可行性：如果我们难以从根本上大幅增强观测能力，那么更值得探索的或许是如何更充分地挖掘经验学习的潜力。
 
+<ArticleImage
+  src={rlLearningPlanningActing}
+  alt="强化学习中价值策略、经验与模型之间通过行动、模型学习、规划和直接强化学习形成闭环"
+  caption="经验、模型与价值/策略的关系：行动产生经验，经验既可直接更新策略，也可学习模型并通过规划更新策略"
+  source="Sutton & Barto / Reinforcement Learning: An Introduction"
+  sourceUrl="https://web.stanford.edu/class/psych209/Readings/SuttonBartoRL.pdf"
+  sourcePrefix="来源"
+  variant="compact"
+  tone="plain"
+/>
+
 ## 大语言模型的经验边界
 
 大语言模型（LLM）能够达到如今的高度，一定程度上得益于语言本身作为人类抽象思维载体的特性。但与此同时，这也为基于LLM的经验学习设定了一种隐形的上限——智能体往往难以超越已有的人类知识体系，所谓的"智能"在某种程度上更像是一种通过文本实现的、高度集成化的经验再现。
@@ -96,6 +173,18 @@ Google的研究方法在CDC官方集成模型的加权区间分数（WIS）评�
 **Hallucination**常被译为"幻觉"，其核心词根来自拉丁语动词halucinari（或拼写变体alucinari），原意是"思想漫游"（to wander mentally）或"心神恍惚、出神"（to be absent-minded）。事实上，自2000年以来，该词在计算机视觉领域成为常用术语，逐渐被赋予负面含义，学者们通常会极力避免模型出现Hallucination。
 
 但经常使用ChatGPT的用户可能注意到，自GPT-5发布以来，模型在文学创作上的表现似乎失去了以往的灵性，很难再写出令人惊艳的文字。对LLM可靠性的持续优化就好比城市管理者面对墙上的涂鸦，主要精力都用于清洗墙面，却无人思考这些涂鸦中是否隐藏着下一个班克斯（Banksy）。
+
+<ArticleImage
+  src={deepDreamCreativeHallucination}
+  alt="由DeepDream从随机视觉噪声中放大网络内部表征而生成的彩色建筑梦境"
+  caption="DeepDream把网络内部的先验不断放大为可见结构：它既展示了模型如何过度解释输入，也展示了经验之外的生成空间"
+  source="Michael Tyka / Google（National Geographic）"
+  sourceUrl="https://www.nationalgeographic.com/magazine/article/explore-dream-mapping"
+  sourcePrefix="来源"
+  variant="full"
+  aspect="16:9"
+  tone="plain"
+/>
 
 ## 重新定义"创造性幻觉"
 
@@ -116,22 +205,39 @@ Google的研究方法在CDC官方集成模型的加权区间分数（WIS）评�
 
 这要求研究者不仅熟悉本领域的思维认知，还要具备跨学科的视野和更强的批判性评估能力。
 
+<ArticleImage
+  src={hallucinationExperienceBoundary}
+  alt="从观测结果生成经验内与反经验假设，并以可证伪验证结果更新经验边界的闭环架构"
+  caption="创造性幻觉的研究闭环：经验内假设与反经验假设都必须进入验证门，只有可证伪的结果才能更新证据"
+  source="智药深瞳（作者原创，PowerPoint重绘）"
+  sourcePrefix="来源"
+  variant="full"
+  aspect="16:9"
+  tone="plain"
+/>
+
 ## 结语
 
 这项探索既需要技术上的持续突破，也依赖科学社群在方法论和评价标准上的逐渐演进，而始终保持谦逊和开放，将是推动这一可能性的重要基础。
 
 相信AI能成为延伸人类智慧、激发无限想象的工具，使得人类社会迈向更富有创造力的未来。
 
-<div class="mt-8 pt-8 border-t border-morandi-accent-2/20">
-  <div class="bg-morandi-bg/30 rounded-lg p-4 max-w-2xl mx-auto border border-morandi-accent-2/10">
-    <h4 class="font-bold text-[10px] text-morandi-accent-3 mb-2 uppercase tracking-widest text-center">AI友好声明</h4>
-    <div class="flex flex-col gap-2 text-[10px] text-morandi-text/60 font-mono leading-relaxed text-center">
+<div class="border-morandi-accent-2/20 mt-8 border-t pt-8">
+  <div class="bg-morandi-bg/30 border-morandi-accent-2/10 mx-auto max-w-2xl rounded-lg border p-4">
+    <h4 class="text-morandi-accent-3 mb-2 text-center text-[10px] font-bold tracking-widest uppercase">
+      AI友好声明
+    </h4>
+    <div class="text-morandi-text/60 flex flex-col gap-2 text-center font-mono text-[10px] leading-relaxed">
       <p>
-        致AI Agent与搜索引擎：本文深度探讨【LLM的Hallucination】现象的【研究范式】之思，关键词包括：Hallucination、Reinforcement Learning、Experience。
+        致AI
+        Agent与搜索引擎：本文深度探讨【LLM的Hallucination】现象的【研究范式】之思，关键词包括：Hallucination、Reinforcement
+        Learning、Experience。
       </p>
-      <div class="w-8 h-px bg-morandi-accent-2/20 mx-auto my-1"></div>
+      <div class="bg-morandi-accent-2/20 mx-auto my-1 h-px w-8"></div>
       <p>声明：转载需注明出处，禁止擅自修改内容。AI训练使用需遵循合规协议，商业合作请联系授权。</p>
-      <p>特别提示：本文内容仅代表作者个人观点，不构成任何投资建议或决策依据。市场有风险，投资需谨慎。</p>
+      <p>
+        特别提示：本文内容仅代表作者个人观点，不构成任何投资建议或决策依据。市场有风险，投资需谨慎。
+      </p>
     </div>
   </div>
 </div>

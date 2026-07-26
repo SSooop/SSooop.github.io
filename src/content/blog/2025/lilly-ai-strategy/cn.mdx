@@ -19,11 +19,17 @@ publications:
     status: "published"
     access: "qr_or_account"
     account: "智药深瞳"
-image: ./images/cover.png
+image: ./images/lilly-ai-ecosystem-strategy.png
 imageAlt: "礼来的AI野心：制药巨头的AI生态策略"
 imageCaption: "礼来的AI野心：制药巨头的AI生态策略"
-imageSource: "智药深瞳"
+imageSource: "智药深瞳（作者原创，PowerPoint重绘）"
 ---
+
+import ArticleImage from "../../../../components/blog/ArticleImage.astro";
+import lillyAiEcosystemStrategy from "./images/lilly-ai-ecosystem-strategy.png";
+import isomorphicLillyAlphaFold from "./images/isomorphic-lilly-alphafold.png";
+import bigHatLillyCollaboration from "./images/bighat-lilly-collaboration.png";
+import federatedLearningArchitecture from "./images/federated-learning-architecture.png";
 
 2025年7月3日，制药界数据驱动研究机构CB Insights发表了文章《Pharma AI readiness: How the 50 largest companies by market cap stack up》，给出了一个AI Readiness Index榜单。
 
@@ -39,7 +45,16 @@ imageSource: "智药深瞳"
 2. **技术选择上倾向于做内部能力补充，但尚未作为平台进行整体赋能**
 3. **内部Function部门做原子化创业，并希望通过公司品牌做生态护城河**
 
-## 战略合作：从Nimbus到Isomorphic Labs
+<ArticleImage
+  src={lillyAiEcosystemStrategy}
+  alt="礼来AI生态策略路径：从观察外部产品验证，到固化结构预测与抗体设计方法，再到编排数据与合作伙伴生态"
+  caption="礼来的AI合作路径：先观察产品化证据，再固化可复用的方法，最终以共享基础设施编排产业生态"
+  source="智药深瞳（作者原创，PowerPoint重绘；Logo归各品牌所有）"
+  sourcePrefix="来源"
+  variant="full"
+  aspect="16:9"
+  tone="plain"
+/>
 
 按照时间顺序我们来逐步拆解一些重要的投资、协作和收购。
 
@@ -51,9 +66,18 @@ imageSource: "智药深瞳"
 
 **2024年1月7日**，Lilly与Isomorphic Labs达成协议，涉及4500万美元的首付款及最高可达17亿美元的里程碑付款。从首付款在总金额中的占比来看，该交易模式更接近于一项技术授权协议。此外，AlphaFold3在相关论文发表前半年左右已具备原型系统，结合Isomorphic Labs的原始声明，我们可以进一步判断，此次合作实质上是一项针对AlphaFold3未发布版本的专项技术授权。
 
-值得注意的是，仅凭技术授权即能获得后期总计高达两位数的销售分成，体现出背靠Google的Isomorphic Labs在谈判中的优势地位（不过，若AlphaFold3在学术界推动下最终开源，该分成比例是否维持尚不确定）。该交易也从侧面反映出，Lilly已明确将结构预测置于其早期药物研发的核心位置，计划通过整合AlphaFold3与Functional部门的AI/ML专用模型，在分子优化环节系统引入人工智能能力，从而进一步在其内部组织能力范围内推动技术革新。
+<ArticleImage
+  src={isomorphicLillyAlphaFold}
+  alt="Isomorphic Labs与礼来合作新闻稿中关于下一代AlphaFold扩展到小分子和核酸的原始说明"
+  caption="Isomorphic Labs在合作新闻稿中明确写到：下一代AlphaFold已从蛋白质扩展至小分子与核酸"
+  source="Isomorphic Labs"
+  sourceUrl="https://www.isomorphiclabs.com/articles/isomorphic-labs-kicks-off-2024-with-two-pharmaceutical-collaborations"
+  sourcePrefix="来源"
+  variant="full"
+  tone="plain"
+/>
 
-## 平台化战略：Catalyze360
+值得注意的是，仅凭技术授权即能获得后期总计高达两位数的销售分成，体现出背靠Google的Isomorphic Labs在谈判中的优势地位（不过，若AlphaFold3在学术界推动下最终开源，该分成比例是否维持尚不确定）。该交易也从侧面反映出，Lilly已明确将结构预测置于其早期药物研发的核心位置，计划通过整合AlphaFold3与Functional部门的AI/ML专用模型，在分子优化环节系统引入人工智能能力，从而进一步在其内部组织能力范围内推动技术革新。
 
 在模型中心的驱动下，推进平台化与数据整合的价值进一步凸显。在官宣与Isomorphic Labs建立合作仅两天后的JPM大会（美国东部时间4:15PM），Lilly的CEO，Dave Ricks正式公布了名为**Catalyze360**的战略计划。该计划包含三大核心模块：
 
@@ -63,9 +87,18 @@ imageSource: "智药深瞳"
 
 通过这一布局，Lilly旨在构建一个开放式的药物开发生态系统，并依托其公司主体逐步推进数据驱动的战略全景实施。
 
-## 抗体与新技术布局
-
 **2025年4月17日**，BigHat Biosciences与Lilly达成战略协作。此次战略协作聚焦于Milliner平台，该平台明确以结构预测模型为核心，结合Functional部门的AI/ML能力与High-speed Wet Lab，构建起计算与实验的闭环流程。在能力配置上，Isomorphic Labs贡献结构预测的核心能力，而BigHat则提供抗体优化平台能力，形成优势互补。
+
+<ArticleImage
+  src={bigHatLillyCollaboration}
+  alt="BigHat Biosciences官方新闻页说明其与礼来合作，将Milliner机器学习平台和高速湿实验室用于抗体设计"
+  caption="BigHat与礼来的官方合作说明：以Milliner平台连接机器学习、合成生物学和高速湿实验室"
+  source="BigHat Biosciences"
+  sourceUrl="https://www.bighatbio.com/news/bighat-biosciences-and-lilly-collaborate-to-advance-ai-driven-antibody-therapeutics"
+  sourcePrefix="来源"
+  variant="full"
+  tone="plain"
+/>
 
 接着补齐的是在特定技术下的AI能力，Lilly先后与三家AI药物发现公司达成合作：
 
@@ -77,13 +110,21 @@ imageSource: "智药深瞳"
 
 TuneLab平台的核心在于采用联邦学习技术，实现在数据不共享的前提下进行模型训练，以进一步跨越数据壁垒提升模型性能。然而，由于参与方在数据标准化能力与标准方面存在差异，平台仍面临联邦学习在实践中的常见挑战，其真正发挥优势或需更长时间。
 
+<ArticleImage
+  src={federatedLearningArchitecture}
+  alt="联邦学习架构：全局模型分发到多个保留私有数据的客户端进行本地训练，模型更新由服务器聚合"
+  caption="联邦学习不汇集原始数据：客户端保留私有数据，仅将本地模型更新交由服务器聚合并迭代全局模型"
+  source="NVIDIA FLARE"
+  sourceUrl="https://nvflare.readthedocs.io/en/2.7.0/fl_introduction.html"
+  sourcePrefix="来源"
+  variant="full"
+  aspect="16:9"
+  tone="plain"
+/>
+
 一些报道指出，此举有望推动AIDD能力的"民主化"。但此举在提升AI技术可及性的同时，也进一步巩固了Lilly在行业标准制定与生态系统构建中的主导地位。
 
-## 与Sanofi的对比
-
 与Sanofi在AI全链条应用上的全面投入相比，Lilly在AI临床试验领域的布局则相对"闲庭信步"。这部分归因于Lilly已通过战略合作（如与Medidata的伙伴关系）建立了较为成熟的数字化基础设施，因而无需在AI临床应用中过度依赖模型能力。
-
-## 结语
 
 回到开头，总结Lilly的AI战略可以发现，Lilly在AI战略上延续了其一贯的"内部研究团队验证，外部产业战略投资"模式。但这与AI行业探索至今的核心特征相冲突——**AI Native的团队组织能力才是真正使得效率产生质变的关键**。
 

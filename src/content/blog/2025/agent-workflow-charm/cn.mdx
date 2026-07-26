@@ -19,11 +19,19 @@ publications:
     status: "published"
     access: "qr_or_account"
     account: "智药深瞳"
-image: ./images/cover.png
-imageAlt: "Agent之于Workflow的魅力"
-imageCaption: "Agent之于Workflow的魅力"
-imageSource: "智药深瞳"
+image: ./images/agent-system-overview-cover.png
+imageAlt: "LLM驱动的自主智能体系统总览，展示规划、记忆、工具与行动之间的关系"
+imageCaption: "LLM驱动的自主智能体由规划、记忆与工具使用三类核心模块构成"
+imageSource: "Lilian Weng / Lil'Log"
+imageSourceUrl: "https://lilianweng.github.io/posts/2023-06-23-agent/"
+imagePosition: center
 ---
+
+import ArticleImage from '../../../../components/blog/ArticleImage.astro';
+import agentSystemOverview from './images/agent-system-overview.png';
+import difyWorkflowInterface from './images/dify-workflow-interface.png';
+import agentAsWorkflowPrompt from './images/agent-as-workflow-prompt.png';
+import difyIterationNode from './images/dify-iteration-node.png';
 
 Dify在2023年5月11日发布了第一个版本，同时在GitHub上开源。作为一款开源大语言模型应用开发平台，设计之初Dify融合了后端即服务（BaaS）与LLMOps理念，旨在帮助开发者与非技术人员高效搭建生成式AI应用。
 
@@ -35,6 +43,17 @@ Dify的成功毋庸置疑，但我们也需冷静审视其背后的发展逻辑�
 
 2023年6月23日，Lilian Weng在其blog上给出了一篇名为：LLM Powered Autonomous Agents的文章，文中清晰给出了具有什么样的能力才可以称为Agent：
 
+<ArticleImage
+  src={agentSystemOverview}
+  alt="LLM驱动的自主智能体系统总览，中心Agent连接规划、记忆、工具与行动模块"
+  caption="LLM驱动的自主智能体系统：Planning、Memory与Tool Use共同支撑Agent行动"
+  source="Lilian Weng / Lil'Log"
+  sourceUrl="https://lilianweng.github.io/posts/2023-06-23-agent/"
+  sourcePrefix="来源"
+  variant="full"
+  tone="plain"
+/>
+
 - **Planning**：Agent必须有能够将大的任务拆解为小的可执行的任务的能力，并且通过Reflection（反思）和Refinement（优化）提高最终结果。
 - **Memory**：Agent必须能够进行短期地（通常是in-context）和长期地记忆。
 - **Tool use**：Agent必须能调用工具从而扩展能力边界。
@@ -42,6 +61,18 @@ Dify的成功毋庸置疑，但我们也需冷静审视其背后的发展逻辑�
 在人工智能发展早期，研究者对Agent的"自主性"表现出极高的关注度。这一关注延续到LLM为主导的Agent构建：通过整合规划（Planning）、记忆（Memory）和工具使用（Tool use）等核心模块崭露头角，并展现出显著的技术突破。然而，一个关键的理论问题也自然出现：既然Agent已经具备规划能力，那么Workflow的必要性是否会永远停留在弥补LLM技术缺陷的场景下？这一问题的探讨涉及到智能系统架构设计的本质考量。
 
 2024年4月8日Dify在其insights中给出理由：解决多数业务流程自动化场景既需要AI自主决策能力，又要求流程可视化、可控、可追溯的需求。Agent负责感知、决策、工具调用与自主任务分解，而Workflow则承担着流程的标准化、可监控和业务规则的执行角色，两者并非完全替代关系。
+
+<ArticleImage
+  src={difyWorkflowInterface}
+  alt="Dify Workflow产品界面，展示问题分类、知识检索、LLM与直接回答节点组成的可视化流程"
+  caption="Dify Workflow通过可视化节点将模型能力、知识检索与确定性流程连接起来"
+  source="Dify"
+  sourceUrl="https://dify.ai/blog/dify-ai-workflow"
+  sourcePrefix="来源"
+  variant="full"
+  aspect="16:9"
+  tone="plain"
+/>
 
 所以事实上，Dify 官方也承认，Workflow 与 Agent 的混合使用是一种"技术上的折衷"。或者从 LLM 技术的底层逻辑来看，如果认为完全避免幻觉（Hallucination）是不可实现的，那么这种混合模式或许是一种"技术上的必然"。然而，在众多需求提出既需要确定性流程又需融入灵活自主环节的背景下，我们应当首先实事求是地探讨：现实场景是否真的有必要引入灵活自主机制？
 
@@ -51,9 +82,29 @@ Dify的成功毋庸置疑，但我们也需冷静审视其背后的发展逻辑�
 
 在一些项目中，我们经常可以看到开发者直接将代码写入 prompt 中。笔者常与同事交流这样一种观点：当你考虑将代码写进 prompt 时，或许应当意识到——此时更适合直接编写代码。
 
+<ArticleImage
+  src={agentAsWorkflowPrompt}
+  alt="Agent提示词界面中写入依赖检查与项目初始化等确定性Workflow命令"
+  caption="当确定性的依赖检查和项目初始化被直接写入Prompt，Agent实际上开始承担Workflow的角色"
+  source="智药深瞳（界面截图）"
+  sourcePrefix="来源"
+  variant="compact"
+  tone="ink"
+/>
+
 **把Workflow当Agent的经典案例**：
 
 当前，部分用户对Dify产品经理以大型语言模型（LLM）为中心的设计思路存在一些质疑，认为这导致直至本文发布时的最新版本中，"迭代节点"仍存在一个必需的输出变量是错误的设计。尽管Dify的开发团队已亲自作出部分解释，并且该项目在一定程度上由开源社区共同推动，但笔者认为，优秀的设计应尽可能实现逻辑自明，减少对额外解释的依赖。
+
+<ArticleImage
+  src={difyIterationNode}
+  alt="Dify迭代节点设置界面，输入与输出变量均要求为数组"
+  caption="Dify迭代节点把输入、输出变量约束显式固化在Workflow配置中"
+  source="智药深瞳（Dify界面截图）"
+  sourcePrefix="来源"
+  variant="compact"
+  tone="ink"
+/>
 
 从上述两个案例中可以观察到，实际用户更倾向于使用一种以LLM作为人机交互接口的Workflow工具（传统Workflow的迭代node的确不需要要求输出）。这一现象进一步印证了最初的判断：在现实应用场景中，用户真正需要的往往是一个体验更友好、集成度更高的Workflow系统，而LLM在其中主要承担交互层面的增强功能。值得注意的是，n8n作为Workflow自动化平台的代表，其GitHub star数已达135k，不仅超过了LangChain（115k）和Dify（113k），还呈现出持续增长的趋势。这一数据在一定程度上反映出，市场对用户友好型Workflow工具的需求正在扩大，而LLM能力正逐渐作为交互增强组件被集成进这类平台中。
 

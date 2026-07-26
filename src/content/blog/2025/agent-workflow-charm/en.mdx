@@ -20,11 +20,19 @@ keywords:
   - "Dify"
   - "n8n"
   - "agent planning"
-image: ./images/cover.png
-imageAlt: "The Charm of Agents in Workflow Design"
-imageCaption: "The Charm of Agents in Workflow Design"
-imageSource: "IntelliPharma Hub"
+image: ./images/agent-system-overview-cover.png
+imageAlt: "Overview of an LLM-powered autonomous agent system linking planning, memory, tools, and action"
+imageCaption: "Planning, memory, and tool use form the core modules of an LLM-powered autonomous agent"
+imageSource: "Lilian Weng / Lil'Log"
+imageSourceUrl: "https://lilianweng.github.io/posts/2023-06-23-agent/"
+imagePosition: center
 ---
+
+import ArticleImage from '../../../../components/blog/ArticleImage.astro';
+import agentSystemOverview from './images/agent-system-overview.png';
+import difyWorkflowInterface from './images/dify-workflow-interface.png';
+import agentAsWorkflowPrompt from './images/agent-as-workflow-prompt.png';
+import difyIterationNode from './images/dify-iteration-node.png';
 
 Dify released its first version on May 11, 2023, and made the project open source on GitHub at the same time. As an open-source platform for building large-language-model applications, Dify was designed from the beginning as a blend of backend-as-a-service and LLMOps. Its aim was to help both developers and non-technical users build generative AI applications more efficiently.
 
@@ -35,6 +43,16 @@ At the beginning of 2025, DeepSeek ignited a broad demand in the Chinese market 
 Dify's success is undeniable. But we still need to look calmly at the logic behind it. Dify may have risen with the AI wave, but at its core it is a low-code workflow platform that perfectly answered the demand for workflow construction that ordinary users could actually use. AI did intensify management's sense of urgency around transformation, and that urgency pushed digitalization forward. To understand this more deeply, we can go back to 2023, when the concept of agents first gained broad recognition.
 
 On June 23, 2023, Lilian Weng published "LLM Powered Autonomous Agents." The article gave a clear definition of what capabilities an agent should have:
+
+<ArticleImage
+  src={agentSystemOverview}
+  alt="Overview of an LLM-powered autonomous agent system with planning, memory, tools, and action surrounding the central agent"
+  caption="An LLM-powered autonomous agent system combines planning, memory, and tool use"
+  source="Lilian Weng / Lil'Log"
+  sourceUrl="https://lilianweng.github.io/posts/2023-06-23-agent/"
+  variant="full"
+  tone="plain"
+/>
 
 - **Planning**: an agent must be able to break down a large task into smaller executable tasks, and improve the final result through reflection and refinement.
 - **Memory**: an agent must be able to use both short-term memory, usually in context, and long-term memory.
@@ -48,12 +66,41 @@ Planning in an agent is local and dynamic. It works inside a concrete task, choo
 
 This is why many successful AI applications still rely on explicit workflows. A research task, for example, is open ended. As one useful observation puts it:
 
+<ArticleImage
+  src={difyWorkflowInterface}
+  alt="Dify Workflow interface connecting question classification, knowledge retrieval, LLM, and direct-answer nodes"
+  caption="Dify Workflow connects model capabilities and knowledge retrieval through an observable visual process"
+  source="Dify"
+  sourceUrl="https://dify.ai/blog/dify-ai-workflow"
+  variant="full"
+  aspect="16:9"
+  tone="plain"
+/>
+
 > Research work involves open-ended problems where it's very difficult to predict the required steps in advance. You can't hardcode a fixed path for exploring complex topics, as the process is inherently dynamic and path-dependent.
 
 That is precisely why the workflow should not be understood as a fixed path. A mature workflow is more like a contract among model, user, data, tool, and organization. It tells the system where freedom is allowed and where accountability must return.
 
 The same logic explains why multi-agent systems should be treated with caution. I strongly suspect that many so-called AI applications do not truly need multiple agents. Every extra layer of abstraction makes debugging harder and increases the chance of drifting away from the direction in which model capabilities are improving. In many practical systems, a single capable agent with a clear workflow is more valuable than a complicated society of agents.
 
+<ArticleImage
+  src={agentAsWorkflowPrompt}
+  alt="An agent prompt containing deterministic dependency checks and project-setup workflow commands"
+  caption="Encoding deterministic setup commands directly in a prompt turns the agent into an implicit workflow"
+  source="IntelliPharma Hub (interface screenshot)"
+  variant="compact"
+  tone="ink"
+/>
+
 For vertical AI applications, the real lesson is not to worship agents or workflows. The lesson is to understand which part of the task needs autonomy and which part needs structure. Agents bring adaptive reasoning; workflows bring repeatability, observability, and organizational trust. When the two are combined well, AI stops being a demo and starts becoming infrastructure.
+
+<ArticleImage
+  src={difyIterationNode}
+  alt="Dify iteration-node settings with array input and output variables"
+  caption="Dify's iteration node makes workflow input and output constraints explicit"
+  source="IntelliPharma Hub (Dify interface screenshot)"
+  variant="compact"
+  tone="ink"
+/>
 
 In this sense, the charm of agents in workflows is not that agents replace workflows. It is that agents make workflows alive. And the charm of workflows in the agent era is that they give intelligence a form in which it can be trusted, reviewed, and improved.

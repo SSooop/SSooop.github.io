@@ -21,9 +21,18 @@ publications:
     account: "智药深瞳"
 image: ./images/cover.png
 imageAlt: "Spec Coding反共识：当代码不再成为核心资产"
-imageCaption: "Spec Coding反共识：当代码不再成为核心资产"
-imageSource: "智药深瞳"
+imageCaption: "从快速原型走向可验证、可维护的软件系统"
+imageSource: "ULAM LABS"
+imageSourceUrl: "https://www.ulam.io/software-services/mvp-rescue/"
 ---
+
+import ArticleImage from '../../../../components/blog/ArticleImage.astro';
+import vibeCodingRescue from './images/vibe-coding-rescue.png';
+import specKitStarHistory from './images/spec-kit-star-history.png';
+import agenticCodingRevisions from './images/agentic-coding-revisions.png';
+import specKitTestFirst from './images/spec-kit-test-first.png';
+import solVerFramework from './images/sol-ver-framework.png';
+import specKitComplianceGates from './images/spec-kit-compliance-gates.png';
 
 2025年2月2日，Andrej Karpathy在X平台发表了关于AI编程领域的重要观点，首次系统性地提出了"**Vibe Coding**"（氛围编程）这一概念。
 
@@ -33,13 +42,20 @@ imageSource: "智药深瞳"
 2. **自然语言交互**：采用自然语言作为统一的交互界面，打破了传统编程语言的壁垒，实现了人机协作的范式转变
 3. **接纳代码冗余**：在快速原型开发场景下，允许代码存在一定的冗余和非最优结构（Not too bad for throwaway weekend projects），优先保证交付速度而非代码质量，特别适用于概念验证和短期项目
 
-## Vibe Coding的兴衰
-
 在开发社区中广泛兴起的"Vibe Coding"理念与实践的推动下，一批主打Vibe Coding的初创企业迅速涌现。其中，**Base44** 的发展轨迹尤为引人注目：该公司自成立至被收购仅历时六个月，最终以8000万美元的价格成交，充分体现了资本对这一趋势追捧的新高峰。
 
 然而，随之而来的问题也逐渐显现——以自然语言为基础的直觉交互模式，本质上难以实现对开发需求的精确描述，因而对长期项目的稳定性、团队协作效率以及代码的可维护性造成了灾难性的打击。如今甚至出现专门致力于修复Vibe Coding遗留问题的公司，例如 **Ulam Labs**，已开始进入公众视野。
 
-## Spec Coding的崛起
+<ArticleImage
+  src={vibeCodingRescue}
+  alt="ULAM LABS 的 Vibe Coding Rescue 服务页面"
+  caption="当快速生成的原型进入生产环境，代码质量、架构、安全与可维护性重新成为问题"
+  source="ULAM LABS"
+  sourceUrl="https://www.ulam.io/software-services/mvp-rescue/"
+  variant="wide"
+  aspect="16:9"
+  tone="ink"
+/>
 
 2025年Q2末期到Q3，一种名为"规格驱动编程"（**Spec Coding**，或Spec Driven Coding）的新兴理念逐渐在社区中受到关注。尽管目前难以追溯其确切起源，但这一概念在AI编程领域所发挥的重要作用已日益凸显。它不仅有效缓解了此前Vibe Coding所遗留的工程管理问题，更进一步推动了AI辅助编程范式的演进与重构。
 
@@ -49,9 +65,36 @@ imageSource: "智药深瞳"
 
 需要强调的是，规格本身并不关注"如何实现代码"，而仅聚焦于"应完成什么"以及"需满足何种条件"，本质上承担着沟通契约的角色。笔者将这种现代软件评价体系概括为"**自验证软件系统**"（Self-verifying Software System），以突显其内在的闭环验证结构。
 
-## Spec Kit：官方入场
+<div class="my-10 overflow-x-auto rounded-lg border border-morandi-accent-2/30 bg-white/60 px-6 py-7 text-center shadow-sm">
+  <math
+    display="block"
+    aria-label="Specification Layer generates Implementation Layer, which verifies Behavior Trace, which monitors Specification Feedback"
+    class="mx-auto text-[0.82rem] text-morandi-text sm:text-[0.9rem]"
+  >
+    <mrow>
+      <mtext>Specification Layer</mtext>
+      <mover><mo stretchy="true">⟶</mo><mtext>generate</mtext></mover>
+      <mtext>Implementation Layer</mtext>
+      <mover><mo stretchy="true">⟶</mo><mtext>verify</mtext></mover>
+      <mtext>Behavior Trace</mtext>
+      <mover><mo stretchy="true">⟶</mo><mtext>monitor</mtext></mover>
+      <mtext>Specification Feedback</mtext>
+    </mrow>
+  </math>
+</div>
 
 2025年8月27日，GitHub官方正式发布**Spec Kit**项目，该项目旨在通过规格驱动开发（Spec-Driven Development，SDD）协助企业提升AI辅助编程的质量与效率。该工具能够将自然语言描述的需求转化为结构化规格文档，并基于Claude、GPT、Gemini或Copilot等AI编程助手自动生成可执行代码。项目自发布当日GitHub Star迅速增长，并获得开发者社区的广泛关注与认可。
+
+<ArticleImage
+  src={specKitStarHistory}
+  alt="GitHub Spec Kit 发布后的 Star 增长曲线"
+  caption="Spec Kit 在 2025 年发布后迅速获得开发者关注"
+  source="Star History"
+  sourceUrl="https://www.star-history.com/#github/spec-kit&Date"
+  variant="wide"
+  aspect="auto"
+  tone="paper"
+/>
 
 从以上的讨论不难看出，从过往优秀的软件工程实践过渡到AI Coding时代的Spec Coding已经出现了部分非共识，借由Spec Kit项目进行总结：
 
@@ -69,6 +112,17 @@ imageSource: "智药深瞳"
 
 一些实证研究已经展现出这种趋势的端倪。在针对157个开源项目的567个PR请求的研究中，超过半数由Agent生成的PR获得了83.8%的接受率。Agent生成的代码量同样达到了可观的规模，尽管目前仍存在代码冗余和引入不必要变更等问题。
 
+<ArticleImage
+  src={agenticCodingRevisions}
+  alt="Agentic PR 与 Human PR 修订提交中变更文件数、增加行数和删除行数的分布"
+  caption="Agentic PR 与 Human PR 在修订成本上的分布比较（论文图 6）"
+  source="Watanabe et al., On the Use of Agentic Coding"
+  sourceUrl="https://arxiv.org/abs/2509.14745"
+  variant="wide"
+  aspect="auto"
+  tone="paper"
+/>
+
 可以预见，AI编程对软件工程行业的变革将类似于纺织机对传统纺织业的颠覆性冲击。在这个新范式下，我们需要将注意力从代码实现本身转向更精确的需求规格说明的维护。当规格说明足够精确时，代码生成的时间成本将逐渐降低，手写编写和维护代码反而会成为低效的选择。
 
 终有一天，数十万行的业务代码将不再是系统复杂度壁垒。取而代之的将是由Agent和人类协同构建的、规模更加庞大、复杂度更高的超大型系统。
@@ -77,7 +131,29 @@ imageSource: "智药深瞳"
 
 在SDD的constitution.md（一系列指导Agent Coding的规范化文件）中，测试驱动开发（Test-Driven Development，**TDD**）原则被提升至**NON-NEGOTIABLE**级别。尽管在实际开发中，并非所有代码都能严格遵循"测试驱动"的范式，但这一原则在多数场景下都展现出显著的有效性。其核心价值在于：当代码生成成本大幅降低时，测试单元作为可验证的执行环境，能够为代码求解过程提供类似强化学习系统中的奖励信号。
 
+<ArticleImage
+  src={specKitTestFirst}
+  alt="GitHub Spec Kit 官方文档中的 Test-First Imperative"
+  caption="Spec Kit 将测试优先原则定义为 NON-NEGOTIABLE"
+  source="GitHub Spec Kit"
+  sourceUrl="https://github.com/github/spec-kit/blob/main/spec-driven.md#article-iii-test-first-imperative"
+  variant="wide"
+  aspect="auto"
+  tone="paper"
+/>
+
 **测试即规格的可执行表达！**（Tests are Executable Specifications）这一理念在某种程度上借助AI的能力，实现了传统软件工程中测试驱动开发(TDD)与行为驱动开发(BDD)的概念融合。通过AI辅助生成测试代码，测试本身的创建过程同样可以基于对测试规格的形式化描述来完成。在这一框架下，测试演变为连接自然语言规格与计算机实际行为的关键对齐机制，从而在AI辅助开发的新范式中发挥着更为基础和核心的作用。
+
+<ArticleImage
+  src={solVerFramework}
+  alt="SOL-VER 同时生成代码解答与单元测试的自博弈训练框架"
+  caption="SOL-VER 让同一模型在求解器与验证器角色之间迭代改进（论文图 1）"
+  source="Lin et al., Learning to Solve and Verify"
+  sourceUrl="https://arxiv.org/abs/2502.14948"
+  variant="wide"
+  aspect="auto"
+  tone="paper"
+/>
 
 ## 反常识3："过度工程化"的重新定义
 
@@ -88,13 +164,22 @@ imageSource: "智药深瞳"
 
 在Spec Kit中采用复杂度举证来约束Agent的过度抽象。
 
+<ArticleImage
+  src={specKitComplianceGates}
+  alt="GitHub Spec Kit 通过前置门禁检查简单性与反抽象原则"
+  caption="Spec Kit 的前置门禁要求 Agent 对项目数量与额外抽象作出明确举证"
+  source="GitHub Spec Kit"
+  sourceUrl="https://github.com/github/spec-kit/blob/main/spec-driven.md#4-constitutional-compliance-through-gates"
+  variant="wide"
+  aspect="auto"
+  tone="paper"
+/>
+
 我们暂不对该方案的长期有效性下定论，因为随着技术演进，可能会出现更优的解决方案。事实上，从Claude Sonnet 4.5发布后的表现来看，Claude Code在过度编码方面已有明显改善。
 
 不过，笔者认为抽象层级的问题仍值得深入探讨。在Spec Coding中，当AI成为代码的主要消费者时，抽象的目标应当转向**业务领域的概念边界**而非传统的技术实现边界。具体而言，抽象粒度应与业务概念的自然边界相对齐，同时兼顾规格本身的可组合性和可验证性。
 
 限于篇幅和个人能力，本文无法充分展开关于自然语言层面的规格抽象规范的实践讨论。这一话题涉及诸多细节和权衡，笔者希望未来有机会与各位读者进一步交流探讨。
-
-## 结语
 
 站在2025年Q4，回望Spec Coding的演进轨迹，我们见证的不仅是编程范式的变革，更是一次深刻的行业重构。正如计算机技术曾重塑各行各业的生产方式，对编码行为本身的革命，正在成为赋能千行百业的全新支点。
 

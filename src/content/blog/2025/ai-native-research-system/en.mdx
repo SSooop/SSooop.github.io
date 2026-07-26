@@ -20,11 +20,18 @@ keywords:
   - "agent commercialization"
   - "coding agents"
   - "deep research"
-image: ./images/cover.png
-imageAlt: "Designing an AI-Native Research System"
-imageCaption: "Designing an AI-Native Research System"
-imageSource: "IntelliPharma Hub"
+image: ./images/multi-omics-integration.png
+imageAlt: "An elephant-shaped diagram of biological enhancer research integrating sequence, cell-type, 3D genome, MPRA, CRISPR-screen, and in-vivo evidence"
+imageCaption: "Enhancer research integrates multiple observation channels and converging forms of evidence"
+imageSource: "Gerstein Lab / Yale"
+imageSourceUrl: "http://files2.gersteinlab.org/public-docs/2022/03.01/MG_lectures/22m7--cbb752-MG-spr22-multi-omics.pdf"
+imagePosition: center
 ---
+
+import ArticleImage from '../../../../components/blog/ArticleImage.astro';
+import agentTrends2025 from './images/agent-trends-2025.webp';
+import aiNativeResearchCollaboration from './images/ai-native-research-collaboration.png';
+import multiOmicsIntegration from './images/multi-omics-integration.png';
 
 On August 7, 2025, GPT-5 was released with enormous public attention. For a moment, the debate around AGI entered a strange mixture of heat and cold. OpenAI described the model as having PhD-level reasoning, while many users complained that benchmark performance did not equal actual experience. The launch-day slide incident, where a simple numerical comparison became a meme, made the reaction even more complicated.
 
@@ -40,6 +47,16 @@ From a commercialization perspective, 2025 has often been called the first year 
 - **Computer-using agents** point toward AI-native operating systems.
 - **Coding agents** automate software generation and reshape engineering workflows.
 - **Deep research agents** automate information mining and strategic analysis for enterprise customers.
+
+<ArticleImage
+  src={agentTrends2025}
+  alt="An infographic showing six AI agent trends for 2025: voice agents, Agentic RAG, agent protocols, computer-using agents, coding agents, and deep research agents"
+  caption="Six AI agent trends for 2025: Voice, Agentic RAG, protocols, CUA, Coding, and Deep Research"
+  source="Rakesh Gohel / LinkedIn"
+  sourceUrl="https://www.linkedin.com/posts/rakeshgohel01_ai-agent-trends-have-drastically-changed-activity-7343981787842297858-PJkS/"
+  variant="full"
+  tone="plain"
+/>
 
 Among these, coding agents may move fastest because they have the clearest reward structure. Code can run, tests can fail, and errors are visible. That makes software engineering a valuable reference field for every vertical AI practitioner. Deep research agents, meanwhile, may bring unprecedented pressure to enterprise information providers and consulting firms.
 
@@ -57,6 +74,16 @@ Coding agents are useful because they show what happens when AI is connected to 
 
 Scientific research rarely has such direct feedback. A biological hypothesis may take months to test. A data interpretation may depend on assumptions that are not immediately visible. A wet-lab result may be confounded by experimental noise. Therefore, an AI-native research system must deliberately construct intermediate feedback loops: literature consistency checks, data provenance checks, simulation, retrospective validation, and structured critique.
 
+<ArticleImage
+  src={multiOmicsIntegration}
+  alt="An elephant-shaped diagram of biological enhancer research integrating sequence, cell-type, 3D genome, MPRA, CRISPR-screen, and in-vivo evidence"
+  caption="Enhancer research illustrates why AI-native science needs multiple observation channels and converging forms of evidence"
+  source="Gerstein Lab / Yale"
+  sourceUrl="http://files2.gersteinlab.org/public-docs/2022/03.01/MG_lectures/22m7--cbb752-MG-spr22-multi-omics.pdf"
+  variant="full"
+  tone="plain"
+/>
+
 ## The Role of Deep Research Agents
 
 Deep research agents can help by absorbing large amounts of information and turning fragmented material into structured hypotheses. In enterprise settings, this may threaten traditional consulting and research-report workflows. But in scientific work, the value is not merely summarization. The value lies in building a persistent research memory that can connect scattered facts across time.
@@ -66,6 +93,15 @@ A good research agent should know what has already been tried, why it failed, wh
 ## Designing for Human Judgment
 
 The most important principle is that AI-native research should not remove human judgment. It should move human judgment to a higher level. Instead of spending most of their time searching, formatting, and recombining information, researchers should spend more time defining the problem, evaluating evidence, and deciding which uncertainty is worth resolving.
+
+<ArticleImage
+  src={aiNativeResearchCollaboration}
+  alt="A collaborative AI research system connecting agents with scientists in genomics, bioinformatics, molecular biology, protein engineering, structural biology, cellular biology, and drug discovery"
+  caption="A collaborative model of AI agents and human scientists: systematizing complex research rather than replacing scientists"
+  source="IntelliPharma Hub (AI-generated)"
+  variant="compact"
+  tone="plain"
+/>
 
 In this sense, the AI scientist is not a single model. It is a system composed of models, memory, tools, data, human review, and institutional learning. The real product is not an answer, but a research loop that improves over time.
 
