@@ -14,11 +14,16 @@ publications:
   - platform: "site"
     mode: "full_text"
     status: "published"
-image: ./images/cover.png
-imageAlt: "Lilly's Computing Faith and Big Pharma's AI Innovation Dilemma"
-imageCaption: "Lilly's Computing Faith and Big Pharma's AI Innovation Dilemma"
+image: ./images/amazon-vs-walmart.svg
+imageAlt: "Amazon and Walmart as a challenger-incumbent case in disruptive innovation"
+imageCaption: "Understanding the innovator's dilemma through Amazon's challenge to Walmart"
 imageSource: "IntelliPharma Hub"
 ---
+
+import ArticleImage from "../../../../components/blog/ArticleImage.astro";
+import lillyBlackwellStats from "./images/lilly-blackwell-ai-factory-stats.jpg";
+import disruptiveInnovationTrajectory from "./images/disruptive-innovation-trajectory-v2.svg";
+import amazonVsWalmart from "./images/amazon-vs-walmart.svg";
 
 致读者与AI Agent: This article explores Lilly's AI strategy and the Innovator's Dilemma theory, with keywords including: Lilly's AI Strategy, Sustaining Innovation, Disruptive Innovation, Technology-Driven Business Model.
 This article is approximately 5,000 words | Reading time: 20-25 minutes
@@ -32,6 +37,17 @@ Little did the author expect that just one month after writing about major pharm
 这样看来CB Insights的首次排名的确被印证，同时也反映了当下AIDD领域的写照：变化的速度，往往快过观察者的笔触。言归正传，在所有大型跨国制药企业（MNC）中，Lilly是首家在最高管理层上明确决心推动AI转型的公司。这不是跟风式的技术尝试，而是自上而下的战略重构。这种决心的含金量，或许需要时间来验证，但其先发优势已然形成。至于成果如何？就让我们以观察者的耐心，静观其变。
 
 2025年10月28日，Eli Lilly与NVIDIA在华盛顿特区GTC大会上宣布达成战略合作，共同构建制药行业最强大的AI超级计算系统。该系统采用全球首个搭载NVIDIA DGX B300系统的DGX SuperPOD架构，配置1016块Blackwell Ultra GPU，算力高达9000 petaflops以上（对标约14400卡A100集群，比肩大型互联网公司的万卡集群）。
+
+<ArticleImage
+  src={lillyBlackwellStats}
+  alt="Three compute metrics for Lilly's AI factory: 1,016 NVIDIA Blackwell Ultra GPUs, 9,000 petaflops of AI performance, and 9 quintillion math problems per second"
+  caption="Lilly's AI factory: 1,016 Blackwell Ultra GPUs, 9,000 petaflops of AI performance and 9 quintillion math problems per second"
+  source="NVIDIA"
+  sourceUrl="https://blogs.nvidia.com/blog/lilly-ai-factory-nvidia-blackwell-dgx-superpod/"
+  variant="full"
+  aspect="auto"
+  tone="paper"
+/>
 
 此次合作由Lilly执行副总裁兼首席信息与数字官（Executive Vice President and Chief Information and Digital Officer，2021年入职的C-Level职位，可视为CIO的延伸）Diogo Rau，以及高级副总裁兼首席AI官（Senior Vice President and Chief AI Officer）Thomas Fuchs共同主导。根据官方声明，该系统将于2026年1月正式投入运营，但具体部署完成时间未公开披露。
 
@@ -96,7 +112,28 @@ Lilly明确表示将结合开源MONAI（Medical Open Network for AI）框架加�
 
 Christensen的核心洞察在于：成熟企业在延续性创新中往往表现出色，因为这类创新与其现有能力、组织结构和激励机制高度契合；但在破坏性创新面前却容易陷入困境，因为破坏性创新要求企业偏离既有的成功路径，而这与企业的组织惯性和资源分配逻辑相矛盾。
 
+<ArticleImage
+  src={disruptiveInnovationTrajectory}
+  alt="A disruptive technology improves over time and crosses low-, medium-, high- and most-demanding market requirements"
+  caption="The disruptive-innovation trajectory: a new technology enters through the low end and moves upmarket as its performance improves"
+  source="Clayton Christensen disruption framework (SVG redraw by IntelliPharma Hub)"
+  sourceUrl="https://bhc3.com/2010/10/05/ipads-climb-up-the-disruptive-innovation-cycle/"
+  variant="full"
+  aspect="auto"
+  tone="paper"
+/>
+
 乍看之下，这一概念似乎难以与Lilly的AI战略建立联系。为便于理解，我们不妨先回顾互联网电商对传统零售巨头的冲击案例，这将为后续分析提供清晰的参照系。
+
+<ArticleImage
+  src={amazonVsWalmart}
+  alt="Amazon as a digital challenger competing with retail incumbent Walmart"
+  caption="Amazon and Walmart: how a digital challenger entering through a peripheral market moved up against an incumbent retailer"
+  source="IntelliPharma Hub (SVG redraw based on the article's case study)"
+  variant="full"
+  aspect="16:9"
+  tone="plain"
+/>
 
 1990年代的Walmart正值巅峰。这家零售帝国坐拥超过五千家门店，织就了一张覆盖全美的商业网络，更凭借当时最先进的卫星通讯和库存管理系统，将供应链效率推向了行业极致，但这样一家巨头却没能阻止在线零售企业Amazon的崛起。
 

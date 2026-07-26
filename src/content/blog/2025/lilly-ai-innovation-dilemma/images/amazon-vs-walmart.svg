@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Amazon versus Walmart</title>
+  <desc id="desc">A split editorial illustration contrasts Amazon's digital challenger model with Walmart's incumbent retail model.</desc>
+  <defs>
+    <linearGradient id="left-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#061b2c"/>
+      <stop offset=".58" stop-color="#0d3a56"/>
+      <stop offset="1" stop-color="#137aa0"/>
+    </linearGradient>
+    <linearGradient id="right-bg" x1="1" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3b1113"/>
+      <stop offset=".58" stop-color="#8a281d"/>
+      <stop offset="1" stop-color="#d86b2d"/>
+    </linearGradient>
+    <radialGradient id="coin" cx=".38" cy=".32" r=".75">
+      <stop offset="0" stop-color="#fff4a7"/>
+      <stop offset=".28" stop-color="#f9cc4a"/>
+      <stop offset=".68" stop-color="#dc8b15"/>
+      <stop offset="1" stop-color="#8f4912"/>
+    </radialGradient>
+    <radialGradient id="glow-left">
+      <stop offset="0" stop-color="#69d8ff" stop-opacity=".58"/>
+      <stop offset="1" stop-color="#69d8ff" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glow-right">
+      <stop offset="0" stop-color="#ffb35f" stop-opacity=".62"/>
+      <stop offset="1" stop-color="#ff7a45" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="shadow" x="-40%" y="-40%" width="180%" height="180%">
+      <feDropShadow dx="0" dy="24" stdDeviation="28" flood-color="#000" flood-opacity=".42"/>
+    </filter>
+    <filter id="blur"><feGaussianBlur stdDeviation="22"/></filter>
+  </defs>
+
+  <rect width="800" height="900" fill="url(#left-bg)"/>
+  <rect x="800" width="800" height="900" fill="url(#right-bg)"/>
+  <path d="M800 0L800 900" stroke="#fff" stroke-opacity=".1"/>
+  <circle cx="630" cy="450" r="420" fill="url(#glow-left)"/>
+  <circle cx="970" cy="450" r="420" fill="url(#glow-right)"/>
+
+  <g opacity=".24" fill="none" stroke="#b9e8ff" stroke-width="2">
+    <path d="M0 180C210 90 360 240 560 140S760 160 800 100"/>
+    <path d="M0 720C220 610 400 770 610 650S760 670 800 610"/>
+    <path d="M120 0V900M280 0V900M440 0V900M600 0V900"/>
+  </g>
+  <g opacity=".18" fill="none" stroke="#ffd0a0" stroke-width="2">
+    <path d="M800 100C940 180 1080 40 1270 140S1470 110 1600 190"/>
+    <path d="M800 650C980 740 1130 590 1310 690S1490 640 1600 720"/>
+    <path d="M1000 0V900M1160 0V900M1320 0V900M1480 0V900"/>
+  </g>
+
+  <g font-family="Inter, Arial, sans-serif">
+    <text x="78" y="100" font-size="21" font-weight="700" letter-spacing="5" fill="#a9d7e9">DIGITAL CHALLENGER</text>
+    <text x="1522" y="100" text-anchor="end" font-size="21" font-weight="700" letter-spacing="5" fill="#ffd0a0">RETAIL INCUMBENT</text>
+
+    <g transform="translate(92 355)">
+      <text x="0" y="0" font-size="112" font-weight="760" letter-spacing="-7" fill="#fff">amazon</text>
+      <path d="M42 40C188 115 388 111 532 26" fill="none" stroke="#ffb33b" stroke-width="13" stroke-linecap="round"/>
+      <path d="M516 17L552 18L535 50" fill="none" stroke="#ffb33b" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="8" y="116" font-size="27" font-weight="560" fill="#c5e4ef">From niche bookseller to digital platform</text>
+      <text x="8" y="154" font-size="21" fill="#90c8dc">从边缘市场切入，持续向上突破</text>
+    </g>
+
+    <g transform="translate(1010 355)">
+      <text x="0" y="0" font-size="112" font-weight="760" letter-spacing="-5" fill="#fff">Walmart</text>
+      <g transform="translate(456 -44)" fill="#ffc220">
+        <rect x="-8" y="-48" width="16" height="42" rx="8"/>
+        <rect x="-8" y="6" width="16" height="42" rx="8"/>
+        <rect x="-48" y="-8" width="42" height="16" rx="8"/>
+        <rect x="6" y="-8" width="42" height="16" rx="8"/>
+        <rect x="-8" y="-48" width="16" height="42" rx="8" transform="rotate(60)"/>
+        <rect x="-8" y="-48" width="16" height="42" rx="8" transform="rotate(120)"/>
+      </g>
+      <text x="4" y="60" font-size="32" font-weight="650" fill="#ffc220">Save money. Live better.</text>
+      <text x="4" y="116" font-size="27" font-weight="560" fill="#ffd8c3">Scale, stores and supply-chain leadership</text>
+      <text x="4" y="154" font-size="21" fill="#f0ad8e">规模、门店与供应链优势</text>
+    </g>
+  </g>
+
+  <g filter="url(#shadow)">
+    <circle cx="800" cy="450" r="142" fill="url(#coin)" stroke="#ffe793" stroke-width="8"/>
+    <circle cx="800" cy="450" r="112" fill="none" stroke="#9f5a17" stroke-width="5" stroke-dasharray="4 10"/>
+    <text x="800" y="478" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="92" font-weight="850" fill="#5a2518">VS</text>
+  </g>
+
+  <g opacity=".5" filter="url(#blur)">
+    <path d="M706 300C640 360 656 438 590 520C675 482 710 422 738 352Z" fill="#9ee9ff"/>
+    <path d="M894 300C960 360 944 438 1010 520C925 482 890 422 862 352Z" fill="#ff9a4f"/>
+  </g>
+
+  <g font-family="Inter, Arial, sans-serif" text-anchor="middle">
+    <text x="800" y="760" font-size="28" font-weight="760" letter-spacing="6" fill="#fff">THE INNOVATOR'S DILEMMA</text>
+    <text x="800" y="808" font-size="22" font-weight="550" fill="#fff" opacity=".74">颠覆者如何穿越巨头的护城河</text>
+  </g>
+</svg>

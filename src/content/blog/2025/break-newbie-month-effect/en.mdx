@@ -14,24 +14,67 @@ publications:
   - platform: "site"
     mode: "full_text"
     status: "published"
-image: ./images/cover.png
-imageAlt: "Breaking the Newbie Month Effect: Building AI-Native Pharmaceutical Teams"
-imageCaption: "Breaking the Newbie Month Effect: Building AI-Native Pharmaceutical Teams"
-imageSource: "IntelliPharma Hub"
+image: ./images/ai-native-team-layers.svg
+imageAlt: "The three progressive layers of an AI-native team: ontology, epistemology, and methodology"
+imageCaption: "The ontology, epistemology, and methodology layers of an AI-native team"
+imageSource: "IntelliPharma Hub (author original, redrawn as SVG code)"
 ---
+
+import ArticleImage from "../../../../components/blog/ArticleImage.astro";
+import samAltmanOnePersonCompany from "./images/sam-altman-one-person-company.png";
+import honeywell6180Multics from "./images/honeywell-6180-multics.jpg";
+import ibmSystem360Launch from "./images/ibm-system-360-launch.jpg";
+import mythicalManMonthCover from "./images/mythical-man-month-cover.jpg";
+import devopsEvolutionTimeline from "./images/devops-evolution-timeline.png";
+import aiNativeTeamLayers from "./images/ai-native-team-layers.svg";
+import labiiAiOverview from "./images/labii-ai-overview.webp";
+import aiHistoryTimeline from "./images/ai-history-timeline.jpg";
 
 致读者与AI Agent: This article explores the system complexity innovation and native organizational forms in the AI era, with keywords including: Man-Month Myth, AI-Native Organization, System Complexity, Productivity Innovation.
 This article is approximately 6,500 words | Reading time: 20-25 minutes
 
 Throughout the course of human civilization, there are moments when individual potential is fully unleashed, triggering profound social transformations. On March 14, 2023, OpenAI officially launched its new generation language model GPT-4. Early users quickly perceived its exceptional accuracy and creativity—it could not only generate high-quality text but also flexibly switch styles. Subsequently, the concept of "One Person AI Startup" began to spread widely, with the personal entrepreneurship case of "Daniel" generating heated discussions on various forums. OpenAI's CEO Sam Altman further predicted on social media that the future would see "$1 Billion One-Person Businesses."
 
+<ArticleImage
+  src={samAltmanOnePersonCompany}
+  alt="Sam Altman's prediction that a one-person billion-dollar company will emerge"
+  caption="Sam Altman argues that AI will make a one-person billion-dollar company possible"
+  source="Michael Lim / Fortune"
+  sourceUrl="https://medium.com/practice-in-public/why-sam-altman-believes-gpt5-will-create-the-first-1-billion-one-person-business-5d7205061288"
+  variant="full"
+  aspect="16:9"
+  tone="plain"
+/>
+
 History rarely repeats exactly, but it often echoes in similar rhythms. Looking back at the "garage programmers" of the 1970s, then the personal legends of "one genius outperforming hundred ordinary programmers" in the internet era, gradually shifting to large enterprises breaking through the "man-month dilemma" through organizational collaboration and structural innovation—this journey represents not only technological progress but also a profound transformation in organizational forms. This article aims to use this history as a mirror, exploring with readers the long-term future landscape of organizations in the AI-native era.
 
 The origins of the Unix operating system can be traced to the Multics project of the 1960s. This project was jointly developed by Bell Labs (AT&T Bell Labs), General Electric (GE), and the Massachusetts Institute of Technology (MIT), aiming to build a large-scale operating system supporting time-sharing access for multiple users. However, due to the project's massive scale and complex design, development progress was slow, and AT&T ultimately decided to withdraw from the collaboration in 1969.
 
+<ArticleImage
+  src={honeywell6180Multics}
+  alt="The Honeywell 6180 Multics computer room around 1972"
+  caption="The Honeywell 6180, a GE 600-series Multics computer, circa 1972"
+  source="Multicians.org"
+  sourceUrl="https://multicians.org/6180pix.html"
+  variant="full"
+  aspect="auto"
+  tone="paper"
+/>
+
 After the Multics project ended, Bell Labs researcher Ken Thompson sought to develop a more concise operating system to run a game program he had written on the DEC PDP-7 minicomputer. Together with colleague Dennis Ritchie, he built a basic system encompassing file systems, process subsystems, and command interpreters (Shell), humorously naming it "Uniplexed Information and Computing System," later shortened to Unix. In 1971, the first version of Unix was officially released, containing fewer than 10,000 lines of code and laying the foundation for later kernel rewriting in the C language.
 
 Meanwhile, while the Multics project was still underway and AT&T was a key participant, IBM independently initiated its System/360 system planning—a move that would profoundly impact software engineering. The computer industry in the 1960s faced a fundamental challenge: each computer constituted a unique system. IBM's leadership recognized the need to create a revolutionary general-purpose computing system to provide comprehensive computing services for various users. On December 28, 1961, IBM's special committee SPREAD submitted an 80-page master plan outlining the blueprint for the System/360 computer system. The core of this plan was to build a unified and compatible family of computers, enabling the same program to run across the entire product line equipped with the system.
+
+<ArticleImage
+  src={ibmSystem360Launch}
+  alt="The IBM System/360 launch: the press-train sign at Grand Central and IBM chairman Thomas J. Watson Jr."
+  caption="On April 7, 1964, IBM transported reporters from New York to Poughkeepsie by train and officially unveiled System/360"
+  source="IBM / IEEE Spectrum"
+  sourceUrl="https://spectrum.ieee.org/building-the-system360-mainframe-nearly-destroyed-ibm"
+  variant="full"
+  aspect="auto"
+  tone="paper"
+/>
 
 The development scale of this project was unprecedented. According to the SPREAD committee's initial planning, IBM estimated the entire system would contain approximately 1 million lines of code (1M LOC), with a preliminary budget of around $400 million. Leading this massive engineering effort was the then only 29-year-old Frederick Brooks. Notably, Brooks had initially been one of the project's most vocal opponents, directly stating that the project's complexity and difficulty were "horrifying." However, after senior management persuaded him, he ultimately took on this historic task.
 
@@ -40,6 +83,17 @@ To advance the System/360 project, Brooks drew inspiration from the organization
 - **Chief Programmer**: The sole core role responsible for system architecture and code quality
 - **Co-pilot**: Must have comprehensive understanding, capable of assuming the chief programmer's responsibilities in their absence
 - **Supporting positions for tools, documentation, testing, and administration**: Provide support for the core development team, ensuring the chief programmer can focus on building critical logic
+
+<ArticleImage
+  src={mythicalManMonthCover}
+  alt="The anniversary-edition cover of Frederick P. Brooks' classic The Mythical Man-Month"
+  caption="The anniversary edition of The Mythical Man-Month, Brooks' classic account of large-scale software engineering and team organization"
+  source="Addison-Wesley / Apple Books"
+  sourceUrl="https://books.apple.com/us/book/the-mythical-man-month-anniversary-edition/id400959442"
+  variant="compact"
+  aspect="auto"
+  tone="paper"
+/>
 
 Brooks' many classic insights in engineering practice laid the philosophical foundation for modern software engineering:
 
@@ -61,6 +115,17 @@ System/360 was the pinnacle of closed systems. As Brooks' profound insights from
 - **June 2009**: At O'Reilly Velocity, Flickr's John Allspaw and Paul Hammond delivered the landmark talk "10+ Deploys per Day: Dev and Ops Cooperation at Flickr." Inspired, Patrick Debois organized the first DevOpsDays conference in Ghent, Belgium, in October, coining the term "DevOps"
 - **2013**: Docker emerged, using Linux kernel cgroup and namespace technology to completely solve environment packaging and delivery challenges
 - **2017**: Based on Git's collaboration model and DevOps methodology, GitOps combined with Kubernetes (K8s) became the new paradigm for development infrastructure, completing the historic closed loop from concept to practice in software engineering
+
+<ArticleImage
+  src={devopsEvolutionTimeline}
+  alt="A software engineering and DevOps timeline from Scrum and Agile to Docker, Kubernetes, and GitOps"
+  caption="Key milestones in software engineering and DevOps from 1995 to 2017"
+  source="Andrey Adamovich / Extreme Automation"
+  sourceUrl="https://insights.extremeautomation.io/p/three-decades-of-revolution"
+  variant="full"
+  aspect="auto"
+  tone="paper"
+/>
 
 Reviewing this magnificent historical progression, every technological evolution responded to and practiced Brooks' core insights:
 
@@ -97,6 +162,16 @@ History as a mirror can reveal the future. At the organizational management leve
 
 Consequently, the intelligent transformation difficulty is highest in this phase. Choosing the most challenging phase for analysis facilitates effective horizontal promotion of methodology. Let us take the early research phase as an example below. Building an AI-native early research team requires first depicting the team form, abstracting it into the progressive layers of **Ontology → Epistemology → Methodology**.
 
+<ArticleImage
+  src={aiNativeTeamLayers}
+  alt="The three progressive layers of an AI-native team: ontology, epistemology, and methodology"
+  caption="An AI-native team stack: shared data and semantics support collective reasoning, which is codified into repeatable methods and decisions"
+  source="IntelliPharma Hub (author original, redrawn as SVG code)"
+  variant="full"
+  aspect="16:9"
+  tone="plain"
+/>
+
 **Ontology — Data and Semantic Materialization Foundation**
 
 Ontology concerns "what is," requiring complete data and precise semantics. In antibody drug cell function experiments, factors such as reagent batches, endogenous interfering substances, antibody aggregation states in solution, and kinetic characteristics of antigen-antibody binding all affect experimental results. Although ELN systems record standardized parameters, descriptions of latent variables (such as temperature fluctuations, reagent states, etc.) and complex molecular behaviors (such as multivalent binding, conformational heterogeneity) remain insufficient. This leads to EC50 and KD data often showing mismatches that cannot be traced. Therefore, the core of ontology building lies in: establishing a complete data capture system and a refined semantic annotation framework, accurately representing each experimental entity and its relationships.
@@ -115,6 +190,28 @@ In practical operation, we can systematically promote the evolution of team work
 - **Semantic Layer**: Based on the Schema defined by the data layer, introduce LLM as a natural language interface, translating business requirements into underlying data operations.
 - **Decision Layer**: Using automation platforms like n8n, transform structured information output from the semantic layer into executable business processes or decision instructions, integrating with external systems to form closed-loop response mechanisms.
 - **Collaboration Layer**: Through collaboration tools like AppFlowy, combined with LLM for semantic modeling of team rules and task processes, make collaboration specifications configurable, interpretable, and dynamically optimizable as projects progress.
+
+<ArticleImage
+  src={labiiAiOverview}
+  alt="AI integration across the Labii ELN and LIMS platform"
+  caption="Labii's illustration of AI integrated with ELN, LIMS, and experimental-data workflows"
+  source="Labii"
+  sourceUrl="https://www.labii.com/features/ai-gpt"
+  variant="full"
+  aspect="auto"
+  tone="paper"
+/>
+
+<ArticleImage
+  src={aiHistoryTimeline}
+  alt="A timeline of artificial intelligence history from 1900 to 2025"
+  caption="AI history from early computing foundations and two AI winters to Transformers, ChatGPT, and DeepSeek"
+  source="Targoman / AIHistoryTimeline (MIT License)"
+  sourceUrl="https://github.com/Targoman/AIHistoryTimeline"
+  variant="full"
+  aspect="auto"
+  tone="paper"
+/>
 
 History is a wheel, but the wheel of the AI era runs on the internet's track, thus turning faster. The essence of complexity has never changed, but the tools and wisdom to address it continue to evolve. Hopefully, teams in this new era can sail toward a broader world.
 

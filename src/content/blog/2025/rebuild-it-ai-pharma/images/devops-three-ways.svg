@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">The Three Ways to DevOps</title>
+  <desc id="desc">
+    Three panels progress from one-way flow, to feedback, to continuous learning and experimentation.
+  </desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#faf9f6"/>
+      <stop offset="1" stop-color="#edf1f5"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="160%">
+      <feDropShadow dx="0" dy="14" stdDeviation="18" flood-color="#17273b" flood-opacity=".12"/>
+    </filter>
+    <marker id="blueArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0 0 10 5 0 10Z" fill="#407daa"/>
+    </marker>
+    <marker id="greenArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0 0 10 5 0 10Z" fill="#3e9b7c"/>
+    </marker>
+    <marker id="purpleArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0 0 10 5 0 10Z" fill="#8061aa"/>
+    </marker>
+  </defs>
+
+  <rect width="1600" height="900" rx="40" fill="url(#bg)"/>
+  <circle cx="1450" cy="100" r="250" fill="#8061aa" opacity=".045"/>
+  <circle cx="120" cy="830" r="250" fill="#407daa" opacity=".045"/>
+
+  <g font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif">
+    <text x="800" y="88" text-anchor="middle" fill="#18283c" font-size="32" font-weight="780" letter-spacing="7">THE THREE WAYS TO DEVOPS</text>
+    <text x="800" y="130" text-anchor="middle" fill="#6d7888" font-size="21">Flow → Feedback → Continual learning and experimentation</text>
+
+    <g filter="url(#shadow)">
+      <rect x="80" y="190" width="440" height="590" rx="30" fill="#fff"/>
+      <rect x="580" y="190" width="440" height="590" rx="30" fill="#fff"/>
+      <rect x="1080" y="190" width="440" height="590" rx="30" fill="#fff"/>
+    </g>
+    <rect x="80" y="190" width="440" height="12" rx="6" fill="#407daa"/>
+    <rect x="580" y="190" width="440" height="12" rx="6" fill="#3e9b7c"/>
+    <rect x="1080" y="190" width="440" height="12" rx="6" fill="#8061aa"/>
+
+    <g text-anchor="middle">
+      <text x="300" y="255" fill="#315f84" font-size="23" font-weight="800" letter-spacing="2">THE FIRST WAY</text>
+      <text x="300" y="292" fill="#20354a" font-size="34" font-weight="800">Flow</text>
+      <text x="300" y="324" fill="#6a7585" font-size="18">Industrial management · 工业管理</text>
+
+      <text x="800" y="255" fill="#347b65" font-size="23" font-weight="800" letter-spacing="2">THE SECOND WAY</text>
+      <text x="800" y="292" fill="#20354a" font-size="34" font-weight="800">Feedback</text>
+      <text x="800" y="324" fill="#6a7585" font-size="18">Digital management · 数字化管理</text>
+
+      <text x="1300" y="255" fill="#684c91" font-size="23" font-weight="800" letter-spacing="2">THE THIRD WAY</text>
+      <text x="1300" y="292" fill="#20354a" font-size="34" font-weight="800">Learning</text>
+      <text x="1300" y="324" fill="#6a7585" font-size="18">Intelligent management · 智能化管理</text>
+    </g>
+
+    <g>
+      <rect x="130" y="385" width="154" height="76" rx="22" fill="#e8f1f7" stroke="#92b5cf" stroke-width="2"/>
+      <rect x="316" y="545" width="154" height="76" rx="22" fill="#f3f0e9" stroke="#c8bd9f" stroke-width="2"/>
+      <text x="207" y="418" text-anchor="middle" fill="#305f84" font-size="20" font-weight="750">Engineering</text>
+      <text x="207" y="444" text-anchor="middle" fill="#6a7786" font-size="15">工程</text>
+      <text x="393" y="578" text-anchor="middle" fill="#695e45" font-size="20" font-weight="750">Customers</text>
+      <text x="393" y="604" text-anchor="middle" fill="#7c7464" font-size="15">客户</text>
+      <path d="M207 461V520Q207 583 300 583H302" fill="none" stroke="#407daa" stroke-width="4" marker-end="url(#blueArrow)"/>
+      <text x="300" y="692" text-anchor="middle" fill="#407daa" font-size="24" font-weight="800">VALUE FLOWS FORWARD</text>
+      <text x="300" y="726" text-anchor="middle" fill="#798494" font-size="17">建立端到端价值流</text>
+    </g>
+
+    <g>
+      <rect x="630" y="385" width="154" height="76" rx="22" fill="#e7f3ed" stroke="#92c6b5" stroke-width="2"/>
+      <rect x="816" y="545" width="154" height="76" rx="22" fill="#f3f0e9" stroke="#c8bd9f" stroke-width="2"/>
+      <text x="707" y="418" text-anchor="middle" fill="#347b65" font-size="20" font-weight="750">Engineering</text>
+      <text x="707" y="444" text-anchor="middle" fill="#6a7786" font-size="15">工程</text>
+      <text x="893" y="578" text-anchor="middle" fill="#695e45" font-size="20" font-weight="750">Customers</text>
+      <text x="893" y="604" text-anchor="middle" fill="#7c7464" font-size="15">客户</text>
+      <path d="M707 461V520Q707 583 800 583H802" fill="none" stroke="#3e9b7c" stroke-width="4" marker-end="url(#greenArrow)"/>
+      <path d="M893 545V490Q893 424 800 424H798" fill="none" stroke="#3e9b7c" stroke-width="4" marker-end="url(#greenArrow)"/>
+      <text x="800" y="692" text-anchor="middle" fill="#3e9b7c" font-size="24" font-weight="800">FEEDBACK FLOWS BACK</text>
+      <text x="800" y="726" text-anchor="middle" fill="#798494" font-size="17">构建快速反馈机制</text>
+    </g>
+
+    <g>
+      <rect x="1130" y="385" width="154" height="76" rx="22" fill="#eee9f6" stroke="#b6a4cf" stroke-width="2"/>
+      <rect x="1316" y="545" width="154" height="76" rx="22" fill="#f3f0e9" stroke="#c8bd9f" stroke-width="2"/>
+      <text x="1207" y="418" text-anchor="middle" fill="#684c91" font-size="20" font-weight="750">Engineering</text>
+      <text x="1207" y="444" text-anchor="middle" fill="#6a7786" font-size="15">工程</text>
+      <text x="1393" y="578" text-anchor="middle" fill="#695e45" font-size="20" font-weight="750">Customers</text>
+      <text x="1393" y="604" text-anchor="middle" fill="#7c7464" font-size="15">客户</text>
+      <path d="M1207 461V520Q1207 583 1300 583H1302" fill="none" stroke="#8061aa" stroke-width="4" marker-end="url(#purpleArrow)"/>
+      <path d="M1393 545V490Q1393 424 1300 424H1298" fill="none" stroke="#8061aa" stroke-width="4" marker-end="url(#purpleArrow)"/>
+      <path d="M1260 510C1290 475 1350 480 1372 520" fill="none" stroke="#8061aa" stroke-width="3" marker-end="url(#purpleArrow)"/>
+      <path d="M1252 548C1287 585 1347 585 1375 548" fill="none" stroke="#8061aa" stroke-width="3" marker-end="url(#purpleArrow)"/>
+      <path d="M1260 580C1295 625 1355 625 1390 585" fill="none" stroke="#8061aa" stroke-width="3" marker-end="url(#purpleArrow)"/>
+      <text x="1300" y="692" text-anchor="middle" fill="#8061aa" font-size="22" font-weight="800">EXPERIMENT &amp; LEARN</text>
+      <text x="1300" y="726" text-anchor="middle" fill="#798494" font-size="17">持续学习与实验</text>
+    </g>
+
+    <g transform="translate(160 830)">
+      <rect width="1280" height="2" fill="#d2d8df"/>
+      <circle cx="0" cy="1" r="7" fill="#407daa"/>
+      <circle cx="640" cy="1" r="7" fill="#3e9b7c"/>
+      <circle cx="1280" cy="1" r="7" fill="#8061aa"/>
+    </g>
+  </g>
+</svg>

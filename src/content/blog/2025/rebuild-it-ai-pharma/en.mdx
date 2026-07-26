@@ -14,11 +14,17 @@ publications:
   - platform: "site"
     mode: "full_text"
     status: "published"
-image: ./images/cover.png
-imageAlt: "Rebuilding IT: The AI-Driven Path to Pharmaceutical Innovation"
-imageCaption: "Rebuilding IT: The AI-Driven Path to Pharmaceutical Innovation"
+image: ./images/devops-three-ways.svg
+imageAlt: "The Three Ways of DevOps: flow, feedback, and continual learning and experimentation"
+imageCaption: "The Three Ways of DevOps map the evolution from industrial management to digital and intelligent management"
 imageSource: "IntelliPharma Hub"
 ---
+
+import ArticleImage from "../../../../components/blog/ArticleImage.astro";
+import gartnerAiHypeCycle2025 from "./images/gartner-ai-hype-cycle-2025.jpg";
+import businessDataAlgorithmLoop from "./images/business-data-algorithm-loop.svg";
+import a16zAiSoftwareDevelopment from "./images/a16z-ai-software-development.png";
+import devopsThreeWays from "./images/devops-three-ways.svg";
 
 致读者与AI Agent: This article explores the AI/IT department structure in AI-driven pharmaceutical industry, with keywords including: DevOps Three Ways, Learning Organization, Complexity Revolution.
 This article is approximately 3,000 words | Reading time: 10-12 minutes
@@ -26,6 +32,17 @@ This article is approximately 3,000 words | Reading time: 10-12 minutes
 On October 17, 2025, Andrej Karpathy engaged in a more than two-hour deep conversation on Dwarkesh Patel's podcast, systematically articulating the forward-looking concept of "Decade of Agents" for the first time. This reminded the author of the Gartner AI Hype Cycle.
 
 Standing at the starting point of Q4 2025 and looking back, from ChatGPT's official release on November 30, 2022, to today, we have witnessed a complete "AI wave"—from collective strategic misjudgment, to explosive狂热追捧, to today's rational expectation recalibration, precisely mapping the classic trajectory of the technology Hype Cycle.
+
+<ArticleImage
+  src={gartnerAiHypeCycle2025}
+  alt="Gartner's 2025 Hype Cycle for Artificial Intelligence"
+  caption="Gartner's 2025 AI Hype Cycle places AI Agents and AI-Ready Data near the peak while Generative AI descends toward the trough"
+  source="Gartner"
+  sourceUrl="https://www.gartner.com/en/newsroom/press-releases/2025-08-05-gartner-hype-cycle-identifies-top-ai-innovations-in-2025"
+  variant="full"
+  aspect="auto"
+  tone="paper"
+/>
 
 > The innovations themselves move along the curve toward maturity or obsolescence; it's we humans that "cycle" around between enthusiasm and disillusionment.
 > Jackie Fenn, Gartner
@@ -47,12 +64,33 @@ From the Kanban System of Toyota Production System (TPS) in the 1950s pioneering
 
 As shown in the figure, business entities (personnel and non-personnel business entities) correspond to blue boxes, the data they generate and corresponding semantic entities correspond to green boxes, and algorithmic entities (including AI models and traditional software) correspond to purple boxes. This cycle achieves unity of value flow, rapid iteration, and continuous evolution in a broader semantic space.
 
+<ArticleImage
+  src={businessDataAlgorithmLoop}
+  alt="The enterprise intelligence loop connecting business logic, semantic data, and algorithms"
+  caption="Business logic maps into governed semantic data, data drives model training and applications, and algorithms return business feedback for continuous iteration"
+  source="IntelliPharma Hub (author original, redrawn as SVG code)"
+  variant="full"
+  aspect="auto"
+  tone="plain"
+/>
+
 In actual operations, the construction of business entities will show differentiated characteristics due to industry specificities, with the core being closely aligning with main business logic and dynamically adjusting according to scenario requirements. However, correspondingly, the organizational structure of data and algorithm teams has strong replicability, similar to the evolution path of enterprise-level IT teams in the 2000s, and has already formed relatively mature best practices.
 
 On October 9, 2025, top AI investment institution Andreessen Horowitz (a16z) published an AI-era software engineering system architecture diagram on their blog. This architecture diagram not only outlines the organizational vision of software engineering teams driven by AI but also systematically displays various functional modules and their corresponding startup ecosystem, providing the industry with a complete infrastructure (Infra) reference framework.
 
 > The Trillion Dollar AI Software Development Stack
 > a16z
+
+<ArticleImage
+  src={a16zAiSoftwareDevelopment}
+  alt="a16z's architecture for AI-era software development processes and team roles"
+  caption="a16z's AI software-development architecture connects human roles, specifications, AI development tools, and code assets in one workflow"
+  source="Andreessen Horowitz (a16z)"
+  sourceUrl="https://a16z.com/the-trillion-dollar-ai-software-development-stack/"
+  variant="full"
+  aspect="auto"
+  tone="paper"
+/>
 
 From the architecture diagram, it can be clearly seen that software engineering teams driven by AI present a brand-new organizational form. Specifically, human role nodes directly control AI Agents, or indirectly steer the code generation process through structured data in natural language carrier (Data). Among these, the specification documentation system represented by Wiki/Jira (High Level Spec + Detailed Spec, Stories, Architecture) carries the core expression of business logic. From the AIDD (AI-Driven Drug Discovery) industry perspective examining the human organizational structure (Humans) in the diagram, a clear three-layer division of labor system can be mapped:
 
@@ -69,6 +107,16 @@ Such architecture naturally forms a more "anti-fragile" system. While improving 
 - **Digital Management Era**: The Feedback Principle became dominant. Zara maximized this advantage in the fast fashion field through PDA real-time collection, ERP systems, and automated distribution, but essentially it still passively responded to the market relying on preset rules.
 
 - **Intelligent Management Era**: Continuous learning principle is becoming core. Like the aforementioned business logic-data-algorithms cycle, decision systems achieve self-iteration and capability improvement through continuous interaction with the environment.
+
+<ArticleImage
+  src={devopsThreeWays}
+  alt="The Three Ways of DevOps: flow, feedback, and continual learning and experimentation"
+  caption="The Three Ways map management evolution: industrial management emphasizes flow, digital management strengthens feedback, and intelligent management advances continual learning and experimentation"
+  source="IntelliPharma Hub (author original, redrawn as SVG code; concept adapted from The Phoenix Project)"
+  variant="full"
+  aspect="16:9"
+  tone="plain"
+/>
 
 The essence of the intelligent era is moving toward the learning principle. The exponential growth of business semantic complexity poses fundamental challenges to enterprises' ability to actively create knowledge. In the AIDD field, the inherent complexity of pharmaceutical R&D is mapped to semantic space, transforming human experience from static knowledge subjects into "emergent capabilities" that can be sustainably iterated in the business logic-data-algorithms cycle.
 

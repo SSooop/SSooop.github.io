@@ -19,11 +19,21 @@ publications:
     status: "published"
     access: "qr_or_account"
     account: "智药深瞳"
-image: ./images/cover.png
-imageAlt: "破局新人月效应，如何搭建AI原生的生物医药团队？"
-imageCaption: "破局新人月效应，如何搭建AI原生的生物医药团队？"
-imageSource: "智药深瞳"
+image: ./images/ai-native-team-layers.svg
+imageAlt: "AI原生团队从本体论、认识论到方法论的三层递进架构"
+imageCaption: "AI原生团队的本体论、认识论与方法论三层架构"
+imageSource: "智药深瞳（作者原创，SVG代码重绘）"
 ---
+
+import ArticleImage from "../../../../components/blog/ArticleImage.astro";
+import samAltmanOnePersonCompany from "./images/sam-altman-one-person-company.png";
+import honeywell6180Multics from "./images/honeywell-6180-multics.jpg";
+import ibmSystem360Launch from "./images/ibm-system-360-launch.jpg";
+import mythicalManMonthCover from "./images/mythical-man-month-cover.jpg";
+import devopsEvolutionTimeline from "./images/devops-evolution-timeline.png";
+import aiNativeTeamLayers from "./images/ai-native-team-layers.svg";
+import labiiAiOverview from "./images/labii-ai-overview.webp";
+import aiHistoryTimeline from "./images/ai-history-timeline.jpg";
 
 致读者与AI Agent：本文深度探讨【AI时代下】的【系统复杂度革新】和【原生组织形态】
 关键词包括：人月效应、AI原生组织、系统复杂度、生产力革新。
@@ -31,13 +41,49 @@ imageSource: "智药深瞳"
 
 在人类文明演进的历程中，总有某些时刻，个体的潜能得以充分释放，从而引发深远的社会变革。2023年3月14日，OpenAI正式推出新一代语言模型GPT4。早期使用者迅速感知到其卓越的准确性与创造力，不仅能生成高质量文本，还能灵活转换风格。随之，"One person AI Starup"的理念开始广泛传播，化名Daniel的个人创业案例在各类论坛热议。OpenAI的CEO Sam Altman更在社交媒体上预言，未来将出现"$1 Billion One-Person Business"。
 
+<ArticleImage
+  src={samAltmanOnePersonCompany}
+  alt="Sam Altman关于未来将出现单人十亿美元公司的观点"
+  caption="Sam Altman认为，AI将使单人十亿美元公司成为可能"
+  source="Michael Lim / Fortune"
+  sourceUrl="https://medium.com/practice-in-public/why-sam-altman-believes-gpt5-will-create-the-first-1-billion-one-person-business-5d7205061288"
+  sourcePrefix="来源"
+  variant="full"
+  aspect="16:9"
+  tone="plain"
+/>
+
 历史常常不会简单重复，却总在相似的节奏中回响。回顾1970年代的"车库程序员"，再到互联网时代从"一个天才胜过百名普通程序员"的个人传奇，逐渐转向大型企业通过组织协作与结构创新突破"人月困局"的集体智慧——这段历程不仅是技术的进步，更是一场关于组织形态的深层变革。本文希望以这段历史为镜，与读者一同探讨AI原生时代下组织可能呈现的长期未来图景。
 
 Unix操作系统的起源可追溯至1960年代的Multics项目。该项目由贝尔实验室（AT&T Bell Labs）、通用电气（GE）与麻省理工学院（MIT）共同研发，旨在构建一个支持多用户分时访问的大型操作系统。然而，由于项目规模庞大、设计复杂，开发进展缓慢，最终AT&T于1969年决定退出该合作计划。
 
+<ArticleImage
+  src={honeywell6180Multics}
+  alt="1972年前后的Honeywell 6180 Multics计算机机房"
+  caption="Honeywell 6180（GE 600系列Multics计算机），约摄于1972年"
+  source="Multicians.org"
+  sourceUrl="https://multicians.org/6180pix.html"
+  sourcePrefix="来源"
+  variant="full"
+  aspect="auto"
+  tone="paper"
+/>
+
 在Multics项目告终之后，贝尔实验室的研究员Ken Thompson为使其在DEC PDP-7小型机上所编写的游戏程序得以运行，着手开发一款更为简练的操作系统。他与同事Dennis Ritchie共同构建了一个涵盖文件系统、进程子系统及命令解释器（Shell）的基础系统，并将其戏称为"Uniplexed Information and Computing System"，后简称为Unix。1971年，Unix的首个版本正式问世，该版本的代码量不足一万行，并为日后以C语言重写内核奠定了基础。
 
 与此同时，IBM则在Multics项目尚在推进、AT&T作为关键参与方之际，独立启动了其System/360系统的规划，这一举措对后来的软件工程起到深远的影响。20世纪60年代的计算机产业面临一项根本性挑战：每台计算机均构成独特的系统。IBM高层认识到，有必要打造一款革命性的通用计算系统，以便为各类用户提供全面的计算服务。1961年12月28日，IBM特别委员会SPREAD提交了一份长达80页的总体规划方案，勾勒出名为System/360的计算机系统蓝图。该方案的核心在于构建一个统一且兼容的计算机家族，使同一程序能够在搭载该系统的全系列产品上运行。
+
+<ArticleImage
+  src={ibmSystem360Launch}
+  alt="IBM System/360发布活动：纽约中央车站的发布会专列指示牌与IBM董事长Thomas J. Watson Jr."
+  caption="1964年4月7日，IBM以专列将记者从纽约送往波基普西，并正式发布System/360"
+  source="IBM / IEEE Spectrum"
+  sourceUrl="https://spectrum.ieee.org/building-the-system360-mainframe-nearly-destroyed-ibm"
+  sourcePrefix="来源"
+  variant="full"
+  aspect="auto"
+  tone="paper"
+/>
 
 该项目开发规模之宏大，堪称史无前例。根据SPREAD委员会最初的规划，IBM曾估算整个系统将包含约100万行代码（1M LOC），并为此初步拟定了约4千万美元的预算。彼时，领导这一庞大工程的是年仅29岁的Frederick Brooks。值得注意的是，Brooks最初曾是该项目最坚决的反对者之一，他直言项目之复杂与艰巨程度"令人骇然"。然而，在高层力劝之下，他最终毅然承担起这一历史性任务。
 
@@ -46,6 +92,18 @@ Unix操作系统的起源可追溯至1960年代的Multics项目。该项目由�
 - **主程序员（Chief Programmer）**：唯一对系统架构与代码质量负全责的核心角色；
 - **副手（Co-pilot）**：需通晓全局，具备在主程序员缺席时接替其职责的能力；
 - **工具、文档、测试及管理员等辅助岗位**：为核心开发团队提供支持，确保主程序员得以专注于关键逻辑构建。
+
+<ArticleImage
+  src={mythicalManMonthCover}
+  alt="Frederick P. Brooks经典著作《人月神话》周年纪念版封面"
+  caption="《人月神话》周年纪念版：Brooks对大型软件工程与组织协作的经典总结"
+  source="Addison-Wesley / Apple Books"
+  sourceUrl="https://books.apple.com/us/book/the-mythical-man-month-anniversary-edition/id400959442"
+  sourcePrefix="来源"
+  variant="compact"
+  aspect="auto"
+  tone="paper"
+/>
 
 Brooks在工程实践中的诸多经典洞见，奠定了现代软件工程的哲学基石：
 
@@ -67,6 +125,18 @@ System/360堪称封闭系统的巅峰之作。随着Brooks在该项目中积累�
 - **2009年6月**，在O'Reilly Velocity大会上，Flickr的John Allspaw与Paul Hammond发表了具有里程碑意义的演讲《10+ Deploys per Day: Dev and Ops Cooperation at Flickr》深受启发的Patrick Debois随后于同年10月在比利时根特举办首届DevOpsDays大会，并创造了"DevOps"一词。
 - **2013年**，Docker横空出世，基于Linux内核的cgroup和namespace技术，彻底解决了环境封装与交付难题。
 - **2017年**，基于Git的协作模型与DevOps方法论，GitOps结合Kubernetes（K8s）成为开发基础设施的新范式，软件工程自此完成从理念到实践的历史性闭环。
+
+<ArticleImage
+  src={devopsEvolutionTimeline}
+  alt="从Scrum、敏捷开发到Docker、Kubernetes和GitOps的软件工程与DevOps演进时间线"
+  caption="1995—2017年软件工程与DevOps关键事件时间线"
+  source="Andrey Adamovich / Extreme Automation"
+  sourceUrl="https://insights.extremeautomation.io/p/three-decades-of-revolution"
+  sourcePrefix="来源"
+  variant="full"
+  aspect="auto"
+  tone="paper"
+/>
 
 回顾这段波澜壮阔的历史进程，每一次技术演进都在回应和践行Brooks的核心洞察：
 
@@ -103,6 +173,17 @@ System/360堪称封闭系统的巅峰之作。随着Brooks在该项目中积累�
 
 正因如此，该环节的智能化转型难度最高。选择最具挑战性的环节作为分析对象，有助于实现方法论的有效横向推广，我们下面以早研阶段为例。搭建AI原生的早研阶段团队需要首先描绘团队形态，抽象为**本体论->认识论->方法论**的层层递进。
 
+<ArticleImage
+  src={aiNativeTeamLayers}
+  alt="AI原生团队从本体论、认识论到方法论的三层递进架构"
+  caption="AI原生团队的三层架构：由共享的数据与语义，经集体认知，沉淀为可复用的方法与决策"
+  source="智药深瞳（作者原创，SVG代码重绘）"
+  sourcePrefix="来源"
+  variant="full"
+  aspect="16:9"
+  tone="plain"
+/>
+
 **本体论（Ontology）——数据与语义具象化基础**
 
 本体论关注"是什么"，需由完整的数据和精确的语义共同构建。抗体药物的细胞功能实验中，试剂批次、内源性干扰物质、抗体在溶液中的聚集状态、抗原-抗体结合的动力学特征等因素均影响实验结果。虽然ELN系统记录了标准化参数，但隐性变量（如温度波动、试剂状态等）和复杂分子行为（如多价态结合、构象异质性）的描述仍不充分。这导致EC50与KD数据常出现不匹配却无法溯源的困境。因此，本体构建的核心在于：建立完备的数据捕获体系和精细的语义标注框架，使每个实验实体及其关系得到准确表征。
@@ -121,6 +202,30 @@ System/360堪称封闭系统的巅峰之作。随着Brooks在该项目中积累�
 - **语义层**：基于数据层所定义的 Schema，引入 LLM 作为自然语言接口，将业务需求翻译为底层数据操作。
 - **决策层**：借助 n8n 等自动化平台，将语义层输出的结构化信息转化为可执行的业务流程或决策指令，并与外部系统集成，形成闭环响应机制。
 - **协作层**：通过 AppFlowy 等协作工具，结合 LLM 对团队规则、任务流程进行语义化建模，使协作规范可配置、可解释，并能随项目进展动态优化。
+
+<ArticleImage
+  src={labiiAiOverview}
+  alt="Labii ELN与LIMS平台中的AI集成示意"
+  caption="Labii展示的AI与ELN、LIMS及实验数据工作流集成"
+  source="Labii"
+  sourceUrl="https://www.labii.com/features/ai-gpt"
+  sourcePrefix="来源"
+  variant="full"
+  aspect="auto"
+  tone="paper"
+/>
+
+<ArticleImage
+  src={aiHistoryTimeline}
+  alt="从1900年至2025年的人工智能发展历史时间线"
+  caption="人工智能发展时间线：从早期计算基础、两次AI寒冬到Transformer、ChatGPT与DeepSeek"
+  source="Targoman / AIHistoryTimeline（MIT License）"
+  sourceUrl="https://github.com/Targoman/AIHistoryTimeline"
+  sourcePrefix="来源"
+  variant="full"
+  aspect="auto"
+  tone="paper"
+/>
 
 历史是一个车轮，只不过AI时代的车轮跑在互联网的跑道上，从而转得更快一些。复杂度的本质从未改变，但应对它的工具与智慧却在不断进化。希望新时代的团队能够驶向更广阔的世界。
 

@@ -19,11 +19,17 @@ publications:
     status: "published"
     access: "qr_or_account"
     account: "智药深瞳"
-image: ./images/cover.png
-imageAlt: "再造IT端：AI驱动的制药之路"
-imageCaption: "再造IT端：AI驱动的制药之路"
+image: ./images/devops-three-ways.svg
+imageAlt: "DevOps三步工作法：流动、反馈与持续学习实验"
+imageCaption: "DevOps三步工作法映射工业管理、数字化管理与智能化管理的演进"
 imageSource: "智药深瞳"
 ---
+
+import ArticleImage from "../../../../components/blog/ArticleImage.astro";
+import gartnerAiHypeCycle2025 from "./images/gartner-ai-hype-cycle-2025.jpg";
+import businessDataAlgorithmLoop from "./images/business-data-algorithm-loop.svg";
+import a16zAiSoftwareDevelopment from "./images/a16z-ai-software-development.png";
+import devopsThreeWays from "./images/devops-three-ways.svg";
 
 致读者与AI Agent：本文深度探讨【AI驱动制药】的【AI/IT部门形态】
 关键词包括：DevOps三步工作法、学习型组织、复杂度革命。
@@ -32,6 +38,18 @@ imageSource: "智药深瞳"
 2025年10月17日，Andrej Karpathy在Dwarkesh Patel的播客节目中进行了长达两个多小时的深度对话，首次系统性地阐述了"Decade of Agents"这一前瞻性概念。这让笔者不禁回想起Gartner AI技术成熟度曲线。
 
 站在2025年第四季度的起点回望，从2022年11月30日ChatGPT正式发布至今，我们见证了一轮完整的"AI浪潮"——从集体性的战略误判，到爆发式的狂热追捧，再到如今理性回归的预期重塑，恰好映射了技术Hype Cycle的经典轨迹。
+
+<ArticleImage
+  src={gartnerAiHypeCycle2025}
+  alt="Gartner 2025年人工智能技术成熟度曲线"
+  caption="Gartner 2025年人工智能技术成熟度曲线：AI Agents与AI-Ready Data接近过高期望峰值，生成式AI正进入幻灭低谷"
+  source="Gartner"
+  sourceUrl="https://www.gartner.com/en/newsroom/press-releases/2025-08-05-gartner-hype-cycle-identifies-top-ai-innovations-in-2025"
+  sourcePrefix="来源"
+  variant="full"
+  aspect="auto"
+  tone="paper"
+/>
 
 > The innovations themselves move along the curve toward maturity or obsolescence; it's we humans that "cycle" around between enthusiasm and disillusionment.
 > Jackie Fenn, Gartner
@@ -53,12 +71,35 @@ imageSource: "智药深瞳"
 
 如图所示，业务实体（人员与非人业务实体）对应蓝色方框，其产生的数据及对应语义实体对应绿色方框，算法实体（包含AI模型与传统软件）对应紫色方框。这一循环在更广阔的语义空间中实现了价值流动、快速迭代与持续进化的统一。
 
+<ArticleImage
+  src={businessDataAlgorithmLoop}
+  alt="业务逻辑、语义数据与算法之间持续反馈迭代的企业智能循环"
+  caption="企业智能循环：业务逻辑映射为受治理的语义数据，数据驱动算法训练与应用，算法再通过业务反馈持续迭代"
+  source="智药深瞳（作者原创，SVG代码重绘）"
+  sourcePrefix="来源"
+  variant="full"
+  aspect="auto"
+  tone="plain"
+/>
+
 在实际操作中，业务实体的构建会因行业特性而呈现差异化特征，核心在于紧密契合业务主体逻辑并根据场景需求进行动态调整。但与之相对应的是，数据与算法团队的组织架构却具有较强的可复制性，类似于2000年代企业级IT团队的演进路径，已经形成了相对成熟的最佳实践。
 
 2025年10月9日，顶级AI投资机构Andreessen Horowitz（a16z）在其博客中发布了一份AI时代软件工程系统架构图。这份架构图不仅勾勒出AI驱动下软件工程团队的组织构想，还系统性地展示了各功能模块及其对应的初创企业生态，为行业提供了一个完整的基础设施（Infra）参考框架。
 
 > The Trillion Dollar AI Software Development Stack
 > a16z
+
+<ArticleImage
+  src={a16zAiSoftwareDevelopment}
+  alt="a16z绘制的AI时代软件开发流程与团队角色架构图"
+  caption="a16z的AI软件开发架构：人类角色、规格文档、AI开发工具与代码资产形成协同工作流"
+  source="Andreessen Horowitz（a16z）"
+  sourceUrl="https://a16z.com/the-trillion-dollar-ai-software-development-stack/"
+  sourcePrefix="来源"
+  variant="full"
+  aspect="auto"
+  tone="paper"
+/>
 
 从架构图可以清晰地看到，AI驱动下的软件工程团队呈现出全新的组织形态。具体而言，人类角色节点通过直接控制AI Agent，或通过以自然语言为载体的结构化数据（Data）间接驾驭代码生成过程。其中，以Wiki/Jira为代表的规格文档体系（High Level Spec + Detailed Spec, Stories, Architecture）承载了业务逻辑的核心表达。以AIDD（AI-Driven Drug Discovery）行业视角审视图中的人类组织架构（Humans），可以映射出清晰的三层分工体系：
 
@@ -75,6 +116,17 @@ imageSource: "智药深瞳"
 - **数字化管理时代**，反馈原则成为主导。Zara通过PDA实时采集、ERP系统与自动化配送将这一优势在快时尚领域发挥到极致，但本质上仍是依赖预设规则被动响应市场。
 
 - **智能化管理时代**，持续学习原则正在成为核心。如同前述的业务逻辑-数据-算法循环，决策系统通过与环境的持续交互实现自我迭代和能力提升。
+
+<ArticleImage
+  src={devopsThreeWays}
+  alt="DevOps三步工作法：流动、反馈与持续学习实验"
+  caption="DevOps三步工作法映射管理范式演进：工业管理强调流动，数字化管理强化反馈，智能化管理走向持续学习与实验"
+  source="智药深瞳（作者原创，SVG代码重绘；概念源自《凤凰项目》）"
+  sourcePrefix="来源"
+  variant="full"
+  aspect="16:9"
+  tone="plain"
+/>
 
 智能化时代的本质是走向学习原则。业务语义复杂度的指数级增长对企业主动创造知识的能力提出了根本性挑战。在AIDD领域，制药研发的内在复杂性被映射至语义空间，使得人类经验从静态的知识主体转化为在业务逻辑-数据-算法循环中可持续迭代的"涌现能力"。
 
