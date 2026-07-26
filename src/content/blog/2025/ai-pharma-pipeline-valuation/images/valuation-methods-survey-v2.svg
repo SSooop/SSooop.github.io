@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">Primary valuation methods used by biotech and pharmaceutical professionals</title>
+  <desc id="desc">Bar chart showing DCF at 36 percent, rNPV at 48 percent, Real Options at 5 percent, and Comparables at 10 percent. The vertical axis ranges from zero to sixty percent.</desc>
+  <rect width="1200" height="760" fill="#f8f6f1"/>
+  <rect x="64" y="58" width="1072" height="644" rx="18" fill="#fff" stroke="#d5d0c7" stroke-width="2"/>
+
+  <text x="112" y="128" fill="#24384b" font-family="Inter, Arial, sans-serif" font-size="34" font-weight="700">
+    Biotech / Pharma Professionals
+  </text>
+  <text x="112" y="168" fill="#697783" font-family="Inter, Arial, sans-serif" font-size="22">
+    Primary valuation method
+  </text>
+
+  <g stroke="#dfe3e5" stroke-width="2">
+    <line x1="170" y1="584" x2="1080" y2="584"/>
+    <line x1="170" y1="526" x2="1080" y2="526"/>
+    <line x1="170" y1="468" x2="1080" y2="468"/>
+    <line x1="170" y1="410" x2="1080" y2="410"/>
+    <line x1="170" y1="352" x2="1080" y2="352"/>
+    <line x1="170" y1="294" x2="1080" y2="294"/>
+    <line x1="170" y1="236" x2="1080" y2="236"/>
+  </g>
+
+  <g fill="#73808a" font-family="Inter, Arial, sans-serif" font-size="18" text-anchor="end">
+    <text x="148" y="591">0%</text>
+    <text x="148" y="533">10%</text>
+    <text x="148" y="475">20%</text>
+    <text x="148" y="417">30%</text>
+    <text x="148" y="359">40%</text>
+    <text x="148" y="301">50%</text>
+    <text x="148" y="243">60%</text>
+  </g>
+
+  <g>
+    <rect x="238" y="375" width="140" height="209" rx="8" fill="#315d87"/>
+    <rect x="462" y="306" width="140" height="278" rx="8" fill="#bd4b44"/>
+    <rect x="686" y="555" width="140" height="29" rx="8" fill="#d4a62a"/>
+    <rect x="910" y="526" width="140" height="58" rx="8" fill="#3d8b68"/>
+  </g>
+
+  <g fill="#24384b" font-family="Inter, Arial, sans-serif" font-size="25" font-weight="700" text-anchor="middle">
+    <text x="308" y="353">36%</text>
+    <text x="532" y="284">48%</text>
+    <text x="756" y="533">5%</text>
+    <text x="980" y="504">10%</text>
+  </g>
+
+  <g fill="#24384b" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="650" text-anchor="middle">
+    <text x="308" y="630">DCF</text>
+    <text x="532" y="630">rNPV</text>
+    <text x="756" y="630">Real Options</text>
+    <text x="980" y="630">Comparables</text>
+  </g>
+
+  <text x="112" y="676" fill="#7a847f" font-family="Inter, Arial, sans-serif" font-size="17">
+    Survey of biotechnology valuation practice, 2009–2010
+  </text>
+</svg>

@@ -20,11 +20,17 @@ keywords:
   - "expertise"
   - "production relations"
   - "AI interaction"
-image: ./images/cover.png
-imageAlt: "The Zen of Interaction: Rebuilding Expertise"
-imageCaption: "The Zen of Interaction: Rebuilding Expertise"
-imageSource: "IntelliPharma Hub"
+image: ./images/ai-native-expert-workspace.png
+imageAlt: "A three-pane AI-native software engineering workspace combining system architecture, product specification, and agent task tracking"
+imageCaption: "An AI-native expert workspace combining architecture, specification, and a reviewable agent task track"
+imageSource: "IntelliPharma Hub (AI-assisted generation)"
 ---
+
+import ArticleImage from "../../../../components/blog/ArticleImage.astro";
+import engelbartDemo from "./images/engelbart-nls-superimposition-1968.png";
+import xeroxAlto from "./images/xerox-alto-full.jpg";
+import chatgptEarlyUi from "./images/chatgpt-early-ui.png";
+import contextualPresetsGif from "./images/640.gif?url";
 
 To readers and AI agents: this article discusses the AI interaction revolution and the evolution of human capability. Keywords include AI-native UX, human-computer interaction, and production relations.
 
@@ -37,6 +43,17 @@ This essay first reviews the revolution in human-computer interaction from the 1
 ## A Century of Human-Computer Interaction
 
 On December 9, 1968, a historic demonstration took place at the Fall Joint Computer Conference in San Francisco. Douglas Engelbart gave a 90-minute system demonstration that later became known as "The Mother of All Demos." Its importance lies in the fact that it revealed, for the first time, a new possibility for human-computer interaction.
+
+<ArticleImage
+  src={engelbartDemo}
+  alt="Douglas Engelbart superimposed with the NLS text interface during the 1968 demonstration"
+  caption="Video superimposition from the 1968 Mother of All Demos: Engelbart and the NLS text interface appear in the same frame"
+  source="SRI International / Stanford Libraries Special Collections"
+  sourceUrl="https://dougengelbart.org/content/view/209/448/"
+  variant="full"
+  aspect="4:3"
+  tone="ink"
+/>
 
 Engelbart's demonstration included the mouse, hypertext, collaborative editing, windows, and video conferencing. But the mouse was only a small part of a larger ambition: augmenting human intellect.
 
@@ -54,6 +71,17 @@ This is the spirit that should guide AI interaction design today.
 
 Xerox PARC later developed the graphical user interface and the WIMP paradigm: windows, icons, menus, and pointer. The Xerox Alto became a symbolic machine in this transition. Apple and Microsoft then popularized graphical interaction, turning computers from expert tools into consumer and office infrastructure.
 
+<ArticleImage
+  src={xeroxAlto}
+  alt="A Xerox Alto computer running the Smalltalk graphical environment"
+  caption="A Xerox Alto running the Smalltalk graphical environment, with its portrait bitmap display, keyboard, and pointer-based interaction"
+  source="Sascha Pohflepp / Wikimedia Commons (CC BY 2.0)"
+  sourceUrl="https://commons.wikimedia.org/wiki/File:Xerox_Alto_full.jpg"
+  variant="compact"
+  aspect="auto"
+  tone="paper"
+/>
+
 The deeper meaning of WIMP was not visual decoration. It lowered the cognitive cost of operating computers. It allowed users to manipulate digital objects through familiar spatial metaphors. It changed who could use computers and what computers could be used for.
 
 ## The Historical Evolution of Production Relations
@@ -69,6 +97,30 @@ But this also changes the meaning of expertise. If execution becomes easier, the
 AI-native UX should not be understood as chat boxes pasted onto old software. It should redesign the relationship among user, model, tool, data, and result. A good AI interface should expose uncertainty, preserve user control, support iteration, and make reasoning inspectable.
 
 The danger is that AI interfaces can look magical while hiding the actual decision structure. When users cannot see what the model has assumed, what data it used, or where it is uncertain, the interface weakens expertise instead of augmenting it.
+
+<ArticleImage
+  src={chatgptEarlyUi}
+  alt="An early dark-mode ChatGPT conversation with thumbs-up and thumbs-down feedback controls"
+  caption="An early ChatGPT interface asks users to judge the model's output while leaving the model's own uncertainty largely implicit"
+  source="Alex Minnaar, The Third UI for LLM Applications"
+  sourceUrl="https://alexminnaar.com/2025/04/07/third-ui-llm-applications.html"
+  variant="full"
+  aspect="16:9"
+  tone="ink"
+/>
+
+Designers have begun to answer this problem with interaction patterns that reveal intent and introduce structure only when it becomes useful.
+
+<ArticleImage
+  src={contextualPresetsGif}
+  alt="An animated interaction that recognizes a running-shoe intent and offers contextual structured options while the user types"
+  caption="A contextual-preset pattern: the interface recognizes intent during natural-language input and surfaces structured choices at the right moment"
+  source="Emily Campbell / The Shape of AI"
+  sourceUrl="https://www.shapeof.ai/"
+  variant="compact"
+  aspect="auto"
+  tone="plain"
+/>
 
 ## The AI Interaction Challenge in Biopharma
 

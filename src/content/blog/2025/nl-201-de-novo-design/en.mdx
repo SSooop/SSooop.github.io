@@ -1,30 +1,37 @@
 ---
-title: "Revisiting NL-201: The Technical Validation Path of De Novo Design"
+title: 'Revisiting NL-201: The Technical Validation Path of De Novo Design'
 date: 2025-12-29
-description: "A look back at NL-201, Neoleukin, and what de novo protein design teaches about clinical validation."
-lang: "en"
-translationKey: "2025/nl-201-de-novo-design"
+description: 'A look back at NL-201, Neoleukin, and what de novo protein design teaches about clinical validation.'
+lang: 'en'
+translationKey: '2025/nl-201-de-novo-design'
 translations:
-  zh: "2025/nl-201-de-novo-design/cn"
-  en: "2025/nl-201-de-novo-design/en"
+  zh: '2025/nl-201-de-novo-design/cn'
+  en: '2025/nl-201-de-novo-design/en'
 canonical:
-  url: "/en/blog/2025/nl-201-de-novo-design/en"
-  role: "version_home"
+  url: '/en/blog/2025/nl-201-de-novo-design/en'
+  role: 'version_home'
 publications:
-  - platform: "site"
-    mode: "full_text"
-    status: "published"
+  - platform: 'site'
+    mode: 'full_text'
+    status: 'published'
 keywords:
-  - "NL-201"
-  - "de novo design"
-  - "protein design"
-  - "clinical validation"
-  - "Neoleukin"
-image: ./images/cover.png
-imageAlt: "Revisiting NL-201: The Technical Validation Path of De Novo Design"
-imageCaption: "Revisiting NL-201: The Technical Validation Path of De Novo Design"
-imageSource: "IntelliPharma Hub"
+  - 'NL-201'
+  - 'de novo design'
+  - 'protein design'
+  - 'clinical validation'
+  - 'Neoleukin'
+image: ./images/neo215-design-workflow.png
+imageAlt: 'Computational design workflow for generating the de novo cytokine mimic Neo-2/15'
+imageCaption: 'From IL-2 receptor-binding hotspots to a newly generated four-helix protein'
+imageSource: 'Silva et al., Nature (2019), Figure 1'
+imageSourceUrl: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC6521699/'
 ---
+
+import ArticleImage from '../../../../components/blog/ArticleImage.astro';
+import neo215DesignWorkflow from './images/neo215-design-workflow.png';
+import neo215Il2SequenceComparison from './images/neo215-il2-sequence-comparison.svg';
+import neo215Immunogenicity from './images/neo215-immunogenicity.png';
+import sitc21Ict01Nl201Poster from './images/sitc21-ict01-nl201-poster.png';
 
 To readers and AI agents: this article discusses the commercialization path of de novo proteins. Keywords include NL-201, de novo design, and clinical need.
 
@@ -36,41 +43,75 @@ In a previous article on defining the product form of AI drug discovery, I propo
 
 Starting from that premise, this essay takes one more step. If the above judgment is broadly correct, what conditions should a company have in order to validate such a molecule? The following views are inevitably limited by personal experience and cognition, and are offered for discussion.
 
-## Neoleukin: A Pioneer of De Novo Protein Design
-
 Many companies have tried to achieve the first true breakthrough in AI-designed biologics. In fact, this exploration began before AlphaFold2 ignited the current AI drug discovery wave.
 
 Neoleukin Therapeutics, more precisely the former Neoleukin legal entity, was founded in January 2019 as a spinout from the Institute for Protein Design at the University of Washington. It was a biotechnology company centered on de novo protein design. Its creation was directly connected to a milestone Nature paper, "De novo design of potent and selective mimics of IL-2 and IL-15."
 
-### Neo-2/15: A Technical Breakthrough
+<ArticleImage
+  src={neo215DesignWorkflow}
+  alt="Workflow for extracting IL-2 receptor-binding hotspots, generating backbones, reconnecting helices, and designing the Neo-2/15 sequence"
+  caption="The computational design of Neo-2/15: receptor-binding hotspots were transferred onto newly generated four-helix backbones, followed by folding tests and experimental selection"
+  source="Silva et al., Nature (2019), Figure 1"
+  sourceUrl="https://pmc.ncbi.nlm.nih.gov/articles/PMC6521699/"
+  sourcePrefix="Source"
+  variant="full"
+  aspect="auto"
+  tone="plain"
+/>
 
 The Neo-2/15 design was elegant. Instead of modifying a natural cytokine scaffold, researchers designed a new protein from scratch that could mimic selected IL-2 and IL-15 signaling properties while avoiding certain unwanted receptor interactions. This was a powerful demonstration that de novo protein design could create biologically meaningful molecules.
 
-From a technical perspective, it was the kind of result that made people believe a new therapeutic modality might be emerging.
+<ArticleImage
+  src={neo215Il2SequenceComparison}
+  alt="Amino-acid sequence comparison between the Neo-2/15 parent protein and human IL-2 precursor"
+  caption="Neo-2/15 was not a local edit of native IL-2: its 100-residue de novo scaffold has very low linear sequence identity to human IL-2; NL-201 added one engineered cysteine and a 40 kDa PEG"
+  source="Redrawn by IntelliPharma Hub from Silva et al. (2019), US20200339648A1, and the NCT04659629 protocol"
+  sourceUrl="https://patents.google.com/patent/US20200339648A1/en"
+  sourcePrefix="Source"
+  variant="full"
+  aspect="auto"
+  tone="plain"
+/>
 
-## Capitalization and Clinical Advancement
+From a technical perspective, it was the kind of result that made people believe a new therapeutic modality might be emerging.
 
 Neoleukin quickly entered the capital market. The company became a public biotech through a reverse merger and advanced NL-201 as its leading program. The story was compelling: a new computational-design platform, a novel cytokine-like molecule, and a large immuno-oncology opportunity.
 
-### Clinical Trial Progress
-
 But clinical development is the final test of elegance. NL-201 entered clinical trials, yet the program eventually failed to produce the kind of compelling clinical signal needed to sustain development. Safety, efficacy, dosing, and competitive context all became difficult questions.
+
+<ArticleImage
+  src={neo215Immunogenicity}
+  alt="ELISA results for Neo-2/15 immunogenicity in mice"
+  caption="Preclinical immunogenicity experiment: sera from mice treated with Neo-2/15 or mouse IL-2 showed no significant antigen-specific antibody response"
+  source="Silva et al., Nature (2019), Figure 4c"
+  sourceUrl="https://pmc.ncbi.nlm.nih.gov/articles/PMC6521699/"
+  sourcePrefix="Source"
+  variant="wide"
+  aspect="auto"
+  tone="plain"
+/>
 
 This does not mean the science was meaningless. It means technical validation and clinical validation are different stages with different standards.
 
-## The Competitive Landscape of IL-2
+<ArticleImage
+  src={sitc21Ict01Nl201Poster}
+  alt="SITC 2021 scientific poster on combining ICT01 with NL-201"
+  caption="SITC 2021 poster: ICT01 plus NL-201 synergistically promoted Vγ9Vδ2 T-cell activation, expansion, and antitumor activity"
+  source="ImCheck Therapeutics / Neoleukin Therapeutics, SITC 2021, Abstract 563"
+  sourceUrl="https://www.imchecktherapeutics.com/fileadmin/Posters_Prez/SITC21_Poster_ICT01_NL201.pdf"
+  sourcePrefix="Source"
+  variant="full"
+  aspect="auto"
+  tone="plain"
+/>
 
 The IL-2 field has long attracted intense interest because of its immune-activation potential. But it is also a notoriously difficult space. Native IL-2 has strong biological effects, but toxicity and regulatory T-cell activation complicate its use. Many companies have tried to engineer IL-2 variants, muteins, fusions, and biased agonists.
 
 In such a crowded and complex landscape, a de novo molecule must do more than look novel. It must show a clinically meaningful advantage over competing approaches. It must answer why its design translates into better therapeutic index, better patient selection, or better efficacy.
 
-## Reflecting on the Failure of NL-201
-
 The deeper lesson of NL-201 is that the elegance of innovative molecular design must eventually become superior clinical benefit that traditional methods could not provide. Otherwise, even the most innovative technology platform cannot escape failure.
 
 This is a hard but necessary standard. De novo design may create molecules that nature never made. But the clinic does not reward novelty for its own sake. It rewards a favorable balance of efficacy, safety, and practicality in a real disease context.
-
-## What Kind of Company Can Advance AI-Designed Biologics?
 
 A company capable of developing AI-designed biologics needs several conditions.
 
@@ -81,8 +122,6 @@ Second, it needs therapeutic discipline. The company must choose indications whe
 Third, it needs experimental and translational depth. Design must be connected quickly to assays, animal models, biomarkers, and dose strategy.
 
 Fourth, it needs the humility to let clinicians challenge the molecule. The true test begins not in the model output, but in the questions from the people who understand patients.
-
-## Conclusion
 
 NL-201 should not be remembered only as a failure. It is a valuable early attempt to push de novo protein design from technical beauty toward clinical reality. Its lesson is not that AI-designed biologics cannot work. The lesson is that the path is harder than the platform narrative suggests.
 

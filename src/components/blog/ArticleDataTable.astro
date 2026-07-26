@@ -1,0 +1,187 @@
+---
+interface Column {
+  key: string;
+  label: string;
+  align?: 'left' | 'center' | 'right';
+}
+
+interface Props {
+  columns: Column[];
+  rows: Array<Record<string, string | number>>;
+  caption?: string;
+  source?: string;
+  sourceUrl?: string;
+  sourcePrefix?: string;
+  compact?: boolean;
+}
+
+const {
+  columns,
+  rows,
+  caption,
+  source,
+  sourceUrl,
+  sourcePrefix = 'Source',
+  compact = false,
+} = Astro.props as Props;
+---
+
+<figure class:list={['article-data-table', { 'article-data-table--compact': compact }]}>
+  <div class="article-data-table__viewport">
+    <table>
+      <thead>
+        <tr>
+          {
+            columns.map((column) => (
+              <th class={`article-data-table__cell--${column.align ?? 'left'}`} scope="col">
+                {column.label}
+              </th>
+            ))
+          }
+        </tr>
+      </thead>
+      <tbody>
+        {
+          rows.map((row) => (
+            <tr>
+              {columns.map((column) => (
+                <td class={`article-data-table__cell--${column.align ?? 'left'}`}>
+                  {row[column.key]}
+                </td>
+              ))}
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
+
+  {
+    (caption || source) && (
+      <figcaption>
+        {caption && <span>{caption}</span>}
+        {source && (
+          <span>
+            {caption && <span aria-hidden="true"> / </span>}
+            {sourceUrl ? (
+              <a href={sourceUrl} target="_blank" rel="noopener noreferrer" title={source}>
+                {sourcePrefix}
+              </a>
+            ) : (
+              <>
+                {sourcePrefix}: {source}
+              </>
+            )}
+          </span>
+        )}
+      </figcaption>
+    )
+  }
+</figure>
+
+<style>
+  .article-data-table {
+    width: min(100%, 44rem);
+    margin: 2.75rem auto;
+    color: var(--color-morandi-text);
+  }
+
+  .article-data-table--compact {
+    width: min(100%, 38rem);
+  }
+
+  .article-data-table__viewport {
+    overflow-x: auto;
+    border: 1px solid color-mix(in srgb, var(--color-morandi-accent-2), transparent 35%);
+    border-radius: 8px;
+    background: color-mix(in srgb, white, var(--color-morandi-bg) 18%);
+    box-shadow: 0 20px 48px rgb(74 74 74 / 0.11);
+  }
+
+  table {
+    width: 100%;
+    min-width: 38rem;
+    border-collapse: collapse;
+    font-size: 0.78rem;
+    line-height: 1.45;
+  }
+
+  th,
+  td {
+    padding: 0.72rem 0.78rem;
+    border-bottom: 1px solid color-mix(in srgb, var(--color-morandi-accent-2), transparent 62%);
+    vertical-align: top;
+  }
+
+  th {
+    background: color-mix(in srgb, var(--color-morandi-text), transparent 92%);
+    color: color-mix(in srgb, var(--color-morandi-text), black 8%);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.035em;
+    text-transform: uppercase;
+  }
+
+  tbody tr:last-child td {
+    border-bottom: 0;
+  }
+
+  tbody tr:nth-child(even) {
+    background: color-mix(in srgb, var(--color-morandi-bg), transparent 65%);
+  }
+
+  .article-data-table__cell--left {
+    text-align: left;
+  }
+
+  .article-data-table__cell--center {
+    text-align: center;
+  }
+
+  .article-data-table__cell--right {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+
+  figcaption {
+    max-width: 40rem;
+    margin: 0.8rem auto 0;
+    padding-inline: 0.25rem;
+    color: color-mix(in srgb, var(--color-morandi-text), transparent 32%);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    line-height: 1.7;
+    text-align: center;
+  }
+
+  figcaption a {
+    display: inline-flex;
+    min-height: 1.35rem;
+    align-items: center;
+    justify-content: center;
+    padding: 0.14rem 0.5rem;
+    border: 1px solid color-mix(in srgb, var(--color-track-intellipharma), transparent 58%);
+    border-radius: 6px;
+    background: color-mix(in srgb, var(--color-track-intellipharma), transparent 90%);
+    color: var(--color-track-intellipharma);
+    font-size: 0.64rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    line-height: 1;
+    text-decoration: none;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 640px) {
+    table {
+      font-size: 0.73rem;
+    }
+
+    th,
+    td {
+      padding: 0.62rem 0.65rem;
+    }
+  }
+</style>

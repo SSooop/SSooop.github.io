@@ -2,6 +2,9 @@ import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
 import react from '@astrojs/react';
 import mdx from '@astrojs/mdx';
+import { unified } from '@astrojs/markdown-remark';
+import rehypeKatex from 'rehype-katex';
+import remarkMath from 'remark-math';
 
 const siteUrl = (process.env.SITE_URL || 'https://ssooop.github.io').replace(/\/+$/, '');
 const basePath = process.env.PUBLIC_BASE || '/';
@@ -23,6 +26,13 @@ export default defineConfig({
   output: 'static',
 
   integrations: [react(), mdx()],
+
+  markdown: {
+    processor: unified({
+      remarkPlugins: [[remarkMath, { singleDollarTextMath: false }]],
+      rehypePlugins: [rehypeKatex],
+    }),
+  },
 
   // Build optimizations
   build: {

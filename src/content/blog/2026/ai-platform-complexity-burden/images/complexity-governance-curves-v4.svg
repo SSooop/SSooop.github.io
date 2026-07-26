@@ -1,0 +1,136 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1020" viewBox="0 0 1600 1020" role="img" aria-labelledby="title desc">
+  <title id="title">复杂度—治理成本曲线</title>
+  <desc id="desc">市场外包、动态边界和内部科层三种治理模式的单位治理成本随领域复杂度和资产专用性变化的概念图。</desc>
+  <defs>
+    <marker id="axis-arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0 0L10 5L0 10Z" fill="#263746"/>
+    </marker>
+    <marker id="blue-arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0 0L10 5L0 10Z" fill="#2c6e91"/>
+    </marker>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#2d3e4f" flood-opacity=".12"/>
+    </filter>
+    <pattern id="grid" width="80" height="80" patternUnits="userSpaceOnUse">
+      <path d="M80 0H0V80" fill="none" stroke="#cbd5dc" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="1600" height="1020" fill="#f3efe9"/>
+  <rect x="54" y="44" width="1492" height="932" rx="28" fill="#fffdf9" stroke="#d8cec1" stroke-width="2" filter="url(#shadow)"/>
+
+  <text x="110" y="112" fill="#182d3f" font-family="Inter, 'Noto Sans SC', system-ui, sans-serif" font-size="42" font-weight="750">
+    复杂度—治理成本曲线
+  </text>
+  <text x="110" y="151" fill="#617385" font-family="Inter, 'Noto Sans SC', system-ui, sans-serif" font-size="21" letter-spacing=".4">
+    COMPLEXITY–GOVERNANCE COST CURVES
+  </text>
+  <text x="1490" y="114" text-anchor="end" fill="#617385" font-family="Inter, 'Noto Sans SC', system-ui, sans-serif" font-size="18">
+    概念模型 · Conceptual model
+  </text>
+
+  <g>
+    <rect x="190" y="195" width="430" height="76" rx="14" fill="#dceaf1" opacity=".72"/>
+    <rect x="620" y="195" width="500" height="76" rx="14" fill="#e4eee3" opacity=".76"/>
+    <rect x="1120" y="195" width="330" height="76" rx="14" fill="#f0dfd8" opacity=".78"/>
+
+    <rect x="190" y="285" width="430" height="520" fill="#dceaf1" opacity=".72"/>
+    <rect x="620" y="285" width="500" height="520" fill="#e4eee3" opacity=".76"/>
+    <rect x="1120" y="285" width="330" height="520" fill="#f0dfd8" opacity=".78"/>
+    <rect x="190" y="285" width="1260" height="520" fill="url(#grid)" opacity=".75"/>
+
+    <text x="405" y="225" text-anchor="middle" fill="#2c6079" font-family="Inter, 'Noto Sans SC', system-ui, sans-serif" font-size="22" font-weight="700">
+      市场优势区
+    </text>
+    <text x="405" y="251" text-anchor="middle" fill="#517486" font-family="Inter, 'Noto Sans SC', system-ui, sans-serif" font-size="15" letter-spacing=".5">
+      MARKET ADVANTAGE
+    </text>
+
+    <text x="870" y="225" text-anchor="middle" fill="#477058" font-family="Inter, 'Noto Sans SC', system-ui, sans-serif" font-size="22" font-weight="700">
+      混合治理区
+    </text>
+    <text x="870" y="251" text-anchor="middle" fill="#617a69" font-family="Inter, 'Noto Sans SC', system-ui, sans-serif" font-size="15" letter-spacing=".5">
+      HYBRID ORCHESTRATION
+    </text>
+
+    <text x="1285" y="225" text-anchor="middle" fill="#89574e" font-family="Inter, 'Noto Sans SC', system-ui, sans-serif" font-size="22" font-weight="700">
+      内部化优势区
+    </text>
+    <text x="1285" y="251" text-anchor="middle" fill="#8a6b65" font-family="Inter, 'Noto Sans SC', system-ui, sans-serif" font-size="15" letter-spacing=".5">
+      INTERNALIZATION ADVANTAGE
+    </text>
+  </g>
+
+  <g transform="translate(0 80)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M220 682C385 675 510 635 620 560C785 448 930 350 1120 280C1240 235 1338 215 1415 210"
+      stroke="#2c6e91" stroke-width="8"/>
+    <path d="M220 606C370 594 500 578 620 560C800 530 952 463 1120 380C1240 320 1340 265 1415 245"
+      stroke="#4f8a62" stroke-width="8"/>
+    <path d="M220 430C470 425 760 412 1120 380C1240 368 1338 350 1415 330"
+      stroke="#973b3b" stroke-width="8"/>
+  </g>
+
+  <g stroke="#263746" stroke-width="3" fill="none">
+    <path d="M190 805V268" marker-end="url(#axis-arrow)"/>
+    <path d="M190 805H1470" marker-end="url(#axis-arrow)"/>
+  </g>
+
+  <g stroke="#657684" stroke-width="2" stroke-dasharray="8 8">
+    <line x1="620" y1="285" x2="620" y2="805"/>
+    <line x1="1120" y1="285" x2="1120" y2="805"/>
+  </g>
+
+  <g font-family="Inter, 'Noto Sans SC', system-ui, sans-serif">
+    <text x="87" y="545" transform="rotate(-90 87 545)" text-anchor="middle" fill="#263746" font-size="23" font-weight="700">
+      单位治理成本 · UNIT GOVERNANCE COST
+    </text>
+    <text x="152" y="297" text-anchor="end" fill="#617385" font-size="17">高 HIGH</text>
+    <text x="152" y="799" text-anchor="end" fill="#617385" font-size="17">低 LOW</text>
+
+    <text x="830" y="880" text-anchor="middle" fill="#263746" font-size="23" font-weight="700">
+      领域复杂度 / 资产专用性 · COMPLEXITY / ASSET SPECIFICITY
+    </text>
+    <text x="194" y="838" fill="#617385" font-size="17">低 LOW</text>
+    <text x="1435" y="838" text-anchor="end" fill="#617385" font-size="17">高 HIGH</text>
+  </g>
+
+  <g transform="translate(0 80)" font-family="Inter, 'Noto Sans SC', system-ui, sans-serif">
+    <rect x="308" y="617" width="230" height="58" rx="12" fill="#fffdf9" stroke="#9cb8c7" stroke-width="2"/>
+    <circle cx="334" cy="646" r="7" fill="#2c6e91"/>
+    <text x="354" y="641" fill="#234a61" font-size="20" font-weight="700">市场外包</text>
+    <text x="354" y="661" fill="#617385" font-size="14">MARKET OUTSOURCING</text>
+
+    <rect x="748" y="540" width="230" height="58" rx="12" fill="#fffdf9" stroke="#a8c1ad" stroke-width="2"/>
+    <circle cx="774" cy="569" r="7" fill="#4f8a62"/>
+    <text x="794" y="564" fill="#365f45" font-size="20" font-weight="700">动态边界</text>
+    <text x="794" y="584" fill="#617385" font-size="14">HYBRID GOVERNANCE</text>
+
+    <rect x="1190" y="405" width="224" height="58" rx="12" fill="#fffdf9" stroke="#c39b94" stroke-width="2"/>
+    <circle cx="1216" cy="434" r="7" fill="#973b3b"/>
+    <text x="1236" y="429" fill="#723030" font-size="20" font-weight="700">内部科层</text>
+    <text x="1236" y="449" fill="#617385" font-size="14">INTERNAL HIERARCHY</text>
+  </g>
+
+  <g transform="translate(0 80)" font-family="Inter, 'Noto Sans SC', system-ui, sans-serif">
+    <circle cx="620" cy="560" r="10" fill="#182d3f" stroke="#fffdf9" stroke-width="4"/>
+    <path d="M656 518L625 553" stroke="#2c6e91" stroke-width="2.5" fill="none" marker-end="url(#blue-arrow)"/>
+    <rect x="650" y="438" width="245" height="78" rx="14" fill="#fffdf9" stroke="#9cb8c7" stroke-width="2"/>
+    <text x="672" y="469" fill="#263746" font-size="19" font-weight="700">第一边界点</text>
+    <text x="672" y="495" fill="#617385" font-size="15">外包 → 混合治理</text>
+
+    <circle cx="1120" cy="380" r="10" fill="#182d3f" stroke="#fffdf9" stroke-width="4"/>
+    <path d="M1068 343L1113 374" stroke="#2c6e91" stroke-width="2.5" fill="none" marker-end="url(#blue-arrow)"/>
+    <rect x="858" y="264" width="234" height="78" rx="14" fill="#fffdf9" stroke="#9cb8c7" stroke-width="2"/>
+    <text x="880" y="295" fill="#263746" font-size="19" font-weight="700">第二边界点</text>
+    <text x="880" y="321" fill="#617385" font-size="15">混合治理 → 内部化</text>
+  </g>
+
+  <g font-family="Inter, 'Noto Sans SC', system-ui, sans-serif">
+    <text x="110" y="944" fill="#617385" font-size="16">
+      注：曲线越低表示单位治理成本越低；边界点会随技术、制度与行业特征移动。
+    </text>
+    <text x="1490" y="944" text-anchor="end" fill="#8a969e" font-size="15">
+      Based on Coase–Williamson transaction-cost economics
+    </text>
+  </g>
+</svg>

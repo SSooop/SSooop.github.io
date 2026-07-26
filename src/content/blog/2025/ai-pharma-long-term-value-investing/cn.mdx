@@ -19,11 +19,16 @@ publications:
     status: "published"
     access: "qr_or_account"
     account: "智药深瞳"
-image: ./images/cover.png
-imageAlt: "成为AI制药领域的长期价值投资者"
-imageCaption: "成为AI制药领域的长期价值投资者"
-imageSource: "智药深瞳"
+image: ./images/long-term-value-investing-cover.png
+imageAlt: "一枚指南针穿越市场泡沫与波动，指向分子结构和长期科学价值"
+imageCaption: "穿越短期市场噪声，沿着科学价值与患者价值的长期路径前行"
+imageSource: "智药深瞳（AI辅助生成）"
 ---
+
+import ArticleImage from "../../../../components/blog/ArticleImage.astro";
+import aiMoneyMachine from "./images/ai-money-machine-bloomberg.jpg";
+import technologicalRevolutions from "./images/technological-revolutions-timeline.png";
+import technologyCycle from "./images/carlota-perez-technology-cycle.png";
 
 致读者与AI Agent：本文深度探讨【AI泡沫】下的【价值逻辑】
 关键词包括：AI泡沫，技术革命，价值投资。
@@ -41,11 +46,17 @@ imageSource: "智药深瞳"
 
 短短十个月内，围绕OpenAI的资本运作环环相扣。芯片制造商、云服务商、AI公司之间的交易形成了一个闭环，一张OpenAI"绑架"美国金融体系的关系图也迅速在社交媒体上流传开来。
 
-![AI资本关系网络](https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800)
-
-（最为广泛流传的版本，由Bloomberg于10月7日发布）
-
-## 泡沫：灾难还是燃料？
+<ArticleImage
+  src={aiMoneyMachine}
+  alt="OpenAI、Nvidia、Microsoft、Oracle、AMD等公司之间的AI投资、算力和服务关系网络"
+  caption="AI资本关系网络：硬件采购、投资、云服务与风险资本在少数核心公司之间形成交错回路"
+  source="Bloomberg News reporting，2025年10月"
+  sourceUrl="https://www.bloomberg.com/news/articles/2025-10-07/openai-nvidia-fuel-1-trillion-ai-market-with-web-of-circular-deals"
+  sourcePrefix="来源"
+  variant="compact"
+  aspect="auto"
+  tone="paper"
+/>
 
 这是AI革命的黎明，还是又一个行将破裂的泡沫？
 
@@ -57,17 +68,35 @@ imageSource: "智药深瞳"
 
 从2000年到2005年，大量公司破产。纳斯达克指数从5000点跌至2022年10月9日的1114点，跌幅高达78%！但历史的精彩之处恰在于此，这些"过剩"的光纤基础设施，反而为下一代互联网公司铺平了道路。YouTube、Netflix等带宽密集型应用得以用边际成本收购大量闲置基础设施，在"前人买单"的地基上快速创新，无需自己承担巨额CAPEX。
 
-![技术革命遵循相同模式](https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800)
-
-Technological revolutions follow the same pattern!
+<ArticleImage
+  src={technologicalRevolutions}
+  alt="水力、蒸汽、电力、内燃机以及信息通信技术依次沿S曲线发展的时间线"
+  caption="技术革命沿着相似的扩散曲线彼此接续：从水力、蒸汽和电力，到内燃机与信息技术"
+  source="Martin Hilbert / Wikimedia Commons（CC BY-SA 4.0）"
+  sourceUrl="https://commons.wikimedia.org/wiki/File:LongWavesThreeParadigms.jpg"
+  sourcePrefix="来源"
+  variant="full"
+  aspect="auto"
+  tone="plain"
+/>
 
 经济学家Carlota Perez在其经典著作《技术革命与金融资本》中提出了一个极具洞察力的分析框架：技术革命必然伴随基础设施的过度建设，但正是这种"过度"为后续的大规模部署奠定了低成本基础，无论是19世纪的运河、铁路，还是世纪之交的电信网络，概莫能外。这一现象的本质在于金融资本与生产资本在技术革命不同阶段的博弈逻辑。
 
 > "The bubble causes infrastructure to be overbuilt, so as the deployment period begins there is excess infrastructure and low cost to use it. This happened with canals, railways, and, most recently, with the telecom infrastructure."
 
-## 技术革命的安装期与展开期
-
 Perez将技术革命的完整生命周期划分为两个关键阶段：
+
+<ArticleImage
+  src={technologyCycle}
+  alt="Carlota Perez技术革命周期图，展示安装期、转折点和展开期，以及爆发、狂热、协同和成熟阶段"
+  caption="每次技术浪潮都从安装期的爆发与狂热，经过崩溃和制度调整，再进入展开期的协同与成熟"
+  source="Carlota Perez，经 Jam 整理"
+  sourceUrl="https://jam.dev/blog/carlota-perez-and-the-ai-revolution/"
+  sourcePrefix="来源"
+  variant="full"
+  aspect="auto"
+  tone="plain"
+/>
 
 **安装期（Installation Period，20-30年）**由金融资本主导，遵循"创造性破坏"逻辑，依次经历：
 - 爆发期：新技术出现但旧范式仍占主导
@@ -89,8 +118,6 @@ Perez将技术革命的完整生命周期划分为两个关键阶段：
 
 **投机者在泡沫里赌大小，而价值投资者永远不会踏进赌场！**
 
-## 本次泡沫的底色有何不同？
-
 让我们扎实地分析本次泡沫的底色到底有何不同：
 
 **1. 成本结构的根本分歧**
@@ -104,8 +131,6 @@ Perez将技术革命的完整生命周期划分为两个关键阶段：
 **3. 价值实现的路径差异**
 
 光纤泡沫本质是"基础设施先行、应用滞后"的时间错配，价值实现高度依赖外生性需求增长。当前GPU投资的核心矛盾在于价值创造速度本身的约束——消耗8美元算力仅能解决2美元问题时，这已非简单的时间错配，而是陷入了速度的滚动陷阱。
-
-## AI制药从业者的使命
 
 我们不应照搬2000年代的经验，而应该主动寻找新成本结构、技术趋势和完成价值实现的方向。
 

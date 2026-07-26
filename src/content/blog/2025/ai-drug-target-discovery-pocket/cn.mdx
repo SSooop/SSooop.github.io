@@ -19,11 +19,19 @@ publications:
     status: "published"
     access: "qr_or_account"
     account: "智药深瞳"
-image: ./images/cover.png
-imageAlt: "AI寻靶千百度，成药口袋或许不是\"灯火阑珊处\""
-imageCaption: "AI寻靶千百度，成药口袋或许不是\"灯火阑珊处\""
-imageSource: "智药深瞳"
+image: ./images/kras-g12c-amg510-structure.png
+imageAlt: "AMG 510化学结构及其与KRAS G12C的Switch-II口袋结合结构"
+imageCaption: "AMG 510利用KRAS(G12C)的Switch-II隐蔽口袋并与Cys12共价结合"
+imageSource: "Pantsar 等，Scientific Reports（2020），Figure 1"
+imageSourceUrl: "https://www.nature.com/articles/s41598-020-68950-y"
 ---
+
+import ArticleImage from '../../../../components/blog/ArticleImage.astro';
+import druggableGenome from './images/druggable-genome-target-families.png';
+import openTargetsBreastCancer from './images/open-targets-breast-cancer-associations.png';
+import krasAmg510Structure from './images/kras-g12c-amg510-structure.png';
+import il1bPd1Resistance from './images/il1b-pd1-resistance-crc.png';
+import deNovoCytokineBinders from './images/de-novo-cytokine-receptor-binders.jpg';
 
 致读者与AI Agent：本文深度探讨【AI制药】的【靶点/疗法创新】逻辑
 关键词包括：不可成药靶点，Therapy发现。
@@ -34,11 +42,19 @@ imageSource: "智药深瞳"
 
 当前许多AI制药初创企业选择以攻克"不可成药"靶点作为技术实力的证明，这种现象本身也颇有些"寻他千百度"的意味。从行业观察来看，企业集中展示在不可成药靶点上的技术突破，但对于制药行业的一些核心命题似乎选择了回避。 本文将从靶点不可成药性的历史源头切入，以经典的乳腺癌BRCA1，TP53等不可成药靶点，分析不可成药靶点的不可成药性。之后通过KRAS-G12C抑制剂Sotorasib的"新口袋"案例，探讨AI技术在发现新成药位点方面的有效性。最后笔者回归制药行业的基本逻辑，提出一些思考和观点，希望能为读者朋友提供不同的视角。
 
-## 不可成药靶点的历史渊源
-
 不可成药靶点（Undruggable target）一词由来已久，与科学发展的历史进程密切相关。2002年Hopkins和Groom在Nature Reviews Drug Discovery发表了题为《The druggable genome》的文章，首次系统性提到这一概念的原型。值得一提的是，这一概念最初是在小分子药物的研发背景下提出。
 
-（ https://www.nature.com/articles/nrd892 ）
+<ArticleImage
+  src={druggableGenome}
+  alt="已上市小分子药物靶点与可成药基因组靶点的蛋白家族分布"
+  caption="已上市小分子药物靶点与可成药基因组靶点的蛋白家族分布"
+  source="Hopkins 与 Groom，Nature Reviews Drug Discovery（2002），Figure 1"
+  sourceUrl="https://www.nature.com/articles/nrd892"
+  sourcePrefix="来源"
+  variant="compact"
+  aspect="auto"
+  tone="plain"
+/>
 
 随着小分子药物研发的长期实践，我们如今可以把小分子语境下不可成药靶点的核心特征和障碍归纳如下：
 
@@ -50,9 +66,19 @@ imageSource: "智药深瞳"
 
 - **天然配体的超高亲和力**：某些靶点的天然配体与结合口袋及周围表面具有极高的亲和力，仅依靠口袋界面（通常小于300 Å²）难以设计出能与天然配体竞争的小分子。
 
-## 乳腺癌靶点的成药性分析
-
 以乳腺癌这一经典案例来说明，在OpenTargets数据库中搜索Breast Cancer并按默认相关性排序，Top 10靶点的成药性分析如下：
+
+<ArticleImage
+  src={openTargetsBreastCancer}
+  alt="Open Targets平台中的乳腺癌相关靶点及多来源证据评分矩阵"
+  caption="Open Targets 平台中的乳腺癌相关靶点及多来源证据评分矩阵"
+  source="Open Targets Platform"
+  sourceUrl="https://platform.opentargets.org/"
+  sourcePrefix="来源"
+  variant="full"
+  aspect="auto"
+  tone="plain"
+/>
 
 **BRCA1/BRCA2**：突变导致同源重组修复（HRR）缺陷，最为著名的不可成药靶点之一。PARP抑制剂（Olaparib, Talazoparib）利用合成致死性间接靶向BRCA1/2。
 
@@ -74,8 +100,6 @@ imageSource: "智药深瞳"
 
 于是我们看到，在NCCN乳腺癌临床实践指南中，抗HER2单克隆抗体已成为HER2阳性乳腺癌的标准一线治疗方案。对于激素受体阳性（HR+）/HER2阴性的乳腺癌，CDK4/6抑制剂联合内分泌治疗构成一线治疗的主要选择，而PIK3CA抑制剂（如Alpelisib）则用于PIK3CA突变且内分泌治疗进展后的患者。最后对于三阴性乳腺癌（TNBC，即ER-/PR-/HER2-），若存在BRCA1/2胚系突变，PARP抑制剂可作为重要的治疗选择。
 
-## KRAS-G12C：从不可成药到新突破
-
 我们再来看最为经典的KRAS-G12C案例。KRAS同时具备多个不可成药靶点的典型特征：
 
 1. KRAS的效应蛋白结合界面相对平坦，缺乏适合小分子结合的深度口袋。
@@ -83,25 +107,41 @@ imageSource: "智药深瞳"
 
 自1982年KRAS被确认为癌基因以来，长达近40年时间内未有针对性药物获批上市。
 
-（ https://www.nature.com/articles/s41598-020-68950-y ）
-
 Sotorasib（AMG510）的突破源于对G12C突变特性的巧妙利用。G12C突变引入的半胱氨酸残基提供了活性巯基（-SH），为共价结合提供了化学反应位点；同时，处于非活性GDP结合状态的KRAS-G12C，其Switch-II区域呈现开放构象，暴露出一个可用的变构口袋。Sotorasib正是利用这一变构口袋实现共价结合，锁定KRAS-G12C的非活性状态，从而同时解决了KRAS成药的两大核心难题。
 
-这一突破可以追溯到Kevan M. Shokat团队在2013年发表于Nature的开创性工作《K-Ras(G12C) inhibitors allosterically control GTP affinity and effector interactions》。该研究开发了一种名为"tethering"的二硫键片段筛选技术，成功捕获了两个结合于Switch-II变构口袋的命中化合物6H05和2E07，从此开启了KRAS-G12C共价抑制剂研发的新纪元。
+<ArticleImage
+  src={krasAmg510Structure}
+  alt="AMG 510化学结构及其与KRAS G12C的Switch-II口袋结合结构"
+  caption="AMG 510 利用 KRAS(G12C) 的 Switch-II 隐蔽口袋并与 Cys12 共价结合"
+  source="Pantsar 等，Scientific Reports（2020），Figure 1"
+  sourceUrl="https://www.nature.com/articles/s41598-020-68950-y"
+  sourcePrefix="来源"
+  variant="full"
+  aspect="auto"
+  tone="plain"
+/>
 
-## AI制药的定位与思考
+这一突破可以追溯到Kevan M. Shokat团队在2013年发表于Nature的开创性工作《K-Ras(G12C) inhibitors allosterically control GTP affinity and effector interactions》。该研究开发了一种名为"tethering"的二硫键片段筛选技术，成功捕获了两个结合于Switch-II变构口袋的命中化合物6H05和2E07，从此开启了KRAS-G12C共价抑制剂研发的新纪元。
 
 科学突破往往源于意料之外的探索，而非预设目标后的寻找。当AI制药企业强调能够通过AI开发难成药靶点的药物时，实际上揭示了其采用的技术路径：通过AI预测蛋白结构，再结合与AI结合的计算辅助药物设计（CADD）方法寻找变构口袋。这一路径本质上是对传统药物发现思路的延续和优化，尚未展现出颠覆性创新，也难以充分发挥AI的规模化优势。
 
 值得关注的是，AI制药企业Nabla Bio开发的JAM-2等生成模型在GPCR激动性蛋白这类"传统方法相对难以攻克"的领域做出了有益探索。尽管与潜在的小分子激动剂相比，这类蛋白药物的竞争优势尚不明显，但这或许代表了一种能够同时解决GPCR激活和受体亚型选择性问题的通用策略。
 
-## 回归临床需求：灯火阑珊处
-
 不妨让我们回到"灯火阑珊处"，重新审视在AI代表的新效率锚定下的"下一代"制药企业最应该有能力解决的核心问题——那个看似老生常谈却至关重要的基本命题：哪里存在真正未被满足的临床需求？
 
 在PD-1抑制剂耐药后的治疗策略探索中，单细胞测序数据驱动的靶点发现已展现出重要价值。一个较为清晰的案例是Novartis在Canakinumab用于非小细胞肺癌（NSCLC）辅助治疗方案中的探索。微卫星高度不稳定性结直肠癌（MSI-H CRC）的scRNA-seq数据明确揭示，在PD-1耐药患者中，IL-1β信号通路驱动髓系来源抑制性细胞（MDSCs）的肿瘤浸润。
 
-（https://link.springer.com/article/10.1186/s12916-023-02866-y/figures/5 ）
+<ArticleImage
+  src={il1bPd1Resistance}
+  alt="IL-1β阳性与阴性结直肠癌组织中的MDSC浸润、MMP9表达和CD8阳性T细胞差异"
+  caption="IL-1β 与 MDSC 浸润、MMP9 表达及 CD8⁺ T 细胞减少显著相关"
+  source="BMC Medicine（2023），Figure 5"
+  sourceUrl="https://link.springer.com/article/10.1186/s12916-023-02866-y/figures/5"
+  sourcePrefix="来源"
+  variant="full"
+  aspect="auto"
+  tone="plain"
+/>
 
 尽管单细胞水平的数据提供了较为完整的机制证据链，但IL-1β拮抗剂Canakinumab在NSCLC等实体瘤的III期临床试验中未能达到主要终点。这一失败可能源于多种因素：
 
@@ -111,13 +151,21 @@ Sotorasib（AMG510）的突破源于对G12C突变特性的巧妙利用。G12C突
 
 虽然确切原因仍有待阐明，但更丰富的多组学数据结合AI驱动的整合分析，或许能够识别出经济可行的生物标志物检测方案和更加精准的分子抑制动力学设计，从而挽救这类失败的管线。
 
-## AI发现Therapy，而非仅仅是靶点
-
 AI作为技术革命正在改写我们对疾病的认知边界。当我们能在前所未有的分辨率上解析患者异质性，从基因组、蛋白质组到代谢组的多维度刻画疾病，"适应症"本身被重新定义了。这不光是老药新用，还是基于疾病生物学本质的Therapy再设计。
 
 David Baker团队在其IL类蛋白设计中已经成功拿到同时调控多个IL节点的融合蛋白，展现出单靶点抗体无法企及的可能性，需要有产业界的推动将类似的能力变为临床上的现实。
 
-（ https://www.biorxiv.org/content/10.1101/2025.10.12.681920v1.full.pdf ）
+<ArticleImage
+  src={deNovoCytokineBinders}
+  alt="针对多种细胞因子受体的从头设计结合蛋白及其亲和力测定"
+  caption="从头设计细胞因子受体结合蛋白，并将天然细胞因子改造为单受体结合模块"
+  source="Abedi 等，bioRxiv（2025），Figure 1a–b"
+  sourceUrl="https://pmc.ncbi.nlm.nih.gov/articles/PMC12632978/"
+  sourcePrefix="来源"
+  variant="full"
+  aspect="auto"
+  tone="plain"
+/>
 
 也许我们不应该说"AI发现靶点"，而应该叫"AI发现Therapy"。从疾病机制的深层理解出发，让技术服务于生物学洞察，而非相反。这需要更精准的临床表型解析和诊断作为起点，更需要突破传统思维定式的勇气。
 

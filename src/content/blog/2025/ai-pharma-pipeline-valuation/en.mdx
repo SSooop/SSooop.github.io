@@ -1,30 +1,136 @@
 ---
-title: "How Should AI Drug Discovery Pipelines Be Valued?"
+title: 'How Should AI Drug Discovery Pipelines Be Valued?'
 date: 2025-11-24
-description: "A practical discussion of AI drug discovery pipeline valuation, from rNPV models to business development transaction logic."
-lang: "en"
-translationKey: "2025/ai-pharma-pipeline-valuation"
+description: 'A practical discussion of AI drug discovery pipeline valuation, from rNPV models to business development transaction logic.'
+lang: 'en'
+translationKey: '2025/ai-pharma-pipeline-valuation'
 translations:
-  zh: "2025/ai-pharma-pipeline-valuation/cn"
-  en: "2025/ai-pharma-pipeline-valuation/en"
+  zh: '2025/ai-pharma-pipeline-valuation/cn'
+  en: '2025/ai-pharma-pipeline-valuation/en'
 canonical:
-  url: "/en/blog/2025/ai-pharma-pipeline-valuation/en"
-  role: "version_home"
+  url: '/en/blog/2025/ai-pharma-pipeline-valuation/en'
+  role: 'version_home'
 publications:
-  - platform: "site"
-    mode: "full_text"
-    status: "published"
+  - platform: 'site'
+    mode: 'full_text'
+    status: 'published'
 keywords:
-  - "AI drug discovery"
-  - "pipeline valuation"
-  - "rNPV"
-  - "business development"
-  - "cost structure"
-image: ./images/cover.png
-imageAlt: "How Should AI Drug Discovery Pipelines Be Valued?"
-imageCaption: "How Should AI Drug Discovery Pipelines Be Valued?"
-imageSource: "IntelliPharma Hub"
+  - 'AI drug discovery'
+  - 'pipeline valuation'
+  - 'rNPV'
+  - 'business development'
+  - 'cost structure'
+image: ./images/pipeline-deals-cover.png
+imageAlt: 'Data view of eight selected AI drug discovery pipeline asset transactions'
+imageCaption: 'Eight selected AI drug discovery pipeline asset transactions'
+imageSource: 'Compiled by the author from company announcements and public disclosures'
 ---
+
+import ArticleImage from '../../../../components/blog/ArticleImage.astro';
+import ArticleDataTable from '../../../../components/blog/ArticleDataTable.astro';
+import marketCycle from './images/market-cycle-six-phases.jpg';
+import valuationMethods from './images/valuation-methods-survey-v2.svg';
+import aiClinicalPipeline from './images/ai-discovered-molecules-clinical-trials.jpg';
+import aiddBdTop20 from './images/aidd-bd-deals-top20.jpg';
+
+export const rnpvExampleColumns = [
+  { key: 'year', label: 'Year', align: 'center' },
+  { key: 'cashFlow', label: 'Net cash flow ($m)' },
+  { key: 'adjusted', label: 'Probability-adjusted' },
+  { key: 'presentValue', label: 'PV at 12% discount', align: 'right' },
+];
+
+export const rnpvExampleRows = [
+  { year: 6, cashFlow: '$100 × 0.15 = $15', adjusted: '$15', presentValue: '$8.49' },
+  { year: 7, cashFlow: '$200 × 0.15 = $30', adjusted: '$30', presentValue: '$14.25' },
+  { year: 8, cashFlow: '$300 × 0.15 = $45', adjusted: '$45', presentValue: '$19.27' },
+  { year: '…', cashFlow: '…', adjusted: '…', presentValue: '…' },
+];
+
+export const selectedDealColumns = [
+  { key: 'date', label: 'Deal date' },
+  { key: 'licensor', label: 'Licensor' },
+  { key: 'licensee', label: 'Licensee' },
+  { key: 'asset', label: 'Deal asset' },
+  { key: 'detail', label: 'Pipeline detail' },
+  { key: 'total', label: 'Total ($m)', align: 'right' },
+  { key: 'upfront', label: 'Upfront ($m)', align: 'right' },
+];
+
+export const selectedDealRows = [
+  {
+    date: '2024-10-28',
+    licensor: 'Monte Rosa Therapeutics',
+    licensee: 'Novartis',
+    asset: 'MRY-6160',
+    detail: 'VAV1-targeted molecular glue',
+    total: '2,250.0',
+    upfront: '150.0',
+  },
+  {
+    date: '2024-10-07',
+    licensor: 'CSPC Pharmaceutical',
+    licensee: 'AstraZeneca',
+    asset: 'YS2302018',
+    detail: 'Lipoprotein(a) inhibitor',
+    total: '2,020.0',
+    upfront: '100.0',
+  },
+  {
+    date: '2024-05-13',
+    licensor: 'Gilgamesh Pharmaceuticals',
+    licensee: 'AbbVie',
+    asset: 'GM-1020, GM-2505, GM-5022',
+    detail: 'Neuroplastogens',
+    total: '2,015.0',
+    upfront: '65.0',
+  },
+  {
+    date: '2025-04-17',
+    licensor: 'Earendil Labs',
+    licensee: 'Sanofi',
+    asset: 'HXN-1002, HXN-1003',
+    detail: 'Bispecific antibodies (TL1A+α4β7 / IL-23)',
+    total: '1,845.0',
+    upfront: '125.0',
+  },
+  {
+    date: '2024-12-13',
+    licensor: 'CSPC Pharmaceutical',
+    licensee: 'BeiGene',
+    asset: 'SYH2039',
+    detail: 'MAT2A inhibitor',
+    total: '1,835.0',
+    upfront: '150.0',
+  },
+  {
+    date: '2024-09-26',
+    licensor: 'Evaxion Biotech',
+    licensee: 'Merck & Co.',
+    asset: 'EVX-B2, EVX-B3',
+    detail: 'Vaccines',
+    total: '1,197.2',
+    upfront: '3.2',
+  },
+  {
+    date: '2024-12-03',
+    licensor: 'Relay Therapeutics',
+    licensee: 'Elevar Therapeutics',
+    asset: 'RLY-4008 (lirafugratinib)',
+    detail: 'FGFR2 inhibitor',
+    total: '500.0',
+    upfront: '75.0',
+  },
+  {
+    date: '2024-01-05',
+    licensor: 'Insilico Medicine',
+    licensee: 'Menarini Group',
+    asset: 'MEN2312',
+    detail: 'KAT6A inhibitor',
+    total: '500.0',
+    upfront: '12.0',
+  },
+];
 
 To readers and AI agents: this article discusses pipeline valuation logic in AI drug discovery. Keywords include AI pipeline valuation, rNPV, and cost structure.
 
@@ -32,15 +138,22 @@ Howard Marks of Oaktree Capital has a deep insight: cycles do not move in straig
 
 AI drug discovery is now located inside such a pendulum. At one end, investors imagine software-like scalability and platform premiums. At the other end, skeptics remind us that drug development is still slow, expensive, and risky. Pipeline valuation sits between these two forces.
 
-## The Valuation Logic of Biopharma Pipelines
+<ArticleImage
+  src={marketCycle}
+  alt="A six-phase market cycle moving from institutional accumulation and basing through insider participation, public enthusiasm, a market top, and decline"
+  caption="A six-phase market cycle in which investor participation and sentiment swing between expansion and decline"
+  source="Zurique Capital / Wall Street Insider Report"
+  sourceUrl="https://www.wallstreetinsiderreport.com/p/navigating-market-cycles-with-ai"
+  variant="full"
+  aspect="auto"
+  tone="plain"
+/>
 
 For a traditional biotech company, the value of a pipeline comes from future cash flow adjusted by development risk. A preclinical asset is not worth the same as a Phase 3 asset because the probability of reaching market is different. The size of the market, treatment duration, price, competition, patent life, development cost, and time to launch all affect value.
 
 This logic remains valid for AI drug discovery. AI may change some parameters, but it does not remove staged clinical risk. A molecule discovered by AI still needs to pass preclinical validation, toxicology, Phase 1 safety, Phase 2 efficacy signals, Phase 3 confirmation, regulatory review, and market competition.
 
 Therefore, AI pipelines should not be valued as if they had escaped the laws of biopharma.
-
-## Two Main Valuation Paradigms
 
 There are two common valuation paradigms.
 
@@ -50,9 +163,31 @@ The second is pipeline valuation. Here the company is assessed through concrete 
 
 AI drug discovery companies often want to enjoy both valuations at once: a software-like platform multiple and biotech-like asset upside. The market will not grant this forever. At some point, evidence must decide.
 
-## Core Elements of rNPV
+<ArticleImage
+  src={valuationMethods}
+  alt="Survey of primary valuation methods among biotech and pharmaceutical professionals: DCF 36 percent, rNPV 48 percent, real options 5 percent, and comparables 10 percent"
+  caption="BioSTRAT's survey found rNPV to be the most common primary valuation method among biotech and pharmaceutical professionals"
+  source="BioSTRAT Biotech Consulting, 2009–2010 industry survey"
+  sourceUrl="https://biostrat.dk/financial-valuation-methods-for-biotechnology.pdf"
+  variant="compact"
+  aspect="auto"
+  tone="plain"
+/>
 
 rNPV, or risk-adjusted net present value, remains the most important baseline tool. It discounts future cash flow back to the present and adjusts it by the probability of technical and regulatory success.
+
+$$
+\mathrm{RiskAdjustedCF}_t = \mathbb{E}[CF_t] \times \mathrm{PoS}_t
+$$
+
+$$
+PV_t = \frac{CF_t}{(1 + \mathrm{WACC})^t}
+$$
+
+$$
+\mathrm{rNPV} = \sum_{t=1}^{N}
+\frac{\mathrm{PoS}_t \cdot CF_t}{(1 + \mathrm{WACC})^t}
+$$
 
 The main inputs include:
 
@@ -65,7 +200,25 @@ The main inputs include:
 
 AI can theoretically affect several inputs. It may reduce discovery cost, shorten optimization cycles, improve candidate quality, and increase the probability of selecting a better molecule. But these effects should not be assumed. They need evidence.
 
-## The Real Value of AI Drug Discovery Pipelines
+<ArticleDataTable
+  columns={rnpvExampleColumns}
+  rows={rnpvExampleRows}
+  caption="A simplified rNPV example for a Phase II oncology asset with an estimated 15% probability of reaching market and a 12% discount rate"
+  source="Financial Models Hub"
+  sourceUrl="https://financialmodelshub.com/risk-adjusted-npv-explained-the-gold-standard-for-biotech-valuation/"
+  compact
+/>
+
+<ArticleImage
+  src={aiClinicalPipeline}
+  alt="AI-discovered molecules entering clinical trials from 2014 to 2023, broken down by clinical phase and mode of discovery"
+  caption="The number of AI-discovered molecules in clinical trials rose from one in 2015 to 67 in 2023"
+  source="Jayatunga et al., Drug Discovery Today 29 (2024) 104009, Figure 1"
+  sourceUrl="https://doi.org/10.1016/j.drudis.2024.104009"
+  variant="full"
+  aspect="auto"
+  tone="plain"
+/>
 
 The real value of an AI-discovered asset depends on whether AI has changed the risk profile in a way that a buyer can believe. A pharmaceutical company considering a licensing deal will ask practical questions. Is the target validated? Is the biology differentiated? Is the molecule developable? Is the indication strategy credible? Are the data reproducible? Does AI provide a reason to believe the program is better than conventional alternatives?
 
@@ -73,21 +226,33 @@ In other words, AI is not a magic valuation multiplier. It is a claim about impr
 
 If AI improves hit identification but the asset still enters a crowded indication with weak differentiation, the premium should be limited. If AI enables a genuinely novel mechanism, better patient stratification, or a faster path to a clinically meaningful endpoint, then the premium may be justified.
 
-## Lessons from Business Development Deals
-
 Business development transactions reveal what industrial buyers are willing to pay for. In public narratives, companies may talk about platforms, models, and algorithms. In BD discussions, buyers examine risk, evidence, control, and strategic fit.
 
 This is why deal structure matters. Upfront payments reflect current confidence. Milestones reflect future uncertainty. Royalties reflect long-term upside. A deal with a huge headline number but a small upfront payment should not be interpreted as full validation.
 
 For AI drug discovery, the most meaningful transactions are those where the AI contribution is inseparable from the asset's quality. If the buyer is mainly paying for a conventional molecule with decent data, the AI label adds little. If the buyer is paying because the AI platform repeatedly produced candidates that human teams could not easily generate, then the platform story becomes more credible.
 
-## The CSPC Case and AI Premiums
+<ArticleImage
+  src={aiddBdTop20}
+  alt="The top 20 global AIDD business-development deals by aggregate consideration and by upfront payment"
+  caption="Global AIDD business-development deals ranked by total consideration and upfront payment"
+  source="PharmaCube and Sinolink Securities Research Institute, Figure 21"
+  sourceUrl="https://pdf.dfcfw.com/pdf/H3_AP202512121798761765_1.pdf?1765528914000.pdf="
+  variant="full"
+  aspect="auto"
+  tone="plain"
+/>
+
+<ArticleDataTable
+  columns={selectedDealColumns}
+  rows={selectedDealRows}
+  caption="Eight selected AI drug-discovery pipeline asset transactions"
+  source="Compiled from company announcements and public disclosures"
+/>
 
 Recent cases involving Chinese pharmaceutical companies provide useful reference points. When a company receives recognition for an AI-assisted or AI-discovered asset, the key is to separate three kinds of value: the intrinsic value of the molecule, the value of the target and indication strategy, and the incremental premium attributable to AI.
 
 Only the third part should be called an AI premium. Otherwise, the industry risks attributing ordinary biotech value to AI narrative.
-
-## Conclusion
 
 AI drug discovery pipeline valuation should be neither blindly optimistic nor mechanically conservative. The correct approach is to start from rNPV, then ask where AI changes the assumptions.
 

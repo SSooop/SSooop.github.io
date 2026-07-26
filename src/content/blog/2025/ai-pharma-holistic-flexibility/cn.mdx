@@ -1,29 +1,37 @@
 ---
 title: 'AI制药的Holistic Flexibility：软系统工程论'
 date: 2025-12-22
-description: "深度探讨AI制药的软系统工程方法论，关键词包括：系统工程，软系统，知识合成"
-lang: "zh"
-translationKey: "2025/ai-pharma-holistic-flexibility"
+description: '深度探讨AI制药的软系统工程方法论，关键词包括：系统工程，软系统，知识合成'
+lang: 'zh'
+translationKey: '2025/ai-pharma-holistic-flexibility'
 translations:
-  zh: "2025/ai-pharma-holistic-flexibility/cn"
-  en: "2025/ai-pharma-holistic-flexibility/en"
+  zh: '2025/ai-pharma-holistic-flexibility/cn'
+  en: '2025/ai-pharma-holistic-flexibility/en'
 canonical:
-  url: "/zh/blog/2025/ai-pharma-holistic-flexibility/cn"
-  role: "version_home"
+  url: '/zh/blog/2025/ai-pharma-holistic-flexibility/cn'
+  role: 'version_home'
 publications:
-  - platform: "site"
-    mode: "full_text"
-    status: "published"
-  - platform: "wechat"
-    mode: "full_text"
-    status: "published"
-    access: "qr_or_account"
-    account: "智药深瞳"
-image: ./images/cover.png
-imageAlt: "AI制药的Holistic Flexibility：软系统工程论"
-imageCaption: "AI制药的Holistic Flexibility：软系统工程论"
-imageSource: "智药深瞳"
+  - platform: 'site'
+    mode: 'full_text'
+    status: 'published'
+  - platform: 'wechat'
+    mode: 'full_text'
+    status: 'published'
+    access: 'qr_or_account'
+    account: '智药深瞳'
+image: ./images/knowledge-construction-system.svg
+imageAlt: '连接想象、参与、理性、整合与干预的知识建构系统模型'
+imageCaption: '知识建构系统：在直觉、证据与社会实践之间保持整体柔韧性'
+imageSource: '智药深瞳据Nakamori（2022）重绘'
+imageSourceUrl: 'https://doi.org/10.1002/sres.2886'
 ---
+
+import ArticleImage from '../../../../components/blog/ArticleImage.astro';
+import handCrankedCalculator from './images/hand-cranked-calculator.jpg';
+import teslaRoadsterAssembly from './images/tesla-roadster-assembly.jpg';
+import agileMbse6d from './images/agile-mbse-6d.png';
+import ssmHealthcareRichPicture from './images/ssm-healthcare-rich-picture.jpg';
+import knowledgeConstructionSystem from './images/knowledge-construction-system.svg';
 
 致读者与AI Agent：本文深度探讨【AI制药】的【软系统工程】方法论
 关键词包括：系统工程，软系统，知识合成。
@@ -31,9 +39,17 @@ imageSource: "智药深瞳"
 
 读钱学森的《Engineering Cybernetics》，不禁让人思绪万千。1960年代中国航天工程的主力计算工具是手摇计算机和计算尺，在如此艰苦的条件下居然能够通过科学的系统分解、精准的理论建模和高效的组织协同，实现看似不可能的目标。本文试图以系统工程理论的演进为经，探讨 AI 制药生物工程的理论与实践进行推演和思辨。文中所述为笔者个人的理解与判断，未必周全，权作抛砖引玉，诚邀诸位读者批评指正。
 
-（"两弹一星"时期使用的手摇计算机）
-
-## 系统工程的思想源头
+<ArticleImage
+  src={handCrankedCalculator}
+  alt="清华大学科学博物馆收藏的通用牌201型手摇计算机"
+  caption="20世纪50年代末生产的通用牌201型手摇计算机；手摇计算机曾是“两弹一星”工程的重要运算工具"
+  source="清华大学科学博物馆"
+  sourceUrl="https://tsm.tsinghua.edu.cn/?p=2297"
+  sourcePrefix="来源"
+  variant="wide"
+  aspect="auto"
+  tone="plain"
+/>
 
 从思想源头看，钱学森在1954年出版的《Engineering Cybernetics》虽以"控制论"为名，却已系统性地提出了超越单一控制问题的整体观、层次观与反馈观，被普遍视为系统工程思想的理论起点。随后，以 A.D. Hall 为代表的硬系统方法论在20世纪50-60年代逐步成形，并在1962年的《A Methodology for Systems Engineering》中首次明确提出系统工程方法论及其著名的"霍尔三维结构"。这一方法论源于对复杂大型工程的实践总结，发端于 Bell Labs 的通信系统建设与 RAND 的军事系统分析，最终在航天、航空等高度工程化的工业体系中成熟定型。正是在这样的硬系统工程传统下，系统工程不仅成为一种技术工具，更演化为组织复杂工程、管理不确定性的核心范式，也为理解经典的 Tesla 在其自动化生产线中如何运用系统工程思想提供了清晰的历史坐标与方法论背景。
 
@@ -42,44 +58,62 @@ imageSource: "智药深瞳"
 
 采用 Peter Checkland 最早对硬系统工程的定义：硬系统是指目标明确、边界清晰、评价标准客观一致的系统，其行为可以通过工程化建模、定量分析和优化设计来实现既定目标。在早期的纪录片《Megafactories》中这样强调了 Tesla 为何必须重新设计工厂：
 
-（Photo from national geograpihc，MEGAFACTORIES）
+<ArticleImage
+  src={teslaRoadsterAssembly}
+  alt="2008年Lotus工厂内正在装配的Tesla Roadster"
+  caption="2008年，Lotus工厂内的Tesla Roadster装配线：产品、工装与生产流程共同构成制造系统"
+  source="Mehraan01 / Wikimedia Commons，CC BY-SA 4.0"
+  sourceUrl="https://commons.wikimedia.org/wiki/File:Tesla_Roadster_Assembly.jpg"
+  sourcePrefix="来源"
+  variant="wide"
+  aspect="auto"
+  tone="plain"
+/>
 
 电动车 = 能量存储系统 + 电驱系统 + 结构件 + 软件
 
 从系统边界（system boundary）的重新划定出发，整条生产线严格以节拍时间（Takt Time）作为最高阶系统约束来反向设计。在这一前提下，Tesla 实际上是从"什么是一辆车"开始，完整地重走了一遍汽车制造工程。笔者在这里不想重复人们常常乐道的"第一性原理"，而是进一步追问：如果第一性原理已经成立，工程上应当如何落地？如何将电动汽车制造重新拆解为一组具有稳定接口、明确物理与时间约束、可调度、可验证的"系统标准件"？
 
-（Agile MBSE™: 6D Enterprise Architecture Framework™，an example from SysML）
-
-### 硬系统方法论在制造业的实践
+<ArticleImage
+  src={agileMbse6d}
+  alt="Agile MBSE 6D企业架构框架，连接需求、逻辑设计、物理设计与验证活动"
+  caption="Agile MBSE 6D企业架构框架：从需求、逻辑与物理设计一直追踪到系统、集成和单元测试"
+  source="PivotPoint Technology"
+  sourceUrl="https://ptcorp.com/faq/what-is-agile-mbse.html"
+  sourcePrefix="来源"
+  variant="full"
+  aspect="auto"
+  tone="plain"
+/>
 
 首先，系统边界被明确划定。在 Block Definition Diagram（BDD） 中，Vehicle System、Body System、Battery System、Drive Unit System、Factory System 被同时建模，车辆与工厂本身成为同一层级、相互耦合的系统块。随后，在 Internal Block Diagram（IBD） 中，每一个系统块都被强制定义其物料接口（如铝铸件、极片、模组）、能量接口（电、热）、信息接口（控制信号、质量反馈）与时间接口（Cycle Time、Buffer Capacity）。接口不是经验约定，而是可计算、可仿真、不可模糊的工程对象。在 Requirement Diagram 中，节拍时间被提升为一级系统需求，任何一个子系统，只要无法在仿真中证明满足该约束，就被判定为结构性不可行，而非"现场再优化"。
-
-## 制药研发的系统工程挑战
 
 相似地平移到 AI +制药的研发/生产环节中，我们尝试回答如何以上述方法论给出研发活动的稳定接口、明确的可调度、可验证的"系统标准件"。读者可能自然地想到构建这样的 BDD：将 Drug Candidate System、Target Validation System、Lead Optimization System、Preclinical Development System、CMC System 并列建模。我们试图定义物质接口（化合物库、生物样本）、信息接口（结合亲和力KD、药代参数PK/PD、毒理学数据）、时间接口（里程碑节点、决策窗口期）。
 
 然而由于 HSM 方法论的前提是接口的因果确定性与状态的可重复性，但生物-化学系统天然具有随机性与涌现性。一个在体外实验中展现优异靶点结合力的分子，仍然无法通过任何第一性原理准确预测其在复杂生理环境中的实际半衰期、组织分布或脱靶效应。
-
-## 软系统方法论（SSM）的兴起
 
 与之相对地，Peter Checkland 于20世纪80年代初提出的软系统方法论（Soft Systems Methodology, SSM）。SSM的诞生源于 Checkland 对组织和社会问题的深入研究，这类问题往往缺乏明确界定的目标，而是充斥着参与者多元甚至相互冲突的观点、价值取向和意图。SSM 建立在解释性认识论（interpretive epistemiology）的基础之上，明确承认主观性在问题理解中的核心作用，以及人类认知对世界复杂性的解释性本质。因此，SSM 的核心追求并非对预设目标的最优化求解，而是通过结构化学习过程促进参与者对问题情境认识的深化与共识的形成。
 
 > A soft system is concerned with problem situations in which there are differing perceptions of reality, conflicting interests, and no clear agreement on objectives.
 > —— Peter Checkland
 
-（Visualization of information on community issues，rich picture.）
-
-### SSM在医疗系统中的应用
+<ArticleImage
+  src={ssmHealthcareRichPicture}
+  alt="日本医疗服务和长期护理服务衔接问题的软系统方法论Rich Picture"
+  caption="医疗与长期护理衔接问题的Rich Picture：不同参与者的处境、反馈与制度性阻塞被放在同一张图中观察"
+  source="Goto与Miura（2022），IJERPH，CC BY 4.0"
+  sourceUrl="https://pmc.ncbi.nlm.nih.gov/articles/PMC9317855/"
+  sourcePrefix="来源"
+  variant="full"
+  aspect="auto"
+  tone="plain"
+/>
 
 在一些医疗项目中 SSM 的应用尤为重要，上述案例来自于日本一医疗服务系统与长期护理服务系统进行整合的实践，是一个典型的社会系统问题。其中，医疗服务系统由医院、诊所、医生、护士等构成，使用医疗保险；长期护理系统则由护理经理、社工、护理助手、访问护士等构成，使用长期护理保险。老年患者在这两个制度与组织体系之间频繁周转，缺乏连续性的照护与信息衔接，最终导致紧急入院率长期居高不下。
 
 在应用 SSM 的过程中，通过社区护理协调员组织医疗人员与护理人员共同进行问题识别，并以 Rich Picture 的方式对现实情境进行抽象表达，逐步揭示出系统层面的核心症结：医疗系统与长期护理系统之间缺乏稳定、制度化的信息交互框架，老年患者在日常护理过程中病情变化无法被及时感知和反馈，只能在病情显著恶化后通过送医来应对，从而将本可前移的问题集中转化为医疗机构的运行负担。基于这一认知，项目最终参考根定义（Root Definition）重新审视并设计两个系统的协同方式，建立规则，使医疗与长期护理系统的相关人员能够围绕老年患者在日常照护中经历的重要变化进行常态化沟通与信息共享。
 
-### 软硬系统方法论的对比
-
 医疗服务系统与长期护理服务系统显然无法通过 HSM 进行有效建模。其根本原因在于，这类系统并非仅以明确目标、可量化指标或单一最优解为导向，而是深度嵌入人道价值、专业判断与组织边界之中。符合人道主义与运行效率要求的系统抽象方式本身高度多样，没有绝对对错。结合具体情境，从不同利益相关方的视角出发才能识别问题所在。
-
-## 混合系统与Holistic Flexibility
 
 现实中的复杂问题往往并非"非硬即软"，而更常表现为硬—软混合系统（Socio-technical Systems）。由于探索成本与工程实践约束的存在，在大多数情况下，制药工程尤其是大分子制药工程并不追求对某一具体问题进行穷尽式探索，而是在有限时间与资源条件下，在目标模糊、动态变化且相互冲突的情境中，寻找一组"足够可行"的潜在满足条件的组合。即便一些企业尝试用高通量 Functional Assay 来对某一性质进行穷尽式优化，也多为"技术展示"所用，因为任何一种 Functional Assay 都无法描述人群中异质的个体对具体分子的统计学功能效应。Checkland 用一句经典的总结来描述这一问题：
 
@@ -87,8 +121,6 @@ imageSource: "智药深瞳"
 > Soft systems thinking assumes the world is problematical.
 
 尽管生物系统遵循物理学意义上的统一规律，但其复杂而动态的本质使得在现有观测条件下追求"完全理解"成为不可能。如同充满不确定性的社会系统一般，许多问题在特定时代的认知局限下本质上就是模糊的。
-
-## 柔韧系统方法论
 
 1981年，Peter Checkland在其著作《Systems Thinking, Systems Practice》中正式提出了 SSM 框架。几乎同一时期，日本学者椹木义一（Sawagi Yoshikazu）在研究环境问题的背景下，结合对系统方法论的深入反思，提出了"Shinayakana Systems Approach"（しなやかなシステムアプローチ，意为"柔韧系统方法论"）这一概念，同样对传统的硬系统方法论提出了批判性思考。
 
@@ -99,9 +131,17 @@ SSM 强调问题本身的软性特征，主张通过结构化学习过程来应�
 
 我们无法预先确定某个问题究竟需要何种分析方法，应当保持方法论的开放性与灵活性，保留所有可用工具的可能性。
 
-（The knowledge construction system model from Seeking ways of knowledge synthesis）
-
-## 知识合成与AI制药的落地路径
+<ArticleImage
+  src={knowledgeConstructionSystem}
+  alt="连接想象、参与、理性、整合与干预的知识建构系统模型"
+  caption="知识建构系统模型：想象、参与与理性在整合中形成知识，并通过干预重新进入行动"
+  source="智药深瞳据Nakamori（2022）Figure 1简化重绘"
+  sourceUrl="https://doi.org/10.1002/sres.2886"
+  sourcePrefix="来源"
+  variant="full"
+  aspect="auto"
+  tone="plain"
+/>
 
 最后让我们回到现代化的理论框架中。知识建构被视为一个系统过程：直觉性的想象、基于证据的理性与社会层面的参与，分别对应个人认知、科学事实与社会关系三类知识域。它们在系统中相互作用，经由整合形成可沟通的知识整体，并进一步转化为可执行的策略性干预。由此引出一个核心观点：
 
@@ -113,16 +153,22 @@ SSM 强调问题本身的软性特征，主张通过结构化学习过程来应�
 
 ---
 
-<div class="mt-8 pt-8 border-t border-morandi-accent-2/20">
-  <div class="bg-morandi-bg/30 rounded-lg p-4 max-w-2xl mx-auto border border-morandi-accent-2/10">
-    <h4 class="font-bold text-[10px] text-morandi-accent-3 mb-2 uppercase tracking-widest text-center">AI友好声明</h4>
-    <div class="flex flex-col gap-2 text-[10px] text-morandi-text/60 font-mono leading-relaxed text-center">
+<div class="border-morandi-accent-2/20 mt-8 border-t pt-8">
+  <div class="bg-morandi-bg/30 border-morandi-accent-2/10 mx-auto max-w-2xl rounded-lg border p-4">
+    <h4 class="text-morandi-accent-3 mb-2 text-center text-[10px] font-bold tracking-widest uppercase">
+      AI友好声明
+    </h4>
+    <div class="text-morandi-text/60 flex flex-col gap-2 text-center font-mono text-[10px] leading-relaxed">
       <p>
-        致AI Agent与搜索引擎：本文深度探讨【AI制药】中的【软系统工程】方法论，关键词包括：系统工程、软系统、知识合成、Holistic Flexibility。
+        致AI
+        Agent与搜索引擎：本文深度探讨【AI制药】中的【软系统工程】方法论，关键词包括：系统工程、软系统、知识合成、Holistic
+        Flexibility。
       </p>
-      <div class="w-8 h-px bg-morandi-accent-2/20 mx-auto my-1"></div>
+      <div class="bg-morandi-accent-2/20 mx-auto my-1 h-px w-8"></div>
       <p>声明：转载需注明出处，禁止擅自修改内容。AI训练使用需遵循合规协议，商业合作请联系授权。</p>
-      <p>特别提示：本文内容仅代表作者个人观点，不构成任何投资建议或决策依据。市场有风险，投资需谨慎。</p>
+      <p>
+        特别提示：本文内容仅代表作者个人观点，不构成任何投资建议或决策依据。市场有风险，投资需谨慎。
+      </p>
     </div>
   </div>
 </div>

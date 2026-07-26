@@ -1,0 +1,146 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="cover-title cover-desc">
+  <title id="cover-title">AI制药管线估值几何？</title>
+  <desc id="cover-desc">本文筛选的八笔AI制药管线资产交易数据视图。</desc>
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f2eee7"/>
+      <stop offset="1" stop-color="#e5e9e7"/>
+    </linearGradient>
+    <linearGradient id="header" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#102c45"/>
+      <stop offset="1" stop-color="#183f57"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="18" stdDeviation="22" flood-color="#182a38" flood-opacity=".16"/>
+    </filter>
+  </defs>
+
+  <rect width="1600" height="900" fill="url(#background)"/>
+  <circle cx="1480" cy="38" r="280" fill="#cfddd8" opacity=".48"/>
+  <circle cx="74" cy="864" r="250" fill="#ead9cc" opacity=".54"/>
+
+  <g filter="url(#shadow)">
+    <rect x="82" y="64" width="1436" height="772" rx="28" fill="#fbfaf7"/>
+    <path d="M110 64h1380a28 28 0 0 1 28 28v170H82V92a28 28 0 0 1 28-28Z" fill="url(#header)"/>
+  </g>
+
+  <g font-family="Inter, Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif">
+    <text x="132" y="118" fill="#aac3cf" font-size="18" font-weight="700" letter-spacing="4">INTELLIPHARMA HUB · PIPELINE VALUATION</text>
+    <text x="132" y="184" fill="#ffffff" font-size="52" font-weight="760">AI制药管线估值几何？</text>
+    <text x="132" y="225" fill="#d3e0e5" font-size="21">8 SELECTED PIPELINE DEALS · PUBLIC DISCLOSURE VIEW</text>
+    <text x="132" y="250" fill="#9eb7c3" font-size="13" letter-spacing=".45">
+      SOURCE · 作者根据公司公告与公开披露交叉整理
+    </text>
+
+    <g transform="translate(1010 105)">
+      <rect width="144" height="104" rx="15" fill="#ffffff" opacity=".1"/>
+      <text x="20" y="33" fill="#acc5d0" font-size="14" font-weight="700" letter-spacing="1.5">DEALS</text>
+      <text x="20" y="78" fill="#ffffff" font-size="38" font-weight="760">08</text>
+    </g>
+    <g transform="translate(1170 105)">
+      <rect width="156" height="104" rx="15" fill="#ffffff" opacity=".1"/>
+      <text x="20" y="33" fill="#acc5d0" font-size="14" font-weight="700" letter-spacing="1.5">AGGREGATE</text>
+      <text x="20" y="78" fill="#ffffff" font-size="32" font-weight="760">$12.16B</text>
+    </g>
+    <g transform="translate(1342 105)">
+      <rect width="126" height="104" rx="15" fill="#d57e5e"/>
+      <text x="18" y="33" fill="#ffe9df" font-size="14" font-weight="700" letter-spacing="1.3">UPFRONT</text>
+      <text x="18" y="76" fill="#ffffff" font-size="27" font-weight="760">$680M</text>
+    </g>
+
+    <g transform="translate(112 292)">
+      <rect width="1376" height="56" rx="12" fill="#e8eeec"/>
+      <g fill="#597080" font-size="15" font-weight="700" letter-spacing=".8">
+        <text x="24" y="35">交易时间</text>
+        <text x="168" y="35">转让方</text>
+        <text x="432" y="35">受让方</text>
+        <text x="644" y="35">交易资产</text>
+        <text x="1118" y="35" text-anchor="end">总金额 / $M</text>
+        <text x="1336" y="35" text-anchor="end">首付款 / $M</text>
+      </g>
+
+      <g font-size="17" fill="#263d4e">
+        <g transform="translate(0 60)">
+          <rect width="1376" height="58" rx="9" fill="#ffffff"/>
+          <rect width="8" height="58" rx="4" fill="#d57e5e"/>
+          <text x="24" y="36" fill="#6c7d87">2024.10.28</text>
+          <text x="168" y="36" font-weight="650">Monte Rosa Therapeutics</text>
+          <text x="432" y="36">Novartis</text>
+          <text x="644" y="36" font-weight="650">MRY-6160</text>
+          <text x="1118" y="36" text-anchor="end" font-weight="720">2,250.0</text>
+          <text x="1336" y="36" text-anchor="end" font-weight="720" fill="#bb5f42">150.0</text>
+        </g>
+        <g transform="translate(0 121)">
+          <rect width="1376" height="58" rx="9" fill="#f4f6f4"/>
+          <rect width="8" height="58" rx="4" fill="#4d8f83"/>
+          <text x="24" y="36" fill="#6c7d87">2024.10.07</text>
+          <text x="168" y="36" font-weight="650">石药集团</text>
+          <text x="432" y="36">AstraZeneca</text>
+          <text x="644" y="36" font-weight="650">YS2302018</text>
+          <text x="1118" y="36" text-anchor="end" font-weight="720">2,020.0</text>
+          <text x="1336" y="36" text-anchor="end" font-weight="720" fill="#bb5f42">100.0</text>
+        </g>
+        <g transform="translate(0 182)">
+          <rect width="1376" height="58" rx="9" fill="#ffffff"/>
+          <rect width="8" height="58" rx="4" fill="#7a91a3"/>
+          <text x="24" y="36" fill="#6c7d87">2024.05.13</text>
+          <text x="168" y="36" font-weight="650">Gilgamesh Pharmaceuticals</text>
+          <text x="432" y="36">AbbVie</text>
+          <text x="644" y="36" font-weight="650">GM-1020 / GM-2505 / GM-5022</text>
+          <text x="1118" y="36" text-anchor="end" font-weight="720">2,015.0</text>
+          <text x="1336" y="36" text-anchor="end" font-weight="720" fill="#bb5f42">65.0</text>
+        </g>
+        <g transform="translate(0 243)">
+          <rect width="1376" height="58" rx="9" fill="#f4f6f4"/>
+          <rect width="8" height="58" rx="4" fill="#d4a85e"/>
+          <text x="24" y="36" fill="#6c7d87">2025.04.17</text>
+          <text x="168" y="36" font-weight="650">Earendil Labs</text>
+          <text x="432" y="36">Sanofi</text>
+          <text x="644" y="36" font-weight="650">HXN-1002 / HXN-1003</text>
+          <text x="1118" y="36" text-anchor="end" font-weight="720">1,845.0</text>
+          <text x="1336" y="36" text-anchor="end" font-weight="720" fill="#bb5f42">125.0</text>
+        </g>
+        <g transform="translate(0 304)">
+          <rect width="1376" height="58" rx="9" fill="#ffffff"/>
+          <rect width="8" height="58" rx="4" fill="#4d8f83"/>
+          <text x="24" y="36" fill="#6c7d87">2024.12.13</text>
+          <text x="168" y="36" font-weight="650">石药集团</text>
+          <text x="432" y="36">百济神州</text>
+          <text x="644" y="36" font-weight="650">SYH2039</text>
+          <text x="1118" y="36" text-anchor="end" font-weight="720">1,835.0</text>
+          <text x="1336" y="36" text-anchor="end" font-weight="720" fill="#bb5f42">150.0</text>
+        </g>
+        <g transform="translate(0 365)">
+          <rect width="1376" height="58" rx="9" fill="#f4f6f4"/>
+          <rect width="8" height="58" rx="4" fill="#7a91a3"/>
+          <text x="24" y="36" fill="#6c7d87">2024.09.26</text>
+          <text x="168" y="36" font-weight="650">Evaxion Biotech</text>
+          <text x="432" y="36">Merck &amp; Co.</text>
+          <text x="644" y="36" font-weight="650">EVX-B2 / EVX-B3</text>
+          <text x="1118" y="36" text-anchor="end" font-weight="720">1,197.2</text>
+          <text x="1336" y="36" text-anchor="end" font-weight="720" fill="#bb5f42">3.2</text>
+        </g>
+        <g transform="translate(0 426)">
+          <rect width="1376" height="58" rx="9" fill="#ffffff"/>
+          <rect width="8" height="58" rx="4" fill="#d4a85e"/>
+          <text x="24" y="36" fill="#6c7d87">2024.12.03</text>
+          <text x="168" y="36" font-weight="650">Relay Therapeutics</text>
+          <text x="432" y="36">Elevar Therapeutics</text>
+          <text x="644" y="36" font-weight="650">RLY-4008</text>
+          <text x="1118" y="36" text-anchor="end" font-weight="720">500.0</text>
+          <text x="1336" y="36" text-anchor="end" font-weight="720" fill="#bb5f42">75.0</text>
+        </g>
+        <g transform="translate(0 487)">
+          <rect width="1376" height="58" rx="9" fill="#f4f6f4"/>
+          <rect width="8" height="58" rx="4" fill="#d57e5e"/>
+          <text x="24" y="36" fill="#6c7d87">2024.01.05</text>
+          <text x="168" y="36" font-weight="650">Insilico Medicine</text>
+          <text x="432" y="36">Menarini Group</text>
+          <text x="644" y="36" font-weight="650">MEN2312</text>
+          <text x="1118" y="36" text-anchor="end" font-weight="720">500.0</text>
+          <text x="1336" y="36" text-anchor="end" font-weight="720" fill="#bb5f42">12.0</text>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

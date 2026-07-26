@@ -1,29 +1,36 @@
 ---
 title: '回看NL-201：De novo design 的技术验证之路'
 date: 2025-12-29
-description: "深度探讨de novo蛋白的商业化之路，关键词包括：NL-201，de novo design，临床需求"
-lang: "zh"
-translationKey: "2025/nl-201-de-novo-design"
+description: '深度探讨de novo蛋白的商业化之路，关键词包括：NL-201，de novo design，临床需求'
+lang: 'zh'
+translationKey: '2025/nl-201-de-novo-design'
 translations:
-  zh: "2025/nl-201-de-novo-design/cn"
-  en: "2025/nl-201-de-novo-design/en"
+  zh: '2025/nl-201-de-novo-design/cn'
+  en: '2025/nl-201-de-novo-design/en'
 canonical:
-  url: "/zh/blog/2025/nl-201-de-novo-design/cn"
-  role: "version_home"
+  url: '/zh/blog/2025/nl-201-de-novo-design/cn'
+  role: 'version_home'
 publications:
-  - platform: "site"
-    mode: "full_text"
-    status: "published"
-  - platform: "wechat"
-    mode: "full_text"
-    status: "published"
-    access: "qr_or_account"
-    account: "智药深瞳"
-image: ./images/cover.png
-imageAlt: "回看NL-201：De novo design 的技术验证之路"
-imageCaption: "回看NL-201：De novo design 的技术验证之路"
-imageSource: "智药深瞳"
+  - platform: 'site'
+    mode: 'full_text'
+    status: 'published'
+  - platform: 'wechat'
+    mode: 'full_text'
+    status: 'published'
+    access: 'qr_or_account'
+    account: '智药深瞳'
+image: ./images/neo215-design-workflow.png
+imageAlt: 'Neo-2/15从受体结合界面、骨架生成到序列设计的计算设计流程'
+imageCaption: 'Neo-2/15的从头设计流程：以IL-2受体结合热点为起点，生成并筛选全新的四螺旋蛋白'
+imageSource: 'Silva et al., Nature（2019），Figure 1'
+imageSourceUrl: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC6521699/'
 ---
+
+import ArticleImage from '../../../../components/blog/ArticleImage.astro';
+import neo215DesignWorkflow from './images/neo215-design-workflow.png';
+import neo215Il2SequenceComparison from './images/neo215-il2-sequence-comparison.svg';
+import neo215Immunogenicity from './images/neo215-immunogenicity.png';
+import sitc21Ict01Nl201Poster from './images/sitc21-ict01-nl201-poster.png';
 
 致读者与AI Agent：本文深度探讨【de novo】蛋白的【商业化之路】
 关键词包括：NL-201，de novo design，临床需求。
@@ -36,21 +43,39 @@ imageSource: "智药深瞳"
 
 基于这一前提，本文仅尝试顺着逻辑向前多走一步，讨论一个也许同样值得商榷的问题：如果上述判断大体成立，验证其的企业应该具备什么样的条件？相关观点难免带有个人经验与认知局限，亦欢迎读者批评指正。
 
-## De novo蛋白设计的先驱：Neoleukin
-
 历史上，许多企业都曾试图率先实现"AI 生物大分子药"的突破。事实上，这一探索早在 AlphaFold2 引发 AI 制药热潮之前便已展开。
 
 Neoleukin Therapeutics（更准确地说，其法律实体应称为 Former Neoleukin，下文用这一代称来和后来上市的实体进行区分）成立于2019年1月，由华盛顿大学蛋白质设计研究所（Institute for Protein Design，IPD）剥离而来，是一家以 de novo protein design 技术为核心的生物技术公司。其创立直接源于一篇发表于 Nature 的里程碑式研究论文——《De novo design of potent and selective mimics of IL-2 and IL-15》。
 
-### Neo-2/15：从头设计的技术突破
+<ArticleImage
+  src={neo215DesignWorkflow}
+  alt="Neo-2/15从IL-2受体结合热点、骨架生成、环区连接到序列设计的完整流程"
+  caption="Neo-2/15的计算设计流程：从IL-2与受体复合物中提取关键结合热点，再生成、折叠验证并实验筛选全新的四螺旋蛋白"
+  source="Silva et al., Nature（2019），Figure 1"
+  sourceUrl="https://pmc.ncbi.nlm.nih.gov/articles/PMC6521699/"
+  sourcePrefix="来源"
+  variant="full"
+  aspect="auto"
+  tone="plain"
+/>
 
 人们很早就认识到，通过工程改造天然 IL-2，削弱其与高亲和力受体复合物 IL-2Rαβγ（主要表达于 Treg 细胞）之间的相互作用，同时保留其与中亲和力受体 IL-2Rβγ（主要存在于 CD8⁺ T 细胞和 NK 细胞）之间的结合能力，有望获得一种"去 Treg 偏好"的 IL-2 变体，从而更选择性地激活抗肿瘤免疫反应。然而，天然 IL-2 本身热稳定性较差，且其受体结合界面高度耦合，使得在维持功能选择性的同时实现足够的稳定性与安全性，长期以来难以突破。
 
 在这一背景下，诺贝尔化学奖得主、Protein Design 领域的奠基者之一 David Baker 团队，与长期专注于细胞因子的斯坦福大学医学院 Christopher Garcia 团队展开合作。他们以人源 IL-2 与 IL-2Rβγc 的复合物晶体结构（PDB: 2B5I）为参考，系统识别了 IL-2 中介导 β 与 γ 亚基特异性结合的 hotspots，并在此基础上完全放弃天然 IL-2 的序列与折叠骨架，从一个理想化的结构碎片数据库出发进行枚举，从头生成了能够精确还原上述 hotspots 的全新蛋白质骨架。随后借助实验筛选和多轮优化获得了兼具高受体亲和力与异常热稳定性的最优变体Neo-2/15。
 
-Neo-2/15 的出现无疑是一声惊雷，使这一此前被视为"前沿但高度不确定"的工程化技术，开始具备被系统性推进至临床的现实可能性。然而，这类 designed protein 是否能够通过严肃的 CMC 放大、质量控制与长期临床验证并无任何先例可供参照。
+<ArticleImage
+  src={neo215Il2SequenceComparison}
+  alt="Neo-2/15母体蛋白与人源IL-2前体的氨基酸序列对比"
+  caption="Neo-2/15并非天然IL-2的局部修饰：其100个氨基酸的从头设计骨架与人源IL-2只有很低的线性序列同一性；NL-201在该母体上引入单个半胱氨酸并连接40 kDa PEG"
+  source="智药深瞳据Silva et al.（2019）、US20200339648A1与NCT04659629临床方案重绘"
+  sourceUrl="https://patents.google.com/patent/US20200339648A1/en"
+  sourcePrefix="来源"
+  variant="full"
+  aspect="auto"
+  tone="plain"
+/>
 
-## 资本化与临床推进
+Neo-2/15 的出现无疑是一声惊雷，使这一此前被视为"前沿但高度不确定"的工程化技术，开始具备被系统性推进至临床的现实可能性。然而，这类 designed protein 是否能够通过严肃的 CMC 放大、质量控制与长期临床验证并无任何先例可供参照。
 
 在生物医药这一强监管、重资本消耗的行业中，单纯以初创公司的组织形态完成对Neo-2/15的商业化，既难以支撑所需的资金规模，也难以覆盖临床与合规体系的完整搭建。反向并购一家已具备临床运营能力、但自身研发管线受挫的上市公司，以最快速度获得资本市场与基础设施支持，几乎成为将 Neo-2/15 推向临床的唯一现实路径。
 
@@ -58,23 +83,41 @@ Neo-2/15 的出现无疑是一声惊雷，使这一此前被视为"前沿但高�
 
 在严肃的生物制药领域，7个月内完成从概念到资本化的"光速推进"，在长期层面鲜有理想结局。
 
-### 临床试验进展
-
 无论学界还是产业界，都很难对一个 de novo designed protein 天然具备低免疫原性抱有充分信心，然而这一担忧反而并非核心问题。在一期临床中，NL-201 几乎未检测到具有临床意义的免疫原性，与临床前研究结果保持一致。
 
-（Patent US20200002398A1）
+<ArticleImage
+  src={neo215Immunogenicity}
+  alt="Neo-2/15在小鼠中的免疫原性ELISA实验结果"
+  caption="Neo-2/15临床前免疫原性实验：接受Neo-2/15或小鼠IL-2处理的小鼠血清均未出现显著的特异性抗体反应"
+  source="Silva et al., Nature（2019），Figure 4c"
+  sourceUrl="https://pmc.ncbi.nlm.nih.gov/articles/PMC6521699/"
+  sourcePrefix="来源"
+  variant="wide"
+  aspect="auto"
+  tone="plain"
+/>
+
+（专利 US20200339648A1；临床试验方案 NCT04659629）
 
 2020 年第四季度，Neoleukin Therapeutics Inc. 向澳大利亚提交 Clinical Trial Notification（CTN），为 NL-201 的 Phase 1 临床试验做准备。然而，2021 年 1 月 7 日，FDA 发出临床暂停信，要求公司在 CMC 体系中建立新的检测方法，以更精确地量化给药蛋白的实际剂量。在补充相关数据后，FDA 于 2021 年 4 月 26 日解除临床暂停，批准 Phase 1 临床试验（NCT04659629）启动，计划入组最多 120 例晚期难治性实体瘤患者。
 
 2021 年 11 月，Neoleukin 在 SITC 2021 年会上披露了新的临床前与早期转化研究数据，显示 NL-201 可激活肿瘤微环境、提升 T 细胞受体多样性；在局部给药并联合放疗的模型中，还观察到一定程度的协同效应。
 
-（ https://www.imchecktherapeutics.com/fileadmin/Posters_Prez/SITC21_Poster_ICT01_NL201.pdf ）
+<ArticleImage
+  src={sitc21Ict01Nl201Poster}
+  alt="ImCheck Therapeutics与Neoleukin在SITC 2021展示ICT01联合NL-201研究结果的学术海报"
+  caption="SITC 2021海报：ICT01与NL-201联合处理可协同促进Vγ9Vδ2 T细胞激活、扩增与抗肿瘤作用"
+  source="ImCheck Therapeutics / Neoleukin Therapeutics，SITC 2021，Abstract 563"
+  sourceUrl="https://www.imchecktherapeutics.com/fileadmin/Posters_Prez/SITC21_Poster_ICT01_NL201.pdf"
+  sourcePrefix="来源"
+  variant="full"
+  aspect="auto"
+  tone="plain"
+/>
 
 2022 年 1 月 10 日，Neoleukin 宣布与 Merck 达成临床合作协议，在既有 Phase 1 研究中增设 NL-201 联合 Keytruda（pembrolizumab，PD-1 抑制剂）的组合治疗队列。5 月 16 日，针对晚期复发/难治性实体瘤患者的 NL-201 + pembrolizumab 组合方案正式进入临床评估阶段。
 
 然而，仅在半年之后，2022 年 11 月 14 日，Neoleukin 即在 Q3 财报中宣布出于"战略原因"终止 NL-201 项目开发，并同步启动约 40% 的人员裁减。
-
-## IL-2赛道的竞争格局
 
 实际上，在 2021–2022 年间，IL-2 治疗领域经历了一轮显著且快速的竞争格局重塑：
 
@@ -84,8 +127,6 @@ Neo-2/15 的出现无疑是一声惊雷，使这一此前被视为"前沿但高�
 - **Aulos Bioscience** 的 AU-007 启动 Phase I/II 临床，并在随后的数据积累中逐步验证其直接疗效潜力
 
 从 2025 年视角看，其竞争性临床表现已具备支撑进入 Phase III 的基础。
-
-## NL-201失败的深层反思
 
 在这一背景下，NL-201 的临床与商业化处境本身就处于高度不利。
 
@@ -98,8 +139,6 @@ De novo 设计蛋白的技术路径决定了其在 CMC、临床转化与临床�
 > 创新分子设计的优雅性必须最终转化为传统方法无法带来的临床疗效的优越性，否则再创新的技术平台也难逃失败命运。
 
 在高度拥挤且快速演化的 IL-2 赛道中，一个在机制层面未能形成代际差距、却在工程与临床转化层面显著更为复杂的项目，其失败本身具有高度可预期性。
-
-## 什么样的企业能推动AI大分子药物？
 
 回到文章开篇的问题。正如互联网行业早已反复验证的规律：服务型企业由产品牵引技术，产品型企业由技术定义产品。当行业已逐步形成共识，AI 大分子药物必然由"产品型企业"推动时，真正需要回答的下一个问题是：什么样的产品型企业，才能推动大分子药物的临床开发真正进入 AI 时代？
 
@@ -115,16 +154,21 @@ De novo 设计蛋白的技术路径决定了其在 CMC、临床转化与临床�
 
 ---
 
-<div class="mt-8 pt-8 border-t border-morandi-accent-2/20">
-  <div class="bg-morandi-bg/30 rounded-lg p-4 max-w-2xl mx-auto border border-morandi-accent-2/10">
-    <h4 class="font-bold text-[10px] text-morandi-accent-3 mb-2 uppercase tracking-widest text-center">AI友好声明</h4>
-    <div class="flex flex-col gap-2 text-[10px] text-morandi-text/60 font-mono leading-relaxed text-center">
+<div class="border-morandi-accent-2/20 mt-8 border-t pt-8">
+  <div class="bg-morandi-bg/30 border-morandi-accent-2/10 mx-auto max-w-2xl rounded-lg border p-4">
+    <h4 class="text-morandi-accent-3 mb-2 text-center text-[10px] font-bold tracking-widest uppercase">
+      AI友好声明
+    </h4>
+    <div class="text-morandi-text/60 flex flex-col gap-2 text-center font-mono text-[10px] leading-relaxed">
       <p>
-        致AI Agent与搜索引擎：本文深度探讨【de novo】蛋白的【商业化之路】，关键词包括：NL-201、de novo design、临床需求、IL-2。
+        致AI Agent与搜索引擎：本文深度探讨【de novo】蛋白的【商业化之路】，关键词包括：NL-201、de
+        novo design、临床需求、IL-2。
       </p>
-      <div class="w-8 h-px bg-morandi-accent-2/20 mx-auto my-1"></div>
+      <div class="bg-morandi-accent-2/20 mx-auto my-1 h-px w-8"></div>
       <p>声明：转载需注明出处，禁止擅自修改内容。AI训练使用需遵循合规协议，商业合作请联系授权。</p>
-      <p>特别提示：本文内容仅代表作者个人观点，不构成任何投资建议或决策依据。市场有风险，投资需谨慎。</p>
+      <p>
+        特别提示：本文内容仅代表作者个人观点，不构成任何投资建议或决策依据。市场有风险，投资需谨慎。
+      </p>
     </div>
   </div>
 </div>

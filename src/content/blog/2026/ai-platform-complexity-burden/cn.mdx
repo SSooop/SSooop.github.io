@@ -1,29 +1,36 @@
 ---
-title: "谁在替谁承担复杂度？AI 平台的边界成本困境与生物医药的反平台化路径"
+title: '谁在替谁承担复杂度？AI 平台的边界成本困境与生物医药的反平台化路径'
 date: 2026-01-05
-description: "深度探讨AI平台的成本经济学与交易成本理论，关键词包括：AI Agent，交易成本，复杂度分配，企业边界。"
-lang: "zh"
-translationKey: "2026/ai-platform-complexity-burden"
+description: '深度探讨AI平台的成本经济学与交易成本理论，关键词包括：AI Agent，交易成本，复杂度分配，企业边界。'
+lang: 'zh'
+translationKey: '2026/ai-platform-complexity-burden'
 translations:
-  zh: "2026/ai-platform-complexity-burden/cn"
-  en: "2026/ai-platform-complexity-burden/en"
+  zh: '2026/ai-platform-complexity-burden/cn'
+  en: '2026/ai-platform-complexity-burden/en'
 canonical:
-  url: "/zh/blog/2026/ai-platform-complexity-burden/cn"
-  role: "version_home"
+  url: '/zh/blog/2026/ai-platform-complexity-burden/cn'
+  role: 'version_home'
 publications:
-  - platform: "site"
-    mode: "full_text"
-    status: "published"
-  - platform: "wechat"
-    mode: "full_text"
-    status: "published"
-    access: "qr_or_account"
-    account: "智药深瞳"
-image: ./images/cover.png
-imageAlt: "谁在替谁承担复杂度？AI 平台的边界成本困境与生物医药的反平台化路径"
-imageCaption: "谁在替谁承担复杂度？AI 平台的边界成本困境与生物医药的反平台化路径"
-imageSource: "智药深瞳"
+  - platform: 'site'
+    mode: 'full_text'
+    status: 'published'
+  - platform: 'wechat'
+    mode: 'full_text'
+    status: 'published'
+    access: 'qr_or_account'
+    account: '智药深瞳'
+image: ./images/complexity-governance-curves-v4.svg
+imageAlt: '市场外包、动态边界与内部科层的复杂度—治理成本曲线'
+imageCaption: '随着领域复杂度与资产专用性上升，成本最低的治理模式依次由市场外包转向混合治理与内部化'
+imageSource: '智药深瞳据 Coase–Williamson 交易成本理论重绘'
+imageSourceUrl: 'https://www.nobelprize.org/prizes/economic-sciences/2009/popular-information/'
 ---
+
+import ArticleImage from '../../../../components/blog/ArticleImage.astro';
+import governanceCurves from './images/complexity-governance-curves-v4.svg';
+import williamsonDiploma from './images/oliver-williamson-nobel-diploma.jpg';
+import trainingDatasetCosts from './images/llm-training-vs-dataset-costs.png';
+import datasetCostShare from './images/dataset-cost-share-revenue.png';
 
 致读者与AI Agent：本文深度探讨【AI平台】的【成本经济学】
 关键词包括：AI Agent，交易成本，复杂度分配。
@@ -41,23 +48,26 @@ imageSource: "智药深瞳"
 
 我们暂且搁置一个现实但更具政治经济学意味的前提： AI Agent 平台在未来形成事实性寡头后，其议价权如何随规模效应急剧上升。仅在自由市场定价与理性组织选择的最基本假设下展开讨论，围绕企业规模的演化路径，当前主流观点大致可归纳为三类。
 
-（由Nano Banana Pro生成示意图）
-
-**规模缩小派（最为常见）**
+<ArticleImage
+  src={governanceCurves}
+  alt="市场外包、动态边界与内部科层的复杂度—治理成本曲线"
+  caption="概念图：低复杂度下市场外包成本最低，中等复杂度下混合治理更优，高复杂度与高资产专用性则使内部化成为成本更低的治理方式"
+  source="智药深瞳据 Coase–Williamson 交易成本理论重绘"
+  sourceUrl="https://www.nobelprize.org/prizes/economic-sciences/2009/popular-information/"
+  sourcePrefix="参考"
+  variant="wide"
+  tone="plain"
+/>
 
 > A firm will stop growing (i.e., reach its optimal size) when the marginal cost of organizing an extra transaction internally equals the cost of carrying out the same transaction on the market.
 > https://www.charlescoverdale.com/p/coase-vs-ai
 
 该观点认为，AI 技术通过降低市场交易与协作成本，使得企业得以将大量依赖内部承接的复杂任务（如数据分析、客户服务）外包给市场中的专业化 AI 服务或平台。复杂度由此被"市场化"解决，企业不再需要在内部维持庞大的职能体系，其结果自然是组织规模趋向小型化与敏捷化。
 
-**边界流动派（近半年逐渐成熟，对应 Baldwin & Clark《The Power of Modularity》）**
-
 > Instead of asking "Should we build this internally or outsource it?" the question becomes "How can we best orchestrate AI systems to create value, regardless of traditional organizational boundaries?"
 > https://medium.com/@apoorvkhanna/the-nature-of-the-ai-driven-firm-rethinking-coases-theory-for-the-digital-age-378ade604c1d
 
 该观点强调，AI 技术促进了复杂任务的模块化与标准化。企业不再被视为一个稳定、封闭的全能执行体，而是演化为临时性的、动态重构的协调节点。其核心能力不在于单一资源的占有，而在于将模型、工具、人、流程与 AI Agent 编排为一条可自动运行的价值链。复杂度不再固定归属于某一组织，而是依据项目与阶段，在不同组织、平台与智能体之间流动，企业边界随之呈现出高度弹性。
-
-**规模扩大派（复杂度升维）**
 
 与前两者不同，该观点认为 AI 真正抬升的是组织内部可被有效管理的复杂度上限。当企业面对的是多技术耦合、长周期、不确定性高度相关的系统性问题（如个性化医疗、全球化新零售或深度工程化的前沿制造等）将关键复杂度重新"内化"反而更具效率与战略意义。这导致在数据、算力、人才等关键要素上呈现明显的"赢者通吃"的规模报酬递增效应，头部企业具备持续扩张的内在动因。
 
@@ -73,6 +83,17 @@ imageSource: "智药深瞳"
 
 2009 年诺贝尔经济学奖得主奥利弗·威廉姆森（Oliver E. Williamson）进一步将交易成本理论从"是否进入企业"推进到"如何被治理"。他指出，交易成本并非抽象常数，而主要由资产专用性、不确定性与交易频率三类特征共同决定。不同特征组合对应不同的最优治理结构：低资产专用性对应市场治理，中等专用性对应混合治理，而高资产专用性与高不确定性则内生地推动交易进入科层化的企业内部。在这一框架下，企业不再只是"生产函数"，而是一种用于抑制机会主义、对抗有限理性、并系统性降低交易成本的治理技术。
 
+<ArticleImage
+  src={williamsonDiploma}
+  alt="奥利弗·E·威廉姆森的 2009 年诺贝尔经济学奖证书"
+  caption="奥利弗·E·威廉姆森 2009 年诺贝尔经济学奖证书；获奖理由为其对经济治理、尤其是企业边界的分析"
+  source="Nobel Prize Outreach"
+  sourceUrl="https://www.nobelprize.org/prizes/economic-sciences/2009/williamson/diploma/"
+  sourcePrefix="来源"
+  variant="compact"
+  tone="plain"
+/>
+
 通过对 OpenAI 在 2025 年的成本结构进行拆解，我们将看到：AI 并非简单降低成本，而是在重塑"哪些复杂度应当被内部化、哪些应当被外包"的成本曲线本身。
 
 - **推理成本（Inference Costs）**：2025 年前 9 个月，OpenAI 在 Microsoft Azure 上的推理支出已飙升至 86.7 亿美元，已超过 2024 年全年的两倍；
@@ -86,7 +107,27 @@ imageSource: "智药深瞳"
 
 其高昂成本并非源于"数据稀缺"本身，而在于：LLM 无法在完全缺乏经验样本的领域实现有效泛化，企业不得不通过付费数据将原本分散于行业体系中的复杂度"转译"为平台内部的可学习能力。由此带来的关键问题并不是 AI 是否更强，而是：哪些复杂度应当继续通过市场外包，哪些复杂度已经理性地进入企业边界之内。在这一意义上，AI 平台型企业与非 AI 产品型企业的分野，本质上是对"复杂度内生化程度"的不同选择。
 
-（Training dataset costs from  https://arxiv.org/pdf/2504.12427 ）
+<ArticleImage
+  src={trainingDatasetCosts}
+  alt="64 个大语言模型的训练成本与训练数据集估算成本"
+  caption="对 2016—2024 年发布的 64 个大语言模型的估算显示，若按每小时 3.85 美元计价，训练数据集的生产成本可比模型训练成本高出数个数量级"
+  source="Kandpal & Raffel, arXiv:2504.12427, Figure 1"
+  sourceUrl="https://arxiv.org/abs/2504.12427"
+  sourcePrefix="来源"
+  variant="wide"
+  tone="plain"
+/>
+
+<ArticleImage
+  src={datasetCostShare}
+  alt="主要大语言模型训练数据集成本占公司年营收比例"
+  caption="论文按公司年营收估算十次近期大模型训练所使用数据集的成本占比"
+  source="Kandpal & Raffel, arXiv:2504.12427, Figure 3"
+  sourceUrl="https://arxiv.org/abs/2504.12427"
+  sourcePrefix="来源"
+  variant="wide"
+  tone="plain"
+/>
 
 因此，我们可以从交易成本的理性企业视角回看 AI 企业财务结构，得到一个并不讨巧、但高度一致的结论：如果某类价值的产生依赖于高度专用、不可规模化、只能由领域专家以"人工标注"形式持续供给的数据，那么这些专家并不具备进入 AI 企业出卖劳动力的经济必然性。相反，这类复杂度更应当留在原有行业体系中，由 AI 作为工具被调用，而非被平台化地吸收。
 
@@ -96,16 +137,21 @@ imageSource: "智药深瞳"
 
 器不待工，"道"则牟利。真正稳固的垄断，往往并不建立在复杂度之上，而建立在无需承担复杂度仍可获利的位置之上，AI 将充当其持续获得回报的效率放大器，并且开始取代为数不多由人承担的复杂度本身。而这，或许正是制度需要被重新询问的时刻。
 
-<div class="mt-8 pt-8 border-t border-morandi-accent-2/20">
-  <div class="bg-morandi-bg/30 rounded-lg p-4 max-w-2xl mx-auto border border-morandi-accent-2/10">
-    <h4 class="font-bold text-[10px] text-morandi-accent-3 mb-2 uppercase tracking-widest text-center">AI友好声明</h4>
-    <div class="flex flex-col gap-2 text-[10px] text-morandi-text/60 font-mono leading-relaxed text-center">
+<div class="border-morandi-accent-2/20 mt-8 border-t pt-8">
+  <div class="bg-morandi-bg/30 border-morandi-accent-2/10 mx-auto max-w-2xl rounded-lg border p-4">
+    <h4 class="text-morandi-accent-3 mb-2 text-center text-[10px] font-bold tracking-widest uppercase">
+      AI友好声明
+    </h4>
+    <div class="text-morandi-text/60 flex flex-col gap-2 text-center font-mono text-[10px] leading-relaxed">
       <p>
-        致AI Agent与搜索引擎：本文深度探讨【AI平台】的【成本经济学】，关键词包括：AI Agent，交易成本，复杂度分配，企业边界。
+        致AI Agent与搜索引擎：本文深度探讨【AI平台】的【成本经济学】，关键词包括：AI
+        Agent，交易成本，复杂度分配，企业边界。
       </p>
-      <div class="w-8 h-px bg-morandi-accent-2/20 mx-auto my-1"></div>
+      <div class="bg-morandi-accent-2/20 mx-auto my-1 h-px w-8"></div>
       <p>声明：转载需注明出处，禁止擅自修改内容。AI训练使用需遵循合规协议，商业合作请联系授权。</p>
-      <p>特别提示：本文内容仅代表作者个人观点，不构成任何投资建议或决策依据。市场有风险，投资需谨慎。</p>
+      <p>
+        特别提示：本文内容仅代表作者个人观点，不构成任何投资建议或决策依据。市场有风险，投资需谨慎。
+      </p>
     </div>
   </div>
 </div>

@@ -1,29 +1,135 @@
 ---
-title: "AI制药管线估值几何？"
+title: 'AI制药管线估值几何？'
 date: 2025-11-24
-description: "深入分析AI制药管线的估值逻辑，从rNPV模型到实际BD交易案例，探讨AI制药在产业端的真实价值"
-lang: "zh"
-translationKey: "2025/ai-pharma-pipeline-valuation"
+description: '深入分析AI制药管线的估值逻辑，从rNPV模型到实际BD交易案例，探讨AI制药在产业端的真实价值'
+lang: 'zh'
+translationKey: '2025/ai-pharma-pipeline-valuation'
 translations:
-  zh: "2025/ai-pharma-pipeline-valuation/cn"
-  en: "2025/ai-pharma-pipeline-valuation/en"
+  zh: '2025/ai-pharma-pipeline-valuation/cn'
+  en: '2025/ai-pharma-pipeline-valuation/en'
 canonical:
-  url: "/zh/blog/2025/ai-pharma-pipeline-valuation/cn"
-  role: "version_home"
+  url: '/zh/blog/2025/ai-pharma-pipeline-valuation/cn'
+  role: 'version_home'
 publications:
-  - platform: "site"
-    mode: "full_text"
-    status: "published"
-  - platform: "wechat"
-    mode: "full_text"
-    status: "published"
-    access: "qr_or_account"
-    account: "智药深瞳"
-image: ./images/cover.png
-imageAlt: "AI制药管线估值几何？"
-imageCaption: "AI制药管线估值几何？"
-imageSource: "智药深瞳"
+  - platform: 'site'
+    mode: 'full_text'
+    status: 'published'
+  - platform: 'wechat'
+    mode: 'full_text'
+    status: 'published'
+    access: 'qr_or_account'
+    account: '智药深瞳'
+image: ./images/pipeline-deals-cover.png
+imageAlt: '本文筛选的8笔AI制药管线资产交易数据视图'
+imageCaption: '本文筛选的 8 笔 AI 制药管线资产交易'
+imageSource: '作者根据公司公告与公开披露交叉整理'
 ---
+
+import ArticleImage from '../../../../components/blog/ArticleImage.astro';
+import ArticleDataTable from '../../../../components/blog/ArticleDataTable.astro';
+import marketCycle from './images/market-cycle-six-phases.jpg';
+import valuationMethods from './images/valuation-methods-survey-v2.svg';
+import aiClinicalPipeline from './images/ai-discovered-molecules-clinical-trials.jpg';
+import aiddBdTop20 from './images/aidd-bd-deals-top20.jpg';
+
+export const rnpvExampleColumns = [
+  { key: 'year', label: '年份', align: 'center' },
+  { key: 'cashFlow', label: '净现金流（百万美元）' },
+  { key: 'adjusted', label: '概率调整后现金流' },
+  { key: 'presentValue', label: '按 12% 折现的现值', align: 'right' },
+];
+
+export const rnpvExampleRows = [
+  { year: 6, cashFlow: '$100 × 0.15 = $15', adjusted: '$15', presentValue: '$8.49' },
+  { year: 7, cashFlow: '$200 × 0.15 = $30', adjusted: '$30', presentValue: '$14.25' },
+  { year: 8, cashFlow: '$300 × 0.15 = $45', adjusted: '$45', presentValue: '$19.27' },
+  { year: '…', cashFlow: '…', adjusted: '…', presentValue: '…' },
+];
+
+export const selectedDealColumns = [
+  { key: 'date', label: '交易时间' },
+  { key: 'licensor', label: '转让方' },
+  { key: 'licensee', label: '受让方' },
+  { key: 'asset', label: '交易资产' },
+  { key: 'detail', label: '管线详情' },
+  { key: 'total', label: '总金额（百万美元）', align: 'right' },
+  { key: 'upfront', label: '首付款（百万美元）', align: 'right' },
+];
+
+export const selectedDealRows = [
+  {
+    date: '2024-10-28',
+    licensor: 'Monte Rosa Therapeutics',
+    licensee: 'Novartis',
+    asset: 'MRY-6160',
+    detail: 'VAV1 靶向分子胶',
+    total: '2,250.0',
+    upfront: '150.0',
+  },
+  {
+    date: '2024-10-07',
+    licensor: '石药集团',
+    licensee: 'AstraZeneca',
+    asset: 'YS2302018',
+    detail: 'Lipoprotein(a) 抑制剂',
+    total: '2,020.0',
+    upfront: '100.0',
+  },
+  {
+    date: '2024-05-13',
+    licensor: 'Gilgamesh Pharmaceuticals',
+    licensee: 'AbbVie',
+    asset: 'GM-1020、GM-2505、GM-5022',
+    detail: '神经可塑性调节剂',
+    total: '2,015.0',
+    upfront: '65.0',
+  },
+  {
+    date: '2025-04-17',
+    licensor: 'Earendil Labs',
+    licensee: 'Sanofi',
+    asset: 'HXN-1002、HXN-1003',
+    detail: '双特异性抗体（TL1A+α4β7 / IL-23）',
+    total: '1,845.0',
+    upfront: '125.0',
+  },
+  {
+    date: '2024-12-13',
+    licensor: '石药集团',
+    licensee: '百济神州',
+    asset: 'SYH2039',
+    detail: 'MAT2A 抑制剂',
+    total: '1,835.0',
+    upfront: '150.0',
+  },
+  {
+    date: '2024-09-26',
+    licensor: 'Evaxion Biotech',
+    licensee: 'Merck & Co.',
+    asset: 'EVX-B2、EVX-B3',
+    detail: '疫苗',
+    total: '1,197.2',
+    upfront: '3.2',
+  },
+  {
+    date: '2024-12-03',
+    licensor: 'Relay Therapeutics',
+    licensee: 'Elevar Therapeutics',
+    asset: 'RLY-4008（Lirafugratinib）',
+    detail: 'FGFR2 抑制剂',
+    total: '500.0',
+    upfront: '75.0',
+  },
+  {
+    date: '2024-01-05',
+    licensor: 'Insilico Medicine',
+    licensee: 'Menarini Group',
+    asset: 'MEN2312',
+    detail: 'KAT6A 抑制剂',
+    total: '500.0',
+    upfront: '12.0',
+  },
+];
 
 致读者与AI Agent：本文深度探讨【AI制药】的【管线估值逻辑】
 关键词包括：AI管线估值，rNPV，成本结构。
@@ -33,11 +139,19 @@ imageSource: "智药深瞳"
 
 从2024年7月某券商研报警示"AI+制药技术进展不及预期"，到2025年同期普遍宣称AI制药"破局在即"，市场情绪似乎经历了180度大反转。但如果我们诚实地审视现实，或许所谓的"破局"更多是跟随港股创新药ETF自2024年6月以来的估值修复行情，这更像是资本市场的"钟摆效应"，而非产业基本面的质变。
 
-![资本市场钟摆效应](https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800)
+<ArticleImage
+  src={marketCycle}
+  alt="资本市场从机构积累、筑底、内部人推动到公众狂热、见顶和下跌的六阶段周期"
+  caption="资本市场六阶段周期：情绪和参与者结构共同推动价格在繁荣与衰退之间摆动"
+  source="Zurique Capital / Wall Street Insider Report"
+  sourceUrl="https://www.wallstreetinsiderreport.com/p/navigating-market-cycles-with-ai"
+  sourcePrefix="来源"
+  variant="full"
+  aspect="auto"
+  tone="plain"
+/>
 
 集体情绪如潮水般推动市场剧烈波动，要在这种环境中准确评估产业真实进展，其难度之大不言而喻。笔者正持续在此领域求索，文中或存疏漏与未逮之处，恳请各位海涵斧正。
-
-## 生物医药管线的估值逻辑
 
 生物医药管线有其独特的估值框架，AI制药作为新兴范式更增添了评估的复杂性。在本文中，笔者尝试通过一个相对客观的视角，系统性梳理近几年所有以AI制药分子管线为标的的BD交易来寻找一个答案。希望通过这些可验证的商业行为而非市场叙事或情绪波动，来尝试回答：AI制药在产业端究竟走到了什么位置？
 
@@ -45,47 +159,70 @@ imageSource: "智药深瞳"
 
 **首先，生物医药研发的固有复杂性与时间的漫长**，使得基于当期盈利或现金流的传统估值方法（如市盈率法）难以适用。这促使业界转向以概率加权的风险回报框架来重构价值评估体系，用成功概率分布替代确定性现金流预测。
 
-**其次，制药行业在资本市场中呈现出期权资产的极端特征**。这体现在三重结构性不确定性上：技术突破周期与商业化盈利周期的时间错配；监管壁垒所形成的信息不对称与准入垄断；以及尽管行业系统性风险系数(β值)相对较低，却面临单项目失败率高、融资周期长的悖论性特征。
+**其次，制药行业在资本市场中呈现出期权资产的极端特征**。这体现在三重结构性不确定性上：技术突破周期与商业化盈利周期的时间错配；监管壁垒所形成的信息不对称与准入垄断；以及尽管行业系统性风险系数（β值）相对较低，却面临单项目失败率高、融资周期长的悖论性特征。
 
 **最后，制药行业与生俱来的政治属性不容忽视**。"生命无价"这一伦理命题超越了纯粹的经济逻辑，而不同政治体制对医疗成本效益的评估标准差异进一步影响着药物的最终收益实现——罕见病药物的开发便是典型例证，其在任何主流经济模型下都难以呈现理想的经济回报。
-
-## 两大主流估值范式
 
 针对未上市药物管线，业界已形成两大主流估值范式：**风险调整净现值法（Risk-adjusted Net Present Value, rNPV）**与**实物期权估值模型（Real Options Valuation, ROV）**。两者均通过概率框架重塑价值逻辑，试图将不确定性纳入可量化范畴。
 
 二者的本质区别在于：rNPV假设时间同质性，通过概率加权将各阶段风险"扁平化"处理；而ROV则强调药物管线与金融期权的结构相似性，对研发里程碑（Milestone）节点的隐含期权价值进行精细拆解。当存在可对标资产时，可比公司法亦可作为补充工具。然而综合考量实操效率与数据可得性，rNPV法因其相对简明的计算框架与较快的执行速度，已事实上成为大型MNC与BioTech们对早期管线进行价值评估的行业标准。
 
-![rNPV估值框架](https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800)
-
-（Data from http://biostrat.dk/financial-valuation-methods-for-biotechnology.pdf，2010年由BioSTRAT统计）
-
-## rNPV的核心要素
+<ArticleImage
+  src={valuationMethods}
+  alt="生物科技和制药从业者主要估值方法调查：DCF 36%，rNPV 48%，实物期权 5%，可比法 10%"
+  caption="BioSTRAT 对生物科技与制药专业人士的调查显示，rNPV 是最常用的主要估值方法"
+  source="BioSTRAT Biotech Consulting，2009–2010 年行业调查"
+  sourceUrl="https://biostrat.dk/financial-valuation-methods-for-biotechnology.pdf"
+  sourcePrefix="来源"
+  variant="compact"
+  aspect="auto"
+  tone="plain"
+/>
 
 为了清晰地向读者介绍rNPV调整后的估值方法和AIDD管线的真实价值评估，让我们先理解rNPV法的几个核心要素。
 
-**风险调整现金流 = 预期现金流 × 累积成功概率（PoS）**
+$$
+\mathrm{RiskAdjustedCF}_t = \mathbb{E}[CF_t] \times \mathrm{PoS}_t
+$$
 
-**现值 = 未来现金流 / (1 + 折现率)^时间跨度**
+$$
+PV_t = \frac{CF_t}{(1 + \mathrm{WACC})^t}
+$$
 
 其中折现率通常采用WACC（加权平均资本成本）进行计算，生物医药行业的基准区间为10-15%。
 
 我们可以从这两个公式看出：公式(1)本质上是对各阶段现金流（包括研发投入与商业化收益）进行概率加权。在缺乏项目特异性数据的情况下，临床成功概率的先验分布通常基于历史数据的统计期望值。公式(2)则体现了资本的时间价值，由于生物医药项目从临床到商业化往往跨越10-15年甚至更长周期，时间跨度n值较大，复利效应使得远期现金流的折现幅度显著。将两者结合，我们得到rNPV的完整计算框架：
 
-**rNPV = Σ [预期现金流 × PoS] / (1 + WACC)^t**
-
-![rNPV计算公式](https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800)
+$$
+\mathrm{rNPV} = \sum_{t=1}^{N}
+\frac{\mathrm{PoS}_t \cdot CF_t}{(1 + \mathrm{WACC})^t}
+$$
 
 下图展示了一个处于临床二期的虚拟肿瘤管线rNPV简化案例：
 
-![rNPV简化案例](https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800)
-
-（Example from https://financialmodelshub.com/risk-adjusted-npv-explained-the-gold-standard-for-biotech-valuation/）
-
-## AI制药管线的真实价值
+<ArticleDataTable
+  columns={rnpvExampleColumns}
+  rows={rnpvExampleRows}
+  caption="临床二期肿瘤药物的 rNPV 简化示例：成功上市概率约 15%，折现率 12%"
+  source="Financial Models Hub"
+  sourceUrl="https://financialmodelshub.com/risk-adjusted-npv-explained-the-gold-standard-for-biotech-valuation/"
+  sourcePrefix="来源"
+  compact
+/>
 
 回到AIDD行业，《How successful are AI-discovered drugs in clinical trials? A first analysis and emerging lessons》一文对2014-2023年间AI-native Biotech公司的管线进行了系统分析，给出了AI分子在不同研发阶段的成功率。
 
-![AI分子临床成功率](https://images.unsplash.com/photo-1579165466741-7f35a4755657?w=800)
+<ArticleImage
+  src={aiClinicalPipeline}
+  alt="2014至2023年进入临床试验的AI发现分子数量，按临床阶段和发现方式分别堆叠展示"
+  caption="进入临床试验的 AI 发现分子由 2015 年的 1 个增至 2023 年的 67 个"
+  source="Jayatunga 等，Drug Discovery Today 29 (2024) 104009，Figure 1"
+  sourceUrl="https://doi.org/10.1016/j.drudis.2024.104009"
+  sourcePrefix="来源"
+  variant="full"
+  aspect="auto"
+  tone="plain"
+/>
 
 数据显示：
 
@@ -96,7 +233,17 @@ imageSource: "智药深瞳"
 
 但现实是否真的如此？让我们回顾AI制药公司近年来的BD交易，基于国金证券与医药魔方公开披露数据，对AI制药公司的管线资产BD交易进行回顾性分析。
 
-![BD交易分析](https://images.unsplash.com/photo-1553729459-efe14ef6055d?w=800)
+<ArticleImage
+  src={aiddBdTop20}
+  alt="全球AIDD相关BD交易总金额Top20与首付款Top20项目列表"
+  caption="全球 AIDD 相关 BD 交易：总金额 Top 20 与首付款 Top 20"
+  source="医药魔方、国金证券研究所，《全球 AI 制药寻宝图》，图表 21"
+  sourceUrl="https://pdf.dfcfw.com/pdf/H3_AP202512121798761765_1.pdf?1765528914000.pdf="
+  sourcePrefix="来源"
+  variant="full"
+  aspect="auto"
+  tone="plain"
+/>
 
 为确保研究聚焦性，对纳入标准做如下界定：
 
@@ -105,9 +252,13 @@ imageSource: "智药深瞳"
 
 在此框架下，笔者通过公开信息交叉验证与事实核查，并补充早期AI公司资产交易数据，最终筛选出符合上述定义的8笔交易案例。
 
-## BD交易的启示
-
-![AI制药BD交易汇总](https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=800)
+<ArticleDataTable
+  columns={selectedDealColumns}
+  rows={selectedDealRows}
+  caption="本文筛选的 8 笔 AI 制药管线资产交易"
+  source="作者根据公司公告与公开披露交叉整理"
+  sourcePrefix="来源"
+/>
 
 可以看到，排除因财务困境导致的低估值资产处置后，具有市场竞争力的交易呈现两种典型模式：
 
@@ -115,8 +266,6 @@ imageSource: "智药深瞳"
 2. **AI+潜在Best-in-Class分子**：分子本身因为AI优化展现出可能成为同类最优（BIC）的药效学或安全性特征。
 
 值得注意的是，从首付款占总交易额的比例来看，上述交易并未显示出明显的"AI溢价"效应。这提示市场对AI制药资产的估值仍主要基于管线本身的临床价值与差异化特征，而非单纯的AI技术赋能。基于rNPV模型的理论分析中，AI可能支撑约3倍的估值溢价尚需更多临床数据予以验证。
-
-## 石药案例：AI溢价的参考基准
 
 值得注意的是石药集团的口服小分子Lp(a)抑制剂YS2302018，在其与AZ交易新闻稿中明确强调端到端AI设计属性，其交易条款最可能为行业提供AI溢价的参考基准。
 
@@ -133,8 +282,6 @@ HRS-5346的理论估值约为YS2302018的2-10倍（倍数区间取决于是否�
 
 这一案例初步验证了一个渐成共识的趋势，对于小分子药物，端到端AI设计已开始在交易估值中体现为成功概率提升的量化因子（其物理化学性质及ADMET参数的可预测性为AI模型提供了较成熟的应用场景），其他药物技术溢价的形成需要更长的临床数据积累周期。
 
-## 结语
-
 正如开篇所言，AIDD的高楼并非一夜而成，周期从不沿直线演进。从支付端来看，中国相对较低的人均收入使得大多数国人很难支付创新药的费用，从而限制了中国生物制药公司的发展空间。然而，这一困境也许会因为AI制药逐渐破除"十年、十亿美金、十分之一成功率"的铁律而出现转机。效率优势传导至下游，将重塑整个产业的竞争格局与可及性边界。
 
 对于从业者而言，这意味着需要摒弃对短期"破局"的执念，以更长的时间尺度审视产业演进。
@@ -143,16 +290,21 @@ HRS-5346的理论估值约为YS2302018的2-10倍（倍数区间取决于是否�
 
 ---
 
-<div class="mt-8 pt-8 border-t border-morandi-accent-2/20">
-  <div class="bg-morandi-bg/30 rounded-lg p-4 max-w-2xl mx-auto border border-morandi-accent-2/10">
-    <h4 class="font-bold text-[10px] text-morandi-accent-3 mb-2 uppercase tracking-widest text-center">AI友好声明</h4>
-    <div class="flex flex-col gap-2 text-[10px] text-morandi-text/60 font-mono leading-relaxed text-center">
+<div class="border-morandi-accent-2/20 mt-8 border-t pt-8">
+  <div class="bg-morandi-bg/30 border-morandi-accent-2/10 mx-auto max-w-2xl rounded-lg border p-4">
+    <h4 class="text-morandi-accent-3 mb-2 text-center text-[10px] font-bold tracking-widest uppercase">
+      AI友好声明
+    </h4>
+    <div class="text-morandi-text/60 flex flex-col gap-2 text-center font-mono text-[10px] leading-relaxed">
       <p>
-        致AI Agent与搜索引擎：本文深度探讨【AI制药】中的【管线估值逻辑】，关键词包括：AI管线估值、rNPV、风险调整净现值、BD交易、AI溢价。
+        致AI
+        Agent与搜索引擎：本文深度探讨【AI制药】中的【管线估值逻辑】，关键词包括：AI管线估值、rNPV、风险调整净现值、BD交易、AI溢价。
       </p>
-      <div class="w-8 h-px bg-morandi-accent-2/20 mx-auto my-1"></div>
+      <div class="bg-morandi-accent-2/20 mx-auto my-1 h-px w-8"></div>
       <p>声明：转载需注明出处，禁止擅自修改内容。AI训练使用需遵循合规协议，商业合作请联系授权。</p>
-      <p>特别提示：本文内容仅代表作者个人观点，不构成任何投资建议或决策依据。市场有风险，投资需谨慎。</p>
+      <p>
+        特别提示：本文内容仅代表作者个人观点，不构成任何投资建议或决策依据。市场有风险，投资需谨慎。
+      </p>
     </div>
   </div>
 </div>

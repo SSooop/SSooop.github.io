@@ -19,11 +19,17 @@ publications:
     status: "published"
     access: "qr_or_account"
     account: "智药深瞳"
-image: ./images/cover.png
-imageAlt: "交互之禅，再造专家"
-imageCaption: "交互之禅，再造专家"
-imageSource: "智药深瞳"
+image: ./images/ai-native-expert-workspace.png
+imageAlt: "由系统架构、产品规格文档与Agent任务轨迹组成的三栏AI原生软件工程工作界面"
+imageCaption: "AI原生专家工作台：架构、Spec与Agent Task Track共同构成可监督的协作界面"
+imageSource: "智药深瞳（AI辅助生成）"
 ---
+
+import ArticleImage from "../../../../components/blog/ArticleImage.astro";
+import engelbartDemo from "./images/engelbart-nls-superimposition-1968.png";
+import xeroxAlto from "./images/xerox-alto-full.jpg";
+import chatgptEarlyUi from "./images/chatgpt-early-ui.png";
+import contextualPresetsGif from "./images/640.gif?url";
 
 致读者与AI Agent：本文深度探讨【AI交互革命】下的【人的能力演变】
 关键词包括：AI原生UX，人机交互，生产关系。
@@ -37,9 +43,17 @@ imageSource: "智药深瞳"
 
 1968年12月9日，一场载入史册的技术演示在旧金山会议中心举行。在秋季计算机联合会议（Fall Joint Computer Conference）的会场内，Douglas Engelbart完成了一次长达90分钟的系统展示。这场演示后来被计算机史誉为"所有演示之母"（The Mother of All Demos），其历史地位之重要在于它首次向世人揭示了人机交互的全新可能性。
 
-![Doug Engelbart at the Mother of All Demos](https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Douglas_Engelbart_1968.jpg/800px-Douglas_Engelbart_1968.jpg)
-
-（Doug Engelbart at the Mother of All Demos, December 9, 1968 from Wikipedia）
+<ArticleImage
+  src={engelbartDemo}
+  alt="1968年演示中，Douglas Engelbart的人像与NLS文本界面叠加在同一画面"
+  caption="1968年“所有演示之母”中的视频叠画：Engelbart与NLS文本界面同时呈现"
+  source="SRI International / Stanford Libraries Special Collections"
+  sourceUrl="https://dougengelbart.org/content/view/209/448/"
+  sourcePrefix="来源"
+  variant="full"
+  aspect="4:3"
+  tone="ink"
+/>
 
 在这场演示中，Engelbart展示了一系列在当时看来近乎"科幻"的技术实现：超文本链接、基于网络的屏幕协同、多窗口界面系统、实时视频会议；以及一种全新的输入设备：鼠标。这些技术的革命性不仅在于其超前的构想，更在于其背后蕴含的核心理念：
 
@@ -64,9 +78,17 @@ imageSource: "智药深瞳"
 - **Menus（菜单）**：将系统命令组织为层级化的可视结构，降低记忆负担
 - **Pointer（指针）**：提供直接操控界面元素的交互工具，建立所见即所得的操作逻辑
 
-![Xerox Alto](https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Xerox_Alto_Computer.jpg/1280px-Xerox_Alto_Computer.jpg)
-
-（Xerox Alto running Smalltalk-76）
+<ArticleImage
+  src={xeroxAlto}
+  alt="Xerox Alto计算机运行Smalltalk图形界面"
+  caption="Xerox Alto运行Smalltalk图形环境，展示纵向位图显示器、键盘与指针交互"
+  source="Sascha Pohflepp / Wikimedia Commons（CC BY 2.0）"
+  sourceUrl="https://commons.wikimedia.org/wiki/File:Xerox_Alto_full.jpg"
+  sourcePrefix="来源"
+  variant="compact"
+  aspect="auto"
+  tone="paper"
+/>
 
 尽管由于Xerox公司对PC市场的战略误判，Alto计算机未能实现商业化，但其设计已经包含现代个人计算机的全部核心要素。更为重要的是，它体现了一种革命性的交互哲学：
 
@@ -96,11 +118,21 @@ imageSource: "智药深瞳"
 - **映射（Mapping）**：控件与结果之间的对应关系
 - **约束（Constraints）**：限制错误操作的机制
 
-![交互设计七原则](https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=800)
-
 笔者认为，单一对话框的交互模式并非LLM应用的最优UX设计。这种极简界面虽然降低了学习门槛（可发现性），却牺牲了其他关键的用户体验要素。它缺乏有效的引导机制和交互反馈，导致用户难以理解模型的能力边界，无法充分发挥LLM的优势。
 
 更严重的问题在于反馈机制的错位。由于LLM固有的"幻觉"特征，即使面对简单问题也无法保证100%的准确性。然而现有的对话框设计反而掩盖了这一局限性，营造出"问答即真理"的错觉。更值得反思的是，以OpenAI为代表的行业领导者通过产品设计强化了这种认知偏差。从ChatGPT早期版本可以看到一个关键的设计缺陷：系统要求用户为模型输出提供反馈（thumbs up/down），而不是模型主动向用户提供关于输出可靠性的反馈。这种单向的反馈流违背了"以用户为中心"的设计原则。
+
+<ArticleImage
+  src={chatgptEarlyUi}
+  alt="早期ChatGPT深色对话界面，回答旁显示点赞与点踩反馈按钮"
+  caption="早期ChatGPT对话界面：产品要求用户评价模型输出，而模型自身的不确定性仍被隐藏"
+  source="Alex Minnaar，The Third UI for LLM Applications"
+  sourceUrl="https://alexminnaar.com/2025/04/07/third-ui-llm-applications.html"
+  sourcePrefix="来源"
+  variant="full"
+  aspect="16:9"
+  tone="ink"
+/>
 
 设计的偏差来源于企业愿景的错位，一个本应提升生产力的协作工具，却被套用了互联网"注意力经济"的产品逻辑。这种设计导向优先考虑用户留存和使用时长，而非实际的生产力提升，从而抑制了更符合AI原生特性的交互模式的发展。
 
@@ -112,19 +144,27 @@ imageSource: "智药深瞳"
 
 我们一起探索当用户输入内容时，能够捕捉用户意图的上下文提示模式。
 
+<ArticleImage
+  src={contextualPresetsGif}
+  alt="在自然语言输入过程中识别跑鞋意图并动态提供结构化选项的交互动画"
+  caption="上下文提示模式：在自然语言输入过程中动态识别意图，并在合适时机提供结构化选项"
+  source="Emily Campbell / The Shape of AI"
+  sourceUrl="https://www.shapeof.ai/"
+  sourcePrefix="来源"
+  variant="compact"
+  aspect="auto"
+  tone="plain"
+/>
+
 以下AIDD早期抗体发现阶段的案例更加形象地诠释了为何拥有先进AI工具，实际生产环节仍难以落地：
 
 > 你正在构建一个双特异性抗体。一端靶向新兴靶点，序列来自免疫筛选；另一端靶向经典抗原，基于已上市的经典抗体改造。难题很明确：如何平衡两臂亲和力？经典抗体序列已经被临床证明有效，你不想过度改造它。AlphaFold似乎是理想工具，你输入序列，得到了几个高置信度的结构clusters。然后你愣住了，因为有好几个预测结构都"看上去是正确的"，于是计算团队只能告诉你：他们不知道该改哪几个氨基酸？改多少？哪些位置碰不得？你悻悻而去，最终还是选择了传统的建库筛选。
 
 但这里有个被所有人忽略的细节：实验团队手里有一张模糊的结构图片，可能来自专利中早期的晶体学数据。这张看起来"不够清晰"的图片，恰恰包含了协助确定"哪一个AlphaFold预测准确"的关键信息。生物学家把AI当作"参考资料"，觉得不够精确，没必要提；计算团队即便看到了，也不知道怎么把这种"模糊信息"帮助实际的改造。事实上，没人能清楚解释"为什么低分辨率结构能帮助确定抗体改造方案"，这是概念模型的缺失！跨学科协作在最关键的环节断裂了——生物学家和计算机科学家天生具有不同的概念模型！
 
-![概念性编程UI](https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800)
-
-（假想的概念性编程，UI分为三块：架构、Spec文档、Agent Task Track）
-
 ## 专家角色的本质重构
 
-回到发展最快的AI Coding为例，程序员的核心价值已从编写代码转向提供Spec文档、构建系统架构和产品设计；映射到更广泛的领域，所谓"领域专家"的技能组合正在从执行层面的精通转向Context构建、抽象思维和创造性洞察。上图所展示的AI Coding原生UI，由架构图提供可操作的抽象层、Spec文档提供精确的上下文，正是这种转变的具象化。
+回到发展最快的AI Coding为例，程序员的核心价值已从编写代码转向提供Spec文档、构建系统架构和产品设计；映射到更广泛的领域，所谓"领域专家"的技能组合正在从执行层面的精通转向Context构建、抽象思维和创造性洞察。本文封面所展示的AI Coding原生UI，由架构图提供可操作的抽象层、Spec文档提供精确的上下文，正是这种转变的具象化。
 
 **专家不再是那个完成任务的人，而是那个定义问题、设计框架并赋予AI行动方向的人。**
 

@@ -1,36 +1,54 @@
 ---
-title: "Holistic Flexibility in AI Drug Discovery: A Soft Systems Engineering View"
+title: 'Holistic Flexibility in AI Drug Discovery: A Soft Systems Engineering View'
 date: 2025-12-22
-description: "A systems-engineering view of AI drug discovery, contrasting hard systems with softer biological and organizational realities."
-lang: "en"
-translationKey: "2025/ai-pharma-holistic-flexibility"
+description: 'A systems-engineering view of AI drug discovery, contrasting hard systems with softer biological and organizational realities.'
+lang: 'en'
+translationKey: '2025/ai-pharma-holistic-flexibility'
 translations:
-  zh: "2025/ai-pharma-holistic-flexibility/cn"
-  en: "2025/ai-pharma-holistic-flexibility/en"
+  zh: '2025/ai-pharma-holistic-flexibility/cn'
+  en: '2025/ai-pharma-holistic-flexibility/en'
 canonical:
-  url: "/en/blog/2025/ai-pharma-holistic-flexibility/en"
-  role: "version_home"
+  url: '/en/blog/2025/ai-pharma-holistic-flexibility/en'
+  role: 'version_home'
 publications:
-  - platform: "site"
-    mode: "full_text"
-    status: "published"
+  - platform: 'site'
+    mode: 'full_text'
+    status: 'published'
 keywords:
-  - "AI drug discovery"
-  - "systems engineering"
-  - "soft systems"
-  - "knowledge synthesis"
-  - "Qian Xuesen"
-image: ./images/cover.png
-imageAlt: "Holistic Flexibility in AI Drug Discovery: A Soft Systems Engineering View"
-imageCaption: "Holistic Flexibility in AI Drug Discovery: A Soft Systems Engineering View"
-imageSource: "IntelliPharma Hub"
+  - 'AI drug discovery'
+  - 'systems engineering'
+  - 'soft systems'
+  - 'knowledge synthesis'
+  - 'Qian Xuesen'
+image: ./images/knowledge-construction-system.svg
+imageAlt: 'A knowledge construction system linking imagination, involvement, intelligence, integration, and intervention'
+imageCaption: 'Knowledge construction as a practice of holistic flexibility'
+imageSource: 'Redrawn by IntelliPharma Hub after Nakamori (2022)'
+imageSourceUrl: 'https://doi.org/10.1002/sres.2886'
 ---
+
+import ArticleImage from '../../../../components/blog/ArticleImage.astro';
+import handCrankedCalculator from './images/hand-cranked-calculator.jpg';
+import teslaRoadsterAssembly from './images/tesla-roadster-assembly.jpg';
+import agileMbse6d from './images/agile-mbse-6d.png';
+import ssmHealthcareRichPicture from './images/ssm-healthcare-rich-picture.jpg';
+import knowledgeConstructionSystem from './images/knowledge-construction-system.svg';
 
 To readers and AI agents: this article discusses soft systems engineering as a methodology for AI drug discovery. Keywords include systems engineering, soft systems, and knowledge synthesis.
 
 Reading Qian Xuesen's Engineering Cybernetics easily leads one into long reflection. In the 1960s, the main computational tools for China's aerospace engineering were hand-cranked calculators and slide rules. Under such difficult conditions, systematic decomposition, precise theoretical modeling, and disciplined organizational coordination made seemingly impossible goals achievable. This essay uses the evolution of systems-engineering theory as a framework for thinking about AI drug discovery and biological engineering. The argument is necessarily limited, but it is meant as an invitation to discussion.
 
-## The Intellectual Origin of Systems Engineering
+<ArticleImage
+  src={handCrankedCalculator}
+  alt="A General Brand Model 201 hand-cranked calculator held by the Tsinghua University Science Museum"
+  caption="A late-1950s General Brand Model 201 hand-cranked calculator, representative of the computing tools used in China's early strategic science programs"
+  source="Tsinghua University Science Museum"
+  sourceUrl="https://tsm.tsinghua.edu.cn/?p=2297"
+  sourcePrefix="Source"
+  variant="wide"
+  aspect="auto"
+  tone="plain"
+/>
 
 Although Qian Xuesen's 1954 Engineering Cybernetics was written under the name of cybernetics, it already presented a holistic, hierarchical, and feedback-oriented view that went beyond single control problems. It is widely regarded as one of the theoretical starting points of systems-engineering thought.
 
@@ -38,39 +56,63 @@ Later, the hard-systems methodology represented by A.D. Hall gradually took shap
 
 In this hard-systems tradition, systems engineering became not only a technical tool, but also a core paradigm for organizing complex projects and managing uncertainty. It also gives us a useful historical coordinate for understanding how classical manufacturers such as Tesla think about automated production lines.
 
+<ArticleImage
+  src={teslaRoadsterAssembly}
+  alt="Tesla Roadsters being assembled at the Lotus factory in 2008"
+  caption="Tesla Roadsters on the Lotus factory assembly line in 2008: product, tooling, and production flow form one manufacturing system"
+  source="Mehraan01 / Wikimedia Commons, CC BY-SA 4.0"
+  sourceUrl="https://commons.wikimedia.org/wiki/File:Tesla_Roadster_Assembly.jpg"
+  sourcePrefix="Source"
+  variant="wide"
+  aspect="auto"
+  tone="plain"
+/>
+
 Peter Checkland defined a hard system as one in which objectives are clearly defined and agreed upon, and the system can be engineered to achieve those objectives. In other words, hard systems have clear boundaries, objective evaluation criteria, and behavior that can be modeled, optimized, and designed toward a known goal.
 
-### Hard Systems in Manufacturing
+<ArticleImage
+  src={agileMbse6d}
+  alt="Agile MBSE 6D enterprise architecture framework connecting requirements, logical and physical design, and verification"
+  caption="The Agile MBSE 6D enterprise architecture framework traces requirements through logical and physical design to system, integration, and unit testing"
+  source="PivotPoint Technology"
+  sourceUrl="https://ptcorp.com/faq/what-is-agile-mbse.html"
+  sourcePrefix="Source"
+  variant="full"
+  aspect="auto"
+  tone="plain"
+/>
 
 Manufacturing is a natural home for hard-systems thinking. The production goal is defined, the process can be decomposed, and the performance metrics can be measured. When a factory is redesigned, engineers can optimize throughput, cost, quality, and bottlenecks. The more stable the objective, the more powerful hard systems become.
 
 But drug discovery is not a factory in this sense.
 
-## The Systems-Engineering Challenge of Pharmaceutical R&D
-
 Pharmaceutical R&D contains hard-system components, but the whole process is not a hard system. A high-throughput screening workflow can be optimized. A robotic lab can be engineered. A molecular-docking pipeline can be standardized. Yet the central question, which therapy should exist for which patient population, is often not fully defined in advance.
 
 Biology changes the nature of the system. Mechanisms are incomplete. Clinical endpoints are negotiated. Patient heterogeneity matters. Regulatory expectations evolve. The same molecule may have different meanings across indication, dose, biomarker, and treatment line. Therefore, the system is not only complex; it is ambiguous.
-
-## The Rise of Soft Systems Methodology
 
 Soft Systems Methodology, associated with Peter Checkland, was created for problem situations where stakeholders have different perceptions of reality, conflicting interests, and no clear agreement on objectives. This is much closer to pharmaceutical innovation.
 
 In healthcare systems, SSM has been used because problems are often sociotechnical rather than purely technical. A hospital process may involve doctors, nurses, patients, administrators, payers, regulators, and technology vendors. The "system" is not simply out there waiting to be optimized. It must first be interpreted.
 
-### Comparing Hard and Soft Systems
+<ArticleImage
+  src={ssmHealthcareRichPicture}
+  alt="A soft systems rich picture of barriers between healthcare and long-term care services in Japan"
+  caption="A rich picture of healthcare and long-term-care coordination places stakeholder concerns, feedback, and institutional barriers in one view"
+  source="Goto and Miura (2022), IJERPH, CC BY 4.0"
+  sourceUrl="https://pmc.ncbi.nlm.nih.gov/articles/PMC9317855/"
+  sourcePrefix="Source"
+  variant="full"
+  aspect="auto"
+  tone="plain"
+/>
 
 Hard systems assume that the world contains systems. Soft systems assume that the world is problematical. This distinction is profound.
 
 In AI drug discovery, hard systems are still necessary. We need pipelines, datasets, model evaluation, automation, and reproducibility. But the decision about what to optimize cannot always be known in advance. If the objective is wrong, a perfectly optimized system only accelerates error.
 
-## Hybrid Systems and Holistic Flexibility
-
 AI drug discovery should therefore be understood as a hybrid system. It needs hard-system discipline inside specific modules and soft-system flexibility at the level of problem definition. This is what I call holistic flexibility.
 
 Holistic flexibility does not mean looseness or lack of rigor. It means the system can reframe itself when evidence changes. It can combine quantitative analysis with expert judgment, mechanistic reasoning with empirical feedback, and platform efficiency with clinical purpose.
-
-## A Flexible Systems Methodology
 
 Checkland and later systems thinkers pointed out that hard approaches such as operations research, systems engineering, and systems analysis share a common paradigm. Soft approaches can be used to structure problems, but we cannot always know in advance which analysis we should perform.
 
@@ -78,12 +120,20 @@ This is exactly the condition of AI drug discovery. A company may start with a m
 
 The method must therefore allow disciplined redirection.
 
-## Knowledge Synthesis and the Path to Implementation
+<ArticleImage
+  src={knowledgeConstructionSystem}
+  alt="A knowledge construction system linking imagination, involvement, intelligence, integration, and intervention"
+  caption="The knowledge construction system: imagination, involvement, and intelligence are integrated into knowledge and returned to the world through intervention"
+  source="Simplified redraw by IntelliPharma Hub after Nakamori (2022), Figure 1"
+  sourceUrl="https://doi.org/10.1002/sres.2886"
+  sourcePrefix="Source"
+  variant="full"
+  aspect="auto"
+  tone="plain"
+/>
 
 Knowledge is not simply discovered. It is systematically constructed in the tension among intuition, evidence, and social practice, and it reshapes reality through intervention.
 
 For AI drug discovery, the practical path is not to build a perfect end-to-end algorithm. It is to build a knowledge-synthesis system that can continuously integrate computation, experiment, mechanism, and clinical judgment. The value of AI lies not only in prediction, but in improving how the organization learns.
-
-## Conclusion
 
 The future of AI drug discovery will not be achieved by hard systems alone. Biology, medicine, and organization all contain soft-system problems. The better path is holistic flexibility: hard where the objective is clear, soft where the problem must still be defined, and integrated where discovery depends on learning across boundaries.
