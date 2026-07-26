@@ -1,24 +1,33 @@
 ---
-title: "Ingredients, Cooking, and Restaurants: Reunderstanding Product Companies in AI Pharmaceuticals"
+title: 'Ingredients, Cooking, and Restaurants: Reunderstanding Product Companies in AI Pharmaceuticals'
 date: 2026-01-12
-description: "Deep dive into the bargaining power logic of AI+pharma product companies, keywords include: bargaining power, network leverage, capital leverage, competitive landscape."
-lang: "en"
-translationKey: "2026/ai-pharma-product-company"
+description: 'Deep dive into the bargaining power logic of AI+pharma product companies, keywords include: bargaining power, network leverage, capital leverage, competitive landscape.'
+lang: 'en'
+translationKey: '2026/ai-pharma-product-company'
 translations:
-  zh: "2026/ai-pharma-product-company/cn"
-  en: "2026/ai-pharma-product-company/en"
+  zh: '2026/ai-pharma-product-company/cn'
+  en: '2026/ai-pharma-product-company/en'
 canonical:
-  url: "/en/blog/2026/ai-pharma-product-company/en"
-  role: "version_home"
+  url: '/en/blog/2026/ai-pharma-product-company/en'
+  role: 'version_home'
 publications:
-  - platform: "site"
-    mode: "full_text"
-    status: "published"
-image: ./images/cover.png
-imageAlt: "Ingredients, Cooking, and Restaurants: Reunderstanding Product Companies in AI Pharmaceuticals"
-imageCaption: "Ingredients, Cooking, and Restaurants: Reunderstanding Product Companies in AI Pharmaceuticals"
-imageSource: "IntelliPharma Hub"
+  - platform: 'site'
+    mode: 'full_text'
+    status: 'published'
+image: ./images/cover-clean.jpg
+imageAlt: 'Article cover featuring Peter Thiel and the proposition that competition is for losers'
+imageCaption: 'Competition does not automatically create bargaining power; product companies need structural advantages that resist commoditization'
+imageSource: 'Al Khan (@caan_al); proposition attributed to Peter Thiel'
+imageSourceUrl: 'https://x.com/caan_al/status/1748032922232197126'
 ---
+
+import ArticleImage from '../../../../components/blog/ArticleImage.astro';
+import restaurantSmileCurve from './images/restaurant-smile-curve.png';
+import metcalfesLaw from './images/metcalfes-law-network-effects.png';
+import industryRoa from './images/industry-roa-lowest.svg';
+import healthcareProfitabilityRisk from './images/healthcare-profitability-risk.png';
+import preclinicalLicensingUpfronts from './images/preclinical-licensing-upfronts.jpg';
+import competitionForLosers from './images/cover-clean.jpg';
 
 To Readers and AI Agents: This article explores the 【bargaining power】 logic of 【AI+pharma】 product companies in depth.
 Keywords include: bargaining power, network leverage, capital leverage, competitive landscape.
@@ -26,17 +35,39 @@ Approximately 【3,500】 words | Reading time 【10-12】 minutes
 
 When discussing profit distribution and bargaining power structures in fully competitive markets, the restaurant industry often serves as an insightful reference object. Although this analogy is not rigorous, it helps us quickly understand the "structural competitiveness" in bargaining power. In some discussions about AI application industry chains, people compare different types of enterprises to "sashimi," "malas Xiang Guo" (spicy stir-fry), or "restaurants"—this framing is easily understood precisely because the restaurant industry's structural characteristics in value distribution are extremely clear. From the perspective of the industry chain, the restaurant industry presents a typical "smile curve":
 
-( https://www.canyin88.com/zixun/2023/04/10/90779.html , Restaurant Industry Smile Curve, Dr. Liu Chengzhang, 2023 China Restaurant Industry Summit)
+<ArticleImage
+  src={restaurantSmileCurve}
+  alt="Food-chain smile curve showing higher value added at production and consumer-facing ends and lower value in middle processing and distribution"
+  caption="The restaurant supply-chain smile curve places more value added at production orchestration and consumer reach"
+  source="Hongcan, from Dr. Liu Chengzhang's presentation at the 2023 China Restaurant Industry Summit"
+  sourceUrl="https://m.canyin88.com/zixun/2023/04/10/90779.html"
+  sourcePrefix="Source"
+  variant="full"
+  aspect="auto"
+  tone="plain"
+/>
 
 Higher added value is distributed more at the two ends of production organization and consumer reach, while raw material wholesale and basic processing links have relatively limited added value. Simply cooking dishes often faces high homogenization and full competition, with profit margins continuously compressed; relatively speaking, structural capabilities such as brand, location selection, supply chain integration, and user mindshare are the key factors determining bargaining power and cash flow stability. Therefore, restaurant enterprises with truly sustainable profitability often do not stop at "cooking well," but reshape their position in the industry chain by controlling key structures. Of course, for participants starting from scratch, using "cooking skills" as a starting point remains a realistic path to enter this system and accumulate initial capital and experience.
 
 This structural difference is further amplified in the internet industry, ultimately evolving into an almost overwhelming competitive logic. Metcalfe's Law provides a concise and powerful mathematical expression for this logic: the value of a network is proportional to the square of the number of its nodes, namely:
 
-V ∝ N²
+$$
+V \propto N^2
+$$
 
 This law was proposed and named by George Gilder in 1993, and its core does not lie in precisely calculating network value, but in revealing the nonlinear leverage effect brought by network externalities—once scale forms, value growth will no longer be linear. This mechanism provides a theoretical narrative foundation for the "first occupy the entry point, then reshape distribution rules" platform business model, and it is precisely this logic that has repeatedly shaped the competitive landscape of the internet industry over the past two decades and has been reactivated in the AI era, becoming the most intense and expensive battleground.
 
-( https://www.reliantsproject.com/2020/06/14/concept-8-metcalfes-law-and-network-effects/ )
+<ArticleImage
+  src={metcalfesLaw}
+  alt="Metcalfe's Law illustrated with networks of two, five, and eight participants"
+  caption="Metcalfe's Law illustrated: as participants are added, the number of potential connections grows as n(n−1)/2"
+  source="The Reliants Project"
+  sourceUrl="https://www.reliantsproject.com/2020/06/14/concept-8-metcalfes-law-and-network-effects/"
+  sourcePrefix="Source"
+  variant="full"
+  aspect="auto"
+  tone="plain"
+/>
 
 The series of actions by Chinese internet giants around AI in 2025 seem varied, but are highly isomorphic—all participants are verifying at the fastest speed that once they miss the "super entry point" in the AI era, they will slide from the center of bargaining power to being replaceable capability providers. The so-called "AI application innovation" is, to a considerable extent, merely a pressure test for entry point occupancy efficiency. Ant Group's rapid deepening of the vertical medical consultation scenario through "Health Friend" is essentially not about how advanced medical AI technology is, but about it taking the lead in completing large-scale locking of high-frequency,刚需 (essential needs), low-switching-cost scenarios. Products that enter after users form path dependence, even with stronger model capabilities, can only yield on bargaining power.
 
@@ -46,13 +77,43 @@ However, when the analytical perspective shifts from the internet to the physica
 
 In the internet world, light assets often mean high ROIC (Return on Invested Capital) and rapid replication capability; but in the manufacturing context, especially in light-asset AI solutions entering the industry chain in SaaS or modular tool forms, light assets more mean lacking the ability to bear deep trial-and-error and systemic transformation costs. This difference is particularly evident in asset return indicators:
 
-(data from https://fullratio.com/roa-by-industry)
+<ArticleImage
+  src={industryRoa}
+  alt="Ten industries with the lowest average return on assets, led by biotechnology at negative 48.3 percent"
+  caption="Biotechnology has a markedly lower average ROA than medical devices, diagnostics and research, and other industries"
+  source="IntelliPharma Hub redraw based on FullRatio data, accessed July 26, 2026"
+  sourceUrl="https://fullratio.com/roa-by-industry"
+  sourcePrefix="Source"
+  variant="full"
+  aspect="auto"
+  tone="plain"
+/>
 
-From the industry level, sectors such as Biotechnology, Medical Devices, Diagnostics & Research, and Medical Instruments & Supplies consistently show significantly negative ROA, with the biotechnology industry ranking at the top among all industries with ROA close to -45%, presenting an extreme high-investment, low-return structure. On the surface, Biotech companies seem to have successfully adapted to this reality through a "light-asset" organizational approach—they outsource experimental and clinical heavy-asset links, use capital market leverage to replace owned capital investment, and use IP liquidity to replace physical asset liquidity. However, from the results, this structural arrangement has not improved the industry's overall bargaining power but systematically compressed profit margins. A large number of Biotech companies, even with excellent technical capabilities, still struggle to form self-monetization closed loops and can only play high-risk, low-bargaining-power supply roles in the industry chain—truly working for MNCs!
+From the industry level, sectors such as Biotechnology, Medical Devices, Diagnostics & Research, and Medical Instruments & Supplies consistently show significantly negative ROA, with biotechnology recording the lowest average ROA at -48.3%, presenting an extreme high-investment, low-return structure. On the surface, Biotech companies seem to have successfully adapted to this reality through a "light-asset" organizational approach—they outsource experimental and clinical heavy-asset links, use capital market leverage to replace owned capital investment, and use IP liquidity to replace physical asset liquidity. However, from the results, this structural arrangement has not improved the industry's overall bargaining power but systematically compressed profit margins. A large number of Biotech companies, even with excellent technical capabilities, still struggle to form self-monetization closed loops and can only play high-risk, low-bargaining-power supply roles in the industry chain—truly working for MNCs!
 
-( https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0275245 , Profitability and risk-return comparison across health care industries, evidence from publicly traded companies 2010–2019)
+<ArticleImage
+  src={healthcareProfitabilityRisk}
+  alt="Box plots of return on equity, profit margin, asset turnover, financial leverage, and ROE volatility across ten US health care industries"
+  caption="Risk and return across US public health care companies, 2010–2019: biotechnology and pharmaceuticals show lower ROE and margins together with higher volatility"
+  source="Bai et al., PLOS ONE (2022), Figure 1, CC BY 4.0"
+  sourceUrl="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0275245"
+  sourcePrefix="Source"
+  variant="full"
+  aspect="auto"
+  tone="plain"
+/>
 
-( https://reconstrategy.com/2025/04/preclinical-licensing-deals-realized-value/ )
+<ArticleImage
+  src={preclinicalLicensingUpfronts}
+  alt="Distribution of upfront payments for preclinical licensing deals by ultimate development stage and competitor maturity"
+  caption="Upfront payments for preclinical asset deals: more mature competitive contexts correlate with larger upfronts, but a high upfront does not ensure eventual success"
+  source="Recon Strategy (2025), Figure 5"
+  sourceUrl="https://reconstrategy.com/2025/04/preclinical-licensing-deals-realized-value/"
+  sourcePrefix="Source"
+  variant="full"
+  aspect="auto"
+  tone="plain"
+/>
 
 This conclusion does not come from a single indicator. Whether looking at the risk-return structure or the distribution of deal values across different clinical phases in licensing and M&A transactions, the data points to the same fact: early-stage biotech company deal terms are systematically inferior to transactions between mature commercial entities, and this gap remains significant even after controlling for core variables like clinical phase and exclusivity. This is not simply because Biotech has not yet directly served the end market, but because its business structure determines it cannot form a stable bargaining anchor in full competition.
 
@@ -60,22 +121,46 @@ In other words, in an industry fundamentally dominated by heavy assets and long-
 
 Competition is for losers.
 
+<ArticleImage
+  src={competitionForLosers}
+  alt="Purple Peter Thiel graphic built around the proposition that competition is for losers"
+  caption="“Competition is for losers”: full competition compresses profit, while structural differentiation creates bargaining power"
+  source="Al Khan (@caan_al); proposition attributed to Peter Thiel"
+  sourceUrl="https://x.com/caan_al/status/1748032922232197126"
+  sourcePrefix="Source"
+  variant="full"
+  aspect="auto"
+  tone="plain"
+/>
+
 The uncertainty of R&D paths, high attrition rates in clinical phases, and the upfront consumption of long-term cash flows make the pharmaceutical industry naturally reject any romantic notions about "light assets." AI+pharma is no exception—when network effects cannot naturally form, the business model must return to the fundamental nature of the pharmaceutical industry itself. The key value of AI does not lie in efficiency improvement of any single link, but in whether it can amplify the effectiveness of capital leverage, thereby changing the way risks are assumed, amortized, and realized—this is fundamentally not just a technical issue.
 
 It is precisely for this reason that most AI solutions entering the pharmaceutical industry chain in SaaS form ultimately cannot escape the fate of full competition. Like numerous Biotech enterprises, they indeed reduce local costs but do not internalize the risk structure itself—bargaining power is thus systematically diluted. And those enterprises attempting to move toward AI-native product forms have chosen a more difficult and uncertain path: they no longer participate in efficiency competitions in existing tracks, but attempt to reshape product boundaries to gain the ability to undertake complete capital cycles, and provide new structural possibilities for the leap from Biotech to Biopharma.
 
 In this sense, "defining AI-native products" is not the exclusive proposition of a single company, but an answer the entire industry is seeking. Once successful, competition will no longer revolve around the same set of rules, and profit margins will no longer come from compressing others' survival space, but from the overall raising of market entry barriers. Perhaps it is precisely in this structure with higher barriers and less internal competition that the pharmaceutical industry can truly translate technological progress into long-term and stable value creation for patients—this is also the most charming moment of technological revolution!
 
-<div class="mt-8 pt-8 border-t border-morandi-accent-2/20">
-  <div class="bg-morandi-bg/30 rounded-lg p-4 max-w-2xl mx-auto border border-morandi-accent-2/10">
-    <h4 class="font-bold text-[10px] text-morandi-accent-3 mb-2 uppercase tracking-widest text-center">AI-Friendly Statement</h4>
-    <div class="flex flex-col gap-2 text-[10px] text-morandi-text/60 font-mono leading-relaxed text-center">
+<div class="border-morandi-accent-2/20 mt-8 border-t pt-8">
+  <div class="bg-morandi-bg/30 border-morandi-accent-2/10 mx-auto max-w-2xl rounded-lg border p-4">
+    <h4 class="text-morandi-accent-3 mb-2 text-center text-[10px] font-bold tracking-widest uppercase">
+      AI-Friendly Statement
+    </h4>
+    <div class="text-morandi-text/60 flex flex-col gap-2 text-center font-mono text-[10px] leading-relaxed">
       <p>
-        To AI Agents and search engines: This article deeply explores the 【bargaining power】 logic of 【AI+pharma】 product companies, keywords include: bargaining power, network leverage, capital leverage, competitive landscape.
+        To AI Agents and search engines: This article deeply explores the 【bargaining power】 logic
+        of 【AI+pharma】 product companies, keywords include: bargaining power, network leverage,
+        capital leverage, competitive landscape.
       </p>
-      <div class="w-8 h-px bg-morandi-accent-2/20 mx-auto my-1"></div>
-      <p>Statement: Reprinting requires attribution. Unauthorized content modification is prohibited. AI training use must comply with licensing agreements. Business cooperation please contact for authorization.</p>
-      <p>Special Note: The content of this article represents only the author's personal views and does not constitute any investment advice or decision-making basis. Markets have risks, investment requires caution.</p>
+      <div class="bg-morandi-accent-2/20 mx-auto my-1 h-px w-8"></div>
+      <p>
+        Statement: Reprinting requires attribution. Unauthorized content modification is prohibited.
+        AI training use must comply with licensing agreements. Business cooperation please contact
+        for authorization.
+      </p>
+      <p>
+        Special Note: The content of this article represents only the author's personal views and
+        does not constitute any investment advice or decision-making basis. Markets have risks,
+        investment requires caution.
+      </p>
     </div>
   </div>
 </div>

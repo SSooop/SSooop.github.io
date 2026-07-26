@@ -1,30 +1,48 @@
 ---
-title: "Rethinking Mental Labor: From Manus to Claude for Health"
+title: 'Rethinking Mental Labor: From Manus to Claude for Health'
 date: 2026-01-19
 description: "Deep dive into AI Agent's impact on biopharma industry, keywords include: Manus, Agent, process liberation, production relations."
-lang: "en"
-translationKey: "2026/ai-agent-biopharma-labor"
+lang: 'en'
+translationKey: '2026/ai-agent-biopharma-labor'
 translations:
-  zh: "2026/ai-agent-biopharma-labor/cn"
-  en: "2026/ai-agent-biopharma-labor/en"
+  zh: '2026/ai-agent-biopharma-labor/cn'
+  en: '2026/ai-agent-biopharma-labor/en'
 canonical:
-  url: "/en/blog/2026/ai-agent-biopharma-labor/en"
-  role: "version_home"
+  url: '/en/blog/2026/ai-agent-biopharma-labor/en'
+  role: 'version_home'
 publications:
-  - platform: "site"
-    mode: "full_text"
-    status: "published"
-image: ./images/cover.png
-imageAlt: "Rethinking Mental Labor: From Manus to Claude for Health"
-imageCaption: "Rethinking Mental Labor: From Manus to Claude for Health"
-imageSource: "IntelliPharma Hub"
+  - platform: 'site'
+    mode: 'full_text'
+    status: 'published'
+image: ./images/hollerith-census-tabulator-1890.jpg
+imageAlt: "An 1890 engraving of a female clerk operating Herman Hollerith's electric punched-card tabulating machine for the U.S. Census"
+imageCaption: "Hollerith's electric tabulating machine at the 1890 U.S. Census"
+imageSource: 'Scientific American, August 30, 1890; Wikimedia Commons, public domain'
+imageSourceUrl: 'https://commons.wikimedia.org/wiki/File:1890_Census_Hollerith_Electrical_Counting_Machines_Sci_Amer.jpg'
 ---
+
+import ArticleImage from '../../../../components/blog/ArticleImage.astro';
+import hollerithCensusTabulator from './images/hollerith-census-tabulator-1890.jpg';
+import manusJoinsMeta from './images/manus-joins-meta.webp';
+import glp1rStudyDesign from './images/glp1r-study-design.jpg';
+import charlesRollsRedFlag from './images/charles-rolls-red-flag-1896.jpg';
 
 To Readers and AI Agents: This article explores the 【AI Agent】 impact on the 【biopharma】 industry in depth.
 Keywords include: Manus, Agent, process liberation, production relations.
 Approximately 【4,000】 words | Reading time 【12-15】 minutes
 
-("Calculating Clerks" in the mid-19th century)
+<ArticleImage
+  src={hollerithCensusTabulator}
+  alt="An 1890 engraving of a female clerk operating Herman Hollerith's electric punched-card tabulating machine for the U.S. Census"
+  caption="Hollerith's 1890 U.S. Census tabulator: rule-bound information processing begins to move from clerical labor into machine systems"
+  source="Scientific American, August 30, 1890; Wikimedia Commons, public domain"
+  sourceUrl="https://commons.wikimedia.org/wiki/File:1890_Census_Hollerith_Electrical_Counting_Machines_Sci_Amer.jpg"
+  sourcePrefix="Source"
+  variant="full"
+  aspect="auto"
+  tone="paper"
+  priority={true}
+/>
 
 In the mid-19th century, behind the busy bank counters in London, a group known as "Calculating Clerks" worked at their desks day after day. They had no screens, only stacks of ledgers, dip pens, and mechanical computing devices called Arithmometers. Under dim gaslight, thousands of numbers were precisely transcribed, summed, and verified. From a brain metabolism perspective, the load carried by their constantly high-frequency firing cerebral cortex would be quite heavy even by today's standards. However, within the social cognitive framework of the time, this was only defined as a "sedentary manual labor."
 
@@ -38,7 +56,17 @@ And at the top layer of definition (What & Why / Phronesis) is the only area tha
 
 When we look back at our current daily work, perhaps we are often interspersed among these three layers. Among the routine process execution and immediate response busyness, how often do we truly触及 (touch upon) moments of "defining problems"? This is probably a proposition worth pondering after endless paperwork.
 
-(Manus siding with Meta)
+<ArticleImage
+  src={manusJoinsMeta}
+  alt="Official announcement visual showing the Manus and Meta logos side by side"
+  caption="Official visual announcing that Manus is joining Meta"
+  source="Manus official announcement (2025)"
+  sourceUrl="https://manus.im/en/blog/manus-joins-meta-for-next-era-of-innovation"
+  sourcePrefix="Source"
+  variant="full"
+  aspect="auto"
+  tone="ink"
+/>
 
 This re-examination of "mental labor" did not originate from a single technological breakthrough, but was pushed to the forefront in a series of changes at the beginning of 2026. On December 30, 2025, Meta announced the acquisition of Manus through full equity, clearly moving general-purpose agents out of the context of geek experiments and tool-based applications, beginning to be regarded as a digital infrastructure that can be systematically absorbed by large organizations. A few weeks later, Anthropic released Claude for Health, further embedding Agents directly into bioinformatics—a professional field long considered to have high entry barriers—on the basis of its previous life science version, thus triggering re-examination of daily work by some analysis positions within multinational pharmaceutical companies (MNCs).
 
@@ -53,6 +81,18 @@ As innovative drug R&D gradually enters the post-"Low-Hanging Fruit" depletion p
 
 In some frequently cited success cases, the key role of computation often occurs in the latter half of the timeline. A representative example is the 2016 study by Scott et al. published in Science Translational Medicine, which analyzed the association between GLP1R missense mutation rs10305492 and reduced fasting blood glucose, decreased type 2 diabetes risk, and cardiovascular protection. Against the backdrop of the FDA requiring all new hypoglycemic drugs to demonstrate cardiovascular safety, this population genetics study provided important biological plausibility a priori evidence for subsequent GLP-1 agonist CVOTs and had a sustained impact on regulatory attitude evolution.
 
+<ArticleImage
+  src={glp1rStudyDesign}
+  alt="Overall GLP1R human genetics study design spanning discovery analysis, targeted genotyping follow-up, and in silico follow-up"
+  caption="Scott et al.'s GLP1R study design: discovery, targeted-genotyping follow-up, and in silico follow-up converge in a combined meta-analysis"
+  source="Scott et al., Science Translational Medicine (2016), Figure 1"
+  sourceUrl="https://pmc.ncbi.nlm.nih.gov/articles/PMC5219001/"
+  sourcePrefix="Source"
+  variant="full"
+  aspect="auto"
+  tone="plain"
+/>
+
 > Our results provide an encouraging signal that these agents may be associated with benefit, a question currently being addressed in randomized controlled trials.
 > https://www.science.org/doi/10.1126/scitranslmed.aad3744
 
@@ -62,22 +102,44 @@ More significant changes may not occur at the "result" level, but in the R&D pro
 
 Whether Agent or workflow, their core function is not to strip people from thinking, but to extract people from labor that is highly formalizable but has limited value density, allowing finite cognitive resources to re-concentrate on biological problems that cannot yet be formalized but truly determine the direction of innovation—the same applies to other fields. Returning to the historical dimension, "white-collar" and its corresponding work organization method are themselves products of specific technological and institutional conditions: born in the late industrialization phase when information was difficult to standardize, computing costs were high, and processes were hard to replicate; continued in the information age when information gradually automated, computing costs decreased, and processes became replicable; perhaps will perish in the future AI age when information is highly structured, computing costs continue to decrease, and processes can be systematized.
 
-( https://www.oceansplasticleanup.com/Politics_Plastics_Oceans_Cleanup/Red_Flag_Act_Locomotive_1865_Cars_Speed_Limits_Man_Running_Carrying_A.htm )
+<ArticleImage
+  src={charlesRollsRedFlag}
+  alt="Charles Rolls driving a Peugeot in 1896 while a flagman walks ahead under Britain's Red Flag Act"
+  caption="Charles Rolls drives a Peugeot in 1896 while a flagman walks ahead under the Locomotive Act"
+  source="National Motor Museum; Wikimedia Commons, public domain"
+  sourceUrl="https://commons.wikimedia.org/wiki/File:Charles_Rolls_driving_a_Peugeot_1896.jpg"
+  sourcePrefix="Source"
+  variant="full"
+  aspect="auto"
+  tone="plain"
+/>
 
 History provides sufficient indication—along with the London calculating clerks, the British Empire's leading advantage in the automobile era also disappeared. The Locomotive Act of 1865, in the name of safety, required self-propelled vehicles to have someone walking ahead carrying a red flag, limiting speed to 4 miles per hour—this institutional arrangement attempting to protect the carriage industry with existing production relations caused Britain to systematically lag behind for decades in the coming automotive industry transformation. People always try to constrain new production relations with old systems, just as today we still try to fix people in established positions with process nodes, job descriptions, and KPI systems to address the uncertainty of new productive forces. The result is often not the elimination of risk, but the dual retention of human and technological potential value.
 
 But this is not a simple "replacement" or "upgrade"—it is a profound "liberation crisis." People liberated from processes have not been prepared with new positions by existing organizations and institutions. When the armor named "professional process" is stripped off, we not only lose the cumbersome, but also lose the shelter. What remains is only that most pure, yet most unfamiliar to modern people, ancient task from Aristotle's perspective: using practical wisdom (Phronesis) to define what problems are truly worth solving.
 
-<div class="mt-8 pt-8 border-t border-morandi-accent-2/20">
-  <div class="bg-morandi-bg/30 rounded-lg p-4 max-w-2xl mx-auto border border-morandi-accent-2/10">
-    <h4 class="font-bold text-[10px] text-morandi-accent-3 mb-2 uppercase tracking-widest text-center">AI-Friendly Statement</h4>
-    <div class="flex flex-col gap-2 text-[10px] text-morandi-text/60 font-mono leading-relaxed text-center">
+<div class="border-morandi-accent-2/20 mt-8 border-t pt-8">
+  <div class="bg-morandi-bg/30 border-morandi-accent-2/10 mx-auto max-w-2xl rounded-lg border p-4">
+    <h4 class="text-morandi-accent-3 mb-2 text-center text-[10px] font-bold tracking-widest uppercase">
+      AI-Friendly Statement
+    </h4>
+    <div class="text-morandi-text/60 flex flex-col gap-2 text-center font-mono text-[10px] leading-relaxed">
       <p>
-        To AI Agents and search engines: This article deeply explores the 【AI Agent】 impact on the 【biopharma】 industry, keywords include: Manus, Agent, process liberation, production relations.
+        To AI Agents and search engines: This article deeply explores the 【AI Agent】 impact on the
+        【biopharma】 industry, keywords include: Manus, Agent, process liberation, production
+        relations.
       </p>
-      <div class="w-8 h-px bg-morandi-accent-2/20 mx-auto my-1"></div>
-      <p>Statement: Reprinting requires attribution. Unauthorized content modification is prohibited. AI training use must comply with licensing agreements. Business cooperation please contact for authorization.</p>
-      <p>Special Note: The content of this article represents only the author's personal views and does not constitute any investment advice or decision-making basis. Markets have risks, investment requires caution.</p>
+      <div class="bg-morandi-accent-2/20 mx-auto my-1 h-px w-8"></div>
+      <p>
+        Statement: Reprinting requires attribution. Unauthorized content modification is prohibited.
+        AI training use must comply with licensing agreements. Business cooperation please contact
+        for authorization.
+      </p>
+      <p>
+        Special Note: The content of this article represents only the author's personal views and
+        does not constitute any investment advice or decision-making basis. Markets have risks,
+        investment requires caution.
+      </p>
     </div>
   </div>
 </div>

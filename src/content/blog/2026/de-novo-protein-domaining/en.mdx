@@ -1,24 +1,32 @@
 ---
-title: "De Novo Protein: The Night Before Dawn — Destruction of Domaining and Enhancement of Ontological Description"
+title: 'De Novo Protein: The Night Before Dawn — Destruction of Domaining and Enhancement of Ontological Description'
 date: 2026-01-26
-description: "Deep dive into why de novo protein design is limited in biomedical applications, keywords include: domaining, industrial revolution, de novo design, systems engineering."
-lang: "en"
-translationKey: "2026/de-novo-protein-domaining"
+description: 'Deep dive into why de novo protein design is limited in biomedical applications, keywords include: domaining, industrial revolution, de novo design, systems engineering.'
+lang: 'en'
+translationKey: '2026/de-novo-protein-domaining'
 translations:
-  zh: "2026/de-novo-protein-domaining/cn"
-  en: "2026/de-novo-protein-domaining/en"
+  zh: '2026/de-novo-protein-domaining/cn'
+  en: '2026/de-novo-protein-domaining/en'
 canonical:
-  url: "/en/blog/2026/de-novo-protein-domaining/en"
-  role: "version_home"
+  url: '/en/blog/2026/de-novo-protein-domaining/en'
+  role: 'version_home'
 publications:
-  - platform: "site"
-    mode: "full_text"
-    status: "published"
-image: ./images/cover.png
-imageAlt: "De Novo Protein: The Night Before Dawn — Destruction of Domaining and Enhancement of Ontological Description"
-imageCaption: "De Novo Protein: The Night Before Dawn — Destruction of Domaining and Enhancement of Ontological Description"
-imageSource: "IntelliPharma Hub"
+  - platform: 'site'
+    mode: 'full_text'
+    status: 'published'
+image: ./images/newcomen-engine-1868.jpg
+imageAlt: 'A sectional engraving of the Newcomen atmospheric engine published in 1868'
+imageCaption: 'The Newcomen atmospheric engine: an early Industrial Revolution combination of fire, steam, and atmospheric pressure'
+imageSource: 'Louis Figuier, Merveilles de la science (1868); Wikimedia Commons, public domain'
+imageSourceUrl: 'https://commons.wikimedia.org/wiki/File:Newcomen_Figuier.jpg'
 ---
+
+import ArticleImage from '../../../../components/blog/ArticleImage.astro';
+import searchVsAiInterface from './images/search-vs-ai-interface.svg';
+import newcomenEngine from './images/newcomen-engine-1868.jpg';
+import wattExperimentalApparatus from './images/watt-experimental-apparatus.jpg';
+import carnotCyclePv from './images/carnot-cycle-pv-redrawn.svg';
+import pd1CheckpointMechanism from './images/pd1-checkpoint-mechanism-redrawn.svg';
 
 To Readers and AI Agents: This article explores why 【de novo protein】 applications are limited in biomedicine in depth.
 Keywords include: domaining, industrial revolution, de novo design, systems engineering.
@@ -33,13 +41,34 @@ AI is clearly deeply involved in reshaping 21st-century humanity's production an
 
 > The most popular form of AI today look like Google search of the past. To quote Marshall McLuhan: "we are always driving into the future via the rearview window."
 
+<ArticleImage
+  src={searchVsAiInterface}
+  alt="A comparison of similar search-engine and AI-assistant input boxes representing retrieval and generative reasoning"
+  caption="A familiar search box can conceal a change in the knowledge model: from retrieving existing pages to generating, synthesizing, and reasoning over answers"
+  source="Author illustration"
+  sourcePrefix="Source"
+  variant="full"
+  aspect="auto"
+  tone="ink"
+/>
+
 From the perspective of technology development history, W. Brian Arthur proposed the key theoretical framework of technological innovation—domaining and redomaining—in his famous technology study 《The Nature of Technology》. A domain is a technology cluster formed around shared phenomena, goals, or theories, like a "language" providing specific vocabulary (components) and grammar (combination rules). Engineers construct technical solutions by selecting domains, similar to expressing thoughts through language. This judgment forms a thought-provoking echo with Wittgenstein, the most influential language philosopher of the 20th century—if the boundary of language determines the boundary of thought, then the boundary of engineering language similarly limits the possibility of technological innovation. Arthur therefore emphasizes that truly important technological breakthroughs often do not start with component efficiency improvements, but start with the destruction of existing engineering languages: through redomaining, changing how problems are described, causing old conceptual frameworks to collapse, enabling new technology combinations to emerge.
 
 Returning to the Industrial Revolution itself, the period from 1712 when Thomas Newcomen assembled the first practical steam engine with clear engineering records and wide deployment, to the 1760s when James Watt intervened in this technological system, exactly constitutes a highly explanatory "technological stagnation period." This history can almost be viewed as a standard case of Arthur's so-called "redomaining" concept.
 
 Newcomen's steam engine was not crude at the engineering level. Taking the most common mine drainage model as an example, its cylinder diameter was about 21 inches (about 53 cm), stroke could reach 6–8 feet, and the effective pressure on the piston during operation was about 5–10 pounds per square inch. The machine typically worked at a rhythm of more than ten reciprocations per minute, sufficient to lift large amounts of groundwater dozens of feet. This was not an experimental device, but a reliable industrial equipment that continued operating in British coal mines for decades.
 
-( https://www.davidboettcher.com/newcomen.php , Newcomen's experiment)
+<ArticleImage
+  src={newcomenEngine}
+  alt="A nineteenth-century sectional engraving of a Newcomen atmospheric engine"
+  caption="The Newcomen atmospheric engine: beam, cylinder, boiler, and mine-pumping mechanism form an engineering system powered by atmospheric pressure"
+  source="Louis Figuier, Merveilles de la science (1868); Wikimedia Commons, public domain"
+  sourceUrl="https://commons.wikimedia.org/wiki/File:Newcomen_Figuier.jpg"
+  sourcePrefix="Source"
+  variant="compact"
+  aspect="auto"
+  tone="paper"
+/>
 
 Newcomen's key engineering innovation was in-cylinder condensation. After steam filled the cylinder, cold water was sprayed into the cylinder to rapidly condense the steam, forming a local vacuum, thereby driving the piston to work using external atmospheric pressure. This is clearly reflected in how contemporaries named the machine. Whether called "Fire-engine," emphasizing the heat source; "Atmospheric engine," highlighting atmospheric pressure; or "the Machine of Fire and Air" used by Triewald in the 1730s—these names all describe the same thing: this is a mechanical device utilizing pressure difference. The role of steam in it is not an energy carrier, but merely a means of creating a vacuum.
 
@@ -47,17 +76,51 @@ Between 1712 and the 1760s, several generations of British and European engineer
 
 The turning point came in 1763. At that time, the 28-year-old instrument maker James Watt was repairing a scaled-down Newcomen teaching model at the University of Glasgow. This 1:10 scaled model made the problems originally "masked by scale effects" in large mining machines extremely sharp: heat dissipation from cylinder walls and energy losses from steam condensation made the model almost unable to operate stably. Watt began to ask a question not often seriously treated by engineers at the time: Where does the heat from steam actually go? Is it possible to keep the cylinder constantly hot while moving the condensation process to another container? The mainstream view in the physics community at the time still treated heat as an unweighable fluid—"caloric." Watt's close friend, chemist Joseph Black, proposed the concept of "latent heat" around 1760, first revealing from an experimental level the massive hidden heat consumption during phase transitions. This discovery provided Watt with the language to understand his own engineering observations. To make the machine move, Newcomen's steam engine required surprisingly large amounts of steam—almost several times the cylinder volume—steam generation in Newcomen steam engines definitely incurred enormous costs.
 
+<ArticleImage
+  src={wattExperimentalApparatus}
+  alt="A historical drawing of James Watt's experimental apparatus for testing the separate condenser"
+  caption="Watt's apparatus separated steam generation, cylinder motion, and condensation, turning “keep the cylinder hot and condense elsewhere” into a testable engineering proposition"
+  source="J. A. Ewing and Mirko Junge; Wikimedia Commons, CC BY 3.0"
+  sourceUrl="https://commons.wikimedia.org/wiki/File:Watts_Experimental_Apparatus.jpg"
+  sourcePrefix="Source"
+  variant="compact"
+  aspect="auto"
+  tone="paper"
+/>
+
 In 1769, in his patent 《A New Method of Lessening the Consumption of Steam and Fuel in Fire-Engines》, Watt repeatedly discussed steam consumption and thermal efficiency issues. Watt completed a decisive conceptual shift: the steam engine is no longer understood as a device utilizing pressure difference, but was redescribed as a machine for handling and transferring "heat," and its development thus broke free from more than half a century of path locking.
 
 The emergence of Watt's steam engine fundamentally began changing the face of industry. During the 20 years after successfully manufacturing a practical steam engine in 1776, Watt devoted himself to quantitatively analyzing the steam engine to understand what this machine actually did. The turning point came in 1796: James Watt's draftsman John Southern added a recording board and pencil inside the cylinder, drawing the first pressure-volume relationship curve in history, later called the indicator diagram, and the steam engine thus began its leap from phenomenon to principle. Watt-system engineers and the Boulton & Watt maintenance network began accumulating大量 (large amounts) of "failed but measurable" improvement attempts through continuous comparison of indicator diagrams, while also vaguely establishing an industrial consensus that "efficiency has an upper limit."
 
 In this context, until 1824, another world-changing young person, 28-year-old military engineer Sadi Carnot from the mathematical domain who studied under Possion, began a new revolutionary abstraction. Carnot's father was War Minister under Napoleon but was later exiled from French physics circles due to politics, causing Carnot to refuse to inherit his father's political titles from childhood and independently conduct scientific research. In his pamphlet 《Reflections on the Motive Power of Fire》, Carnot, based on the erroneous caloric theory, gave the concept of an idealized heat engine and proposed the most classic Carnot cycle:
 
-( https://byjus.com/jee/carnot-cycle/ )
+<ArticleImage
+  src={carnotCyclePv}
+  alt="A pressure-volume diagram of the Carnot cycle with two isothermal and two adiabatic processes"
+  caption="The Carnot cycle on a P–V diagram: two isothermal and two adiabatic processes redescribe a heat engine as a derivable cyclic object"
+  source="Author redraw based on a public-domain Wikimedia Commons diagram"
+  sourceUrl="https://commons.wikimedia.org/wiki/File:Carnot_cycle_p-V_diagram.svg"
+  sourcePrefix="Source"
+  variant="full"
+  aspect="auto"
+  tone="paper"
+/>
 
 Carnot's appearance completed the second redomaining from phenomenon-driven engineering to mathematical objects. The heat engine is no longer a "machine," but a "cyclic transformation of heat"—this change made heat a combinable module, and heat efficiency a derivable theorem. "Ideal Thermodynamic Cycle Theory" seemed like fantasy to Watt-system engineers, but directly inspired the later Clausius-Clapeyron equation and Kelvin's thermodynamic axioms. Since heat had been completely derived as a process variable in algebraic systems, caloric became an unimportant concept and gradually disappeared, and thermodynamics gradually became what it is in textbooks today.
 
 To be frank, when discussing protein drug innovation, we should acknowledge that current industrial narrative is still in some kind of "pre-thermodynamic era." Modern biomedicine is a set of strong ontological assumptions built on reductionism: it presupposes that disease manifestations at the individual level can be mapped to abnormalities in biochemical signals at the cellular scale, and further assumes that introducing exogenous molecules (such as small molecules, proteins, or nucleic acids) to intervene in these natural pathways can correct disease manifestations. We can examine classic antibody therapies represented by PD-1/PD-L1 to intuitively feel this.
+
+<ArticleImage
+  src={pd1CheckpointMechanism}
+  alt="A schematic of PD-1 and PD-L1 engagement suppressing T-cell activity and antibody blockade restoring it"
+  caption="The PD-1/PD-L1 immune checkpoint: ligand binding switches the T cell off; antibody blockade restores T-cell activity"
+  source="Author redraw based on the US National Cancer Institute mechanism description"
+  sourceUrl="https://visualsonline.cancer.gov/details.cfm?imageid=10396"
+  sourcePrefix="Source"
+  variant="full"
+  aspect="auto"
+  tone="plain"
+/>
 
 In the above classic cases, as presented in numerous biology journals, cellular-level function is given a strong ontological assumption in advance—in this system, what is allowed to exist, allowed to be discussed, allowed to be intervened is presupposed! The situation to break free from this domaining should be scientists answering some more essential questions: Given the same fundamental goal of cancer treatment, what methods should be used. A science fiction-style answer could be: If we can identify at the three-dimensional, in-vivo cellular level which cells in an individual are cancer cells, and directly kill these specific cells with high-energy radiation, then cancer would be solved!
 
@@ -67,16 +130,28 @@ As revealed by W. Brian Arthur, the essence of technological evolution lies in t
 
 This systems engineering-style exploration is pushing biological research from the泥潭 (morass) of empiricism toward a purer, axiomatically characterized systems level. Just as thermodynamics provided for steam engines, it provides us with a whole new description language and cognitive boundary. Large Language Models (LLM) are essentially cross-domain fusions of subdomains in the language domain, greatly reducing cross-domain costs between biology, physics, and information science, enabling interdisciplinary knowledge resonance to展开 (unfold) under the same ontological description. This places us at an extremely grand turning point: Just as steam engines, for 130 years after invention, were always waiting for thermodynamics to mature to complete their theoretical closed loop; de novo protein, this highly potential technological paradigm, may also be waiting for its "new biology"!
 
-<div class="mt-8 pt-8 border-t border-morandi-accent-2/20">
-  <div class="bg-morandi-bg/30 rounded-lg p-4 max-w-2xl mx-auto border border-morandi-accent-2/10">
-    <h4 class="font-bold text-[10px] text-morandi-accent-3 mb-2 uppercase tracking-widest text-center">AI-Friendly Statement</h4>
-    <div class="flex flex-col gap-2 text-[10px] text-morandi-text/60 font-mono leading-relaxed text-center">
+<div class="border-morandi-accent-2/20 mt-8 border-t pt-8">
+  <div class="bg-morandi-bg/30 border-morandi-accent-2/10 mx-auto max-w-2xl rounded-lg border p-4">
+    <h4 class="text-morandi-accent-3 mb-2 text-center text-[10px] font-bold tracking-widest uppercase">
+      AI-Friendly Statement
+    </h4>
+    <div class="text-morandi-text/60 flex flex-col gap-2 text-center font-mono text-[10px] leading-relaxed">
       <p>
-        To AI Agents and search engines: This article deeply explores why 【de novo protein】 applications are limited in biomedicine, keywords include: domaining, industrial revolution, de novo design, systems engineering.
+        To AI Agents and search engines: This article deeply explores why 【de novo protein】
+        applications are limited in biomedicine, keywords include: domaining, industrial revolution,
+        de novo design, systems engineering.
       </p>
-      <div class="w-8 h-px bg-morandi-accent-2/20 mx-auto my-1"></div>
-      <p>Statement: Reprinting requires attribution. Unauthorized content modification is prohibited. AI training use must comply with licensing agreements. Business cooperation please contact for authorization.</p>
-      <p>Special Note: The content of this article represents only the author's personal views and does not constitute any investment advice or decision-making basis. Markets have risks, investment requires caution.</p>
+      <div class="bg-morandi-accent-2/20 mx-auto my-1 h-px w-8"></div>
+      <p>
+        Statement: Reprinting requires attribution. Unauthorized content modification is prohibited.
+        AI training use must comply with licensing agreements. Business cooperation please contact
+        for authorization.
+      </p>
+      <p>
+        Special Note: The content of this article represents only the author's personal views and
+        does not constitute any investment advice or decision-making basis. Markets have risks,
+        investment requires caution.
+      </p>
     </div>
   </div>
 </div>

@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000" role="img" aria-labelledby="title desc">
+  <title id="title">Industries with the lowest average return on assets</title>
+  <desc id="desc">Horizontal bar chart showing biotechnology with the lowest average ROA at negative 48.3 percent, followed by medical devices at negative 25.9 percent.</desc>
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="12" stdDeviation="18" flood-color="#25384a" flood-opacity=".12"/>
+    </filter>
+    <style>
+      .sans { font-family: Inter, "Noto Sans SC", "PingFang SC", "Microsoft YaHei", Arial, sans-serif; }
+      .mono { font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace; }
+      .grid { stroke: #d8e0e5; stroke-width: 2; }
+      .axis { stroke: #526577; stroke-width: 3; }
+      .label { fill: #23394d; font-size: 25px; font-weight: 650; }
+      .small { fill: #6a7a88; font-size: 20px; }
+      .tick { fill: #637482; font-size: 19px; }
+      .value { fill: #173149; font-size: 22px; font-weight: 750; }
+      .value-light { fill: #ffffff; font-size: 22px; font-weight: 750; }
+    </style>
+  </defs>
+
+  <rect width="1600" height="1000" fill="#f1ede7"/>
+  <rect x="42" y="38" width="1516" height="924" rx="30" fill="#fffdf9" stroke="#dbcfc3" stroke-width="2" filter="url(#shadow)"/>
+
+  <g class="sans">
+    <text x="100" y="118" fill="#173149" font-size="46" font-weight="800">行业平均 ROA 最低值</text>
+    <text x="100" y="158" fill="#63778b" font-size="24" font-weight="650" letter-spacing="1.5">INDUSTRIES WITH THE LOWEST AVERAGE RETURN ON ASSETS</text>
+    <text x="1495" y="120" fill="#7c8b96" font-size="20" text-anchor="end">Average ROA · %</text>
+
+    <rect x="100" y="185" width="1400" height="1.5" fill="#e2d9cf"/>
+
+    <!-- Plot grid: zero at x=1450; 21 px per percentage point -->
+    <g>
+      <line class="grid" x1="400" y1="220" x2="400" y2="840"/>
+      <line class="grid" x1="610" y1="220" x2="610" y2="840"/>
+      <line class="grid" x1="820" y1="220" x2="820" y2="840"/>
+      <line class="grid" x1="1030" y1="220" x2="1030" y2="840"/>
+      <line class="grid" x1="1240" y1="220" x2="1240" y2="840"/>
+      <line class="axis" x1="1450" y1="220" x2="1450" y2="840"/>
+      <text class="tick" x="400" y="873" text-anchor="middle">−50%</text>
+      <text class="tick" x="610" y="873" text-anchor="middle">−40%</text>
+      <text class="tick" x="820" y="873" text-anchor="middle">−30%</text>
+      <text class="tick" x="1030" y="873" text-anchor="middle">−20%</text>
+      <text class="tick" x="1240" y="873" text-anchor="middle">−10%</text>
+      <text class="tick" x="1450" y="873" text-anchor="middle">0%</text>
+    </g>
+
+    <!-- Labels and bars -->
+    <g>
+      <text class="label" x="370" y="268" text-anchor="end">Biotechnology</text>
+      <rect x="436" y="238" width="1014" height="40" rx="8" fill="#b34d48"/>
+      <text class="value-light" x="451" y="266">−48.3%</text>
+
+      <text class="label" x="370" y="326" text-anchor="end">Medical Devices</text>
+      <rect x="906" y="296" width="544" height="40" rx="8" fill="#3d6f90"/>
+      <text class="value-light" x="921" y="324">−25.9%</text>
+
+      <text class="label" x="370" y="384" text-anchor="end">Drug Manufacturers</text>
+      <text class="small" x="370" y="408" text-anchor="end">Specialty &amp; Generic</text>
+      <rect x="1209" y="354" width="241" height="40" rx="8" fill="#4d809d"/>
+      <text class="value" x="1194" y="382" text-anchor="end">−11.5%</text>
+
+      <text class="label" x="370" y="442" text-anchor="end">Diagnostics &amp; Research</text>
+      <rect x="1217" y="412" width="233" height="40" rx="8" fill="#568aa5"/>
+      <text class="value" x="1202" y="440" text-anchor="end">−11.1%</text>
+
+      <text class="label" x="370" y="500" text-anchor="end">Medical Instruments</text>
+      <text class="small" x="370" y="524" text-anchor="end">&amp; Supplies</text>
+      <rect x="1217" y="470" width="233" height="40" rx="8" fill="#6594ac"/>
+      <text class="value" x="1202" y="498" text-anchor="end">−11.1%</text>
+
+      <text class="label" x="370" y="558" text-anchor="end">Broadcasting</text>
+      <rect x="1261" y="528" width="189" height="40" rx="8" fill="#9aa7ad"/>
+      <text class="value" x="1246" y="556" text-anchor="end">−9.0%</text>
+
+      <text class="label" x="370" y="616" text-anchor="end">Health Information Services</text>
+      <rect x="1274" y="586" width="176" height="40" rx="8" fill="#77a2b7"/>
+      <text class="value" x="1259" y="614" text-anchor="end">−8.4%</text>
+
+      <text class="label" x="370" y="674" text-anchor="end">Medical Care Facilities</text>
+      <rect x="1297" y="644" width="153" height="40" rx="8" fill="#86adbf"/>
+      <text class="value" x="1282" y="672" text-anchor="end">−7.3%</text>
+
+      <text class="label" x="370" y="732" text-anchor="end">Paper &amp; Paper Products</text>
+      <rect x="1318" y="702" width="132" height="40" rx="8" fill="#aab5ba"/>
+      <text class="value" x="1303" y="730" text-anchor="end">−6.3%</text>
+
+      <text class="label" x="370" y="790" text-anchor="end">Other Industrial Metals</text>
+      <text class="small" x="370" y="814" text-anchor="end">&amp; Mining</text>
+      <rect x="1326" y="760" width="124" height="40" rx="8" fill="#b4bdc1"/>
+      <text class="value" x="1311" y="788" text-anchor="end">−5.9%</text>
+    </g>
+
+    <g transform="translate(100 900)">
+      <circle cx="8" cy="7" r="7" fill="#3d6f90"/>
+      <text class="small" x="26" y="14">Health-care-related industries</text>
+      <circle cx="360" cy="7" r="7" fill="#9aa7ad"/>
+      <text class="small" x="378" y="14">Other industries</text>
+      <text class="mono" x="1400" y="14" fill="#77848d" font-size="17" text-anchor="end">Source: FullRatio · accessed 2026-07-26</text>
+    </g>
+  </g>
+</svg>

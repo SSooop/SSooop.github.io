@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="900" viewBox="0 0 1400 900" role="img" aria-labelledby="title desc">
+  <title id="title">Carnot cycle pressure-volume diagram</title>
+  <desc id="desc">A pressure-volume chart showing two isothermal processes connected by two adiabatic processes.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0 0 10 5 0 10Z" fill="#a84a55"/>
+    </marker>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="12" stdDeviation="18" flood-color="#3b3d3d" flood-opacity=".12"/>
+    </filter>
+  </defs>
+
+  <rect width="1400" height="900" fill="#f3efe8"/>
+  <rect x="55" y="48" width="1290" height="804" rx="24" fill="#fbfaf7" stroke="#d8cec2" stroke-width="2" filter="url(#shadow)"/>
+
+  <g font-family="Arial, Helvetica, sans-serif">
+    <text x="108" y="118" fill="#24384c" font-size="42" font-weight="750">CARNOT CYCLE</text>
+    <text x="108" y="155" fill="#6c7d88" font-size="18" font-weight="700" letter-spacing="2">PRESSURE–VOLUME DIAGRAM · IDEAL REVERSIBLE HEAT ENGINE</text>
+
+    <path d="M190 730V205M190 730H1222" fill="none" stroke="#263b4b" stroke-width="4"/>
+    <path d="m190 190-12 25h24Z" fill="#263b4b"/>
+    <path d="m1238 730-25-12v24Z" fill="#263b4b"/>
+    <text x="120" y="466" transform="rotate(-90 120 466)" fill="#263b4b" font-size="23" font-weight="700">PRESSURE · P</text>
+    <text x="680" y="798" fill="#263b4b" font-size="23" font-weight="700">VOLUME · V</text>
+
+    <path d="M360 275C515 318 705 350 900 420" fill="none" stroke="#a84a55" stroke-width="9" stroke-linecap="round" marker-end="url(#arrow)"/>
+    <path d="M900 420C952 488 992 554 1020 638" fill="none" stroke="#d58155" stroke-width="9" stroke-linecap="round" marker-end="url(#arrow)"/>
+    <path d="M1020 638C825 588 640 560 472 536" fill="none" stroke="#a84a55" stroke-width="9" stroke-linecap="round" marker-end="url(#arrow)"/>
+    <path d="M472 536C424 462 390 376 360 275" fill="none" stroke="#d58155" stroke-width="9" stroke-linecap="round" marker-end="url(#arrow)"/>
+
+    <path d="M360 275C590 418 834 507 1020 638" fill="none" stroke="#9bacaf" stroke-width="2" stroke-dasharray="8 10" opacity=".55"/>
+    <path d="M472 536C640 454 770 432 900 420" fill="none" stroke="#9bacaf" stroke-width="2" stroke-dasharray="8 10" opacity=".55"/>
+
+    <g fill="#fbfaf7" stroke="#24384c" stroke-width="4">
+      <circle cx="360" cy="275" r="14"/>
+      <circle cx="900" cy="420" r="14"/>
+      <circle cx="1020" cy="638" r="14"/>
+      <circle cx="472" cy="536" r="14"/>
+    </g>
+    <g fill="#24384c" font-size="22" font-weight="800">
+      <text x="324" y="252">A</text>
+      <text x="918" y="408">B</text>
+      <text x="1037" y="662">C</text>
+      <text x="436" y="565">D</text>
+    </g>
+
+    <g font-size="19">
+      <rect x="512" y="264" width="320" height="74" rx="12" fill="#fff8f4" stroke="#d9b4b5"/>
+      <text x="536" y="294" fill="#8e3744" font-weight="750">A → B · ISOTHERMAL EXPANSION</text>
+      <text x="536" y="320" fill="#7a6d69">Heat absorbed at T<tspan baseline-shift="sub" font-size="14">H</tspan> · Q<tspan baseline-shift="sub" font-size="14">H</tspan> &gt; 0</text>
+
+      <rect x="934" y="428" width="282" height="74" rx="12" fill="#fff8f1" stroke="#e0bea9"/>
+      <text x="957" y="458" fill="#a55c36" font-weight="750">B → C · ADIABATIC</text>
+      <text x="957" y="484" fill="#7a6d69">No heat transfer · Q = 0</text>
+
+      <rect x="632" y="603" width="332" height="74" rx="12" fill="#fff8f4" stroke="#d9b4b5"/>
+      <text x="656" y="633" fill="#8e3744" font-weight="750">C → D · ISOTHERMAL COMPRESSION</text>
+      <text x="656" y="659" fill="#7a6d69">Heat rejected at T<tspan baseline-shift="sub" font-size="14">C</tspan> · Q<tspan baseline-shift="sub" font-size="14">C</tspan> &lt; 0</text>
+
+      <rect x="220" y="404" width="260" height="74" rx="12" fill="#fff8f1" stroke="#e0bea9"/>
+      <text x="243" y="434" fill="#a55c36" font-weight="750">D → A · ADIABATIC</text>
+      <text x="243" y="460" fill="#7a6d69">No heat transfer · Q = 0</text>
+    </g>
+
+    <text x="108" y="827" fill="#7d878a" font-size="16">The enclosed area equals the net work delivered by one ideal cycle.</text>
+  </g>
+</svg>

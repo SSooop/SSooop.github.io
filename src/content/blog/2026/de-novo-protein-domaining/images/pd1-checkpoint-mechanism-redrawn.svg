@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="860" viewBox="0 0 1400 860" role="img" aria-labelledby="title desc">
+  <title id="title">PD-1 and PD-L1 immune checkpoint blockade</title>
+  <desc id="desc">The left panel shows PD-L1 binding PD-1 and suppressing a T cell. The right panel shows checkpoint antibodies blocking the interaction and restoring T-cell activity.</desc>
+  <defs>
+    <marker id="signalArrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0 0 10 5 0 10Z" fill="#3f7d6a"/>
+    </marker>
+    <filter id="cellShadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="9" stdDeviation="14" flood-color="#394248" flood-opacity=".13"/>
+    </filter>
+  </defs>
+
+  <rect width="1400" height="860" fill="#f3efe8"/>
+  <g font-family="Arial, Helvetica, sans-serif">
+    <text x="72" y="82" fill="#24384c" font-size="38" font-weight="750">PD-1 / PD-L1 IMMUNE CHECKPOINT</text>
+    <text x="72" y="118" fill="#6c7d88" font-size="18" font-weight="700" letter-spacing="1.5">A STRONG ONTOLOGICAL MODEL FOR ANTIBODY THERAPY</text>
+
+    <rect x="62" y="160" width="610" height="620" rx="24" fill="#fbfaf7" stroke="#d7cfc3" stroke-width="2"/>
+    <rect x="728" y="160" width="610" height="620" rx="24" fill="#fbfaf7" stroke="#d7cfc3" stroke-width="2"/>
+    <text x="100" y="212" fill="#944652" font-size="24" font-weight="800">CHECKPOINT ENGAGED · T CELL OFF</text>
+    <text x="766" y="212" fill="#3f7d6a" font-size="24" font-weight="800">CHECKPOINT BLOCKED · T CELL ON</text>
+
+    <g filter="url(#cellShadow)">
+      <path d="M208 280c33-44 129-50 170-4 27 30 20 84 1 123-22 44-142 47-180 8-32-34-25-84 9-127Z" fill="#d9817e" stroke="#a95257" stroke-width="4"/>
+      <circle cx="289" cy="345" r="48" fill="#b95f62" opacity=".55"/>
+      <circle cx="306" cy="605" r="122" fill="#a9cbb7" stroke="#4d8870" stroke-width="5"/>
+      <circle cx="306" cy="605" r="60" fill="#70aa88" opacity=".65"/>
+
+      <path d="M874 280c33-44 129-50 170-4 27 30 20 84 1 123-22 44-142 47-180 8-32-34-25-84 9-127Z" fill="#d9817e" stroke="#a95257" stroke-width="4"/>
+      <circle cx="955" cy="345" r="48" fill="#b95f62" opacity=".55"/>
+      <circle cx="972" cy="605" r="122" fill="#a9cbb7" stroke="#4d8870" stroke-width="5"/>
+      <circle cx="972" cy="605" r="60" fill="#70aa88" opacity=".65"/>
+    </g>
+
+    <text x="289" y="267" text-anchor="middle" fill="#71343b" font-size="20" font-weight="750">TUMOR / IMMUNE CELL</text>
+    <text x="306" y="613" text-anchor="middle" fill="#214a3e" font-size="28" font-weight="800">T CELL</text>
+    <text x="955" y="267" text-anchor="middle" fill="#71343b" font-size="20" font-weight="750">TUMOR / IMMUNE CELL</text>
+    <text x="972" y="613" text-anchor="middle" fill="#214a3e" font-size="28" font-weight="800">T CELL</text>
+
+    <g stroke-linecap="round" stroke-linejoin="round">
+      <path d="M265 421v74m48-74v74" stroke="#8e3f49" stroke-width="14"/>
+      <path d="M276 485h25" stroke="#8e3f49" stroke-width="12"/>
+      <path d="M289 497v40" stroke="#d8a739" stroke-width="12"/>
+      <path d="m289 537-18 23m18-23 18 23" stroke="#d8a739" stroke-width="9"/>
+
+      <path d="M931 421v74m48-74v74" stroke="#8e3f49" stroke-width="14"/>
+      <path d="M942 485h25" stroke="#8e3f49" stroke-width="12"/>
+      <path d="M955 503v26" stroke="#d8a739" stroke-width="12" opacity=".35"/>
+      <path d="m955 529-18 23m18-23 18 23" stroke="#d8a739" stroke-width="9" opacity=".35"/>
+    </g>
+
+    <text x="208" y="455" fill="#7a3b44" font-size="19" font-weight="800">PD-L1</text>
+    <text x="330" y="535" fill="#9c7622" font-size="19" font-weight="800">PD-1</text>
+    <text x="874" y="455" fill="#7a3b44" font-size="19" font-weight="800">PD-L1</text>
+    <text x="996" y="535" fill="#9c7622" font-size="19" font-weight="800">PD-1</text>
+
+    <g fill="none" stroke="#3c75a1" stroke-width="11" stroke-linecap="round">
+      <path d="M1070 440v35m0-24-25-23m25 23 25-23"/>
+      <path d="M1128 500v35m0-24-25-23m25 23 25-23"/>
+    </g>
+    <text x="1106" y="393" text-anchor="middle" fill="#315f82" font-size="18" font-weight="800">ANTI-PD-L1 / ANTI-PD-1</text>
+    <path d="M1100 570c78 8 112-20 148-61" fill="none" stroke="#3f7d6a" stroke-width="5" stroke-dasharray="8 8" marker-end="url(#signalArrow)"/>
+
+    <rect x="156" y="694" width="300" height="52" rx="26" fill="#f1d9da"/>
+    <text x="306" y="728" text-anchor="middle" fill="#8f3e49" font-size="20" font-weight="800">T-CELL SIGNAL SUPPRESSED</text>
+    <rect x="822" y="694" width="300" height="52" rx="26" fill="#d9ebe2"/>
+    <text x="972" y="728" text-anchor="middle" fill="#356c5b" font-size="20" font-weight="800">T-CELL ACTIVITY RESTORED</text>
+
+    <g transform="translate(1215 304)">
+      <path d="M0 0c24-31 87-31 111 1 18 25 7 70-20 86-31 18-83 3-100-27C-20 39-15 18 0 0Z" fill="#d9817e" stroke="#a95257" stroke-width="3"/>
+      <path d="M25 21 9 65m54-50-1 55m38-42-25 49" stroke="#fbfaf7" stroke-width="6" stroke-linecap="round"/>
+    </g>
+    <text x="1260" y="425" text-anchor="middle" fill="#7a3b44" font-size="18" font-weight="800">TUMOR CELL DEATH</text>
+  </g>
+</svg>

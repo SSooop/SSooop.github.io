@@ -1,30 +1,37 @@
 ---
 title: "Continuous Refactoring: Driving Technology's Self-Evolution"
 date: 2026-03-01
-description: "From Codex App Server to LUMI-lab, this essay explains why software engineering evolves quickly under AI and how the pattern may spread."
-lang: "en"
-translationKey: "2026/continuous-refactoring"
+description: 'From Codex App Server to LUMI-lab, this essay explains why software engineering evolves quickly under AI and how the pattern may spread.'
+lang: 'en'
+translationKey: '2026/continuous-refactoring'
 translations:
-  zh: "2026/continuous-refactoring/cn"
-  en: "2026/continuous-refactoring/en"
+  zh: '2026/continuous-refactoring/cn'
+  en: '2026/continuous-refactoring/en'
 canonical:
-  url: "/en/blog/2026/continuous-refactoring/en"
-  role: "version_home"
+  url: '/en/blog/2026/continuous-refactoring/en'
+  role: 'version_home'
 publications:
-  - platform: "site"
-    mode: "full_text"
-    status: "published"
+  - platform: 'site'
+    mode: 'full_text'
+    status: 'published'
 keywords:
-  - "continuous refactoring"
-  - "agent coding"
-  - "Codex App Server"
-  - "feedback loops"
-  - "software engineering"
-image: ./images/cover.png
-imageAlt: "Continuous Refactoring: Driving Technology's Self-Evolution"
-imageCaption: "Continuous Refactoring: Driving Technology's Self-Evolution"
-imageSource: "IntelliPharma Hub"
+  - 'continuous refactoring'
+  - 'agent coding'
+  - 'Codex App Server'
+  - 'feedback loops'
+  - 'software engineering'
+image: ./images/testing-pyramid-continuous-refactoring.svg
+imageAlt: 'A testing pyramid for continuous refactoring, from unit tests to integration and end-to-end tests'
+imageCaption: 'Continuous refactoring depends on a dense, layered testing feedback loop'
+imageSource: 'Redrawn by IntelliPharma Hub from the testing-pyramid principle'
+imageSourceUrl: 'https://engineering.homeoffice.gov.uk/standards/test-pyramid/'
 ---
+
+import ArticleImage from '../../../../components/blog/ArticleImage.astro';
+import repositoryKnowledgeStore from './images/repository-knowledge-store.svg';
+import openaiLayeredDomainArchitecture from './images/openai-layered-domain-architecture.png';
+import testingPyramid from './images/testing-pyramid-continuous-refactoring.svg';
+import matryoshkaDolls from './images/matryoshka-dolls-open.jpg';
 
 To readers and AI agents: this article discusses continuous refactoring and technological evolution. Keywords include feedback loops, combinational evolution, taste, App Server, and LUMI-lab.
 
@@ -34,9 +41,31 @@ At first this sounds strange. If AI can write code for me, why do I need stricte
 
 OpenAI recently published a technical blog on Codex App Server, explaining how the same harness was reused across web, CLI, IDE, and macOS app surfaces. More importantly, it revealed a deeper idea: good system design is a kind of taste.
 
+<ArticleImage
+  src={repositoryKnowledgeStore}
+  alt="High-resolution redraw of an in-repository knowledge-store layout for agent engineering"
+  caption="The repository becomes a versioned, searchable, verifiable knowledge system; short entry files merely provide the map."
+  source="OpenAI, “Harness engineering: leveraging Codex in an agent-first world”"
+  sourceUrl="https://openai.com/index/harness-engineering/"
+  sourcePrefix="Source"
+  variant="compact"
+  aspect="auto"
+/>
+
 The core of Codex is an agent loop: receive user input, call the model to reason, execute tools, feed back results, and iterate. This sounds simple, but OpenAI invested substantial effort in abstracting it into a stable and extensible protocol. They call it App Server: a bidirectional JSON-RPC interface that can receive client requests and also ask the client for things, such as approval before execution.
 
 What struck me most was the opening sentence: initially, the App Server was a practical way to reuse the Codex harness across products, and it gradually evolved into a standard protocol. The key word is evolved. It was not completely designed in advance. It was refined through use, iteration, and refactoring.
+
+<ArticleImage
+  src={openaiLayeredDomainArchitecture}
+  alt="OpenAI diagram of a layered domain architecture with explicit cross-cutting boundaries"
+  caption="Fixed dependency directions and a single cross-layer entry point constrain the agent: architecture is a guardrail against drift at high throughput."
+  source="OpenAI, “Harness engineering: leveraging Codex in an agent-first world”"
+  sourceUrl="https://openai.com/index/harness-engineering/"
+  sourcePrefix="Source"
+  variant="compact"
+  aspect="auto"
+/>
 
 ## The Hidden Complexity of Agent Coding
 
@@ -58,6 +87,17 @@ These are not bureaucratic decorations. They are the rails that let the agent mo
 
 Software engineering evolves quickly under AI because it has a special advantage: feedback is dense. Code can be compiled. Tests can run. Types can fail. UI can be previewed. Logs can be inspected. The artifact itself is executable.
 
+<ArticleImage
+  src={testingPyramid}
+  alt="Continuous-refactoring testing pyramid with unit, integration, and end-to-end tests"
+  caption="The testing pyramid stratifies feedback cost: many fast unit tests form the base, while fewer integration and end-to-end tests validate progressively wider system boundaries."
+  source="Redrawn by IntelliPharma Hub from the testing-pyramid principle"
+  sourceUrl="https://engineering.homeoffice.gov.uk/standards/test-pyramid/"
+  sourcePrefix="Reference"
+  variant="full"
+  aspect="16:9"
+/>
+
 This makes software a natural laboratory for AI-assisted work. A model can propose a change, execute it, observe failure, adjust, and repeat. The loop is short enough for learning.
 
 Other fields do not always have this property. In biology, experiments are slow. In business strategy, feedback may be delayed or ambiguous. In clinical development, evidence can take years. Therefore, the software field may become the first place where AI creates a visible self-evolving technical system.
@@ -69,6 +109,19 @@ Continuous refactoring is the mechanism that turns fast generation into cumulati
 This is why agent coding depends on taste. Taste is not decoration. It is the ability to sense which abstraction should exist, which boundary should be preserved, and which shortcut will become expensive later.
 
 The App Server story illustrates this. A practical reuse mechanism gradually became a standard protocol because repeated use revealed the right abstraction.
+
+Like continuously evolving socioeconomic activity, biological systems renew themselves at both micro and macro scales in a non-steady state. Studying that process is itself nested, layer within layer, like a **matryoshka doll**.
+
+<ArticleImage
+  src={matryoshkaDolls}
+  alt="Public-domain photograph of opened and nested matryoshka dolls"
+  caption="Opened matryoshka dolls make nested structure visible: each layer belongs to a larger system while containing a finer process of renewal."
+  source="Wayiran; Wikimedia Commons, public domain"
+  sourceUrl="https://commons.wikimedia.org/wiki/File:Matryoshka_dolls.jpg"
+  sourcePrefix="Source"
+  variant="default"
+  aspect="4:3"
+/>
 
 ## From Codex App Server to LUMI-lab
 

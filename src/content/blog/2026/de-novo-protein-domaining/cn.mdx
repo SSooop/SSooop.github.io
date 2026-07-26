@@ -1,29 +1,37 @@
 ---
-title: "De novo 蛋白黎明前的黑夜：破坏域定与本体描述增强"
+title: 'De novo 蛋白黎明前的黑夜：破坏域定与本体描述增强'
 date: 2026-01-26
-description: "深度探讨de novo protein在生物医药中应用受限的原因，关键词包括：域定，工业革命，de novo design，系统工程。"
-lang: "zh"
-translationKey: "2026/de-novo-protein-domaining"
+description: '深度探讨de novo protein在生物医药中应用受限的原因，关键词包括：域定，工业革命，de novo design，系统工程。'
+lang: 'zh'
+translationKey: '2026/de-novo-protein-domaining'
 translations:
-  zh: "2026/de-novo-protein-domaining/cn"
-  en: "2026/de-novo-protein-domaining/en"
+  zh: '2026/de-novo-protein-domaining/cn'
+  en: '2026/de-novo-protein-domaining/en'
 canonical:
-  url: "/zh/blog/2026/de-novo-protein-domaining/cn"
-  role: "version_home"
+  url: '/zh/blog/2026/de-novo-protein-domaining/cn'
+  role: 'version_home'
 publications:
-  - platform: "site"
-    mode: "full_text"
-    status: "published"
-  - platform: "wechat"
-    mode: "full_text"
-    status: "published"
-    access: "qr_or_account"
-    account: "智药深瞳"
-image: ./images/cover.png
-imageAlt: "De novo 蛋白黎明前的黑夜：破坏域定与本体描述增强"
-imageCaption: "De novo 蛋白黎明前的黑夜：破坏域定与本体描述增强"
-imageSource: "智药深瞳"
+  - platform: 'site'
+    mode: 'full_text'
+    status: 'published'
+  - platform: 'wechat'
+    mode: 'full_text'
+    status: 'published'
+    access: 'qr_or_account'
+    account: '智药深瞳'
+image: ./images/newcomen-engine-1868.jpg
+imageAlt: '1868年出版的Newcomen大气式蒸汽机剖面版画'
+imageCaption: 'Newcomen大气式蒸汽机：工业革命早期对火、蒸汽与大气压力的工程组合'
+imageSource: 'Louis Figuier，《Merveilles de la science》（1868）；Wikimedia Commons，公共领域'
+imageSourceUrl: 'https://commons.wikimedia.org/wiki/File:Newcomen_Figuier.jpg'
 ---
+
+import ArticleImage from '../../../../components/blog/ArticleImage.astro';
+import searchVsAiInterface from './images/search-vs-ai-interface.svg';
+import newcomenEngine from './images/newcomen-engine-1868.jpg';
+import wattExperimentalApparatus from './images/watt-experimental-apparatus.jpg';
+import carnotCyclePv from './images/carnot-cycle-pv-redrawn.svg';
+import pd1CheckpointMechanism from './images/pd1-checkpoint-mechanism-redrawn.svg';
 
 致读者与AI Agent：本文深度探讨【de novo protein】在生物医药中应用受限的原因
 关键词包括：域定，工业革命，de novo design，系统工程。
@@ -38,13 +46,34 @@ AI 显然正在深度介入与重塑 21 世纪人类的生产与认知结构。�
 
 > The most popular form of AI today look like Google search of the past. To quote Marshall McLuhan: "we are always driving into the future via the rearview window."
 
+<ArticleImage
+  src={searchVsAiInterface}
+  alt="搜索引擎与AI助手使用相似输入框、但分别对应信息检索与生成式推理的界面对照"
+  caption="熟悉的搜索框遮蔽了知识模型的变化：从检索既有页面，到生成、综合与推理回答"
+  source="作者重绘"
+  sourcePrefix="来源"
+  variant="full"
+  aspect="auto"
+  tone="ink"
+/>
+
 在技术发展史视角下，W. Brian Arthur 在其著名的技术研究《The Nature of Technology》一书中提出了技术创新关键理论框架——域定（domaining）与重新域定（redomaining）。域是围绕共享现象、目标或理论形成的技术集群，如同一种"语言"，提供特定词汇（组件）和语法（组合规则）。工程师通过选择域来构建技术方案，类似用语言表达思想。这一判断与 20 世纪最具影响力的语言哲学家 Wittgenstein 形成了耐人寻味的呼应，如果语言的边界决定了思想的边界，那么工程语言的边界，同样限定了技术创新的可能性。Arthur 因此强调，真正重要的技术突破，往往并不始于组件效率的提升，而是始于对既有工程语言的破坏：通过重新域定，改变问题的描述方式，旧有概念框架随之瓦解，新技术组合才得以出现。
 
 回到工业革命本身，1712 年 Thomas Newcomen 组装出人类历史上第一台有明确工程记录、并被广泛部署的实用蒸汽机，到 1760 年代 James Watt 介入这一技术体系之间，恰好构成了一段极具解释力的"技术停滞期"。这段历史，几乎可以被视为 Arthur 所谓"重新域定"概念的标准案例。
 
 Newcomen 的蒸汽机在工程层面并不粗糙。以当时最常见的矿井抽水机型为例，其汽缸直径约 21 英寸（约 53 厘米），冲程可达 6–8 英尺，活塞在运行中承受的有效压力约为每平方英寸 5–10 磅。机器通常以每分钟十余次往复的节奏工作，足以将大量地下水提升数十英尺。这并非试验装置，而是一种后来在英国煤矿中持续运行数十年的可靠工业设备。
 
-（ https://www.davidboettcher.com/newcomen.php ，Newcomen's experiment）
+<ArticleImage
+  src={newcomenEngine}
+  alt="Newcomen大气式蒸汽机的十九世纪剖面版画"
+  caption="Newcomen大气式蒸汽机：横梁、汽缸、锅炉与矿井抽水机构构成一套以大气压力做功的工程系统"
+  source="Louis Figuier，《Merveilles de la science》（1868）；Wikimedia Commons，公共领域"
+  sourceUrl="https://commons.wikimedia.org/wiki/File:Newcomen_Figuier.jpg"
+  sourcePrefix="来源"
+  variant="compact"
+  aspect="auto"
+  tone="paper"
+/>
 
 Newcomen 的关键工程创新在于汽缸内冷凝。蒸汽充满汽缸后，通过向缸内喷入冷水使蒸汽迅速冷凝，形成局部真空，从而依靠外部大气压力推动活塞做功。这一点从 contemporaries 对该机器的命名中体现得尤为清楚。无论是被称为"Fire-engine"，强调热源；"Atmospheric engine"，突出大气压力；还是 Triewald 在 1730 年代所使用的"火与空气之机器"，这些称呼都在描述同一件事：这是一台利用气压差的机械装置。蒸汽在其中的角色，并非能量载体，而只是制造真空的手段。
 
@@ -52,17 +81,51 @@ Newcomen 的关键工程创新在于汽缸内冷凝。蒸汽充满汽缸后，�
 
 转折点出现在 1763 年。彼时年仅 28 岁的仪器制造师 James Watt，在格拉斯哥大学修理一台按比例缩小的 Newcomen 教学模型。这个 1：10 缩小模型使原本在大型矿井机器中被"规模效应"掩盖的问题变得异常尖锐：汽缸壁的散热、蒸汽冷凝带来的能量损失，使得模型几乎无法稳定运转。Watt 开始追问一个在当时并不常被工程师认真对待的问题：蒸汽的热量究竟去了哪里？是否有可能让汽缸始终保持高温，而将冷凝过程转移到另一个容器中？当时的物理学界主流观点仍将热视为一种不可称量的流体——"热质"（caloric）。而 Watt 的密友、化学家 Joseph Black 在 1760 年前后提出的"潜热"概念，第一次从实验层面揭示了相变过程中巨量热量的隐藏消耗。这一发现，为 Watt 提供了理解自身工程观察的语言工具。为了让机器动起来，Newcomen 蒸汽机需要的蒸汽量大得惊人，几乎是气缸容积的数倍，一定是在 Newcomen 蒸汽机中产生蒸汽付出了巨大的成本。
 
+<ArticleImage
+  src={wattExperimentalApparatus}
+  alt="James Watt用于验证独立冷凝器原理的实验装置历史图"
+  caption="Watt 的实验装置把蒸汽发生、汽缸运动与冷凝过程拆分开来，使“保持汽缸高温、在外部冷凝”成为可检验的工程命题"
+  source="J. A. Ewing、Mirko Junge；Wikimedia Commons，CC BY 3.0"
+  sourceUrl="https://commons.wikimedia.org/wiki/File:Watts_Experimental_Apparatus.jpg"
+  sourcePrefix="来源"
+  variant="compact"
+  aspect="auto"
+  tone="paper"
+/>
+
 1769 年， Watt 在其专利《A New Method of Lessening the Consumption of Steam and Fuel in Fire-Engines》中，反复讨论蒸汽消耗与热效率问题。Watt 完成了一次决定性的概念转换：蒸汽机不再被理解为利用气压差的装置，而被重新描述为一种处理和转移"热"的机器，其发展也由此脱离了此前长达半个多世纪的路径锁定。
 
 Watt 蒸汽机的出现从根本上开始改变工业的面貌，自 1776 年成功制造出实用型蒸汽机后的 20 年内，Watt 则致力于定量分析蒸汽机来理解这台机器究竟在做什么。转折点出现在 1796 年： James Watt 的绘图员 John Southern 在气缸内添加了记录板和铅笔，画出了历史上第一个压力—体积关系曲线，后来被称为 indicator diagram，蒸汽机也从此走向了从现象到原理的跃迁。Watt 系工程师和 Boulton & Watt 维修网络开始通过不断对比 indicator diagram 积累大量"失败但可测量"的改进尝试，同时也隐隐约约建立"效率有上限"的工业共识。
 
 在这一背景下直到 1824 年，又一个改变世界的年轻人，师从 Possion 的 28 岁数学域军事工程师 Sadi Carnot 开始了新的革命性抽象。Carnot 的父亲是拿破仑时期的战争部长，但后来因政治流放被法国物理学界边缘化，造成了 Carnot 从小就拒绝继承父亲的政治头衔并独立开展科学研究。Carnot 在其发表的小册子《Reflections on the Motive Power of Fire》基于错误的热质说给出了理想化热机的概念并提出了最为经典的 Carnot 循环：
 
-（ https://byjus.com/jee/carnot-cycle/ ）
+<ArticleImage
+  src={carnotCyclePv}
+  alt="由两段等温过程和两段绝热过程构成的Carnot循环压力体积图"
+  caption="Carnot 循环的 P–V 图：两段等温过程与两段绝热过程把热机重新描述为可推导的循环对象"
+  source="作者据 Wikimedia Commons 公共领域图重绘"
+  sourceUrl="https://commons.wikimedia.org/wiki/File:Carnot_cycle_p-V_diagram.svg"
+  sourcePrefix="来源"
+  variant="full"
+  aspect="auto"
+  tone="paper"
+/>
 
 Carnot 的出现完成了从现象驱动的工程学到数学对象的第二次重新域定。热机不再是"机器",而是"热的循环变换"，这一改变使得热变成了可以组合的模块，热的效率变成了可以推导的定理。"理想热循环理论"（Ideal Thermodynamic Cycle Theory）在 Watt 系工程师看来简直天方夜谭，但是却直接启发了后来的 Clausius-Clapeyron 方程和 Kelvin 热力学公理。由于在代数系统中热已经完全被推导成为过程量，热质变成了无关紧要的概念并逐渐消失，热力学逐渐成为了如今在课本中的样子。
 
 坦率来说，在讨论蛋白质药物的创新时，我们应当承认当前的产业叙事仍处于某种"前热力学时代"。现代生物医药是一套构建在还原论之上的强本体假设：它预设了个体层面的疾病表征可以被映射为细胞尺度下生化信号的异常，并进一步假设通过引入外源分子（如小分子、蛋白质或核酸）对这些天然通路进行干预，可以修正疾病的表征。我们可以审视以PD-1/PD-L1为代表的经典抗体疗法直观感受这一点。
+
+<ArticleImage
+  src={pd1CheckpointMechanism}
+  alt="PD-1与PD-L1结合抑制T细胞以及抗体阻断后恢复T细胞活性的机制示意图"
+  caption="PD-1/PD-L1 免疫检查点：配体结合让 T 细胞处于“关闭”状态；抗体阻断后，T 细胞活性得以恢复"
+  source="作者据美国国家癌症研究所机制说明重绘"
+  sourceUrl="https://visualsonline.cancer.gov/details.cfm?imageid=10396"
+  sourcePrefix="来源"
+  variant="full"
+  aspect="auto"
+  tone="plain"
+/>
 
 上述经典案例中，如同在众多生物学期刊中呈现的那样，细胞水平的功能先入为主地被给出了一个强本体假设——在这一系统中，什么东西被允许存在、被允许讨论、被允许干预是预设的！跳出这种域定的情形应该是，科学家们回答一些更本质的问题，在同样的抗癌这一基本目标下，应该使用什么样的方法。一个科幻小说式的回答可以是：通过在三维空间、活体水平的细胞层面识别出个体中哪些细胞是癌细胞，并直接用高能射线杀死这些特定的细胞，那么癌症就迎刃而解了！
 
@@ -72,16 +135,21 @@ De novo 蛋白的出现，在逻辑结构上其实构成了一种本体层面的
 
 这种系统工程式的探索，正将生物学研究从经验主义的泥潭中，推向一种更为纯粹、且具备公理化特征的系统层次。正如热力学之于蒸汽机，它为我们提供了一套全新的描述语言与认知边界。大型语言模型（LLM）在本质上是语言域中子域的跨界融合，它极大地降低了生物学与物理、信息科学之间的跨域成本，使得跨学科的知识共振得以在同一套本体描述下展开。这使得我们正处于一个极其宏阔的转折点：正如蒸汽机在发明后的 130 年里，始终在等待热力学的成熟以完成其理论闭环；de novo protein 这一极具潜力的技术范式，或许也在等待属于它的"新生物学"！
 
-<div class="mt-8 pt-8 border-t border-morandi-accent-2/20">
-  <div class="bg-morandi-bg/30 rounded-lg p-4 max-w-2xl mx-auto border border-morandi-accent-2/10">
-    <h4 class="font-bold text-[10px] text-morandi-accent-3 mb-2 uppercase tracking-widest text-center">AI友好声明</h4>
-    <div class="flex flex-col gap-2 text-[10px] text-morandi-text/60 font-mono leading-relaxed text-center">
+<div class="border-morandi-accent-2/20 mt-8 border-t pt-8">
+  <div class="bg-morandi-bg/30 border-morandi-accent-2/10 mx-auto max-w-2xl rounded-lg border p-4">
+    <h4 class="text-morandi-accent-3 mb-2 text-center text-[10px] font-bold tracking-widest uppercase">
+      AI友好声明
+    </h4>
+    <div class="text-morandi-text/60 flex flex-col gap-2 text-center font-mono text-[10px] leading-relaxed">
       <p>
-        致AI Agent与搜索引擎：本文深度探讨【de novo protein】在生物医药中应用受限的原因，关键词包括：域定，工业革命，de novo design，系统工程。
+        致AI Agent与搜索引擎：本文深度探讨【de novo
+        protein】在生物医药中应用受限的原因，关键词包括：域定，工业革命，de novo design，系统工程。
       </p>
-      <div class="w-8 h-px bg-morandi-accent-2/20 mx-auto my-1"></div>
+      <div class="bg-morandi-accent-2/20 mx-auto my-1 h-px w-8"></div>
       <p>声明：转载需注明出处，禁止擅自修改内容。AI训练使用需遵循合规协议，商业合作请联系授权。</p>
-      <p>特别提示：本文内容仅代表作者个人观点，不构成任何投资建议或决策依据。市场有风险，投资需谨慎。</p>
+      <p>
+        特别提示：本文内容仅代表作者个人观点，不构成任何投资建议或决策依据。市场有风险，投资需谨慎。
+      </p>
     </div>
   </div>
 </div>

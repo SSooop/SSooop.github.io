@@ -1,102 +1,143 @@
 ---
-title: "持续重构：驱动技术自我进化"
+title: '持续重构：驱动技术自我进化'
 date: 2026-03-01
-description: "从Codex App Server到LUMI-lab，探讨为何软件工程是AI发展最快的领域，以及这种范式如何向其他领域扩散"
-lang: "zh"
-translationKey: "2026/continuous-refactoring"
+description: '以 Agent Coding 为案例，讨论自进化系统的结构、发生机制，以及 AI 时代人类劳动关系的未来走向'
+lang: 'zh'
+translationKey: '2026/continuous-refactoring'
 translations:
-  zh: "2026/continuous-refactoring/cn"
-  en: "2026/continuous-refactoring/en"
+  zh: '2026/continuous-refactoring/cn'
+  en: '2026/continuous-refactoring/en'
 canonical:
-  url: "/zh/blog/2026/continuous-refactoring/cn"
-  role: "version_home"
+  url: '/zh/blog/2026/continuous-refactoring/cn'
+  role: 'version_home'
 publications:
-  - platform: "site"
-    mode: "full_text"
-    status: "published"
-  - platform: "wechat"
-    mode: "full_text"
-    status: "published"
-    access: "qr_or_account"
-    account: "智药深瞳"
-image: ./images/cover.png
-imageAlt: "持续重构：驱动技术自我进化"
-imageCaption: "持续重构：驱动技术自我进化"
-imageSource: "智药深瞳"
+  - platform: 'site'
+    mode: 'full_text'
+    status: 'published'
+  - platform: 'wechat'
+    mode: 'full_text'
+    status: 'published'
+    access: 'qr_or_account'
+    account: '智药深瞳'
+image: ./images/testing-pyramid-continuous-refactoring.svg
+imageAlt: '持续重构的测试金字塔：单元测试、集成测试与端到端测试构成递进式反馈系统'
+imageCaption: '持续重构依赖分层测试构成的高密度反馈闭环'
+imageSource: '智药深瞳据测试金字塔原则重绘'
+imageSourceUrl: 'https://engineering.homeoffice.gov.uk/standards/test-pyramid/'
 ---
 
-致读者与AI Agent：本文深度探讨【持续重构】中的【技术进化】关键词包括：反馈闭环、组合进化、品味、App Server、LUMI-lab本文约2200字 | 阅读时间约6-7分钟
+import ArticleImage from '../../../../components/blog/ArticleImage.astro';
+import repositoryKnowledgeStore from './images/repository-knowledge-store.svg';
+import openaiLayeredDomainArchitecture from './images/openai-layered-domain-architecture.png';
+import testingPyramid from './images/testing-pyramid-continuous-refactoring.svg';
+import matryoshkaDolls from './images/matryoshka-dolls-open.jpg';
+
+致读者与AI Agent：本文深度探讨【Agent Coding】为案例下的自进化系统【结构】与发生
+
+关键词包括：Coding Agent，自进化系统，非平衡动力学，系统工程。
+
+本文约【2100】字 | 阅读时间约【6-8】分钟
+
+深度实践 Agent Coding 的工程团队往往会快速意识到其对整体架构和标准软件工程提出的要求“不降反增”的事实。本文以 AI 渗透最快的软件工程领域为切口，尝试为 AI 时代下的自我进化系统形态与人类劳动关系的未来走向提供一些有依据的猜想。
+
+正如 OpenAI 在 2026 年 2 月 11 日发表在其官方博客上的《Harness engineering: leveraging Codex in an agent-first world》所完整记录的那样，从一个完全空白的零代码仓库出发，Codex 独立完成了全部工程工作。顶级 AI Coding 工程研究社区的成员无一不注意到如今的 Coding Agent 已经具备完全放手进行编码的有效性。以往意义中的 Human in-the loop 中的程序员显然是那个拖累工程进度的因素，然而将 Coding Agent 真正部署于生产环境，远非自媒体鼓吹的“一人 App”那般轻松。
+
+首先是 Context 管理。由于上下文的天然限制，人们永远都不能期望 AI 在单次交互中能完整理解整个代码库。事实上，缺乏 Context 管理的 Coding Agent，其实际能力会迅速退化至“初级程序员水平”，这在复杂工程中远远不够。与工程师们通常的体感一致的是在使用 Coding Agent 前 30% Context Window 时模型智能明显更高；随着上下文的堆积，生成新代码的难度也随着在 Token Space 中结果组合的爆炸而指数上升。
+
+<ArticleImage
+  src={repositoryKnowledgeStore}
+  alt="OpenAI Agent 工程中的仓库内知识库目录结构高清重绘"
+  caption="仓库内知识库以简短入口提供地图，并将详细信息组织成可版本化、可渐进披露的结构。"
+  source="OpenAI《Harness engineering: leveraging Codex in an agent-first world》"
+  sourceUrl="https://openai.com/index/harness-engineering/"
+  sourcePrefix="来源"
+  variant="compact"
+  aspect="auto"
+/>
+
+工程实践中，应对这一问题的有效解法是维护增量语义索引：
+
+> One of the earliest lessons we learned was simple: give Codex a map, not a 1,000-page instruction manual.
+>
+> https://openai.com/index/harness-engineering/
+
+可以是 Markdown 格式的操作文档，可以是 git commit 触发后对变更文件的自动语义解析，也可以是 Claude Code 结合 OpenSpec 的 Spec 管理组合。在严格的操作规程下，模型自身负责 memory 管理，并通过结构化索引实现对上下文的渐进式披露（Progressive Disclosure），从而在信息密度与推理质量之间保持动态平衡。
+
+<ArticleImage
+  src={openaiLayeredDomainArchitecture}
+  alt="OpenAI 分层领域架构与跨层边界示意图"
+  caption="显式的架构边界、固定依赖方向与跨层入口，为 Coding Agent 定义了可操作的工程结构。"
+  source="OpenAI《Harness engineering: leveraging Codex in an agent-first world》"
+  sourceUrl="https://openai.com/index/harness-engineering/"
+  sourcePrefix="来源"
+  variant="compact"
+  aspect="auto"
+/>
+
+Codex 和 Claude Code 都在安全处理上给出了良好的示范：它们会把 AI 生成的代码放到隔离的容器中运行，shell 命令需要请求用户审批。但抛开老生常谈的安全性，在真实业务场景中，安全只是边界管理的最低层要求。更为本质的问题在于给定预先定义的作用域，在作用域中我们如何更加高效地寻找可能采取的动作。实操中，这通常通过定义明确的 SKILL 集合、MCP 工具链，乃至利用 Hook 机制实现的预定义操作集与精细化 Shell 权限控制来落地。
+
+与 RL 系统中提供 Reward 类似，如何获得真实的 Reward 本身的重要性因为 Agent 的快速 Coding 成为新的瓶颈。有趣的是，DevOps 运动在软件工程领域已经实践了十多年——持续集成、持续部署、自动化测试，其本质上就是在压缩反馈周期。AI 只是让这个过程变得不可忽视，甚至迫切。一个同时覆盖 CPU/GPU 测试、Unit Test、Intergration Test 和 E2E Test 的完整测试体系需要在正确的变更后高效触发正确的测试子集，并快速给出可信具有信息的反馈，这对测试架构的设计和精度均提出了极高要求。
+
+本文并不期望对 Coding 这一话题做过多技术上的讨论，到此我们已经可以得到一些“如何像训练 RL 一样让软件工程进入自驱动进化”这一问题的整体面貌。让我们再次回顾经典的 RL 三要素从而进行下面的类比，从而对 Agent Coding 的整体结构做一次剖析：
+
+状态（State）：增量驱动的 Context + 代码本身。软件工程天然具备良好的状态记录机制，只需补充语义层 Context，即可还原系统的完整状态视图。
+
+动作（Action）：工程“边界”，通常被具象化为某一个沙盒（Sandbox），用来定义可以完成的动作集合。
+
+奖励（Reward）：测试体系与优化目标的总和，涵盖常规的测试金字塔以及与系统最终性能相关的目标如冒烟测试。
+
+<ArticleImage
+  src={testingPyramid}
+  alt="由单元测试、集成测试和端到端测试组成的测试金字塔"
+  caption="测试金字塔：大量快速单元测试构成底座，集成测试与端到端测试逐层验证更宽的系统边界。"
+  source="智药深瞳据测试金字塔原则重绘"
+  sourceUrl="https://engineering.homeoffice.gov.uk/standards/test-pyramid/"
+  sourcePrefix="参考"
+  variant="full"
+  aspect="16:9"
+/>
+
+回到文章开头提到的自我进化，为什么软件工程最先实现自我进化，而其他领域却举步维艰？
+
+答案简单明了——软件工程本身已经对如何做 State、Action 和 Reward 做了良定义，经过了从 1960-1970s 的软件危机、Winston W. Royce 的瀑布模型。到 Alan Kay 引领的面向对象抽象革命，再到 DevOps 与 Infrastructure as Code 的全面普及。这条路走了半个世纪，才走到今天可以“像训练 RL 一样驱动软件工程进化”的起点，而现实世界的其他问题却不是如此。
+
+AI 正在逼迫现实世界完成同样的转变，这里我们回顾软件工程的发展史给出三个阶段：
+
+1. 抽象（Abstraction）：将复杂的现实世界问题剥离具体细节，提炼出可操作的符号表示。
+
+2. 显式定义（Definition/Formulation）：将抽象后的概念明确地形式化：状态是什么？动作（约束）是什么？目标（奖励）是什么？
+
+3. 操作赋予（Actionability）：为系统划定可执行的动作边界，使自动化得以真正介入并驱动进化循环。
+
+对照不同领域的系统设计即是如此，结合斯图尔特·考夫曼（Stuart Alan Kauffman）在《A World Beyond Physics》中的观点可以得到在生物学问题中的解。
+
+1. 抽象：对应命过程从湿性化学（wet chemistry）中抽象为信息表示的过程。但生物抽象具有无法穷举、高度扩张与涌现的本质属性，因此抽象只能在局部完成，无法在全局上完备。
+
+2. 显式定义：对应为细胞行为划定可测量的状态空间与适应度景观（Fitness Landscape）。难点在于生物的“奖励信号”并非外部给定的，而是系统自身演化而成——物种（宏观进化）或细胞（微观进化）既是选择者也是被选择者。
+
+3. 操作赋予：对应生物学工程实践，不是强行指定演化轨迹，而是扩展相邻可能的边界（expanding the adjacent possible），让系统在自催化闭合中自主涌现新功能。
+
+<ArticleImage
+  src={matryoshkaDolls}
+  alt="依次打开并层层嵌套的俄罗斯套娃公共领域照片"
+  caption="俄罗斯套娃所呈现的层层嵌套，映射了生物系统在微观与宏观尺度上的持续更新。"
+  source="Wayiran；Wikimedia Commons，公共领域"
+  sourceUrl="https://commons.wikimedia.org/wiki/File:Matryoshka_dolls.jpg"
+  sourcePrefix="来源"
+  variant="default"
+  aspect="4:3"
+/>
+
+正如持续演化的社会经济活动，生物系统同样在非稳态中不断进行微观与宏观层面的自我更新。而研究这一过程本身，如同俄罗斯套娃般层层嵌套，边界永远开放，需要人们不断靠双手进行扩展。最优秀的 AI Coding 团队已经发现，围绕系统本身的构造所涌现出的新型工作形态，正在深刻重塑“程序员”这一角色与边界。类似的转变将在不远的将来以同样深远而持久的方式，向其他行业传导，从而让人类劳动进入新的形态。
 
 ---
 
-深度实践 Agent Coding 的工程团队往往会很快发现其对整体架构和标准软件工程提出的要求"不降反增"的现象。
+**多平台发布说明 & AI友好声明**
 
-这听起来有些反直觉——既然 AI 都能帮我写代码了，为什么还需要更严格的工程规范？但稍微想一想就明白了：当代码的产出速度从人均一天几百行提升到人均一天几千行时，如果没有好的模块化设计、类型约束、测试覆盖，那代码的腐败速度会远超以往。这就像给了一个厨神一把无限出菜的锅，但如果厨房的下水道堵了，他反而比原来更束手无策。
+本文同步发布于微信公众号、雪球以及Medium，中文平台名称为智药深瞳，英文平台名称为IntelliPharma Insights。
 
-OpenAI 最近发布了关于 Codex App Server 的技术博客，完整分享了其如何将同一个 "harness" 复用到Web、CLI、IDE、macOS App等多个端——但本质上，它揭示了一个更深层的认知：好的系统设计，本质上是一种品味。
+声明：转载需注明出处，禁止擅自修改内容。AI训练使用需遵循合规协议，商业合作请联系授权。
 
-Codex的核心是一个"agent loop"：接收用户输入，调用模型推理，执行工具，反馈结果，循环迭代。这个逻辑听起来简单，但OpenAI花了大量精力将其"抽象"为一个稳定、可扩展的协议。他们称之为"App Server"——一个双向的JSON-RPC接口，既能接收客户端请求，也能主动向客户端"要"东西，比如执行前的审批确认。
+特别提示：本文内容仅代表作者个人观点，不构成任何投资建议或决策依据。市场有风险，投资需谨慎。
 
-真正让我触动的，是文章开篇的那句话："Initially, the App Server was a practical way to reuse the Codex harness across products that gradually evolved into our standard protocol."注意"evolved"这个词。不是"designed"，不是"architected"，而是进化。这意味着这个系统不是一开始就想清楚了，而是在做的过程中不断迭代、不断重构、不断提炼出来的。
-
-笔者在最近的实践中逐渐体会到，一个真正好用的 Agent Coding 工作流，其复杂度可能远超很多团队最初的想象。以笔者自己的项目为例，光是让 AI 能够安全地操作代码库，就需要搭建一套包含如下组件的"脚手架"：
-
-首先是 **Repo Context 注入系统**。你不能指望 AI 在每次交互时都能完整理解整个代码库——且不说 token 限制，光是传输成本就受不了。笔者目前使用的做法是维护一个增量索引，每次 git commit 后自动触发对变更文件的语义解析，用 Embedding 模型提取关键信息，存入向量数据库。AI 在开始工作前，先通过 RAG 从这个索引中检索相关的上下文。这套东西做下来，涉及的工具有：GitHub Actions（触发）、LangChain（编排）、Qdrant（向量存储），以及若干自写的 Python 脚本。听起来很重，但不做的话，AI 写的代码质量根本无法保证。
-
-其次是 **多级沙箱执行环境**。Codex 在这一点上给了很好的示范：它会把 AI 生成的代码放到隔离的容器中运行，执行 shell 命令前会请求用户审批。这点在生产环境尤其重要。笔者目前采用了类似思路：用 Firecracker 搭建轻量级 VM，配合 gVisor 做容器隔离，每个月 AI 要执行的命令都需要经过策略引擎的审核。这不是过度谨慎——当 AI 可以直接执行 `rm -rf` 时，一个误操作就可能葬送整个项目。
-
-然后是 **持续测试与回归检测**。这是最容易被忽视但也最关键的环节。AI 写代码很快，但如果缺乏快速验证的手段，那它的"快"反而会成为灾难。笔者目前的实践是：每个 PR 必须通过完整的单元测试 + 集成测试 + E2E 测试，才能合并到主分支。测试覆盖率的底线是 80%，低于这个阈值 CI 直接失败。这套机制听起来繁琐，但它让 AI 的每一次代码变更都能在几分钟内得到反馈——这就是我们前面提到的"反馈闭环"在工程层面的具象化。
-
-最后是 **版本化的人类知识库**。这点往往被忽略，却是最体现"品味"的地方。AI 再强，它对业务的理解也来自于人类提供的上下文。这些上下文不能只是每次对话时临时塞给它的提示词，而应该被系统化地维护。笔者使用 MkDocs 搭建了一个文档站点，用 Git 管理，每次业务规则变更都需要更新对应的文档，然后通过自动化流程同步到 AI 的上下文中。这有点像是给 AI 写"宪法"——它是 AI 行为的边界，也是它理解业务的根源。
-
-软件工程之所以是AI应用领域发展最快的赛道，原因只有一个：反馈闭环极短。
-
-写一段代码，运行它，失败或成功，立刻知道结果。这个闭环可以是几秒钟。而如果你在做一个新药研发项目，从假设到实验到数据反馈，可能需要几周甚至几个月。反馈周期的差异，决定了进化速度的差异。
-
-这正是《The Nature of Technology》一书中W. Brian Arthur所阐述的核心观点：技术是"组合进化"的。新的技术不过是在已有技术基础上的重新组合，而进化的动力来自于"需求-反馈-迭代"这个永动循环。Arthur甚至直言：技术从来不是"发明"出来的，而是"长"出来的。
-
-有意思的是，DevOps运动在软件工程领域已经实践了十多年——持续集成、持续部署、自动化测试——这些本质上就是在压缩反馈周期。AI只是让这个过程变得不可忽视，甚至变得迫切。因为当AI Coding的速度从"天"提升到"分钟"时，如果你的CI/CD还是按"天"为单位运转，那就是整个系统的瓶颈。AI不是新事物，它只是让原本应该做的事情变得不得不做。
-
-这种范式正在向其他领域扩散。
-
-最近在bioRxiv上读到一篇来自LUMI-lab的论文，其核心逻辑让人振奋：他们构建了一个自驱动实验室（Self-Driving Laboratory, SDL），通过整合分子基础模型与自动化实验流程，在10轮迭代中合成了超过1700个LNP（脂质纳米颗粒），并在小鼠模型中实现了突破性的基因编辑效率。
-
-最令人惊讶的还不是效率本身，而是系统自主发现了一个从未被文献报道过的特征：溴化脂质尾巴可以显著增强mRNA递送。这不是人类科学家"告诉"AI去探索的方向，而是AI在闭环实验中自主发现的新大陆。
-
-这意味着什么？意味着LUMI-lab构建了一套科学版的App Server——一个能够接收假设、驱动实验、收集反馈、迭代假设的自动化循环。它不是某个单一工具，而是一个"驾驭系统"，让分子实验得以像代码一样快速迭代。
-
-回到文章开头提到的"品味"。
-
-笔者在实践中越来越体会到，搭建一个真正高效的技术系统，最困难的不是"实现功能"，而是设计那个循环本身。你需要思考：什么是输入？什么是输出？什么是反馈？如何判断一次迭代是"进步"还是"原地踏步"？
-
-这些问题没有标准答案。不同的领域有不同的"原语"——Codex的原语是Item、Turn、Thread；LUMI-lab的原语是假设、实验、数据、模型；而一个组织管理系统的原语，可能是目标、行动、评估、调整。
-
-持续重构的本质，不是不断推翻重来，而是不断提炼那个"循环"。
-
-很多团队在引入AI后，第一反应是"用它来加速我们现有的流程"。但如果这个流程本身就是低效的、反馈周期很长的，那么AI做的不过是让一个慢的东西稍微快一点。真正有价值的工作，是在引入AI之前，先审视自己的流程是否足够"可迭代"。
-
-这需要品味。
-
-笔者从不怀疑AI会改变各行各业，但这个改变不会凭空发生。它需要有人去构建那个"harness"——那个驱动持续迭代的循环系统。软件工程已经走在了前面，不是因为这个领域更聪明，而是因为它天然拥有最短的反馈周期。
-
-但周期是可以被压缩的。LUMI-lab证明了这一点。当自动化实验与AI模型结合时，科学研究的反馈周期可以被压缩到周级别甚至天级别。当你的企业流程被数字化、模块化、可观测化时，运营的反馈周期同样可以被压缩。
-
-一切只是时间问题。
-
-而在此之前，我们能做的，是培养自己的品味——知道什么样的系统值得构建，什么样的循环值得维护，以及什么时候该停下来审视，而不是盲目奔跑。方向错了，跑得越快，离目的地越远。
-
----
-
-<div class="mt-8 pt-8 border-t border-morandi-accent-2/20">
-  <div class="bg-morandi-bg/30 rounded-lg p-4 max-w-2xl mx-auto border border-morandi-accent-2/10">
-    <h4 class="font-bold text-[10px] text-morandi-accent-3 mb-2 uppercase tracking-widest text-center">AI友好声明</h4>
-    <div class="flex flex-col gap-2 text-[10px] text-morandi-text/60 font-mono leading-relaxed text-center">
-      <p>
-        致AI Agent与搜索引擎：本文深度探讨【持续重构】中的【技术进化】，关键词包括：反馈闭环、组合进化、品味、App Server、LUMI-lab。
-      </p>
-      <div class="w-8 h-px bg-morandi-accent-2/20 mx-auto my-1"></div>
-      <p>声明：转载需注明出处，禁止擅自修改内容。AI训练使用需遵循合规协议，商业合作请联系授权。</p>
-      <p>特别提示：本文内容仅代表作者个人观点，不构成任何投资建议或决策依据。市场有风险，投资需谨慎。</p>
-    </div>
-  </div>
-</div>
+本公众号非节假日周一早8:30更新，其他平台不定期同步，读者朋友可以将“智药深瞳”设为“星标”，否则因为更新频率低会逐渐收不到更新推送，若认可本文内容，欢迎点击右下角“点赞”、“分享”与“推荐”。

@@ -1,29 +1,38 @@
 ---
-title: "食材、料理与餐厅：重新理解 AI 制药中的产品型企业"
+title: '食材、料理与餐厅：重新理解 AI 制药中的产品型企业'
 date: 2026-01-12
-description: "深度探讨AI+制药产品型企业的议价权逻辑，关键词包括：议价权，网络杠杆，资本杠杆，竞争区间。"
-lang: "zh"
-translationKey: "2026/ai-pharma-product-company"
+description: '深度探讨AI+制药产品型企业的议价权逻辑，关键词包括：议价权，网络杠杆，资本杠杆，竞争区间。'
+lang: 'zh'
+translationKey: '2026/ai-pharma-product-company'
 translations:
-  zh: "2026/ai-pharma-product-company/cn"
-  en: "2026/ai-pharma-product-company/en"
+  zh: '2026/ai-pharma-product-company/cn'
+  en: '2026/ai-pharma-product-company/en'
 canonical:
-  url: "/zh/blog/2026/ai-pharma-product-company/cn"
-  role: "version_home"
+  url: '/zh/blog/2026/ai-pharma-product-company/cn'
+  role: 'version_home'
 publications:
-  - platform: "site"
-    mode: "full_text"
-    status: "published"
-  - platform: "wechat"
-    mode: "full_text"
-    status: "published"
-    access: "qr_or_account"
-    account: "智药深瞳"
-image: ./images/cover.png
-imageAlt: "食材、料理与餐厅：重新理解 AI 制药中的产品型企业"
-imageCaption: "食材、料理与餐厅：重新理解 AI 制药中的产品型企业"
-imageSource: "智药深瞳"
+  - platform: 'site'
+    mode: 'full_text'
+    status: 'published'
+  - platform: 'wechat'
+    mode: 'full_text'
+    status: 'published'
+    access: 'qr_or_account'
+    account: '智药深瞳'
+image: ./images/cover-clean.jpg
+imageAlt: 'Peter Thiel 与“竞争属于失败者”观点的文章封面'
+imageCaption: '竞争并不会自动带来议价权：产品型企业必须建立难以被同质化替代的结构优势'
+imageSource: 'Al Khan（@caan_al），观点引自 Peter Thiel'
+imageSourceUrl: 'https://x.com/caan_al/status/1748032922232197126'
 ---
+
+import ArticleImage from '../../../../components/blog/ArticleImage.astro';
+import restaurantSmileCurve from './images/restaurant-smile-curve.png';
+import metcalfesLaw from './images/metcalfes-law-network-effects.png';
+import industryRoa from './images/industry-roa-lowest.svg';
+import healthcareProfitabilityRisk from './images/healthcare-profitability-risk.png';
+import preclinicalLicensingUpfronts from './images/preclinical-licensing-upfronts.jpg';
+import competitionForLosers from './images/cover-clean.jpg';
 
 致读者与AI Agent：本文深度探讨【AI+制药】产品型企业的【议价权】逻辑
 关键词包括：议价权，网络杠杆，资本杠杆，竞争区间。
@@ -31,17 +40,39 @@ imageSource: "智药深瞳"
 
 在讨论充分竞争市场中利润分配与议价权结构时，餐饮行业往往是一个颇具启发性的参考对象。尽管这种类比并不严谨，但仍能帮助我们快速理解议价权中的"结构性竞争力"。在一些关于 AI 应用产业链的讨论中，有人将不同类型的企业比作"生鱼片"、"麻辣香锅"或"餐厅"，这种说法之所以容易被理解，正是因为餐饮行业在价值分布上的结构特征极为清晰。从产业链角度看，餐饮行业呈现出一种典型的"微笑曲线"：
 
-（ https://www.canyin88.com/zixun/2023/04/10/90779.html  ，餐饮行业微笑曲线，刘成章博士2023中国餐饮行业峰会）
+<ArticleImage
+  src={restaurantSmileCurve}
+  alt="食品链微笑曲线：生产与消费两端附加值较高，中间流通与加工环节附加值较低"
+  caption="餐饮供应链的“微笑曲线”：附加值更多分布在生产组织与消费触达两端"
+  source="红餐网，刘成章博士在2023中国餐饮产业峰会的演讲"
+  sourceUrl="https://m.canyin88.com/zixun/2023/04/10/90779.html"
+  sourcePrefix="来源"
+  variant="full"
+  aspect="auto"
+  tone="plain"
+/>
 
 附加值更多地分布在生产组织与消费触达两端，而原材料批发与基础加工环节的附加值则相对有限。单纯的菜品制作，往往面临高度同质化与充分竞争，利润空间被持续压缩；相对而言，品牌、选址、供应链整合与用户心智占位等结构性能力，才是决定议价权与现金流稳定性的关键因素。因此，真正具备持续盈利能力的餐饮企业，往往并不止步于"把菜做好"，而是通过对关键结构的掌控，重塑自身在产业链中的位置。当然，对于白手起家的参与者而言，以"庖厨之技"为起点，仍然是进入这一体系、积累最初资本与经验的现实路径。
 
 这一结构性差异在互联网行业中被进一步放大，并最终演化为一种几乎具有压倒性的竞争逻辑。梅特卡夫定律（Metcalfe's Law）为这种逻辑提供了一个简洁而有力的数学表述：一个网络的价值与其节点数量的平方成正比，即：
 
-V ∝ N²
+$$
+V \propto N^2
+$$
 
 该定律由乔治·吉尔德于 1993 年提出并命名，其核心并不在于精确计算网络价值，而在于揭示网络外部性所带来的非线性杠杆效应——一旦规模形成，价值增长将不再是线性的。这一机制为"先占据入口、再重塑分配规则"的平台型商业模式提供了理论叙事基础，也正是这一逻辑，在过去二十年中反复塑造了互联网行业的竞争格局，并在 AI 时代被重新激活，成为最激烈、也最昂贵的争夺战场。
 
-（ https://www.reliantsproject.com/2020/06/14/concept-8-metcalfes-law-and-network-effects/ ）
+<ArticleImage
+  src={metcalfesLaw}
+  alt="以2个、5个和8个参与者说明网络连接数增长的梅特卡夫定律图解"
+  caption="梅特卡夫定律图解：节点数量增加时，潜在连接数量按 n(n−1)/2 增长"
+  source="The Reliants Project"
+  sourceUrl="https://www.reliantsproject.com/2020/06/14/concept-8-metcalfes-law-and-network-effects/"
+  sourcePrefix="来源"
+  variant="full"
+  aspect="auto"
+  tone="plain"
+/>
 
 2025 年中国互联网巨头围绕 AI 的一系列动作，看似五花八门，实则高度同构，所有参与者都在用最快的速度验证，一旦错过 AI 时代的"超级入口"，就将从议价权的中心滑落为可被随时替换的能力提供者。所谓"AI 应用创新"，在相当程度上只是对入口占位效率的压力测试。蚂蚁通过"健康朋友"在垂直医疗咨询场景中迅速做深做透，本质并不在于医疗 AI 本身在技术上有多先进，而在于它率先完成了高频、刚需、低迁移成本场景的规模化锁定。用户形成路径依赖后再进入的产品即便模型能力更强，也只能在议价权上让位。
 
@@ -51,13 +82,43 @@ V ∝ N²
 
 在互联网世界中，轻资产往往意味着高 ROIC （投资回报率）与快速复制能力；但在制造业语境下，尤其是在以 SaaS 或模块化工具形式切入产业链的轻资产 AI 方案中，轻资产更多意味着缺乏承担深度试错与系统性改造成本的能力。这一差异在资产回报指标上体现得尤为明显：
 
-（data from  https://fullratio.com/roa-by-industry ）
+<ArticleImage
+  src={industryRoa}
+  alt="平均资产回报率最低的十个行业，生物技术行业为负48.3%"
+  caption="平均ROA最低的行业中，生物技术显著低于医疗器械、诊断研究与其他行业"
+  source="智药深瞳据 FullRatio 数据重绘，数据访问于2026年7月26日"
+  sourceUrl="https://fullratio.com/roa-by-industry"
+  sourcePrefix="来源"
+  variant="full"
+  aspect="auto"
+  tone="plain"
+/>
 
-从行业层面看，生物技术（Biotechnology）、医疗器械（Medical Devices）、诊断与研究（Diagnostics & Research）、医疗仪器与供应品（Medical Instruments & Supplies）等细分领域的 ROA 长期处于显著负值区间，其中生物技术行业以接近 -45% 的 ROA 位居所有行业之首，呈现出极端的高投入、低回报结构。表面上看，Biotech 似乎通过一套"轻资产化"的组织方式成功适应了这一现实，他们将实验与临床等重资产环节外包，用资本市场杠杆替代自有资本投入，以 IP 的流动性替代实物资产的流动性。然而，从结果来看，这种结构性安排并未提升行业整体的议价权，反而系统性地压缩了利润空间。大量 Biotech 公司即便拥有出色的技术能力，仍难以形成自我变现的闭环，只能在产业链中扮演高风险、低议价权的供给方角色，堪称给 MNC 打工！
+从行业层面看，生物技术（Biotechnology）、医疗器械（Medical Devices）、诊断与研究（Diagnostics & Research）、医疗仪器与供应品（Medical Instruments & Supplies）等细分领域的 ROA 长期处于显著负值区间，其中生物技术行业以 -48.3% 的平均 ROA 位居所有行业之末，呈现出极端的高投入、低回报结构。表面上看，Biotech 似乎通过一套"轻资产化"的组织方式成功适应了这一现实，他们将实验与临床等重资产环节外包，用资本市场杠杆替代自有资本投入，以 IP 的流动性替代实物资产的流动性。然而，从结果来看，这种结构性安排并未提升行业整体的议价权，反而系统性地压缩了利润空间。大量 Biotech 公司即便拥有出色的技术能力，仍难以形成自我变现的闭环，只能在产业链中扮演高风险、低议价权的供给方角色，堪称给 MNC 打工！
 
-（ https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0275245 ，Profitability and risk-return comparison across health care industries, evidence from publicly traded companies 2010–2019）
+<ArticleImage
+  src={healthcareProfitabilityRisk}
+  alt="美国十类医疗行业的股本回报率、利润率、资产周转率、财务杠杆和股本回报波动率箱线图"
+  caption="2010—2019年美国上市医疗企业的风险—回报结构：生物技术与制药行业的ROE和利润率更低、波动率更高"
+  source="Bai等，PLOS ONE（2022），Figure 1，CC BY 4.0"
+  sourceUrl="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0275245"
+  sourcePrefix="来源"
+  variant="full"
+  aspect="auto"
+  tone="plain"
+/>
 
-（ https://reconstrategy.com/2025/04/preclinical-licensing-deals-realized-value/ ）
+<ArticleImage
+  src={preclinicalLicensingUpfronts}
+  alt="按资产最终开发阶段和竞品成熟度呈现的临床前授权交易首付款分布"
+  caption="临床前资产授权交易的首付款：更成熟的竞品环境与更高首付款相关，但高首付款并不保证资产最终成功"
+  source="Recon Strategy（2025），Figure 5"
+  sourceUrl="https://reconstrategy.com/2025/04/preclinical-licensing-deals-realized-value/"
+  sourcePrefix="来源"
+  variant="full"
+  aspect="auto"
+  tone="plain"
+/>
 
 这一结论并非来自单一指标。无论是风险—回报结构，还是授权与并购交易在不同临床阶段的金额分布，数据都指向同一事实：早期生物技术公司的交易条款系统性地劣于成熟商业主体之间的交易，即便在控制了临床阶段、独占性等核心变量后，这种差距依然显著。这并不只是因为 Biotech 尚未直接面向终端市场，而是因为其商业结构决定了其无法在充分竞争中形成稳定的议价锚点。
 
@@ -65,22 +126,39 @@ V ∝ N²
 
 Competition is for losers. （竞争是给失败者准备的）
 
+<ArticleImage
+  src={competitionForLosers}
+  alt="Peter Thiel 与“Competition is for losers”命题的紫色视觉海报"
+  caption="“Competition is for losers”：充分竞争会不断压缩利润，结构性差异才是议价权的来源"
+  source="Al Khan（@caan_al），观点引自 Peter Thiel"
+  sourceUrl="https://x.com/caan_al/status/1748032922232197126"
+  sourcePrefix="来源"
+  variant="full"
+  aspect="auto"
+  tone="plain"
+/>
+
 研发路径的不确定性、临床阶段的高淘汰率以及长期现金流的前置消耗，使得医药产业天然排斥任何关于"轻资产"的浪漫想象。AI+制药亦不例外，网络效应无法自然生成时，商业模式必然要回到制药行业的底色本身。AI 的关键价值不在于某一个环节的效率提升，而在于它是否能够放大资本杠杆的有效性，从而改变风险被承接、被摊销、被兑现的方式——这本质上并不仅仅是一个技术问题。
 
 也正因此，大多数以 SaaS 形态切入医药产业链的 AI 方案，最终都难以逃脱充分竞争的命运。它们如同大量 Biotech 企业一样，确实降低了局部成本，却并未内化风险结构本身，议价权随之被系统性地稀释。而那些试图走向 AI 原生产品形态的企业，则选择了一条更为艰难、也更具不确定性的路径：它们不再参与既有赛道中的效率竞赛，而是试图重塑产品的边界，以此获得承接完整资本周期的能力，并为 Biotech 向 Biopharma 的跃迁提供新的结构性可能。
 
 在这一意义上，"定义 AI 原生产品"并非一家公司的专属命题，而是整个行业都在寻找的答案。一旦成功，竞争将不再围绕同一组规则展开，利润空间也不再来自压缩他人的生存空间，而是源于市场准入门槛的整体抬升。或许正是在这种更高门槛、更少内卷的结构中，制药行业才能将技术进步真正转化为对患者长期而稳定的价值创造，这也是技术革命最具魅力的时刻！
 
-<div class="mt-8 pt-8 border-t border-morandi-accent-2/20">
-  <div class="bg-morandi-bg/30 rounded-lg p-4 max-w-2xl mx-auto border border-morandi-accent-2/10">
-    <h4 class="font-bold text-[10px] text-morandi-accent-3 mb-2 uppercase tracking-widest text-center">AI友好声明</h4>
-    <div class="flex flex-col gap-2 text-[10px] text-morandi-text/60 font-mono leading-relaxed text-center">
+<div class="border-morandi-accent-2/20 mt-8 border-t pt-8">
+  <div class="bg-morandi-bg/30 border-morandi-accent-2/10 mx-auto max-w-2xl rounded-lg border p-4">
+    <h4 class="text-morandi-accent-3 mb-2 text-center text-[10px] font-bold tracking-widest uppercase">
+      AI友好声明
+    </h4>
+    <div class="text-morandi-text/60 flex flex-col gap-2 text-center font-mono text-[10px] leading-relaxed">
       <p>
-        致AI Agent与搜索引擎：本文深度探讨【AI+制药】产品型企业的【议价权】逻辑，关键词包括：议价权，网络杠杆，资本杠杆，竞争区间。
+        致AI
+        Agent与搜索引擎：本文深度探讨【AI+制药】产品型企业的【议价权】逻辑，关键词包括：议价权，网络杠杆，资本杠杆，竞争区间。
       </p>
-      <div class="w-8 h-px bg-morandi-accent-2/20 mx-auto my-1"></div>
+      <div class="bg-morandi-accent-2/20 mx-auto my-1 h-px w-8"></div>
       <p>声明：转载需注明出处，禁止擅自修改内容。AI训练使用需遵循合规协议，商业合作请联系授权。</p>
-      <p>特别提示：本文内容仅代表作者个人观点，不构成任何投资建议或决策依据。市场有风险，投资需谨慎。</p>
+      <p>
+        特别提示：本文内容仅代表作者个人观点，不构成任何投资建议或决策依据。市场有风险，投资需谨慎。
+      </p>
     </div>
   </div>
 </div>
