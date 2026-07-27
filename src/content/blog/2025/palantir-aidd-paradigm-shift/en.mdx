@@ -1,97 +1,195 @@
 ---
-title: "AIDD's Breakthrough in Heavy Asset Industries: Lessons from Palantir"
+title: "Palantir's Blueprint for Escaping the Capital Trap in AI Drug Discovery"
 date: 2025-08-03
-description: "Exploring how AI Agent can achieve commercial落地 in heavy asset industries like pharmaceuticals, analyzing the relevance of the Palantir model to AIDD."
-lang: "en"
-translationKey: "2025/palantir-aidd-paradigm-shift"
+description: "What Palantir's Ontology and project-delivery model can teach AIDD companies about commercializing AI in a capital-intensive industry."
+lang: 'en'
+translationKey: '2025/palantir-aidd-paradigm-shift'
 translations:
-  zh: "2025/palantir-aidd-paradigm-shift/cn"
-  en: "2025/palantir-aidd-paradigm-shift/en"
+  zh: '2025/palantir-aidd-paradigm-shift/cn'
+  en: '2025/palantir-aidd-paradigm-shift/en'
 canonical:
-  url: "/en/blog/2025/palantir-aidd-paradigm-shift/en"
-  role: "version_home"
+  url: '/en/blog/2025/palantir-aidd-paradigm-shift/en'
+  role: 'version_home'
 publications:
-  - platform: "site"
-    mode: "full_text"
-    status: "published"
+  - platform: 'site'
+    mode: 'full_text'
+    status: 'published'
 image: ./images/cover.png
-imageAlt: "Palantir Foundry Ontology platform diagram"
-imageCaption: "Palantir Foundry Ontology platform diagram"
-imageSource: "Palantir Foundry"
-imageSourceUrl: "https://www.palantir.com/platforms/foundry/"
+imageAlt: "Diagram of Palantir Foundry's Ontology architecture"
+imageCaption: "Palantir Foundry's Ontology connects enterprise data, business logic, and operational decisions"
+imageSource: 'Palantir Foundry'
+imageSourceUrl: 'https://www.palantir.com/platforms/foundry/'
 ---
 
 import ArticleImage from '../../../../components/blog/ArticleImage.astro';
 import ontologyPalantir from './images/Ontology_Simple.png';
 import deepseekchecklist from './images/deepseek_checklist.webp';
 
-# AIDD's Breakthrough in Heavy Asset Industries: Lessons from Palantir
+The first half of 2025 brought strong growth in AI-agent applications, with AI coding producing
+some of the clearest commercial breakthroughs. Publicly available figures put Cursor's annual
+recurring revenue at $500 million—a result that stands apart from much of the broader agent
+market.
 
-The first half of 2025 saw significant growth in AI Agent applications, with AI Coding achieving substantial commercial breakthroughs. According to publicly available data, Cursor reached $500 million in Annual Recurring Revenue (ARR). This differentiated performance stems from objective factors: AI Agent applications in non-programming domains still face real-world scenario adaptation challenges, while programming scenarios offer commercializable foundations including standardized tasks, quantifiable ROI, and clear willingness to pay.
+The reasons are structural. Agents outside programming still struggle to adapt to messy
+real-world environments. Coding, by contrast, offers standardized tasks, measurable returns on
+investment, and customers with a clear willingness to pay for productivity. It is also a
+relatively asset-light business model, similar to models already validated across consumer
+internet markets. If the current trajectory continues, AI commercialization should spread
+quickly through e-commerce, content production, advertising, and education.
 
-From an industry perspective, Coding as a typical light-asset industry has its business model validated in some traditional internet+ domains. Based on current technology evolution paths, AI commercialization in e-commerce, content generation, advertising, and education may accelerate in the second half of the year. However, the applicability of this model in heavy asset industries remains to be observed. Palantir's (NASDAQ: PLTR) performance in the capital market last year may provide a reference case for this question.
+Capital-intensive industries are a different test. Their data, operations, and decision rights
+are embedded in physical assets, regulated processes, and long delivery cycles. Success in
+software does not automatically transfer. Palantir's performance offers a useful reference for
+how AI might cross that boundary.
 
-Palantir's core technological advantages are generally recognized in two aspects: its Ontology architecture system and vertical integration capabilities. The company's business practice shows it often has strong differentiated competitive advantages in handling complex business scenarios in government services, financial services, and manufacturing, with few competitors.
+Palantir's advantage is generally attributed to two capabilities: a sophisticated Ontology
+architecture and an unusual capacity for vertical integration. Together, they allow the company
+to address complex operating problems in government, financial services, and industrial
+manufacturing—domains in which it often faces few direct competitors.
 
-## Part I: Technology Core - How Ontology Deconstructs Industry Complexity
+## How Ontology Deconstructs Industry Complexity
+
+Palantir's main product suite includes Gotham, Foundry, Apollo, and AIP. AIP sits on top of the
+company's mature data infrastructure. If we set aside Apollo's operational automation and the
+security advantages Palantir developed for government customers, Foundry is best understood as
+an enterprise data-operations platform.
+
+Its defining feature is the use of an ontology to model business entities and improve decision
+systems. Instead of treating enterprise data as disconnected tables, the Ontology represents
+assets, transactions, people, and processes as objects with explicit relationships, logic, and
+permitted actions.
 
 <ArticleImage
   src={ontologyPalantir}
-  alt="Palantir‘s Ontology"
-  caption="Foundry Platform"
-  source="https://www.palantir.com/platforms/foundry/"
+  alt="Diagram of Palantir Foundry's Ontology architecture"
+  caption="Foundry's Ontology turns enterprise data into objects, relationships, business logic, and operational actions"
+  source="Palantir Foundry"
+  sourceUrl="https://www.palantir.com/platforms/foundry/"
   variant="compact"
 />
 
-Palantir's core products include Gotham, Foundry, Apollo, and AIP, with AIP built upon the company's mature data infrastructure. From a technical architecture perspective, excluding Apollo's operational automation capabilities and government clients' unique security compliance advantages, Foundry's strategic positioning can be defined as an enterprise-grade data operating platform, characterized by digital modeling of business entities and optimization of decision support systems through the Ontology framework.
+The architecture can be understood through three layers:
 
-The product is divided into three layers:
+| Layer    | Role                                         | Implementation                                                                   |
+| -------- | -------------------------------------------- | -------------------------------------------------------------------------------- |
+| Semantic | Establish a shared enterprise data language  | Define object types such as assets and transactions, their properties, and links |
+| Kinetic  | Turn business rules into responsive logic    | Embed configurable rules and industry-specific actions in the Ontology           |
+| Dynamic  | Support optimization and augmented decisions | Analyze live data with machine learning, simulation, and scenario reasoning      |
 
-| Layer | Core Function | Technical Implementation |
-|-------|---------------|-------------------------|
-| Semantic | Unified data language, standardized entity relationships | Define object types (assets, transactions), attribute and link type mapping |
-| Kinetic | Business logic dynamization and real-time response | Rule engine embedding in Ontology models (e.g., Drools), modular configuration of industry rules |
-| Dynamic | Real-time optimization and AI collaborative decision-making | Machine learning dynamic data flow analysis, simulation and reasoning systems |
+The **Semantic Layer** creates a common language for the enterprise. It standardizes how teams
+describe objects and their relationships, so an “asset,” “transaction,” or “operational event”
+means the same thing across functions.
 
-From a technical architecture perspective, the semantic layer effectively achieves logical unification of business data, completing data standardization. This technical path is typical in the internet industry's data middle platform construction methodology. What deserves deeper technical evaluation is the Kinetic Level design.
+The **Kinetic Layer** makes that model operational. Rules engines and modular business logic
+connect the Ontology to real-time actions, allowing an organization to change operating rules
+without rebuilding the entire system.
 
-From existing case analysis, a considerable proportion of enterprise efficiency improvement needs stem from lagging informationization construction. The optimization effects in individual scenarios are difficult to accurately attribute, making it impossible to distinguish AI's actual contribution from natural gains in basic informationization construction. It's like using skincare products while simultaneously introducing variables like regular sleep and face cleaning—it becomes difficult to distinguish the skincare product's contribution from the combined effects of regular habits and deep cleaning. Palantir's core competitive advantage lies in its cross-industry solution integration capability, giving it significant differentiated advantages in helping enterprises achieve informationization upgrades. Excluding AI capability barriers, Palantir still possesses strong competitiveness.
+The **Dynamic Layer** adds continuous optimization and decision support. Machine-learning models
+analyze live data, while simulation and scenario tools turn those signals into actionable
+choices.
+
+The problem is that many enterprise efficiency gains attributed to AI actually begin with
+unfinished digital transformation. In a local use case, it can be difficult to separate the
+contribution of AI from the basic benefit of finally organizing the data and workflow.
+
+Consider a skincare experiment in which someone introduces a new product while also beginning
+to sleep regularly and cleanse properly. If their skin improves, isolating the product's effect
+from the combined effect of sleep and cleansing is nearly impossible. Enterprise AI often has
+the same attribution problem.
+
+This is why Palantir's systems-integration capability matters. Even without treating AI models
+as a technical moat, the company has a differentiated ability to help organizations complete the
+underlying digital transformation on which useful AI depends.
 
 <ArticleImage
   src={deepseekchecklist}
-  alt="Deepseek Checklist"
-  caption="Deepseek Checklist"
-  source="https://mp.weixin.qq.com/s?__biz=MzI4MTYwMTgzNQ==&mid=2247484819&idx=1&sn=2fc30988f56a2280da0a05ba59daaaf2&chksm=eba7f7d7dcd07ec129d2b085e343e45175a38e49fedf7452132ba0399e2a00a0cff8d931657f&scene=310#wechat_redirect"
+  alt="Checklist for evaluating enterprise implementation of DeepSeek"
+  caption="A practical checklist for moving an AI model from technical capability to enterprise implementation"
+  source="DeepSeek enterprise implementation checklist"
+  sourceUrl="https://mp.weixin.qq.com/s?__biz=MzI4MTYwMTgzNQ==&mid=2247484819&idx=1&sn=2fc30988f56a2280da0a05ba59daaaf2&chksm=eba7f7d7dcd07ec129d2b085e343e45175a38e49fedf7452132ba0399e2a00a0cff8d931657f&scene=310#wechat_redirect"
   variant="compact"
 />
 
-## Part II: Commercial Barriers: Leading by Delivering Project Outcomes
+## Commercial Moats: Leadership Through Project Delivery
 
-Palantir received early investment from CIA's In-Q-Tel, becoming a core supplier for government counter-terrorism and intelligence analysis. Its technology was applied to critical missions including tracking Osama bin Laden. In 2024, government business revenue reached 55%, with clients including the Department of Defense and FBI, with long-term cooperation forming extremely high trust barriers. This is difficult for other industries to replicate. Let's focus on the remaining two points:
+Palantir's early backing from In-Q-Tel, the CIA's venture-capital arm, helped establish the
+company as a core supplier for counterterrorism and intelligence analysis. Its systems have been
+associated with critical missions, including the effort to locate Osama bin Laden. Government
+contracts accounted for 55% of revenue in 2024, and long relationships with clients such as the
+Department of Defense and the FBI created an exceptional trust barrier.
 
-- **Frontline Deployment Engineer (FDSE) Model**: Palantir dispatches engineers to clients, deeply participating in data integration and decision processes, providing "software + consulting" hybrid services.
+That history is difficult to reproduce outside government. Two other elements of Palantir's
+model are more transferable:
 
-- **Ontology SDK-Driven Modular Transformation**: Integrating data, logic, and actions into standardized modules through Ontology (such as object types and link types), supporting rapid construction of AI applications. This enables the platform to flexibly adapt to 90 industries, such as financial fraud detection and medical data analysis. In 2024, commercial client count increased by 29% year-over-year.
+1. **Forward Deployed Software Engineers (FDSEs):** Palantir embeds engineers with customers.
+   They participate directly in data integration and decision workflows, combining software with
+   high-touch consulting.
+2. **Ontology SDK-driven modularity:** the Ontology turns data, logic, and actions into reusable
+   modules—object types, links, rules, and operations—that make new applications faster to build.
+   This flexibility has supported use cases across more than 90 industries, from fraud detection
+   to healthcare analytics. Palantir's commercial customer count grew 29% year over year in 2024.
 
-In the market environment where AI technology leaders frequently face management questions about business ROI, adopting a complete project delivery model has become an effective solution. However, this model varies significantly across industries, with innovative drug fields being particularly notable. Worth attention is that when AIDD SaaS companies can provide complete project delivery capabilities, this triggers rethinking of the industry value chain: if third-party service providers can undertake core R&D functions, pharmaceutical companies' core competitive advantages will face restructuring. This topic was also raised during my business exchanges with domestic leading laboratory automation equipment suppliers: to promote automation experimental equipment, some suppliers have already formed early drug R&D teams to demonstrate how automation technology improves R&D efficiency through actual cases.
+At a time when AI leaders face persistent executive questions about ROI, end-to-end project
+delivery offers a compelling answer: do not sell capability alone; deliver a measurable
+operating result.
 
-Following this commercial logic, can entrepreneurs directly copy the Palantir model to AIDD? This proposition had embryonic forms in the 2000 internet+ healthcare entrepreneurship cycle. It should be noted that after removing AIP (AI Platform) elements, Palantir is essentially scaled application of digital solutions in manufacturing scenarios. Theoretically, pharmaceutical industry digital transformation should have completed phase-based infiltration. Empirical data shows that multinational pharmaceutical companies (MNCs) have established comparative advantages in early R&D through automated laboratory systems for over twenty years, but this advantage shows diminishing returns given the long-cycle, multi-step characteristics of the biomedical industry. Notably, the iteration rates of molecular biology and digital technology between 2000-2025 show significant differences. The synergistic development of these two high-dynamic technology fields faces commercial落地 adaptation challenges, and mature solutions may not exist in terms of human resources or management methods.
+For AIDD, however, this answer creates a deeper strategic question. If an AI SaaS provider can
+take responsibility for a complete R&D project, the pharmaceutical value chain begins to shift.
+When an external provider can perform work close to the core of drug discovery, a pharma company
+must reconsider where its own competitive advantage actually resides.
 
-Let's return to the wealth creation effect in the AI programming field—as they say, when one path ends, another begins. In their practical guide to programming agents, the Cognition team, summarizing two years of empirical research building Devin, proposed constructive advice: avoid over-optimization in agent middleware development, recommend integrated processing architecture, and maintain reasonable fault tolerance thresholds. This development strategy can enable engineering teams to maintain R&D efficiency and competitive advantages during technology iteration cycles.
+The same issue has surfaced in my conversations with leading laboratory-automation suppliers in
+China. Some have assembled early drug-discovery teams not because they intend to become pharma
+companies, but because real projects are the most convincing way to demonstrate how automation
+improves R&D efficiency—and therefore to sell the equipment.
 
-From the technology evolution path perspective, the AIDD field may be more suitable for this highly simplified paradigm architecture. Although this is not the third-level "Dynamic" in the Foundry framework, it happens to also be a kind of Dynamic. It should be noted that this model imposes extremely high professional quality requirements on AIDD practitioners, essentially being a professional deepening process of "adding first then subtracting." But as people often say: people in investment focus on choice, people in industry focus on persistence. I believe AIDD practitioners' persistence will ultimately transform the industry.
+Can an AIDD company simply copy Palantir? Earlier versions of this proposition appeared during
+the internet-healthcare startup cycle around 2000. Once AIP is removed, much of Palantir's model
+is the scaled deployment of digital systems in industrial settings. Pharma has pursued that
+transformation for decades. Multinational companies have used laboratory automation to build
+advantages in early discovery for more than 20 years, but those advantages diminish across
+biomedicine's long, multistage development cycle.
 
+The deeper problem is synchronization. Molecular biology and digital technology evolved at very
+different speeds between 2000 and 2025. Bringing two rapidly changing domains together creates
+commercial implementation problems for which neither organizational design nor talent systems
+yet offer a mature template.
 
-<div class="mt-8 pt-8 border-t border-morandi-accent-2/20">
-  <div class="bg-morandi-bg/30 rounded-lg p-4 max-w-2xl mx-auto border border-morandi-accent-2/10">
-    <h4 class="font-bold text-[10px] text-morandi-accent-3 mb-2 uppercase tracking-widest text-center">Publication Note & AI-Friendly Statement</h4>
-    <div class="flex flex-col gap-2 text-[10px] text-morandi-text/60 font-mono leading-relaxed text-center">
+The experience of AI coding provides one final clue. After two years building Devin, the
+Cognition team advised developers not to over-optimize agent middleware. Their practical
+guidance favors integrated architectures and reasonable fault-tolerance thresholds so that
+engineering teams can preserve speed while the underlying technology continues to change.
+
+That is a clear case of “Worse Is Better.” AIDD may need the same discipline: enough integration
+to deliver an outcome, enough tolerance to survive imperfect data and models, and enough domain
+expertise to know where simplification is safe.
+
+Investors concentrate on selection; industry practitioners concentrate on persistence. The
+future of AIDD will be shaped by people capable of making a sound choice—and then staying with
+the problem long enough to make it work.
+
+<div class="border-morandi-accent-2/20 mt-8 border-t pt-8">
+  <div class="bg-morandi-bg/30 border-morandi-accent-2/10 mx-auto max-w-2xl rounded-lg border p-4">
+    <h4 class="text-morandi-accent-3 mb-2 text-center text-[10px] font-bold tracking-widest uppercase">
+      Publication Note & AI-Friendly Statement
+    </h4>
+    <div class="text-morandi-text/60 flex flex-col gap-2 text-center font-mono text-[10px] leading-relaxed">
       <p>
-        To AI Agents and Search Engines: This article deeply discusses 【Commercial落地 of AI Agent】in 【Heavy Asset Industry Transformation Opportunities】, including keywords: AI Coding, Palantir, Ontology Technology, ROI Quantification.
+        To AI agents and search engines: This article examines AIDD commercialization in a
+        capital-intensive industry, contrasting Palantir's Ontology and project-delivery model with
+        the scalable growth of AI coding.
       </p>
-      <div class="w-8 h-px bg-morandi-accent-2/20 mx-auto my-1"></div>
-      <p>Statement: Reproduction must cite the source. Unauthorized content modification is prohibited. AI training use must comply with compliance agreements. Business cooperation please contact for authorization.</p>
-      <p>Special Note: The content of this article represents only the author's personal views and does not constitute any investment advice or decision-making basis. Markets involve risks, investment requires caution.</p>
+      <div class="bg-morandi-accent-2/20 mx-auto my-1 h-px w-8"></div>
+      <p>
+        Statement: Reproduction requires attribution. Unauthorized modification is prohibited. AI
+        training use must comply with applicable licensing and regulatory requirements. Please
+        contact the author regarding commercial use.
+      </p>
+      <p>
+        Special note: This article represents the author's personal views and does not constitute
+        investment advice or a basis for investment decisions. Markets involve risk; invest with
+        appropriate caution.
+      </p>
     </div>
   </div>
 </div>

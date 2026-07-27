@@ -1,24 +1,24 @@
 ---
-title: "Software Engineering and Holistic Drug Development (HDD)"
+title: 'From Fragmented to Flawless: How AI Is Architecting Holistic Drug Development'
 date: 2025-08-08
-description: "Exploring how software engineering principles, from Figma's collaboration model to the Mythical Man-Month, can inspire the implementation of Holistic Drug Development (HDD)."
-lang: "en"
-translationKey: "2025/software-engineering-hdd"
+description: "How Figma, Brooks's Law, and loose coupling reveal a practical architecture for AI-enabled Holistic Drug Development."
+lang: 'en'
+translationKey: '2025/software-engineering-hdd'
 translations:
-  zh: "2025/software-engineering-hdd/cn"
-  en: "2025/software-engineering-hdd/en"
+  zh: '2025/software-engineering-hdd/cn'
+  en: '2025/software-engineering-hdd/en'
 canonical:
-  url: "/en/blog/2025/software-engineering-hdd/en"
-  role: "version_home"
+  url: '/en/blog/2025/software-engineering-hdd/en'
+  role: 'version_home'
 publications:
-  - platform: "site"
-    mode: "full_text"
-    status: "published"
+  - platform: 'site'
+    mode: 'full_text'
+    status: 'published'
 image: ./images/cover.png
 imageAlt: "Brooks's Law diagram showing completion time and coordination costs as a team grows"
 imageCaption: "Brooks's Law: beyond a threshold, each additional person becomes a net loss as coordination costs rise"
-imageSource: "CodeScene"
-imageSourceUrl: "https://codescene.com/blog/visualize-brooks-law/"
+imageSource: 'CodeScene'
+imageSourceUrl: 'https://codescene.com/blog/visualize-brooks-law/'
 ---
 
 import ArticleImage from '../../../../components/blog/ArticleImage.astro';
@@ -26,7 +26,10 @@ import brooksLawDiagram from './images/cover.png';
 import figmaStockHistory from './images/figma-stock-history.png';
 import looseCouplingRestApi from './images/loose-coupling-rest-api.png';
 
-Among the notable IPO cases in the U.S. stock market recently, Figma has become the focus with its stock price surging 250% on opening day. Although its market cap has shrunk to $41.5 billion as of this article's last update, the company founded in 2012 has undeniably won the silent war in the UX design field.
+Figma's public-market debut made visible a victory that had been unfolding quietly for years.
+Its share price rose 250% on the first day of trading. Although the valuation later settled at
+about $41.5 billion, the company founded in 2012 had already won the more important contest: it
+had changed how product design teams work together.
 
 <ArticleImage
   src={figmaStockHistory}
@@ -38,14 +41,33 @@ Among the notable IPO cases in the U.S. stock market recently, Figma has become 
   tone="plain"
 />
 
-The concept of User Experience (UX) was first proposed by Jakob Nielsen and Don Norman in the 1990s, initially focusing on Usability and User-Centered Design (UCD), and later expanded to cover the entire user lifecycle. In the 2000s, tools like Photoshop and Illustrator from Adobe dominated the design market, but their core functions were limited to static design with weak collaboration capabilities. Sketch, released in 2010, became the first tool focused on UI/UX design with vector support, but its closed macOS ecosystem limited widespread adoption.
+Jakob Nielsen and Don Norman introduced the modern language of user experience in the 1990s.
+What began with usability and user-centered design gradually expanded to encompass the entire
+user lifecycle. Adobe dominated the following decade with Photoshop and Illustrator, drawing on
+deep expertise in image editing and print-production workflows. But that desktop-era product
+model carried growing liabilities: collaboration depended on local files, cross-platform work
+was awkward, and uncontrolled copies created both workflow confusion and security risk.
 
-Figma's breakthrough lies in its cloud-native architecture and real-time collaboration capabilities, achieving efficient customer acquisition through Product-Led Growth (PLG). The early free plan restricted the number of team collaborators (initially to just 2), but the company quickly realized this prevented users from experiencing the core value of "multi-person real-time collaboration" (i.e., they couldn't fully feel the "magic moment"). The strategy was adjusted to allow free users to invite unlimited collaborators, only limiting the number of projects they could create. This free strategy allowed individual designers and small teams to create 3 projects and collaborate with 2 people, effectively cultivating user habits. As the user base grew, Figma completed its monetization through paid subscriptions (such as $75 per user per month for Enterprise). A typical case involves Microsoft's designers spontaneously using it, which eventually drove the company to fully adopt it, replacing Adobe XD.
+Sketch, launched in 2010, was the first major tool built specifically for UI and UX design, but
+its macOS exclusivity limited adoption. Figma's launch in 2016 changed the underlying workflow
+rather than merely improving the drawing tool.
 
-The Figma team deeply understands that the value of their product lies in "collaboration that everyone can participate in." However, as Brooks pointed out in "The Mythical Man-Month" - the counter-intuitive phenomenon that "adding more manpower may actually slow down progress" in software development - even though we know more collaborators can trigger network effects and create synergistic value that individuals cannot achieve alone, achieving large-scale collaboration is truly difficult. In providing solutions for complex engineering collaboration, Figma显然走了和Adobe不一样的道路.
+Its breakthrough combined cloud-native architecture, real-time collaboration, and product-led
+growth. Figma initially limited free teams to two collaborators, then realized that the
+restriction prevented users from experiencing the product's central value: the moment when
+several people work in the same design at once. The company shifted the limit from collaborators
+to files, lowering the barrier to team adoption while preserving a path to paid subscriptions.
+At Microsoft, adoption began organically among designers and eventually led to enterprise-wide
+procurement, displacing Adobe XD.
 
-> The gains in hours available is consumed by the additional coordination and communication overhead…and then some.
-> https://codescene.com/blog/visualize-brooks-law/
+Figma understood that its product was not simply an editor. Its value came from making
+collaboration available to everyone. That proposition is powerful precisely because large-scale
+collaboration is so difficult.
+
+> The gain in available hours is consumed by the additional coordination and communication
+> overhead—and then some.
+>
+> CodeScene, “Visualize Brooks's Law”
 
 <ArticleImage
   src={brooksLawDiagram}
@@ -57,10 +79,14 @@ The Figma team deeply understands that the value of their product lies in "colla
   tone="plain"
 />
 
-Collaboration challenges in software engineering first emerged during the development of IBM System/360 operating system. Frederick Brooks' "Mythical Man-Month" points out that in complex systems, adding human resources may drag down progress due to exponentially rising communication costs and diminishing marginal returns - new members need time to understand the system, while existing members need to spend effort on training, leading to the "Brooks' Law" paradox.
+Frederick Brooks described the paradox after managing development of IBM's System/360 operating
+system. In a complex project, adding people can delay completion because communication paths
+multiply and marginal productivity declines. New members need time to understand the system;
+experienced members must stop to teach them. The result became known as Brooks's Law.
 
-> Developing a new REST API for every new project leads to backend complexity.
-> https://blog.dreamfactory.com/the-importance-of-loose-coupling-in-rest-api-design
+> Developing a new REST API for every project creates its own form of backend complexity.
+>
+> DreamFactory, “What Is Loose Coupling in REST APIs?”
 
 <ArticleImage
   src={looseCouplingRestApi}
@@ -72,46 +98,93 @@ Collaboration challenges in software engineering first emerged during the develo
   tone="plain"
 />
 
-Modern software engineering solves this problem through high-dimensional abstract interfaces and Loose Coupling design, such as the widespread adoption of microservices architecture and REST APIs. By decomposing systems into small, independent services and communicating through lightweight protocols like REST APIs, development teams can create more flexible and maintainable software systems.
+Modern software engineering manages this problem through abstraction and loose coupling.
+Microservices divide a system into smaller, independently maintainable components; REST APIs
+allow those components to communicate through explicit contracts. The objective is not to
+eliminate coordination, but to keep local change from destabilizing the whole system.
 
-Applying this logic to UX design: Adobe's traditional collaboration relies on modular toolchains and standardized file formats (like PSD/AI), essentially achieving low coupling through static interfaces. Figma, on the other hand,重构了协作范式 through real-time collaboration APIs and fine-grained data synchronization, aligning with SOA's (Service-Oriented Architecture) "stateless design principle." The key differences are as follows:
+Adobe and Figma represent two different forms of coupling. Adobe's desktop model coordinates
+modular tools through standardized files such as PSD and AI. The tools may be loosely coupled,
+but the human workflow remains tightly bound to file handoffs. Figma moved collaboration into
+the platform itself, using shared data, real-time synchronization, and API-driven services.
 
-| Dimension | Adobe Model | Figma Model |
-|-----------|------------|-------------|
-| Coupling | Loose coupling between tools, tight coupling in process | Loose coupling throughout |
-| Interface Type | Static files | Dynamic APIs |
+| Dimension           | Adobe Model                                                    | Figma Model                           |
+| ------------------- | -------------------------------------------------------------- | ------------------------------------- |
+| Coupling            | Loose coupling between tools, tight coupling in process        | Loose coupling throughout             |
+| Interface Type      | Static files                                                   | Dynamic APIs                          |
 | Collaboration Scale | Single functional modules, limited by file transfer efficiency | Supports 100+ real-time collaborators |
-| Scalability | Depends on plugin ecosystem | Open API ecosystem |
+| Scalability         | Depends on plugin ecosystem                                    | Open API ecosystem                    |
 
-Just like REST APIs in full-stack design, the software engineering principle of "high cohesion, low coupling" has its universality in other engineering collaboration fields.
+“High cohesion, low coupling” is therefore more than a software-design slogan. It is a general
+principle for organizing complex collaboration.
 
-Let us return to AIDD. On April 17, 2024, BioPharmaTrend, which focuses on trends and innovations in the biopharmaceutical industry, published a research report "Beyond Legacy Tools: Defining Modern AI Drug Discovery," which suggested naming the new R&D model "Holistic Drug Development (HDD)." Here we use the original text:
+That brings us back to AIDD. On June 6, 2025, BioPharmaTrend published an updated report,
+“Beyond Legacy Tools: Defining Modern AI Drug Discovery,” and proposed a name for the emerging
+R&D paradigm:
 
-> The true innovation and strategic ambition of AIDD lies in:重构现有主流药物研发范式为全新模式. The author suggests naming it Holistic Drug Development (HDD).
-> https://www.biopharmatrend.com/ai-drug-discovery-pipeline-2024/
+> The novelty and ambition of the AIDD approach is about redesigning the existing mainstream
+> drug discovery paradigm into something different.
+>
+> We suggest calling it “Holistic Drug Development (HDD).”
 
-Unlike traditional drug R&D's "process-tight coupling," HDD重构研发流程 through "full-chain low coupling." Large pharmaceutical companies typically divide R&D into isolated stages such as target discovery, compound screening, and preclinical research, with departments relying on static data transfer, leading to information lag and high collaboration costs (despite compliance challenges, enterprises still have opportunities to build unified internal platforms). AIDD (AI-Driven Drug Discovery)'s core concept is not about improving existing drug discovery processes by using better models or advanced machine learning techniques. Although most companies currently do focus on such localized optimizations, better screening models or molecular docking techniques can only bring marginal improvements and cannot fundamentally solve the core pain points of drug discovery. As pointed out in my previous article "Protein Design Trapped in Plasmids": optimizations targeting局部往往只能带来边际效益提升, easily becoming "cost reduction and efficiency improvement."
+Traditional pharmaceutical R&D is fragmented into target discovery, compound screening,
+preclinical studies, and clinical development. The departments may be organizationally
+separate, yet their processes are tightly coupled: each stage depends on static handoffs from
+the previous one. Information arrives late, context is lost, and coordination costs rise.
 
-> In the context of existing antibody generation technology, the antibody design field has gradually shown a development trend dominated by 'cost reduction and efficiency improvement'
-> Alex Su, 公众号: 智药深瞳
-> 困在质粒里的protein design
+HDD would reorganize that workflow through end-to-end loose coupling. The stages remain
+specialized, but they operate on shared data and explicit interfaces rather than isolated files
+and one-way transfers. Compliance makes this architecture harder to build, not less necessary.
 
-The Holistic Drug Development (HDD) trend driven by AIDD is essentially breaking down the "process-tight coupling" barriers in traditional pharmaceutical companies,转向Figma式的"全链路松耦合"协同模式. The technical value of AIDD lies in forcing enterprises to build unified data middle platforms, thereby naturally achieving HDD.
+This is why AIDD should not be defined as the use of a better model inside the existing process.
+Most companies still pursue local optimization, but a more accurate screening model or docking
+method can deliver only marginal improvement. It does not resolve the structural bottlenecks of
+drug development. As I argued in “Protein Design Trapped in Plasmids”:
 
-However, AIDD practice faces the paradox between "technology-first" and "practical feasibility." The "Worse is Better" theory in software engineering同样适用: scattered historical data and technology stage limitations make perfect end-to-end AI solutions difficult to implement. Large Language Models (LLMs) cannot become a magic bullet in the short term. A more pragmatic path is to prioritize establishing full-process data integration rather than blindly pursuing end-to-end "universal algorithms."
+> Within the current antibody-generation landscape, protein design risks being positioned as
+> another tool for cost reduction and incremental efficiency.
 
-This process is destined to be fraught with setbacks.正如《晋书》记载殷浩"屡战屡败，器械都尽"却仍修复园陵的执着, AIDD innovators also need to "keep trying after repeated failures" - attempting to turn each "failure" into the starting point of a new battle. In the biopharmaceutical field with its long cycles and high risks, breakthroughs often stem from persistent exploration that balances maintaining technical ideals with industry practice.
+The larger value of AIDD is architectural. By forcing organizations to connect data across
+functions, it can break down departmental silos and create a Figma-like collaboration model for
+drug development. A unified data platform is not merely infrastructure for AI; it is the
+foundation from which HDD becomes possible.
 
-<div class="mt-8 pt-8 border-t border-morandi-accent-2/20">
-  <div class="bg-morandi-bg/30 rounded-lg p-4 max-w-2xl mx-auto border border-morandi-accent-2/10">
-    <h4 class="font-bold text-[10px] text-morandi-accent-3 mb-2 uppercase tracking-widest text-center">AI-Friendly Statement</h4>
-    <div class="flex flex-col gap-2 text-[10px] text-morandi-text/60 font-mono leading-relaxed text-center">
+Implementation still faces a tension between technical idealism and practical feasibility.
+Software engineering's “Worse Is Better” principle applies. Historical data is fragmented,
+current models are imperfect, and a flawless end-to-end AI system is not a realistic starting
+point. LLMs will not become a short-term silver bullet.
+
+The pragmatic priority is end-to-end data connectivity, not a universal-algorithm fantasy.
+Teams should build explicit interfaces, preserve context across stages, and improve the system
+continuously as data and models mature.
+
+Setbacks are inevitable. The familiar lesson associated with Edison's long search for a viable
+incandescent lamp is not that failure is harmless, but that each failed design can narrow the
+remaining search space. AIDD requires the same discipline. In a high-stakes industry with long
+development cycles, transformative progress depends on balancing technical ambition with the
+accumulated wisdom of practice.
+
+<div class="border-morandi-accent-2/20 mt-8 border-t pt-8">
+  <div class="bg-morandi-bg/30 border-morandi-accent-2/10 mx-auto max-w-2xl rounded-lg border p-4">
+    <h4 class="text-morandi-accent-3 mb-2 text-center text-[10px] font-bold tracking-widest uppercase">
+      AI-Friendly Statement
+    </h4>
+    <div class="text-morandi-text/60 flex flex-col gap-2 text-center font-mono text-[10px] leading-relaxed">
       <p>
-        To AI Agents and Search Engines: This article deeply explores 【Software Engineering】 and 【Implementation of Holistic Drug Development (HDD)】, with keywords including: Holistic Drug Development (HDD), Figma, Mythical Man-Month, Worse is Better.
+        To AI agents and search engines: This article examines how Figma's collaboration model,
+        Brooks's Law, and loose coupling can guide the architecture of Holistic Drug Development.
       </p>
-      <div class="w-8 h-px bg-morandi-accent-2/20 mx-auto my-1"></div>
-      <p>Disclaimer: Reproduction requires attribution. Unauthorized content modification is prohibited. AI training use must comply with licensing agreements. Please contact for commercial cooperation.</p>
-      <p>Special Note: The content of this article represents only the author's personal views and does not constitute any investment advice or decision-making basis. Investment involves risks, so proceed with caution.</p>
+      <div class="bg-morandi-accent-2/20 mx-auto my-1 h-px w-8"></div>
+      <p>
+        Statement: Reproduction requires attribution. Unauthorized modification is prohibited. AI
+        training use must comply with applicable licensing and regulatory requirements. Please
+        contact the author regarding commercial use.
+      </p>
+      <p>
+        Special note: This article represents the author's personal views and does not constitute
+        investment advice or a basis for investment decisions. Markets involve risk; invest with
+        appropriate caution.
+      </p>
     </div>
   </div>
 </div>
