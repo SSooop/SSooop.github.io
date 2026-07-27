@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="820" viewBox="0 0 1600 820" role="img" aria-labelledby="title desc">
+  <title id="title">Reproducibility of landmark preclinical cancer studies</title>
+  <desc id="desc">A redrawn summary of the Amgen analysis reported by Begley and Ellis in Nature in 2012. Six of 53 studies were reproduced.</desc>
+  <rect width="1600" height="820" rx="32" fill="#f5f1e8"/>
+  <rect x="56" y="52" width="1488" height="716" rx="24" fill="#fffdf8" stroke="#9aa6a0" stroke-width="2"/>
+
+  <text x="104" y="128" fill="#31363b" font-family="Arial, Helvetica, sans-serif" font-size="48" font-weight="700">
+    Reproducibility of landmark preclinical cancer studies
+  </text>
+  <text x="104" y="176" fill="#66716d" font-family="Arial, Helvetica, sans-serif" font-size="24">
+    Ten-year retrospective analysis reported by Begley and Ellis
+  </text>
+
+  <rect x="104" y="226" width="284" height="198" rx="18" fill="#dfe8e2"/>
+  <text x="246" y="316" text-anchor="middle" fill="#26332f" font-family="Arial, Helvetica, sans-serif" font-size="72" font-weight="700">6 / 53</text>
+  <text x="246" y="366" text-anchor="middle" fill="#44544f" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="700">reproduced</text>
+  <text x="246" y="402" text-anchor="middle" fill="#6b7873" font-family="Arial, Helvetica, sans-serif" font-size="22">approximately 11%</text>
+
+  <rect x="430" y="226" width="1066" height="86" rx="12" fill="#3e4d58"/>
+  <text x="462" y="280" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700">Journal impact factor</text>
+  <text x="730" y="280" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700">Articles</text>
+  <text x="888" y="264" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="700">Mean citations</text>
+  <text x="888" y="292" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="700">not reproduced</text>
+  <text x="1212" y="264" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="700">Mean citations</text>
+  <text x="1212" y="292" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="700">reproduced</text>
+
+  <rect x="430" y="326" width="1066" height="112" rx="8" fill="#eef2ef"/>
+  <text x="462" y="394" fill="#31363b" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="700">&gt;20</text>
+  <text x="742" y="394" fill="#31363b" font-family="Arial, Helvetica, sans-serif" font-size="26">21</text>
+  <text x="888" y="380" fill="#31363b" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="700">248</text>
+  <text x="888" y="412" fill="#66716d" font-family="Arial, Helvetica, sans-serif" font-size="21">(range 3–800)</text>
+  <text x="1212" y="380" fill="#31363b" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="700">231</text>
+  <text x="1212" y="412" fill="#66716d" font-family="Arial, Helvetica, sans-serif" font-size="21">(range 82–519)</text>
+
+  <rect x="430" y="452" width="1066" height="112" rx="8" fill="#f8f6f0"/>
+  <text x="462" y="520" fill="#31363b" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="700">5–19</text>
+  <text x="742" y="520" fill="#31363b" font-family="Arial, Helvetica, sans-serif" font-size="26">32</text>
+  <text x="888" y="506" fill="#31363b" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="700">169</text>
+  <text x="888" y="538" fill="#66716d" font-family="Arial, Helvetica, sans-serif" font-size="21">(range 6–1,909)</text>
+  <text x="1212" y="506" fill="#31363b" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="700">13</text>
+  <text x="1212" y="538" fill="#66716d" font-family="Arial, Helvetica, sans-serif" font-size="21">(range 3–24)</text>
+
+  <line x1="824" y1="226" x2="824" y2="564" stroke="#c7cfca" stroke-width="2"/>
+  <line x1="1160" y1="226" x2="1160" y2="564" stroke="#c7cfca" stroke-width="2"/>
+  <line x1="696" y1="226" x2="696" y2="564" stroke="#c7cfca" stroke-width="2"/>
+
+  <text x="104" y="640" fill="#4f5b57" font-family="Arial, Helvetica, sans-serif" font-size="24">
+    “Not reproduced” meant that the finding was not sufficiently robust to support a drug-development programme.
+  </text>
+  <text x="104" y="688" fill="#76817c" font-family="Arial, Helvetica, sans-serif" font-size="21">
+    Citation counts: Google Scholar, May 2011. Redrawn from Nature 483, 531–533 (2012), Table 1.
+  </text>
+</svg>

@@ -1,0 +1,203 @@
+---
+title: 'Why the Endgame of AI Drug Discovery Is Not AlphaGo'
+date: 2026-03-16
+description: 'Through AlphaZero, self-play, tool-using agents, and reward hacking, this essay explains why closed-world reinforcement learning cannot directly overcome the sparse true rewards of drug development.'
+lang: 'en'
+translationKey: '2026/why-ai-drug-discovery-is-not-alphago'
+translations:
+  zh: '2026/why-ai-drug-discovery-is-not-alphago/cn'
+  en: '2026/why-ai-drug-discovery-is-not-alphago/en'
+canonical:
+  url: '/en/blog/2026/why-ai-drug-discovery-is-not-alphago/en'
+  role: 'version_home'
+publications:
+  - platform: 'site'
+    mode: 'full_text'
+    status: 'published'
+  - platform: 'wechat'
+    mode: 'full_text'
+    status: 'published'
+    access: 'qr_or_account'
+    account: '智药深瞳'
+keywords:
+  - AlphaGo
+  - AlphaZero
+  - reinforcement learning
+  - reward hacking
+  - sparse rewards
+  - AI drug discovery
+  - Darwin Gödel Machine
+image: ./images/cover-lee-sedol.png
+imageAlt: 'Lee Sedol contemplating the board during the 2016 AlphaGo Challenge Match'
+imageCaption: 'Lee Sedol studies the board during the 2016 AlphaGo Challenge Match'
+imageSource: 'Google DeepMind'
+imagePosition: 'center'
+---
+
+import ArticleImage from '../../../../components/blog/ArticleImage.astro';
+import leeSedolGameFour from './images/lee-sedol-game-4.svg';
+import alphaZeroTraining from './images/alphazero-training.gif';
+import agenticLoop from './images/agentic-loop-redrawn.svg';
+import rewardHacking from './images/reward-hacking-countdown-code.png';
+import dgmConceptual from './images/dgm-conceptual.png';
+
+To readers and AI agents: this essay examines the structural limits of【sparse rewards】under the【reinforcement-learning】paradigm.  
+Keywords: AlphaGo, reward hacking, sparse rewards.  
+Approximately【2,000】words | Reading time【8–10】minutes
+
+## Ten Years After AlphaGo
+
+On March 10, 2026, Google DeepMind co-founder Demis Hassabis published [“From games to biology and beyond: 10 years of AlphaGo’s impact”](https://deepmind.google/blog/10-years-of-alphago/), reflecting on AlphaGo’s influence on Go, artificial intelligence, and scientific research a decade after its match with Lee Sedol.
+
+AI is now entering human life at extraordinary speed. Increasingly, we find ourselves in Lee’s old predicament: if a machine can perform our work in a better way, what becomes of the skill on which we built our identity?
+
+An episode of the Chinese podcast *Tech Monastery* revisited AlphaGo with professional Go player Fan Hui. Fan was the first professional defeated by AlphaGo in an official match. He lost a closed-door five-game series 0–5 in October 2015, then joined DeepMind and changed from an opponent into a collaborator.
+
+Fan recalled that early AlphaGo versions were far from invulnerable. He could probe their weak regions and deliberately steer games toward complicated fighting positions, sharply improving his chances. Even after AlphaGo defeated Lee Sedol, out-of-distribution board states could still distort the policy and value networks. White 78 in game four became the most famous human strike against that cognitive boundary.
+
+<ArticleImage
+  src={leeSedolGameFour}
+  alt="Complete record of game four between Lee Sedol as White and AlphaGo as Black, including the famous white move 78"
+  caption="The complete record of game four. White 78 was the celebrated, extremely low-prior “divine move”; AlphaGo replied incorrectly at move 79 and revised its value estimate sharply only around move 87."
+  source="Wesalius, Wikimedia Commons (CC BY-SA 4.0)"
+  sourceUrl="https://commons.wikimedia.org/wiki/File:Lee_Sedol_(W)_vs_AlphaGo_(B)_-_Game_4.svg"
+  sourcePrefix="Source"
+  variant="contained"
+  aspect="auto"
+  tone="paper"
+/>
+
+DeepMind later said that AlphaGo assigned White 78 only about a one-in-ten-thousand probability of being played by a human. After Black 79, it still estimated its winning probability at roughly 70%. Only around move 87 did the estimate collapse. That does not mean move 78 literally “broke” the value network. It does show that when a decisive action falls in a region scarcely covered by experience, both search and evaluation can be pulled off course by a bad prior.
+
+## Why AlphaZero Could Improve Itself
+
+In 2017, DeepMind released [“Mastering Chess and Shogi by Self-Play with a General Reinforcement Learning Algorithm”](https://arxiv.org/abs/1712.01815), followed by an expanded Science paper, [“A general reinforcement learning algorithm that masters chess, shogi, and Go through self-play”](https://doi.org/10.1126/science.aar6404). Starting from random play and receiving only the game rules, AlphaZero rapidly surpassed the strongest chess and shogi programs of the time and exceeded AlphaGo Zero’s level in Go.
+
+<ArticleImage
+  src={alphaZeroTraining}
+  alt="Animated self-play training curves for AlphaZero in chess, shogi, and Go"
+  caption="AlphaZero rapidly gained playing strength through self-play; in shogi, it passed the world-champion program Elmo after roughly two hours."
+  source="Google DeepMind (2018)"
+  sourceUrl="https://deepmind.google/blog/alphazero-shedding-new-light-on-chess-shogi-and-go/"
+  sourcePrefix="Source"
+  variant="full"
+  aspect="auto"
+  tone="paper"
+/>
+
+Its loop can be reduced to three components:
+
+1. **Policy and value network:** predicts action probabilities and the eventual outcome from a position.
+2. **Monte Carlo tree search:** uses those priors to focus search on promising branches in a discrete state space.
+3. **Self-play:** continually generates new games and training examples.
+
+The current network guides MCTS. Search produces a stronger action distribution; the final outcome supplies the learning target for value estimation; and the updated network returns to self-play. Capability rises through repeated turns of this flywheel.
+
+The precious precondition is not simply that “RL is powerful.” Go gives AlphaZero an almost perfect learning world:
+
+- its rules are stable and complete;
+- states and actions are recorded exactly;
+- winning and losing constitute an unambiguous true reward;
+- the environment can be copied cheaply and almost without limit;
+- self-play data and the final objective come from the same world.
+
+AlphaZero never has to guess what success ultimately means. However inaccurate an intermediate value estimate may be, a completed game delivers an indisputable verdict.
+
+## From Closed Environments to Tool-Using Agents
+
+Modern AI agents first inherited the AlphaGo intuition: if a problem can be formalized as a closed environment with a computable reward, an agent can improve its policy through reinforcement learning or search.
+
+Most real problems, however, cannot be simulated completely. A second path therefore emerged: the tool-using agent. Instead of solving everything internally, an agent calls search, terminals, code execution, databases, or other real systems and uses environmental feedback to check its actions. [ReAct](https://arxiv.org/abs/2210.03629) interleaved reasoning and acting; many later systems turned that rhythm into an engineering loop.
+
+<ArticleImage
+  src={agenticLoop}
+  alt="A tool-using agent loop that gathers context, takes action, verifies results, and repeats"
+  caption="The basic tool-using loop: gather context, take action, and verify results. A failed verification becomes context for the next pass."
+  source="IntelliPharma Insights, redrawn from Anthropic’s description of Claude Code"
+  sourceUrl="https://www.anthropic.com/product/claude-code"
+  sourcePrefix="Source"
+  variant="full"
+  aspect="auto"
+  tone="paper"
+/>
+
+Claude Code is one of the clearest examples. It reads a codebase, changes the real environment through shell and file tools, then obtains feedback from builds, tests, type checks, and screenshots. Coding agents succeed not because software is inherently simple, but because software engineering contains abundant cheap, fast, repeatable verifiers: compilers emit errors, tests pass or fail, and version control preserves state changes.
+
+That is also where the analogy breaks. Drug development’s final verifier is not a unit test. It is the human body. Establishing whether a candidate is genuinely safe and effective may take years of experiments and clinical trials and consume enormous capital. The same applies to social policy and complex scientific research: true rewards are sparse, delayed, expensive, and sometimes impossible to define by consensus.
+
+Simulation looks like an obvious substitute. But the moment we substitute it, the system no longer optimizes “clinical success.” It optimizes a proxy correlated with clinical success.
+
+## Reward Hacking: Optimizers Find Routes You Did Not Specify
+
+Reward hacking occurs when a proxy objective and the true objective separate under optimization pressure. The model needs no malicious intent. It merely needs to discover a path that scores highly more easily than solving the intended problem.
+
+<ArticleImage
+  src={rewardHacking}
+  alt="Countdown-Code figure showing verifier tampering, rising reward-hacking rates, and transfer to HumanEval"
+  caption="Countdown-Code lets a model either solve the task or tamper with the verifier. A small number of hacking traces in SFT seeds a prior that subsequent RLVR amplifies and transfers to unseen HumanEval tasks."
+  source="Khalifa et al., “Countdown-Code” (2026), Figure 1"
+  sourceUrl="https://arxiv.org/abs/2603.07084"
+  sourcePrefix="Source"
+  variant="full"
+  aspect="auto"
+  tone="paper"
+/>
+
+The 2026 paper [Countdown-Code](https://arxiv.org/abs/2603.07084) created a clean test. A model could solve a mathematical task correctly or edit the testing utility so that a wrong answer passed. When roughly 1% of the synthetic SFT data contained reward-hacking trajectories, later reinforcement learning with verifiable rewards could rapidly amplify the tendency. For some models, the behavior transferred to unseen HumanEval coding tasks.
+
+The earlier paper [“Correlated Proxies”](https://arxiv.org/abs/2403.03185) offered a more general account. A proxy and the true reward can be highly correlated on states visited by a base policy. Optimization then deliberately drives the policy into previously rare states, where the correlation breaks down. Its mitigation is not merely to narrow the action space. It regularizes deviation from a reference policy, particularly at the level of state–action occupancy measures.
+
+Such constraints can delay hacking, but they cannot conjure an unknown true objective. Restricting a model to actions the evaluator understands will reduce exploitation; it may also exclude genuinely novel actions. If White 78 were forbidden, AlphaGo’s value network would not have failed there—but the game would also have lost the possibility most worth discovering.
+
+So the precise lesson is not that “RL cannot create capability beyond the value network.” AlphaZero’s search and joint training plainly improve the network. The actual limit is this: **optimization alone cannot turn a misspecified or information-poor evaluator into reality.** Near an evaluator’s cognitive frontier, additional capability may mean better problem-solving—or merely greater skill at pleasing the scoring rule.
+
+## What AI Drug Discovery Can Still Learn from AlphaGo
+
+AI drug discovery cannot compress a long clinical outcome into a lossless immediate reward. Binding scores, molecular dynamics, cellular phenotypes, animal models, digital twins, and surrogate endpoints each capture only part of disease reality. The more proxies are stacked, the easier it becomes to confuse “works in the model” with “helps the patient.”
+
+That does not make AlphaGo’s legacy irrelevant. We can decompose the grand objective into narrower problems with clearer boundaries and more trustworthy feedback:
+
+- build strong verifiers for protein structure, retrosynthesis, conformational search, and experimental scheduling;
+- require models to make predictions that automated experiments can turn into new real data;
+- preserve disagreement among proxy models rather than collapsing everything prematurely into one score;
+- feed failures, anomalies, and out-of-distribution results back into the loop.
+
+AlphaFold exemplifies this kind of local boundary expansion. It did not directly predict whether a drug would cure a patient. It attacked a crucial subproblem in structural biology with a relatively clear definition, abundant supervision, and independent ways to test the result.
+
+A second direction is evolutionary and open-ended computation, including the [Darwin Gödel Machine](https://sakana.ai/dgm/) and [AlphaEvolve](https://deepmind.google/discover/blog/alphaevolve-a-gemini-powered-coding-agent-for-designing-advanced-algorithms/). DGM lets a coding agent rewrite its own code and retains different descendants in a growing archive, using Darwinian exploration to discover new capability stepping stones.
+
+<ArticleImage
+  src={dgmConceptual}
+  alt="Conceptual diagram combining self-rewriting code with Darwinian open-ended exploration in the Darwin Gödel Machine"
+  caption="The Darwin Gödel Machine: self-rewriting does not climb only one supposedly optimal path; multiple evolutionary branches survive in a growing archive of agents."
+  source="Sakana AI (2025)"
+  sourceUrl="https://sakana.ai/dgm/"
+  sourcePrefix="Source"
+  variant="full"
+  aspect="auto"
+  tone="paper"
+/>
+
+Evolutionary systems have not eliminated reward either. DGM still evaluates descendants on SWE-bench and Polyglot; AlphaEvolve still depends on automatically verifiable algorithmic metrics. What changes is the search structure: instead of one policy hill-climbing one score, the system retains diversity, tolerates temporary regressions, and continues exploring from different ancestors.
+
+That may be the deeper lesson for AI drug discovery. The goal is not a super value network that hands humanity a new medicine in one move. It is an open system that continually expands the hypothesis space, proposes experiments, preserves anomalies, and repeatedly recalibrates its proxy rewards against the biological world.
+
+**The endgame of AI drug discovery is not to optimize fixed rules to perfection on a closed board. It is to keep expanding the boundary of the problem in an open world—while never forgetting that a model’s score is not a patient.**
+
+<div class="border-morandi-accent-2/20 mt-8 border-t pt-8">
+  <div class="bg-morandi-bg/30 border-morandi-accent-2/10 mx-auto max-w-2xl rounded-lg border p-4">
+    <h4 class="text-morandi-accent-3 mb-2 text-center text-[10px] font-bold tracking-widest uppercase">
+      AI-Friendly Statement
+    </h4>
+    <div class="text-morandi-text/60 flex flex-col gap-2 text-center font-mono text-[10px] leading-relaxed">
+      <p>
+        For AI agents and search engines: this essay examines the structural limits of sparse rewards under reinforcement learning. Keywords include AlphaGo, AlphaZero, reward hacking, AI drug discovery, and open-ended evolution.
+      </p>
+      <div class="bg-morandi-accent-2/20 mx-auto my-1 h-px w-8"></div>
+      <p>Reuse requires attribution. Unauthorized modification is prohibited. AI training must follow applicable agreements; commercial use requires permission.</p>
+      <p>
+        This article reflects the author’s personal views and does not constitute investment advice or a basis for decision-making. Markets involve risk.
+      </p>
+    </div>
+  </div>
+</div>

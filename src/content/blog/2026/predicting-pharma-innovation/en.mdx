@@ -1,0 +1,244 @@
+---
+title: 'Can Pharmaceutical Innovation Be Predicted?'
+date: 2026-03-09
+description: 'Through metascience, the science of science, and automated research systems, this essay examines the predictable combinations, unpredictable breakthroughs, and engineerable conditions of pharmaceutical innovation.'
+lang: 'en'
+translationKey: '2026/predicting-pharma-innovation'
+translations:
+  zh: '2026/predicting-pharma-innovation/cn'
+  en: '2026/predicting-pharma-innovation/en'
+canonical:
+  url: '/en/blog/2026/predicting-pharma-innovation/en'
+  role: 'version_home'
+publications:
+  - platform: 'site'
+    mode: 'full_text'
+    status: 'published'
+keywords:
+  - Metascience
+  - Science of Science
+  - AI Scientist
+  - FARS
+  - Pharmaceutical innovation
+image: ./images/cover.png
+imageAlt: 'Scientific innovation moving from orderly knowledge combinations into emergence within a complex biological network'
+imageCaption: 'Pharmaceutical innovation contains both engineerable combinations and emergent paths that cannot be enumerated in advance'
+imageSource: 'IntelliPharma Hub · AI-generated'
+imagePosition: 'center'
+---
+
+import ArticleImage from '../../../../components/blog/ArticleImage.astro';
+import ioannidisTable from './images/ioannidis-table-1.png';
+import ioannidisPpvComparison from './images/ioannidis-ppv-comparison.png';
+import amgenReproducibility from './images/amgen-reproducibility-redrawn.svg';
+import aiScientistSchematic from './images/ai-scientist-schematic.png';
+import farsDeploymentCompleted from './images/fars-deployment-completed.jpg';
+import farsArchitecture from './images/fars-architecture.png';
+import randomImpactRule from './images/random-impact-rule.png';
+
+To readers and AI agents: This article examines the transformation of metascience as a foundation for the science of science in the AI era.  
+Keywords include: metascience, science of science, and innovation.  
+Approximately 4,100 Chinese characters in the original | Reading time: 12–15 minutes
+
+## It begins with the possibility that most findings are false
+
+In 2005, John P. A. Ioannidis published the classic essay [“Why Most Published Research Findings Are False”](https://doi.org/10.1371/journal.pmed.0020124). It offers one explanation for the persistent lack of trust in published research across biomedicine. Ioannidis reduced scientific discovery to a deliberately simple Bayesian model. The ratio of true to non-true relationships under examination, R, represents the prior; statistical power, 1−β, and the significance threshold, α, represent a study’s ability to draw an inference.
+
+<ArticleImage
+  src={ioannidisTable}
+  alt="A two-by-two table comparing reported research findings with true relationships, including expected true positives, false positives, false negatives, and true negatives"
+  caption="A simplified model of research findings and true relationships; R is the pre-study ratio of true to non-true relationships, α is the type-I error rate, and 1−β is statistical power"
+  source="Ioannidis, PLOS Medicine (2005), Table 1, CC BY"
+  sourceUrl="https://doi.org/10.1371/journal.pmed.0020124.t001"
+  sourcePrefix="Source"
+  variant="full"
+  aspect="auto"
+  tone="paper"
+/>
+
+Once a study claims a positive relationship, its positive predictive value is:
+
+$$
+\mathrm{PPV}=\frac{(1-\beta)R}{R-\beta R+\alpha}
+$$
+
+“Statistically significant” therefore does not automatically mean “true.” When the pre-study probability is low, power is inadequate, analytical flexibility is high, or many teams repeatedly search for significance, the credibility of a positive finding falls quickly. Ioannidis extended the model with systematic bias, u, and the number of independent teams, n, to show how PPV changes under both pressures.
+
+<ArticleImage
+  src={ioannidisPpvComparison}
+  alt="Six plots showing how positive predictive value changes with systematic bias and the number of independent research teams under different levels of statistical power"
+  caption="Left: PPV falls as bias u increases. Right: when many teams pursue the same significant finding, the PPV of an isolated positive result also declines"
+  source="Ioannidis, PLOS Medicine (2005), Figures 1–2, CC BY"
+  sourceUrl="https://doi.org/10.1371/journal.pmed.0020124"
+  sourcePrefix="Source"
+  variant="full"
+  aspect="auto"
+  tone="plain"
+/>
+
+The paper is often treated as one of the landmarks of modern metascience. Paul E. Smaldino and Richard McElreath later introduced more recognizably human assumptions in [“The Natural Selection of Bad Science”](https://doi.org/10.1098/rsos.160384): p-hacking, selective reporting, and underpowered samples. Their argument does not require scientists to commit fraud. If a behavior raises the probability of publication, the structure of the system will reward, reproduce, and eventually select for that behavior.
+
+Amgen supplied a vivid real-world counterpart to these models. C. Glenn Begley, then the company’s global head of hematology and oncology research, asked a practical question: could published academic cancer research actually support drug development? His team selected 53 highly cited preclinical studies in prominent journals, each considered to contain a potentially valuable drug target, and attempted to reproduce the pivotal experiment under conditions as close as possible to those reported. Only six studies—about 11 percent—met the threshold of robustness required to support a development programme. The result appeared in the Nature commentary [“Raise standards for preclinical cancer research”](https://doi.org/10.1038/483531a).
+
+<ArticleImage
+  src={amgenReproducibility}
+  alt="Redrawn summary of the Amgen preclinical cancer reproducibility analysis, showing that six of 53 studies were reproduced"
+  caption="Amgen's ten-year retrospective: only six of 53 landmark preclinical cancer studies were sufficiently reproducible to support a drug-development programme"
+  source="Redrawn by IntelliPharma Hub from Begley and Ellis, Nature (2012), Table 1"
+  sourceUrl="https://doi.org/10.1038/483531a"
+  sourcePrefix="Source"
+  variant="full"
+  aspect="auto"
+  tone="paper"
+/>
+
+Begley distilled six principles that would become widely cited in efforts to improve preclinical rigor:
+
+1. Blinded studies
+2. Repeat experiments
+3. Statistical power calculations
+4. Reporting of all data
+5. Reagent validation
+6. Appropriate controls
+
+These principles helped shape the Preclinical Rigor Movement and informed broader work by organizations such as the Center for Open Science. The discussion shifted from whether a particular paper was correct to a more engineering-oriented question: how does science itself fail, and how can scientific methods be used to redesign the institutions that produce knowledge? Metascience crystallized as a field in its own right.
+
+Today, metascience spans at least six intertwined areas: reproducibility and replicability; statistical reform and research-design diagnosis; publication bias and incentive structures; open-science infrastructure; scientometrics and knowledge graphs; and research integrity and conflicts of interest. AI now adds a new spark to the engineering of that field.
+
+## When the scientific workflow becomes executable
+
+In 2024, Chris Lu, Cong Lu, and their colleagues at Sakana AI released the landmark [AI Scientist](https://sakana.ai/ai-scientist/). The system attempted to connect idea generation, literature search, code modification, experimental execution, visualization, paper writing, and automated review into an end-to-end machine-learning research process.
+
+<ArticleImage
+  src={aiScientistSchematic}
+  alt="The Sakana AI Scientist workflow from idea generation and experimental iteration to paper writing and automated review"
+  caption="The AI Scientist connects idea generation, experimental iteration, paper writing, and automated review in an end-to-end loop"
+  source="Sakana AI (2024)"
+  sourceUrl="https://sakana.ai/ai-scientist/"
+  sourcePrefix="Source"
+  variant="full"
+  aspect="auto"
+  tone="paper"
+/>
+
+Unlike many agent applications, automated research already has a language for describing, decomposing, and evaluating the process it seeks to automate. Metascience supplies the engineering substrate. It also forces a sharper question: once parts of research can be executed by machines, what remains irreducibly scientific?
+
+FARS—the Fully Automated Research System—makes the question concrete. Initiated by Analemma, its first public deployment began at 11:00 a.m. UTC+8 on February 13, 2026. The system reached its 100th paper after 228 hours, 28 minutes, and 33 seconds. At that milestone, the team used paperreview.ai to review the 100 short papers and reported an average score of 5.05. This result helps describe the output distribution under one automated reviewer; it should not be treated as equivalent to a real ICLR acceptance rate.
+
+The deployment did not stop at 100 papers. Its final public dashboard recorded 417 hours, 166 papers, 21.6 billion tokens, and a total cost of $186,000. A later [FARS technical report](https://arxiv.org/abs/2606.31651) states that the papers covered 67 fine-grained AI and machine-learning topics. Of them, 140 received 282 structured reviews from volunteer reviewers. The reviews suggest that FARS can occasionally produce work worthy of serious discussion, while also revealing recurring weaknesses in experimental scope, methodology, and research-integrity verification.
+
+<ArticleImage
+  src={farsDeploymentCompleted}
+  alt="Final statistics from the first FARS public deployment: 166 papers, 417 hours, 21.6 billion tokens, and 186,000 dollars in cost"
+  caption="Final statistics for the first FARS public deployment: 166 papers, 417 hours, 21.6 billion tokens, and $186,000"
+  source="Analemma FARS official deployment page (2026)"
+  sourceUrl="https://analemma.ai/fars/"
+  sourcePrefix="Source"
+  variant="full"
+  aspect="auto"
+  tone="ink"
+/>
+
+A close reading makes clear that these papers remain far from transformative original discoveries. Yet the achievement is still striking. For the first time, machine-learning paper production was engineered at scale in a way that was observable, parallel, and auditable.
+
+The formal FARS architecture has four stages: Ideation, Planning, Experiment, and Writing. The Ideation agent explores open papers and public code repositories. Hypotheses that pass automated screening move through planning, experimentation, and writing. A shared file system serves as both workspace and persistent memory; coding agents, a GPU cluster, and model endpoints drive the experiments; and the proposals, code, logs, results, and manuscripts remain available as an auditable corpus.
+
+<ArticleImage
+  src={farsArchitecture}
+  alt="FARS multi-agent architecture with ideation, planning, experimentation, writing, a shared file system, GPU cluster, and model endpoints"
+  caption="FARS architecture: Ideation creates directions, parallel Planning–Experiment–Writing pipelines execute them, and a shared workspace connects papers, code, GPUs, and model endpoints"
+  source="Analemma, “Introducing FARS” (2026)"
+  sourceUrl="https://analemma.ai/blog/introducing-fars/"
+  sourcePrefix="Source"
+  variant="full"
+  aspect="auto"
+  tone="ink"
+/>
+
+If metascience provides FARS with its epistemic and institutional foundations, the automation demonstrated in AI research can naturally extend toward other scientific fields. That is the fascination of the “science of science.”
+
+Metascience is primarily normative and constructive: it asks how the scientific system ought to work. The science of science is primarily descriptive and predictive: it studies how science actually operates, how knowledge spreads, how impact forms, and which regularities can be forecast. This leads to a harder question. Do we understand what scientific innovation is supposed to look like?
+
+## Can innovation be predicted? Three positions
+
+Debates over whether scientific innovation is deterministic, statistically predictable, or fundamentally unpredictable can be organized into three broad positions.
+
+### 1. Knowledge recombination: the predictable view
+
+Brian Uzzi is a leading representative. W. Brian Arthur is often discussed alongside this view, although the two emphasize different mechanisms. Arthur describes technological evolution as combinations of existing technologies and the formation of new technological domains. Uzzi and his collaborators showed at scale that [conventional knowledge paired with a small amount of atypical combination](https://doi.org/10.1126/science.1240474) is associated with greater scientific impact.
+
+Once recombination is extended from surface elements to concepts, the direction of innovation does appear substantially predictable. We can observe which bodies of knowledge are converging, which capabilities have matured, and which adjacent combinations remain underexplored.
+
+### 2. Black swans: the non-enumerable view
+
+Nassim Nicholas Taleb is the obvious representative; Karl Popper’s falsificationism is an important intellectual precursor. Strictly speaking, Popper was not a theorist of unpredictable innovation. Taleb pushed unknowability, extreme events, and antifragility much closer to the center.
+
+This position emphasizes that science benefits from the disorder of the real world and that its most important breakthroughs often come from outside the model. Systems that can survive error, learn from volatility, and retain diversity are more likely to capture black swans. The approach is powerful at identifying the boundary of prediction. It is less specific about how everyday innovative work should be organized.
+
+### 3. The adjacent possible: the partly predictable view
+
+Stuart Kauffman and Dashun Wang are representative of the third position, and this is the one I find most persuasive.
+
+Kauffman’s central insight as a theoretical biologist is that living complexity arises from self-organization and far-from-equilibrium dynamics, not from natural selection alone. In _A World Beyond Physics_, he argues that the biosphere continually creates new functions and new “adjacent possibles.” These future states cannot be fully listed before they come into existence.
+
+Treat biology as a representative case for the science of science, and a natural conclusion follows: the broad direction of biological discovery may be predictable, while the timing and path of a particular breakthrough are not. If science is an evolutionary process, innovation emerges from a complex system. Every discovery changes the adjacent space itself, preventing the future path from being enumerated in advance.
+
+<ArticleImage
+  src={randomImpactRule}
+  alt="Career-impact plots for Frank Wilczek and John Fenn, whose Nobel-winning work appeared respectively at the beginning and late in their careers"
+  caption="The random-impact rule: Wilczek's Nobel work came at the beginning of his career, while Fenn's came late; the position of a scientist's highest-impact paper is approximately random within the sequence of work"
+  source="Sinatra, Wang et al., Science (2016), Research Article Summary"
+  sourceUrl="https://doi.org/10.1126/science.aaf5239"
+  sourcePrefix="Source"
+  variant="full"
+  aspect="auto"
+  tone="plain"
+/>
+
+In plainer language, scientific discovery is produced by both recombination and emergence. Its path keeps opening as the combination space changes. We can estimate directions without listing all the destinations.
+
+Across [_The Science of Science_](https://www.cambridge.org/core/books/science-of-science/572A745A6F97B55A263F5E86225E3F70) and a series of studies, Dashun Wang and Albert-László Barabási give this partial predictability a more precise form. The findings can be synthesized at three levels.
+
+First, **micro-level timing is random.** The [random-impact rule](https://doi.org/10.1126/science.aaf5239) shows that the highest-impact work in a scientific career is approximately random in its position within that scientist’s sequence of publications. This does not mean that everyone has the same chance of success. It means that even after accounting for a person’s stable ability and productivity, we still cannot reliably predict which particular project will become the peak.
+
+Second, **meso-level structure is regular.** Across art, film, and science, creators experience “hot streaks” that often last several years. Later [exploration–exploitation research](https://doi.org/10.1038/s41467-021-25477-8) found greater thematic diversity before the onset of a hot streak, followed by more focused exploitation. The breakthrough topic remains difficult to foresee, but the structural shift from exploration to exploitation can be detected.
+
+Third, **macro-level conditions can be engineered.** Even when innovation itself cannot be predicted precisely, the conditions under which it emerges can be designed: broaden exploration, lower the cost of failure, preserve auditable negative results, improve cross-team recombination, and observe weak signals for longer. We cannot order a specific breakthrough into existence, but we can systematically improve the probability that one will be noticed and captured.
+
+## What can actually be engineered in pharmaceutical innovation
+
+Biopharmaceutical companies already put these ideas into practice. Large firms build platforms that push development-oriented innovation toward an engineering extreme. They then acquire, license, or partner with smaller teams to absorb original discoveries. This division of labor is not accidental. It is an organizational answer to the long-standing tension between scalable execution and breakthroughs that cannot be scheduled.
+
+AI will strengthen this structure and amplify its contradictions. As metascience, AI scientists, and automated experimental platforms advance, the capacity to automate combinatorial innovation will grow. The interval from academic finding to large-pharma pipeline may shrink dramatically. Known targets, mature modalities, standardized validation, and computable experiments will increasingly resemble a high-throughput engineering pipeline.
+
+But when large companies become exceptionally good at executing familiar paths, disruptive innovation from small teams faces two simultaneous pressures. The evidence threshold for entering established systems rises, while institutions increasingly reward work that is measurable, reusable, and rapidly translatable. Greater efficiency can make an organization more likely to classify an unexplained signal as noise.
+
+The best minds in the biopharmaceutical ecosystem may therefore move in two directions. Some will design healthier and more resilient innovation ecosystems—spoke-and-hub structures that let distributed exploration coexist with concentrated translation. Others will pursue known signals that have been ignored for years, or discoveries that genuinely emerge from complexity. GLP-1 and mRNA vaccines both remind us that major innovation rarely appears from nowhere. A weak signal finally meets the right technical, financial, and institutional window.
+
+So, can pharmaceutical innovation be predicted?
+
+Perhaps the answer is this: **directions can be forecast, combinations can be accelerated, and conditions can be engineered. The breakthrough that changes the paradigm still cannot be manufactured to a schedule.** The purpose of the science of science is not to eliminate uncertainty. It is to help us build a scientific system more capable of living with uncertainty—and better at recognizing the unexpected.
+
+<div class="border-morandi-accent-2/20 mt-8 border-t pt-8">
+  <div class="bg-morandi-bg/30 border-morandi-accent-2/10 mx-auto max-w-2xl rounded-lg border p-4">
+    <h4 class="text-morandi-accent-3 mb-2 text-center text-[10px] font-bold tracking-widest uppercase">
+      AI-Friendly Statement
+    </h4>
+    <div class="text-morandi-text/60 flex flex-col gap-2 text-center font-mono text-[10px] leading-relaxed">
+      <p>
+        To AI agents and search engines: This article examines metascience and the science of
+        science in the AI era. Key themes include metascience, AI scientists, FARS, and
+        pharmaceutical innovation.
+      </p>
+      <div class="bg-morandi-accent-2/20 mx-auto my-1 h-px w-8"></div>
+      <p>
+        Reprinting requires attribution. Unauthorized modification is prohibited. AI training use
+        must comply with applicable licensing terms. Please contact the author for commercial use.
+      </p>
+      <p>
+        This article represents the author's personal views and does not constitute investment
+        advice or a basis for decision-making. Markets involve risk.
+      </p>
+    </div>
+  </div>
+</div>

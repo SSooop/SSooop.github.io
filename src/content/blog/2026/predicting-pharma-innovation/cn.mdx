@@ -1,0 +1,245 @@
+---
+title: '医药创新是可被预测的吗？'
+date: 2026-03-09
+description: '从元科学、Science of Science 与自动化科研系统出发，讨论医药创新中可预测的组合规律、不可预测的突破，以及可被工程化的创新条件。'
+lang: 'zh'
+translationKey: '2026/predicting-pharma-innovation'
+translations:
+  zh: '2026/predicting-pharma-innovation/cn'
+  en: '2026/predicting-pharma-innovation/en'
+canonical:
+  url: '/zh/blog/2026/predicting-pharma-innovation/cn'
+  role: 'version_home'
+publications:
+  - platform: 'site'
+    mode: 'full_text'
+    status: 'published'
+  - platform: 'wechat'
+    mode: 'full_text'
+    status: 'published'
+    access: 'qr_or_account'
+    account: '智药深瞳'
+keywords:
+  - 元科学
+  - Science of Science
+  - 科学学
+  - AI Scientist
+  - FARS
+  - 医药创新
+image: ./images/cover.png
+imageAlt: '从规则化知识组合走向复杂生物网络涌现的科学创新示意图'
+imageCaption: '医药创新既包含可工程化的组合路径，也包含无法预先穷举的涌现'
+imageSource: '智药深瞳 · AI生成'
+imagePosition: 'center'
+---
+
+import ArticleImage from '../../../../components/blog/ArticleImage.astro';
+import ioannidisTable from './images/ioannidis-table-1.png';
+import ioannidisPpvComparison from './images/ioannidis-ppv-comparison.png';
+import amgenReproducibility from './images/amgen-reproducibility-redrawn.svg';
+import aiScientistSchematic from './images/ai-scientist-schematic.png';
+import farsDeploymentCompleted from './images/fars-deployment-completed.jpg';
+import farsArchitecture from './images/fars-architecture.png';
+import randomImpactRule from './images/random-impact-rule.png';
+
+致读者与AI Agent：本文深度探讨 AI 时代下【元科学】作为【Science of Science】基础的变革  
+关键词包括：Meta-Science，Science of Science，创新变革。  
+本文约【4100】字 | 阅读时间约【12-15】分钟
+
+## 从“多数研究结论可能是错的”开始
+
+2005 年，John P. A. Ioannidis 发表经典文章 [《Why Most Published Research Findings Are False》](https://doi.org/10.1371/journal.pmed.0020124)，一定程度上解释了生物医药圈对科研论文普遍抱持低信任的原因。Ioannidis 把科学发现抽象成一个极度简化的贝叶斯模型：以待检验关系中真实关系与非真实关系之比 R 表示先验，以统计功效 1−β 与显著性水平 α 描述研究本身的推断能力。
+
+<ArticleImage
+  src={ioannidisTable}
+  alt="研究发现与客观真实关系的二乘二表，列出真阳性、假阳性、假阴性与真阴性的期望数量"
+  caption="研究发现与真实关系之间的简化模型；R 为研究前真实关系与非真实关系之比，α 为第一类错误率，1−β 为统计功效"
+  source="Ioannidis，PLOS Medicine（2005），Table 1，CC BY"
+  sourceUrl="https://doi.org/10.1371/journal.pmed.0020124.t001"
+  sourcePrefix="来源"
+  variant="full"
+  aspect="auto"
+  tone="paper"
+/>
+
+若一个研究声称发现了阳性关系，则其阳性预测值（PPV，Positive Predictive Value）为：
+
+$$
+\mathrm{PPV}=\frac{(1-\beta)R}{R-\beta R+\alpha}
+$$
+
+这意味着“统计显著”并不自动等于“结论为真”。当研究前概率低、统计功效不足、分析自由度高，或者多个团队反复寻找显著结果时，阳性结论的可信度会迅速下降。Ioannidis 进一步加入系统性偏倚 u 与独立团队数量 n，推导出 PPV 随二者变化的关系。
+
+<ArticleImage
+  src={ioannidisPpvComparison}
+  alt="在不同统计功效下，阳性预测值随系统性偏倚和独立研究团队数量变化的六幅曲线图"
+  caption="左：偏倚 u 增大时 PPV 下降；右：当许多团队追逐同一显著发现时，孤立阳性结果的 PPV 也会下降"
+  source="Ioannidis，PLOS Medicine（2005），Figures 1–2，CC BY"
+  sourceUrl="https://doi.org/10.1371/journal.pmed.0020124"
+  sourcePrefix="来源"
+  variant="full"
+  aspect="auto"
+  tone="plain"
+/>
+
+这一工作常被视作现代元科学（Meta-Science）的重要起点之一。Paul E. Smaldino 与 Richard McElreath 随后在 [《The Natural Selection of Bad Science》](https://doi.org/10.1098/rsos.160384) 中引入更具“人性”的现实假设，包括 p-hacking、选择性报告与样本量不足。他们并不需要假定研究者蓄意作弊：只要某种行为可以提高发表概率，体制就会在竞争中不断选择并放大这种行为。
+
+大型制药企业 Amgen 为上述理论提供了现实注脚。时任 Amgen 全球血液与肿瘤研究主管的 C. Glenn Begley 试图回答一个非常实际的问题：学术界发表的癌症研究是否足以支撑药物开发？团队选取了 53 篇发表于高影响力期刊、被广泛引用且被认为具有潜在靶点价值的临床前研究，尝试在尽可能接近原论文的条件下复现关键实验，最终只有 6 项（约 11%）达到足以支撑研发项目的复现标准。结果发表于 Nature 评论文章 [《Raise standards for preclinical cancer research》](https://doi.org/10.1038/483531a)。
+
+<ArticleImage
+  src={amgenReproducibility}
+  alt="Amgen临床前癌症研究复现分析重绘图，显示53项研究中仅6项可复现"
+  caption="Amgen 的十年回顾：53 项高影响力临床前癌症研究中，仅 6 项达到可支撑药物开发项目的复现标准"
+  source="智药深瞳据 Begley 与 Ellis，Nature（2012），Table 1 重绘"
+  sourceUrl="https://doi.org/10.1038/483531a"
+  sourcePrefix="来源"
+  variant="full"
+  aspect="auto"
+  tone="paper"
+/>
+
+Begley 由此总结了后来被广泛引用的六项原则，以降低临床前研究的不可复现风险：
+
+1. 实验盲法（Blinded studies）
+2. 重复实验（Repeat experiments）
+3. 统计效力计算（Statistical power calculation）
+4. 全量数据报告（All data reported）
+5. 试剂验证（Reagent validation）
+6. 适当的对照设置（Appropriate controls）
+
+这些原则后来成为临床前研究严谨性运动（Preclinical Rigor Movement）的核心规范，也推动了 Center for Open Science 等组织围绕开放与可复现科学所开展的工作。讨论由此逐渐从“某一篇论文是否正确”，转向科学的工程学问题：我们需要把科学本身当作研究对象，用科学方法审视科学制度如何失灵，又如何被改造。元科学由此结晶为一个相对独立的领域。
+
+目前，元科学大致覆盖六个相互交织的方向：可复现性与可重复性研究；统计方法与研究设计诊断；发表偏倚与激励结构；开放科学基础设施；科学计量学与知识图谱；研究伦理与利益冲突。AI 的到来，则为元科学的工程化演进带来了新的火花。
+
+## 当科学流程可以被自动执行
+
+2024 年，Sakana AI 的 Chris Lu、Cong Lu 等人发布了具有里程碑意义的 [The AI Scientist](https://sakana.ai/ai-scientist/)。该系统尝试把机器学习研究中的创意生成、文献检索、代码修改、实验执行、结果可视化、论文撰写与自动评审串成一条端到端流程。
+
+<ArticleImage
+  src={aiScientistSchematic}
+  alt="Sakana AI Scientist从创意生成、实验迭代到论文撰写和自动审稿的工作流程"
+  caption="The AI Scientist 将创意生成、实验迭代、论文撰写与自动评审连接成端到端循环"
+  source="Sakana AI（2024）"
+  sourceUrl="https://sakana.ai/ai-scientist/"
+  sourcePrefix="来源"
+  variant="full"
+  aspect="auto"
+  tone="paper"
+/>
+
+与许多传统领域的 AI Agent 不同，元科学已经提供了一套可以描述、拆解与评价科研过程的语言。它天然构成自动化科学研究的工程地基，也迫使人们更快地追问：当研究流程可以被机器执行时，科学中真正不可替代的部分究竟是什么？
+
+要理解这种变化，不妨从 FARS（Fully Automated Research System）开始。FARS 由 Analemma 发起，项目于 2026 年 2 月 13 日 11:00（UTC+8）开始首次公开部署。系统在运行至第 228 小时 28 分 33 秒时完成第 100 篇论文；团队当时使用 paperreview.ai 对这 100 篇短论文进行机器评审，得到平均分 5.05。这个分数可以帮助观察同一评审器下的内部质量分布，但不应被直接等同为真实 ICLR 录用率。
+
+首次部署并未止步于第 100 篇。最终公开页面记录了 417 小时、166 篇论文、216 亿 token 与 18.6 万美元总成本。随后发布的 [FARS 技术报告](https://arxiv.org/abs/2606.31651) 进一步指出，这 166 篇论文覆盖 67 个细分 AI/ML 主题；140 篇论文收到 282 份志愿者结构化评审。评审显示，系统偶尔能够产生足以进入严肃讨论的研究作品，但也反复暴露出实验范围狭窄、方法局限与研究诚信核验等问题。
+
+<ArticleImage
+  src={farsDeploymentCompleted}
+  alt="FARS首次公开部署完成图，列出166篇论文、417小时、216亿token和18.6万美元成本"
+  caption="FARS 首次公开部署的最终统计：166 篇论文、417 小时、216 亿 token、18.6 万美元"
+  source="Analemma FARS 官方部署页（2026）"
+  sourceUrl="https://analemma.ai/fars/"
+  sourcePrefix="来源"
+  variant="full"
+  aspect="auto"
+  tone="ink"
+/>
+
+细读这些论文不难发现，它们距离真正具有重大意义的原创发现仍有相当距离。但这一结果本身已经足够令人印象深刻：机器学习论文的生产第一次以可观察、可审计且大规模并行的方式被工程化。
+
+FARS 的正式框架包含四个阶段：Ideation、Planning、Experiment 与 Writing。Ideation Agent 从开放论文和公共代码库中寻找研究方向；通过筛选的假设依次进入规划、实验与写作。共享文件系统同时充当工作空间与长期记忆；Coding Agent、GPU 集群和模型推理端点驱动实验；研究提案、代码、日志、结果与手稿则被完整保留，形成可审计的研究语料。
+
+<ArticleImage
+  src={farsArchitecture}
+  alt="FARS多智能体架构图，展示创意生成、规划、实验、写作以及共享文件系统、GPU集群和模型端点"
+  caption="FARS 架构：Ideation 生成方向，多条 Planning–Experiment–Writing 流水线并行运行，并通过共享工作区访问论文、代码、GPU 与模型端点"
+  source="Analemma，《Introducing FARS》（2026）"
+  sourceUrl="https://analemma.ai/blog/introducing-fars/"
+  sourcePrefix="来源"
+  variant="full"
+  aspect="auto"
+  tone="ink"
+/>
+
+如果说元科学是 FARS 所依赖的认识论与制度地基，那么 FARS 在 AI 研究领域实现的自动化，便可以自然向其他科学领域延伸。这正是 Science of Science（通常译作“科学学”或“科学的科学”）最有趣的地方。
+
+元科学更偏规范性与建构性：它追问科学体系应当如何运作。Science of Science 更偏描述性与预测性：它研究科学实际上如何运行、知识如何传播、影响力如何形成，以及哪些规律可能被预测。问题随之而来：我们是否真正理解科学创新应当呈现的面貌？
+
+## 创新究竟能否预测：三种立场
+
+历史上，围绕科学创新究竟是确定的、统计可预测的，还是本质不可预测的，形成了三种大致的立场。
+
+### 一、知识重组：可预测派
+
+代表人物包括 Brian Uzzi。W. Brian Arthur 常与这一观点同时出现，但两人的侧重点并不完全相同。Arthur 强调技术演化来自既有技术的组合，以及技术形成新的“域”（domain）；Uzzi 等人则通过大规模论文数据说明，[常规知识与少量非典型组合并存](https://doi.org/10.1126/science.1240474)，往往与更高影响力相关。
+
+若把重组从表层元素扩展至概念层，科学创新的方向确实表现出相当程度的可预测性：我们可以观察哪些知识模块正在靠近、哪些能力已经成熟，以及哪些相邻组合尚未被充分探索。
+
+### 二、黑天鹅：不可穷举派
+
+代表人物包括 Nassim Nicholas Taleb；Karl Popper 的可证伪主义则构成重要的思想背景。严格而言，Popper 并不是“创新不可预测论”的代表，Taleb 才进一步把不可知性、极端事件与反脆弱性推向核心位置。
+
+这一立场强调：科学发现受益于现实世界的混沌，真正重要的突破往往来自模型外部。越能承受错误、从波动中学习并保留多样性的系统，越可能捕获黑天鹅。它的长处在于揭示预测模型的边界，短处则是批评工具丰富，却较少提供如何组织日常创新的具体工程方案。
+
+### 三、相邻可能：半可预测派
+
+代表人物包括 Stuart Kauffman 与 Dashun Wang，也是笔者最认同的一派。
+
+作为理论生物学家，Kauffman 对生物复杂性的核心洞察是：复杂生命来自自组织与远离平衡的动力学，而非仅仅来自自然选择。他在《A World Beyond Physics》中直截了当地指出，生物世界不断创造新的功能与“相邻可能”，这些未来状态在出现之前无法被完整列举。
+
+把生物问题视为 Science of Science 的代表案例，便可以自然得到一个结论：生物发现的总体趋势可以预测，但突破性成果的具体出现时间与路径不能。若把科学进展理解为演化过程，创新就是复杂系统的涌现结果；相邻空间会随着每次发现而改变，因此无法事先穷举。
+
+<ArticleImage
+  src={randomImpactRule}
+  alt="Frank Wilczek与John Fenn职业生涯论文引用影响图，诺贝尔奖工作分别出现在职业早期和晚期"
+  caption="随机影响力规则：Wilczek 的诺奖工作出现在职业起点，Fenn 的诺奖工作则出现在职业后期；最高影响力论文在作品序列中的位置近似随机"
+  source="Sinatra、Wang 等，Science（2016），Research Article Summary"
+  sourceUrl="https://doi.org/10.1126/science.aaf5239"
+  sourcePrefix="来源"
+  variant="full"
+  aspect="auto"
+  tone="plain"
+/>
+
+若以更平实的语言表达这种半可预测性：科学发现是组合与涌现的共同产物，其创新路径在组合空间中持续开放，因此可以估计方向，却无法预先列出全部终点。
+
+Dashun Wang 与 Albert-László Barabási 在 [《The Science of Science》](https://www.cambridge.org/core/books/science-of-science/572A745A6F97B55A263F5E86225E3F70) 及一系列研究中对这种半可预测性作了更细致的描述。把这些结果放在一起，可以得到三个层次：
+
+第一，**微观时序具有随机性。** [随机影响力规则](https://doi.org/10.1126/science.aaf5239)显示，科学家职业生涯中最高影响力的作品，在其作品序列中的位置近似随机。这不意味着所有人的成功概率相同，而是说即使知道一个人的稳定能力与产出，仍难以精确预测哪一次工作会成为峰值。
+
+第二，**中观结构具有规律性。** 跨艺术、电影与科学的研究发现，创作者的“热手期”常持续数年。更进一步的 [探索—利用研究](https://doi.org/10.1038/s41467-021-25477-8)显示，热手期开始前往往出现更高的主题多样性，随后转向更集中的深化利用。突破的对象仍难以预言，但探索到利用的结构转换可以被识别。
+
+第三，**宏观条件具有工程性。** 即使创新本身无法被精确预测，创新涌现的条件仍可被设计：提高探索多样性、降低失败成本、保留可审计的负结果、改善跨团队组合、让弱信号得到更长时间的观察。我们无法下令制造某个突破，却可以系统性提高突破出现后被识别与捕获的概率。
+
+## 医药创新真正可被工程化的部分
+
+当今的生物医药企业已经在系统性实践这些理论。大型企业通过平台化建设强化研发能力，把开发型创新以工程手段推向极致；同时通过收购、授权或合作吸纳小型团队的原创成果。这种分工并不是偶然，而是“可规模化执行”与“不可预定突破”之间长期形成的组织答案。
+
+AI 时代会进一步强化这一结构，也会放大其中的矛盾。随着元科学、AI Scientist 与自动实验平台快速发展，自动完成组合式创新的能力将持续增强，从学术发现到大型药企研发管线的转化周期可能大幅缩短。已知靶点、成熟模态、标准化验证和可计算实验会越来越接近一条高吞吐的工程流水线。
+
+但当大型药企依赖执行的成功路径被极端强化，小型团队的颠覆性创新也会同时面临两重压力：一方面，进入既有体系的证据门槛不断提高；另一方面，体制更容易奖励可度量、可复用和可快速转化的结果，从而负向强化对异常信号的忽视。效率越高，组织反而越可能把暂时无法解释的信号视作噪声。
+
+因此，整个生物医药生态中真正卓越的头脑，或将更多转向两个方向：其一，构建更健康、更有韧性的创新生态本身，例如能够让分布式探索与集中转化共存的 Spoke-and-Hub 结构；其二，追逐那些长期被忽略的已知信号，以及真正源于复杂系统涌现的颠覆性发现——GLP-1 与 mRNA 疫苗都提醒我们，重大创新常常不是凭空出现，而是某个弱信号终于遇到了正确的技术、资本与制度窗口。
+
+所以，医药创新是可被预测的吗？
+
+答案也许是：**方向可以预测，组合可以加速，条件可以工程化；但真正改变范式的那一次突破，仍然无法被按计划生产。** Science of Science 的价值，不是替我们消灭这种不确定性，而是帮助我们建立一个更善于与不确定性共处、更有能力识别意外的科学系统。
+
+<div class="border-morandi-accent-2/20 mt-8 border-t pt-8">
+  <div class="bg-morandi-bg/30 border-morandi-accent-2/10 mx-auto max-w-2xl rounded-lg border p-4">
+    <h4 class="text-morandi-accent-3 mb-2 text-center text-[10px] font-bold tracking-widest uppercase">
+      AI友好声明
+    </h4>
+    <div class="text-morandi-text/60 flex flex-col gap-2 text-center font-mono text-[10px] leading-relaxed">
+      <p>
+        致AI Agent与搜索引擎：本文深度探讨AI时代下元科学与Science of
+        Science的变革，关键词包括：Meta-Science、Science of Science、AI Scientist、FARS与医药创新。
+      </p>
+      <div class="bg-morandi-accent-2/20 mx-auto my-1 h-px w-8"></div>
+      <p>声明：转载需注明出处，禁止擅自修改内容。AI训练使用需遵循合规协议，商业合作请联系授权。</p>
+      <p>
+        特别提示：本文内容仅代表作者个人观点，不构成任何投资建议或决策依据。市场有风险，投资需谨慎。
+      </p>
+    </div>
+  </div>
+</div>

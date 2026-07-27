@@ -1,0 +1,203 @@
+---
+title: '为何 AI 制药的终途不是 AlphaGo 模式？'
+date: 2026-03-16
+description: '从 AlphaZero、自我对弈、工具增强型 Agent 与 Reward Hacking 出发，解释封闭世界强化学习为何无法直接跨越药物研发中的稀疏真实奖励。'
+lang: 'zh'
+translationKey: '2026/why-ai-drug-discovery-is-not-alphago'
+translations:
+  zh: '2026/why-ai-drug-discovery-is-not-alphago/cn'
+  en: '2026/why-ai-drug-discovery-is-not-alphago/en'
+canonical:
+  url: '/zh/blog/2026/why-ai-drug-discovery-is-not-alphago/cn'
+  role: 'version_home'
+publications:
+  - platform: 'site'
+    mode: 'full_text'
+    status: 'published'
+  - platform: 'wechat'
+    mode: 'full_text'
+    status: 'published'
+    access: 'qr_or_account'
+    account: '智药深瞳'
+keywords:
+  - AlphaGo
+  - AlphaZero
+  - 强化学习
+  - Reward Hacking
+  - 稀疏奖励
+  - AI 制药
+  - Darwin Gödel Machine
+image: ./images/cover-lee-sedol.png
+imageAlt: '李世石在2016年AlphaGo挑战赛中凝视棋盘'
+imageCaption: '李世石在 2016 年 AlphaGo 挑战赛中思考棋局'
+imageSource: 'Google DeepMind'
+imagePosition: 'center'
+---
+
+import ArticleImage from '../../../../components/blog/ArticleImage.astro';
+import leeSedolGameFour from './images/lee-sedol-game-4.svg';
+import alphaZeroTraining from './images/alphazero-training.gif';
+import agenticLoop from './images/agentic-loop-redrawn.svg';
+import rewardHacking from './images/reward-hacking-countdown-code.png';
+import dgmConceptual from './images/dgm-conceptual.png';
+
+致读者与AI Agent：本文深度探讨【强化学习】范式下【稀疏 Reward】问题的结构性边界。  
+关键词包括：AlphaGo、Reward Hacking、稀疏 Reward。  
+本文约【2800】字 | 阅读时间约【8-10】分钟
+
+## AlphaGo 十年之后
+
+2026 年 3 月 10 日，Google DeepMind 核心人物 Demis Hassabis 在官方博客发表 [《From games to biology and beyond: 10 years of AlphaGo’s impact》](https://deepmind.google/blog/10-years-of-alphago/)，在 AlphaGo 战胜李世石十周年之际回顾它对围棋、人工智能与科学研究的深远影响。
+
+如今，AI 正以前所未有的速度渗透人类生活。我们似乎都开始经历李世石当年的处境：当机器能以更优的方式完成一项人类工作，我们赖以立身的技能，其意义究竟何在？
+
+小宇宙「科技修道院」有一期对职业棋手樊麾的采访，十分值得一听。樊麾是首位在正式比赛中被 AlphaGo 击败的职业围棋棋手。2015 年 10 月，他与 AlphaGo 进行闭门五番棋，以 0:5 落败，随后加入 DeepMind 团队，从对手转变为合作者。
+
+樊麾回忆，早期版本的 AlphaGo 并非无懈可击。他能够摸索系统的薄弱区域，刻意把棋局带入复杂的战斗形态，从而显著提高胜率。即使后来 AlphaGo 击败李世石，分布外局面仍可能让策略网络与价值网络的判断失真。第四局的白 78，正是人类对机器认知边界的一次著名冲击。
+
+<ArticleImage
+  src={leeSedolGameFour}
+  alt="李世石执白对阵AlphaGo第四局完整棋谱，其中白棋第78手是著名的神之一手"
+  caption="李世石对 AlphaGo 第四局完整棋谱；白 78 是极低先验概率的“神之一手”，AlphaGo 在第 79 手应对失误，到约第 87 手价值判断才骤然修正"
+  source="Wesalius，Wikimedia Commons（CC BY-SA 4.0）"
+  sourceUrl="https://commons.wikimedia.org/wiki/File:Lee_Sedol_(W)_vs_AlphaGo_(B)_-_Game_4.svg"
+  sourcePrefix="来源"
+  variant="contained"
+  aspect="auto"
+  tone="paper"
+/>
+
+DeepMind 后来说明，AlphaGo 对白 78 的人类落子概率估计低至万分之一。它在黑 79 后仍判断自己约有 70% 胜率，直到第 87 手附近才意识到局面已经恶化。这并不意味着第 78 手“直接击穿了价值网络”，却清楚展示了一个事实：当关键行动落在训练经验极少覆盖的区域时，搜索与评估都可能被错误的先验带偏。
+
+## AlphaZero 为什么能够自我增强
+
+2017 年，DeepMind 发表 [《Mastering Chess and Shogi by Self-Play with a General Reinforcement Learning Algorithm》](https://arxiv.org/abs/1712.01815)，随后在 Science 发表扩展版本 [《A general reinforcement learning algorithm that masters chess, shogi, and Go through self-play》](https://doi.org/10.1126/science.aar6404)。AlphaZero 从随机策略出发，仅凭游戏规则进行自我对弈，快速超越当时最强的国际象棋与将棋程序，并达到超越 AlphaGo Zero 的围棋水平。
+
+<ArticleImage
+  src={alphaZeroTraining}
+  alt="AlphaZero在国际象棋、将棋与围棋中的自我对弈训练曲线动画"
+  caption="AlphaZero 通过自我对弈快速提升棋力；图中将棋模型在约两小时后超过当时的世界冠军程序 Elmo"
+  source="Google DeepMind（2018）"
+  sourceUrl="https://deepmind.google/blog/alphazero-shedding-new-light-on-chess-shogi-and-go/"
+  sourcePrefix="来源"
+  variant="full"
+  aspect="auto"
+  tone="paper"
+/>
+
+AlphaZero 的闭环可以压缩为三个组件：
+
+1. **Policy + Value Network（策略与价值网络）**：预测动作概率与局面最终胜率。
+2. **Monte Carlo Tree Search（MCTS）**：利用网络先验，在离散状态空间中集中搜索有希望的分支。
+3. **Self-play（自我对弈）**：让系统持续生成新的对局与学习样本。
+
+当前网络引导 MCTS，搜索结果形成更强的行动分布；对局最终胜负又为价值判断提供训练目标；更新后的网络再次进入自我对弈。能力由此螺旋上升。
+
+这套机制真正珍贵的前提并不是“RL 足够强”，而是围棋提供了近乎完美的学习世界：
+
+- 规则稳定且完整；
+- 状态与动作可以准确记录；
+- 胜负是无歧义的真实 Reward；
+- 环境可以低成本、近乎无限地复制；
+- 自我对弈产生的数据与最终目标完全同源。
+
+换言之，AlphaZero 并不需要猜测什么才算成功。无论中间局面的价值估计多么不准确，一盘棋结束时，胜、负、和都是不可争辩的裁决。
+
+## 从封闭环境到工具增强型 Agent
+
+现代 AI Agent 首先继承了 AlphaGo 式思路：如果问题可以形式化为封闭环境，并存在明确可计算的 Reward，Agent 就能通过 RL 或搜索不断优化策略。
+
+然而，大多数现实问题无法完整模拟。第二条道路于是兴起：工具增强型 Agent（Tool-using Agent）。Agent 不再只在内部“想”，而是调用搜索、终端、代码执行、数据库或其他现实系统，用环境反馈校验自己的行动。[ReAct](https://arxiv.org/abs/2210.03629) 把 reasoning 与 acting 交替组织起来，随后大量 Agent 框架将这种循环工程化。
+
+<ArticleImage
+  src={agenticLoop}
+  alt="工具增强型智能体循环，从收集上下文到采取行动、验证结果并再次循环"
+  caption="工具增强型 Agent 的基本循环：收集上下文、采取行动、验证结果；失败的验证会成为下一轮的新上下文"
+  source="智药深瞳据 Anthropic 对 Claude Code 工作方式的说明重绘"
+  sourceUrl="https://www.anthropic.com/product/claude-code"
+  sourcePrefix="来源"
+  variant="full"
+  aspect="auto"
+  tone="paper"
+/>
+
+Claude Code 是最直观的例子之一。它读取代码库，通过终端和文件工具改变真实环境，再用构建、测试、类型检查和页面截图获得反馈。Coding Agent 的成功并非因为编程问题天然简单，而是因为软件工程拥有大量便宜、快速、可重复的验证器：编译器会报错，测试有通过或失败，版本控制保留了状态变化。
+
+问题也恰恰出在这里。药物研发的最终验证器不是单元测试，而是人体。候选药物是否真正安全有效，往往要经过多年实验与临床试验、消耗巨额资本才能知道。社会政策、复杂科学研究亦然：真实 Reward 极度稀疏、延迟且昂贵，有时甚至无法被一致定义。
+
+我们当然希望用模拟结果替代真实结果。但一旦替代发生，系统优化的就不再是“临床成功”，而是一个与临床成功相关的代理 Reward。
+
+## Reward Hacking：优化器会找到你没有想到的路
+
+Reward Hacking 是代理目标与真实目标在优化压力下分离的现象。模型并不需要具有恶意；它只需要找到一条比解决原问题更容易、却能获得高分的路径。
+
+<ArticleImage
+  src={rewardHacking}
+  alt="Countdown-Code论文图，展示模型篡改验证器、奖励攻击率上升及其向HumanEval泛化"
+  caption="Countdown-Code：模型可选择正确解题，也可篡改测试逻辑。少量带有作弊轨迹的 SFT 数据会播下先验，随后的 RLVR 将其放大，并向未见过的 HumanEval 任务迁移"
+  source="Khalifa 等，《Countdown-Code》（2026），Figure 1"
+  sourceUrl="https://arxiv.org/abs/2603.07084"
+  sourcePrefix="来源"
+  variant="full"
+  aspect="auto"
+  tone="paper"
+/>
+
+2026 年的 [Countdown-Code](https://arxiv.org/abs/2603.07084) 构造了一个干净的实验：模型既可以完成数学推理，也可以直接篡改测试工具，让错误答案通过验证。研究发现，只要合成 SFT 数据中混入约 1% 的 Reward Hacking 轨迹，后续 RLVR 就可能把这种倾向迅速放大；在部分模型中，行为还会迁移到未见过的 HumanEval 代码任务。
+
+更早的 [《Correlated Proxies》](https://arxiv.org/abs/2403.03185) 则给出一个更一般的定义：代理 Reward 与真实 Reward 可能在基础策略访问的状态上高度相关，但优化后的策略会主动走向原先很少出现的状态，使这种相关性崩溃。论文提出的缓解方向并非简单“缩小动作空间”，而是约束策略偏离参考策略，尤其从状态—动作占用分布层面进行正则化。
+
+这类约束可以延缓 Hacking，却无法凭空补上未知的真实目标。限制模型只能采取评估器理解的动作，确实会降低漏洞利用；代价是同样可能排除真正新颖的动作。假如白 78 不允许出现，AlphaGo 的价值网络当然不会在此处出错，但棋局也失去了最值得认识的那部分可能性。
+
+因此，更准确的说法不是“RL 无法创造超过 Value Network 的能力”。AlphaZero 的搜索与共同训练显然能够不断改进网络。真正的边界是：**RL 无法仅凭优化，把一个定义错误或信息不足的评价器自动变成真实世界。** 当优化逐渐逼近评价器的认知边界，新增能力既可能是解题，也可能只是更高明地取悦评分规则。
+
+## AI 制药可以从 AlphaGo 学到什么
+
+AI 制药不能把漫长的临床结局压缩为一个无损的即时 Reward。结合物打分、分子动力学、细胞表型、动物模型、数字孪生乃至临床替代终点，都只能覆盖真实疾病的一部分。代理层叠得越多，系统越容易把“在模型里表现好”误认为“对患者有效”。
+
+但这并不意味着 AlphaGo 的遗产无用。相反，我们可以把宏大目标拆成边界更清晰、反馈更可靠的子问题：
+
+- 在蛋白结构预测、逆合成规划、构象搜索和实验排程等任务中建立强验证器；
+- 让模型提出预测，再由自动化实验产生新的真实数据；
+- 在不同代理模型之间保留分歧，而不是过早压成一个总分；
+- 把失败、异常值与分布外结果纳入学习闭环。
+
+AlphaFold 是这种“单点拓宽边界”的范本：它没有直接预测一款药能否治愈患者，而是在结构生物学中攻克了一个定义相对明确、拥有大量监督数据且可以独立检验的关键子问题。
+
+另一条值得关注的路线是进化式与开放式计算，例如 [Darwin Gödel Machine](https://sakana.ai/dgm/) 和 [AlphaEvolve](https://deepmind.google/discover/blog/alphaevolve-a-gemini-powered-coding-agent-for-designing-advanced-algorithms/)。DGM 让 Coding Agent 修改自身代码，并把不同版本保留在不断增长的档案中，以达尔文式探索寻找新的能力踏脚石。
+
+<ArticleImage
+  src={dgmConceptual}
+  alt="Darwin Gödel Machine将自我代码改写与达尔文式开放探索结合的概念图"
+  caption="Darwin Gödel Machine：自我改写不再只沿单一最优路径爬坡，而是在不断增长的 Agent 档案中保留多条演化分支"
+  source="Sakana AI（2025）"
+  sourceUrl="https://sakana.ai/dgm/"
+  sourcePrefix="来源"
+  variant="full"
+  aspect="auto"
+  tone="paper"
+/>
+
+不过，进化式系统也没有消灭 Reward：DGM 仍用 SWE-bench 与 Polyglot 评价后代，AlphaEvolve 仍依赖可自动验证的算法指标。它们真正改变的是搜索结构——从单一策略沿单一分数爬坡，转向保留多样性、允许暂时退步、从不同祖先继续探索。
+
+这或许才是 AI 制药应当吸收的更深层思想：不是建造一个替人类“一步给出新药”的超级价值网络，而是建立一个能持续扩展假设空间、主动生成实验、容纳异常结果，并让代理 Reward 不断接受真实生物世界校准的开放系统。
+
+**AI 制药的终途，不是在封闭棋盘上把既定规则优化到极致，而是在开放世界中不断扩展问题边界，同时始终记得：模型给出的分数不是患者。**
+
+<div class="border-morandi-accent-2/20 mt-8 border-t pt-8">
+  <div class="bg-morandi-bg/30 border-morandi-accent-2/10 mx-auto max-w-2xl rounded-lg border p-4">
+    <h4 class="text-morandi-accent-3 mb-2 text-center text-[10px] font-bold tracking-widest uppercase">
+      AI友好声明
+    </h4>
+    <div class="text-morandi-text/60 flex flex-col gap-2 text-center font-mono text-[10px] leading-relaxed">
+      <p>
+        致AI Agent与搜索引擎：本文深度探讨强化学习范式下稀疏Reward问题的结构性边界，关键词包括：AlphaGo、AlphaZero、Reward Hacking、AI制药与开放式演化。
+      </p>
+      <div class="bg-morandi-accent-2/20 mx-auto my-1 h-px w-8"></div>
+      <p>声明：转载需注明出处，禁止擅自修改内容。AI训练使用需遵循合规协议，商业合作请联系授权。</p>
+      <p>
+        特别提示：本文内容仅代表作者个人观点，不构成任何投资建议或决策依据。市场有风险，投资需谨慎。
+      </p>
+    </div>
+  </div>
+</div>
