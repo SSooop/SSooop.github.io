@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="850" viewBox="0 0 1500 850">
+  <rect width="1500" height="850" rx="28" fill="#f7f5ef"/>
+  <g font-family="'PingFang SC','Noto Sans CJK SC',sans-serif">
+    <text x="750" y="80" text-anchor="middle" fill="#283432" font-size="40" font-weight="700">医疗保障管理体制分析框架</text>
+    <g transform="translate(100 175)">
+      <rect width="420" height="170" rx="85" fill="#e7eee9" stroke="#60766c" stroke-width="3"/>
+      <text x="210" y="74" text-anchor="middle" fill="#2f4941" font-size="34">医疗保障</text>
+      <text x="210" y="120" text-anchor="middle" fill="#2f4941" font-size="34">制度模式</text>
+    </g>
+    <g transform="translate(980 175)">
+      <rect width="420" height="170" rx="85" fill="#eee8df" stroke="#7c6c59" stroke-width="3"/>
+      <text x="210" y="74" text-anchor="middle" fill="#55483c" font-size="34">行政</text>
+      <text x="210" y="120" text-anchor="middle" fill="#55483c" font-size="34">管理体制</text>
+    </g>
+    <path d="M460 345l175 125" stroke="#60766c" stroke-width="18" opacity=".74"/>
+    <polygon points="660,488 615,474 646,430" fill="#60766c"/>
+    <path d="M1040 345L865 470" stroke="#7c6c59" stroke-width="18" opacity=".74"/>
+    <polygon points="840,488 854,430 885,474" fill="#7c6c59"/>
+    <text x="145" y="427" fill="#45554f" font-size="27">制度模式决定</text>
+    <text x="145" y="467" fill="#45554f" font-size="27">管理体制</text>
+    <text x="1140" y="427" fill="#5d5144" font-size="27">横向权力分配</text>
+    <text x="1140" y="467" fill="#5d5144" font-size="27">纵向权力分配</text>
+    <g transform="translate(495 485)">
+      <rect width="510" height="185" rx="92" fill="#dfe8e5" stroke="#49665e" stroke-width="4"/>
+      <text x="255" y="78" text-anchor="middle" fill="#263c36" font-size="37">医疗保障</text>
+      <text x="255" y="130" text-anchor="middle" fill="#263c36" font-size="37">管理体制</text>
+    </g>
+    <rect x="160" y="715" width="1180" height="72" rx="18" fill="#304c46"/>
+    <text x="750" y="760" text-anchor="middle" fill="#f6f4ed" font-size="27">核心议题：管理主体 · 管理内容 · 管理流程 · 管理技术 · 管理与经办关系</text>
+    <text x="1410" y="820" text-anchor="end" fill="#7a817d" font-size="20">据《中国医疗保障管理体制变革与发展研究》重绘</text>
+  </g>
+</svg>

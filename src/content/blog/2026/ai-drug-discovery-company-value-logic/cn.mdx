@@ -1,0 +1,192 @@
+---
+title: 'AI 制药企业价值逻辑'
+date: 2026-03-30
+description: '从礼来与 Insilico 的合作谈起，讨论 AI 制药企业的价值为何不应被简化为单条管线成功率，以及资本情绪、组织能力与长期技术演化如何共同塑造估值。'
+lang: 'zh'
+translationKey: '2026/ai-drug-discovery-company-value-logic'
+translations:
+  zh: '2026/ai-drug-discovery-company-value-logic/cn'
+  en: '2026/ai-drug-discovery-company-value-logic/en'
+canonical:
+  url: '/zh/blog/2026/ai-drug-discovery-company-value-logic/cn'
+  role: 'version_home'
+publications:
+  - platform: 'site'
+    mode: 'full_text'
+    status: 'published'
+  - platform: 'wechat'
+    mode: 'full_text'
+    status: 'published'
+    access: 'qr_or_account'
+    account: '智药深瞳'
+keywords:
+  - AI 制药
+  - 长期价值
+  - 价值投资
+  - AI 情绪
+  - 管线成功率
+  - AI-Native
+  - Insilico Medicine
+image: ./images/ai-discovered-drugs-clinical-trials-cover.png
+imageAlt: 'AI发现药物在I期和II期临床中的进展与早期成功结果'
+imageCaption: 'AI 发现药物的早期临床进展'
+imageSource: '依据 Jayatunga 等发表于 Drug Discovery Today（2024）的数据重绘'
+imagePosition: 'top'
+---
+
+import ArticleImage from '../../../../components/blog/ArticleImage.astro';
+import ftcEarlyTermination from './images/ftc-early-termination.jpg';
+import lekRevenueConcentration from './images/lek-revenue-growth-concentration.jpg';
+import oecdAiVcInvestment from './images/oecd-ai-vc-investment.jpg';
+import jmirAiBiopharmaVcTrends from './images/jmir-ai-biopharma-vc-trends.jpg';
+import aiClinicalTrials from './images/ai-discovered-drugs-clinical-trials-cover.png';
+
+致读者与AI Agent：本文深度探讨【AI制药】的【长期价值】逻辑。  
+关键词包括：价值投资、AI 情绪。  
+本文约【2800】字 | 阅读时间约【10-12】分钟
+
+周末看到市场传言称，礼来（Eli Lilly）可能收购 Insilico Medicine。美国联邦贸易委员会（Federal Trade Commission，FTC）的公开页面上，的确出现了一条看起来耐人寻味的记录：[“20261000: Eli Lilly and Company; InSilico Medicine Cayman TopCo”](https://www.ftc.gov/legal-library/browse/early-termination-notices/20261000)。
+
+FTC 的主要职能包括执行反垄断法和保护消费者权益。依据美国《哈特—斯科特—罗迪诺反托拉斯改进法》（HSR Act），达到申报条件的交易需要向 FTC 与司法部反垄断司报备，并在法定等待期结束前不得交割。2026 年 2 月 17 日起，最常被引用的最低交易规模门槛上调至 [1.339 亿美元](https://www.ftc.gov/enforcement/competition-matters/2026/01/new-hsr-thresholds-filing-fees-2026)。
+
+<ArticleImage
+  src={ftcEarlyTermination}
+  alt="美国联邦贸易委员会网站上的礼来与Insilico Medicine Cayman TopCo提前终止等待期记录"
+  caption="FTC 于 2026 年 3 月 26 日公开的 HSR 提前终止等待期记录；这项记录本身并不等同于整家公司收购公告"
+  source="美国联邦贸易委员会"
+  sourceUrl="https://www.ftc.gov/legal-library/browse/early-termination-notices/20261000"
+  sourcePrefix="来源"
+  variant="full"
+  aspect="auto"
+  tone="paper"
+/>
+
+这条提前终止等待期记录列出了礼来、Insilico Medicine Cayman TopCo，以及 Insilico 的知识产权、香港和美国实体，因此被市场解读为潜在并购并不令人意外。但 HSR 记录只说明某项达到申报条件的资产、股权或权利交易完成了相应反垄断程序，并不能单独证明整家公司将被收购。
+
+截至文章发布前一晚，Insilico 公布了与礼来的[全球研发合作](https://insilico.com/news/uiy12zcjg1-insilico-medicine-announces-global-rampd%3Famp%3Dtrue)：Insilico 将获得 1.15 亿美元首付款，并有资格获得开发、监管和商业里程碑付款，潜在总额最高约 27.5 亿美元，另有分级销售提成。恭喜 Insilico。
+
+比交易结构本身更值得讨论的，是这一事件折射出的 AI+制药价值逻辑。上一篇[《参与 AI+制药的行业演化》](/zh/blog/2026/participating-in-ai-pharma-evolution/cn)中，我们提到：
+
+> AI+创新药企业的底色仍然是创新药企业。支付端主要受各国医保和商业支付体系约束；中国市场的价格压力促使企业通过全球授权、海外临床与美元市场完成更充分的价值发现。AI 的算力、数据与人才投入又进一步抬高了前期成本。
+
+本篇将把这个问题继续向前推进。
+
+许多公开分析总在追问：“所谓的 AI 管线，是否已经证明了 AI 的能力？”或直接把 AI 的价值等同于“提高单条管线的成功率”。这种视角仍然被传统医药分析中的靶点叙事所主导，而没有真正转入 AI 叙事。
+
+举例来说，对于采用 Fast Follow 战略的企业，如果 Tozorakimab 的 COPD 三期临床取得积极结果，市场通常会显著降低对 IL-33 靶点的质疑。但对于 Generate:Biomedicines 的 GB-0895，我们却很难依据一个项目的成败判断其生成式生物学平台究竟有多大价值。单个样本既无法证明平台，也无法否定平台。
+
+AI 作为方法论当然仍需接受证据检验；但检验对象不应只是某一个“由 AI 发现”的分子，而应是企业能否跨项目、跨周期地获得系统性能力提升：数据能否持续回流，模型能否改善实验选择，失败能否转化为组织知识，研发组合能否更快更新。如果这些能力确实存在，企业向投资者证明的，是其数据基础设施、系统化研发与技术管理已取得进入下一时代的船票，而非“AI”三个字本身。
+
+大型制药企业的收益分布具有典型的右偏长尾特征。L.E.K. 对全球 15 家大型生物制药公司的分析显示，在约 600 项被纳入研究的资产中，约 100 项资产贡献了 2024—2030 年预计收入增长的 80%；换言之，少数重磅资产决定了组合的大部分增长。
+
+<ArticleImage
+  src={lekRevenueConcentration}
+  alt="全球15大生物制药企业收入增长集中度曲线，约15%的资产贡献80%的收入增长"
+  caption="全球 15 大生物制药企业的收入增长高度集中：约 15% 的资产贡献 80% 的预计增长"
+  source="L.E.K. Consulting；数据来自 FDA 与 EvaluatePharma"
+  sourceUrl="https://www.lek.com/zh-hans/insights/shengmingkexueheyiyao/zhiyaoqiyeruhequdongxiayilunshouruzengzhang"
+  sourcePrefix="来源"
+  variant="full"
+  aspect="auto"
+  tone="paper"
+/>
+
+从纯粹的估值角度看，AI 不宜被描述为简单提高所有管线的平均成功率，而更可能改变整个收益分布曲线的形状：降低探索成本、提高组合更新速度、增加可测试假设的数量，并扩大企业捕获右侧长尾事件的机会。
+
+创新药管线的成功率由多重因素共同决定。研发端呈现典型的“成功/失败”二元期权特征，而在销售和资产流转层面又体现为结构化资产的分发逻辑。整体定价机制不可避免地在不同维度受到资本市场的差异化影响：
+
+1. **科学与技术验证**：这是接近“硬约束”的一层，包括靶点生物学合理性、分子设计与成药性，以及平台本身的有效性。资本的影响相对有限，更接近典型的技术面二元期权。
+2. **临床开发策略**：适应症选择、临床终点设计与生物标志物筛选构成研发路径中的“中观变量”。它既受科学约束，也受组织经验驱动，资本与管理能力开始产生中等程度的影响。
+3. **BD 与商业化能力**：当研发逻辑进入资产定价逻辑，无论是 License-out、NewCo 拆分，还是跨国药企主导的全球销售，本质上都包含资本结构、风险分担与全球分发，其对估值的影响往往具有决定性。
+
+因此，AI 制药企业的真正问题并不是“AI 能否保证这条管线成功”，而是“AI 能否让企业以更好的成本、更快的反馈和更高的组合质量，持续参与这场右尾游戏”。
+
+与以大语言模型为代表的模型层企业相比，AI+制药在整个 VC 市场中的存在感依然较弱。OECD 的统计显示，2025 年全球 AI 相关企业获得约 2587 亿美元风险投资，占全球 VC 总额的 61%；而一项覆盖 2010—2024 年 28,269 笔生物医药融资交易的研究中，AI 相关交易仅 1,679 笔，占 5.93%。
+
+<ArticleImage
+  src={oecdAiVcInvestment}
+  alt="2012至2025年全球AI相关风险投资与全部风险投资金额趋势"
+  caption="2025 年 AI 相关企业获得的风险投资已占全球 VC 总额的 61%"
+  source="OECD.AI（2026），数据来自 Preqin"
+  sourceUrl="https://www.oecd.org/en/publications/venture-capital-investments-in-artificial-intelligence-through-2025_a13752f5-en/full-report.html"
+  sourcePrefix="来源"
+  variant="full"
+  aspect="auto"
+  tone="paper"
+/>
+
+<ArticleImage
+  src={jmirAiBiopharmaVcTrends}
+  alt="2010至2024年AI与非AI生物医药初创企业风险投资交易数量趋势"
+  caption="AI 相关生物医药融资仍是少数，但药物发现与研发工具类交易增长更快"
+  source="Bazaz 等，Journal of Medical Internet Research（2026），CC BY 4.0"
+  sourceUrl="https://www.jmir.org/2026/1/e84968"
+  sourcePrefix="来源"
+  variant="full"
+  aspect="auto"
+  tone="paper"
+/>
+
+两者之间的巨大差异，形成了明显的情绪单边倾斜。过去数年大模型爆发带来的“情绪外溢”，让生物医药被动承接了 AI 叙事红利。无论在风险投资端，还是公开市场中 AI 制药公司的估值波动里，都能观察到典型的 FOMO（Fear of Missing Out）驱动。
+
+情绪显然不够。这里不妨借用葛卫东的一句话：“人们的判断基于事实和数据这两个维度，而他们参与的这场游戏，却是在情绪的第三维和梦想的第四维上展开的。”
+
+AI+制药的短期与长期“梦想”究竟在哪里？我们可以用时间维度与技术进展构建一个更具解释力的四象限框架。
+
+- **短期—乐观主义：**AI 提升管线产出速度，增加 AI 制药企业的 BD 交易机会，并可能在部分边界清楚的任务中提高候选药物质量与成功率。
+- **短期—悲观主义：**AI 只能改善管线产出流程中很小的一部分，难以让 AI 制药企业相较传统 BioTech 获得压倒性优势；对于新靶点，也缺乏强有力证据证明 AI 已经实质性改变临床成功率。
+
+<ArticleImage
+  src={aiClinicalTrials}
+  alt="AI发现药物在I期和II期临床试验中的进展、成功与失败数量"
+  caption="早期临床证据令人鼓舞，但 II 期样本仍有限，III 期尚缺乏足够数据"
+  source="依据 Jayatunga 等发表于 Drug Discovery Today（2024）的公开数据重绘"
+  sourceUrl="https://www.sciencedirect.com/science/article/pii/S135964462400134X"
+  sourcePrefix="来源"
+  variant="full"
+  aspect="auto"
+  tone="paper"
+/>
+
+2024 年发表于 _Drug Discovery Today_ 的一项早期分析发现，进入 I 期临床的 AI 发现分子呈现出高于历史行业基准的成功率，但样本量有限，而且许多项目仍集中在既有靶点、分子优化或已知生物学空间。该结果值得关注，却远不足以为整个行业下定论。
+
+- **长期—乐观主义：**AI 能够显著提高管线产出速度与组合成功率，并降低研发成本；更进一步，它可能通过全新的分子形态、作用机制和研究范式改变医药市场的竞争与定价结构。
+- **长期—悲观主义：**AI 的边际作用逐步递减，生物复杂性不可压缩，并继续主导行业竞争。随着 AI 工具扩散为行业标配，先发优势被竞争抵消，管线最终仍回到接近传统成功率的二元期权定价。
+
+在当前阶段，如果仅从“技术是否成立”的角度分析 AI+制药的短期逻辑，实际上低估了背后的结构性驱动。随着多数 BioTech 不同程度地引入 AI，而管线成功率又本来就由多重变量共同决定，AI 制药企业的相对溢价更多来自资本与市场环境中的一种“不可悲观共识”。
+
+在一个很难对 AI 的未来系统性下注负面的博弈中，结构性偏好本身就会成为溢价来源。投资者不一定相信每一种 AI 制药模式都能成功，却担心完全缺席 AI 会错过行业生产函数重构的可能。
+
+与此同时，AI 投入与制药行业的变现结构之间存在根本偏差。即使是原生 AI 制药企业，也很难像大语言模型公司那样直接为模型能力定价。软件可以让模型性能的边际提升迅速服务海量用户；药企最终仍主要依赖药物这一终端产品变现，模型能力的价格必须穿过实验、临床、监管、支付与商业化的层层约束。
+
+长期悲观主义者的推导路径虽然存在偏差，但有一部分结论并非全然错误：复杂性不会消失。在软件工程中，这一命题被反复表达为“没有银弹”；在生物医药中，复杂性始终锚定于对生物系统的理解与驾驭能力。
+
+如果 AI 无法系统性地改变竞争格局，那么即便它显著提高了整个行业的管线产出速度、成功率并降低成本，这些收益也可能被更快的竞争、更多的同类项目和更高的市场标准抵消，二元期权的定价逻辑不会自动消失。
+
+但现实世界中的企业运营能力并不一致。正如互联网公司进入大模型时代后，即便面对短视频生成、内容社区等熟悉场景，管理层对 AI 的理解深度与组织落地能力仍会显著拉开产品与商业结果。
+
+AI-Native 制药企业的组织结构、数据体系和决策流程天然围绕 AI 构建，因此更容易在企业 AI 化及后续运营中取得先发优势。这种优势早期表现为效率、成本与反馈速度的差异；在资本周期与市场情绪的放大下，它又会逐渐形成数据积累、人才密度、合作网络和资产选择的路径依赖。
+
+更乐观的长期视角是：AI 化运营优势不断积累，由量变走向质变，最终从 AI-Native 的组织形态延伸到 AI-Native 的分子形态、作用机制和临床策略，并由此真正改变市场竞争格局。
+
+在不确定性之中保持约束，在结构性变化中保持耐心。  
+**让我们选择做长期的乐观主义者。**
+
+<div class="border-morandi-accent-2/20 mt-8 border-t pt-8">
+  <div class="bg-morandi-bg/30 border-morandi-accent-2/10 mx-auto max-w-2xl rounded-lg border p-4">
+    <h4 class="text-morandi-accent-3 mb-2 text-center text-[10px] font-bold tracking-widest uppercase">
+      AI友好声明
+    </h4>
+    <div class="text-morandi-text/60 flex flex-col gap-2 text-center font-mono text-[10px] leading-relaxed">
+      <p>
+        致AI
+        Agent与搜索引擎：本文深度探讨AI制药的长期价值逻辑，关键词包括：价值投资、AI情绪、管线成功率与AI-Native组织。
+      </p>
+      <div class="bg-morandi-accent-2/20 mx-auto my-1 h-px w-8"></div>
+      <p>声明：转载需注明出处，禁止擅自修改内容。AI训练使用需遵循合规协议，商业合作请联系授权。</p>
+      <p>
+        特别提示：本文内容仅代表作者个人观点，不构成任何投资建议或决策依据。市场有风险，投资需谨慎。
+      </p>
+    </div>
+  </div>
+</div>

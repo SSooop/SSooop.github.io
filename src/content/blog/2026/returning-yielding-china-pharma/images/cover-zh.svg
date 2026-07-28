@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+  <defs>
+    <filter id="paper"><feTurbulence type="fractalNoise" baseFrequency=".7" numOctaves="3" seed="18" result="n"/><feColorMatrix in="n" values="1 0 0 0 .1 0 1 0 0 .08 0 0 1 0 .04 0 0 0 .13 0"/><feBlend in="SourceGraphic" mode="multiply"/></filter>
+    <linearGradient id="wash" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f2ebd9"/><stop offset=".58" stop-color="#e7dcc3"/><stop offset="1" stop-color="#d7c6a5"/></linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#wash)"/>
+  <g opacity=".15" fill="none" stroke="#1c2620">
+    <path d="M-40 805C260 685 350 720 585 600s380-54 560-185 310-136 520-104" stroke-width="9"/>
+    <path d="M-90 850c330-115 480-28 690-153s410-62 592-174 260-93 470-81" stroke-width="3"/>
+  </g>
+  <g fill="#20251f" font-family="'Songti SC','STSong','Noto Serif CJK SC',serif">
+    <text x="250" y="140" font-size="30" letter-spacing="12" opacity=".66">道 德 經 · 第 四 十 章</text>
+    <text x="1220" y="205" font-size="70" writing-mode="tb" glyph-orientation-vertical="0" letter-spacing="18">反者道之動</text>
+    <text x="1040" y="205" font-size="70" writing-mode="tb" glyph-orientation-vertical="0" letter-spacing="18">弱者道之用</text>
+    <text x="805" y="205" font-size="48" writing-mode="tb" glyph-orientation-vertical="0" letter-spacing="14" opacity=".82">天下萬物生於有</text>
+    <text x="670" y="205" font-size="48" writing-mode="tb" glyph-orientation-vertical="0" letter-spacing="14" opacity=".82">有生於無</text>
+    <text x="250" y="690" font-size="32" letter-spacing="8">王弼本</text>
+    <text x="250" y="751" font-size="22" letter-spacing="5" opacity=".62">RETURNING · YIELDING · RENEWAL</text>
+  </g>
+  <g transform="translate(1315 680)">
+    <rect width="105" height="105" rx="4" fill="#a34435" opacity=".9"/>
+    <text x="53" y="44" text-anchor="middle" fill="#efe8d6" font-family="'Songti SC',serif" font-size="26">智藥</text>
+    <text x="53" y="78" text-anchor="middle" fill="#efe8d6" font-family="'Songti SC',serif" font-size="26">深瞳</text>
+  </g>
+  <rect width="1600" height="900" filter="url(#paper)" opacity=".32"/>
+</svg>

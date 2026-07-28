@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+  <defs>
+    <linearGradient id="night" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#172629"/><stop offset=".55" stop-color="#263b3c"/><stop offset="1" stop-color="#465b54"/></linearGradient>
+    <radialGradient id="moon"><stop stop-color="#f3e8cf" stop-opacity=".92"/><stop offset="1" stop-color="#d7c39c" stop-opacity=".18"/></radialGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#night)"/>
+  <circle cx="1280" cy="165" r="245" fill="url(#moon)"/>
+  <path d="M0 785C230 710 387 744 588 639c212-111 382-155 554-109 188 50 300 34 458-14v384H0z" fill="#101c1d" opacity=".82"/>
+  <path d="M0 827c253-76 430-39 619-127 204-95 373-115 551-55 183 61 296 48 430 6v249H0z" fill="#0c1617"/>
+  <g fill="#f1e9d8" font-family="Georgia,'Times New Roman',serif">
+    <text x="170" y="150" font-size="26" letter-spacing="9" opacity=".65">TAO TE CHING · CHAPTER FORTY</text>
+    <text x="170" y="286" font-size="58">Returning is the motion of the Tao.</text>
+    <text x="170" y="372" font-size="58">Yielding is the way of the Tao.</text>
+    <line x1="170" y1="432" x2="730" y2="432" stroke="#c9a46c" stroke-width="2"/>
+    <text x="170" y="502" font-size="31" opacity=".84">All things under heaven are born of being;</text>
+    <text x="170" y="553" font-size="31" opacity=".84">being is born of non-being.</text>
+    <text x="170" y="646" font-size="22" letter-spacing="3" fill="#c9a46c">GIA-FU FENG &amp; JANE ENGLISH</text>
+  </g>
+  <text x="1402" y="757" text-anchor="end" fill="#f1e9d8" font-family="Georgia,serif" font-size="22" letter-spacing="4" opacity=".6">INTELLIPHARMA INSIGHTS</text>
+</svg>

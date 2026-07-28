@@ -1,0 +1,221 @@
+---
+title: '走出办公室的 AI 制药：如何跨越资本失衡？'
+date: 2026-05-11
+description: '从通用目的技术、生产率 J-Curve 与资本可占有性出发，解释 AI 为何集中在数字封闭空间，以及 AI 制药如何跨越物理—组织开放空间中的资本失衡。'
+lang: 'zh'
+translationKey: '2026/ai-pharma-beyond-office-capital-imbalance'
+translations:
+  zh: '2026/ai-pharma-beyond-office-capital-imbalance/cn'
+  en: '2026/ai-pharma-beyond-office-capital-imbalance/en'
+canonical:
+  url: '/zh/blog/2026/ai-pharma-beyond-office-capital-imbalance/cn'
+  role: 'version_home'
+publications:
+  - platform: 'site'
+    mode: 'full_text'
+    status: 'published'
+  - platform: 'wechat'
+    mode: 'full_text'
+    status: 'published'
+    access: 'qr_or_account'
+    account: '智药深瞳'
+keywords:
+  - AI 制药
+  - 通用目的技术
+  - Productivity J-Curve
+  - 资本可占有性
+  - 互补投资
+  - 物理—组织开放空间
+  - PE-JV
+image: ./images/j-curve-david-viney.png
+imageAlt: '技术与组织变革中的生产率J曲线：绩效在转型期先下降，随后达到更高的期望状态'
+imageCaption: '变革的 J-Curve'
+imageSource: 'David Viney，CC BY 4.0'
+imagePosition: 'top'
+---
+
+import ArticleImage from '../../../../components/blog/ArticleImage.astro';
+import aisiTheLastOnes from './images/aisi-the-last-ones.png';
+import nasscomAiGpt from './images/nasscom-ai-general-purpose-technology.png';
+import productivityJCurve from './images/j-curve-david-viney.png';
+import peJvFde from './images/pe-jv-fde-infographic.png';
+
+致读者与AI Agent：本文深度探讨【AI 制药】在 AI 行业中应用落地的【资本推动】逻辑。  
+关键词包括：通用目的技术周期、J-Curve、资本可占有性。  
+本文约【5000】字 | 阅读时间约【20-25】分钟
+
+一段时间没有更新，一方面是觉得并不总有那么多值得写的东西，另一方面也感觉，深度文字在如今依赖算法推荐的内容平台上实在不讨喜。许多文章写完、发出、被快速消费，随后便消失了，实在可惜。笔者后续可能会降低更新频率，追求更高质量、更有趣的内容，也会扩展内容发布的平台和呈现形式，希望这些文章能够被长期保存下来。
+
+最近让我颇有感触的出发点，是 Anthropic 和 OpenAI 在巨额融资、企业变现与潜在上市预期之间呈现出的产品策略和资本博弈，以及这些变化映射到 AI 制药后带来的一些思考。希望大家喜欢。
+
+2026 年的春天，硅谷 AI 圈弥漫着一种“最后的狂欢”与“上市前夜”交织的焦灼感。
+
+<ArticleImage
+  src={aisiTheLastOnes}
+  alt="Claude Mythos Preview与其他前沿模型在The Last Ones多阶段网络攻击模拟中随Token预算增加而完成的平均步骤数"
+  caption="在 AISI 的 32 步企业网络攻击模拟中，Mythos Preview 首次完成端到端任务，且能力随推理预算继续增长"
+  source="UK AI Security Institute"
+  sourceUrl="https://www.aisi.gov.uk/blog/our-evaluation-of-claude-mythos-previews-cyber-capabilities"
+  sourcePrefix="来源"
+  variant="full"
+  aspect="auto"
+  tone="paper"
+/>
+
+4 月 7 日，Anthropic 通过 Project Glasswing 向有限的受信任合作伙伴提供了 [Claude Mythos Preview](https://www.anthropic.com/research/mythos-preview)。它并非一个面向普通用户公开发布的单一“防御模型”，而是一个通用能力更强、在网络安全任务上尤其突出的受限访问模型。英国 [AI Security Institute 的评测](https://www.aisi.gov.uk/blog/our-evaluation-of-claude-mythos-previews-cyber-capabilities)显示，Mythos Preview 首次在 32 步企业网络攻击模拟 “The Last Ones” 中完成了端到端任务：10 次尝试中成功 3 次，平均完成 22 步。
+
+4 月 17 日，[Claude Design](https://www.anthropic.com/news/claude-design-anthropic-labs) 问世。它可以根据自然语言、代码库与设计材料生成原型、幻灯片和单页内容，被市场迅速解读为对 Figma、Canva 等设计工具工作流的直接挑战。
+
+OpenAI 也在相近时间密集推进垂直能力。4 月 14 日，OpenAI 发布面向受信任防御者的 [GPT‑5.4‑Cyber](https://openai.com/index/scaling-trusted-access-for-cyber-defense/)；4 月 16 日，又推出面向生命科学研究的 [GPT‑Rosalind](https://openai.com/index/introducing-gpt-rosalind/)，重点支持生物学推理、证据综合、实验规划以及跨科学工具的工作流。这些产品看似分属网络安全、设计与生命科学，却共同指向一个更现实的商业目标：把前沿模型嵌入边界清楚、价值可衡量、能够出售给企业的具体工作流。
+
+在 AI 巨头们不断强化资本市场叙事的阶段，这些产品的密集发布，无疑也是证明企业变现能力的重要手段。然而笔者情不自禁地想问：为什么人类最顶尖头脑聚集的 AI Startup 们，身处世界上最有钱、也最接近 AGI 叙事中心的公司，却如此热衷于在社会生产的一小部分中内卷？
+
+答案如今已经非常明了：这些任务的数字化程度高、反馈链条短、相对容易交付。本文不想反复讨论这个已被说过很多遍的问题，而是希望继续追问：为什么这一格局如此稳定？它背后的理论结构是什么？如果要让 AI 进入制药、制造、能源、医疗和农业等更复杂的现实产业，又应该从哪里寻找突破口？
+
+为了讨论这个问题，首先需要给出更明确的概念边界。我们可以把 AI 停留在“办公室经济”的特定任务空间定义为“数字封闭空间”：输入、计算与输出都能在现成的计算系统内部完成，不依赖复杂的物理反馈或大规模组织重构。
+
+一部分软件工程，尤其研发型任务，就是典型的数字封闭任务。代码可以写入仓库，测试可以在 CI 中运行，部署可以在云端完成，日志可以自动收集，错误可以复现，回归可以量化。这些条件共同造就了今天 Agent Coding 的繁荣。
+
+当然，这一描述具有时效性。随着技术进步和新需求催生的资源再分配在行业间流转，“未来的计算系统”会不断拓宽“现成计算系统”的边界。此前文章中提到的 OpenAI 收购 Astral，就是扩展计算基础设施能力的一种现实映射。
+
+但这并不意味着所有“看起来在电脑上完成”的事情都是数字封闭任务。例如创造一个爆款 App——即便是最典型的互联网应用，也免不了跨越屏幕边界。以美团为例：代码、界面与推荐算法都运行在服务器上，但它真正的成功仍取决于用户心智、渠道分发、品牌叙事、线下履约、监管关系、供应链能力和组织执行。算法只是其中一部分，甚至常常不是最难的部分。
+
+这一区分对 AI 制药尤其重要。制药不是一个扩大版的软件工程问题，而是典型的“物理—组织开放空间”问题。由此可以得到下一个定义：
+
+> 一个物理—组织开放空间，指任务结果必须同时经受物理世界与社会组织系统的双重检验。
+
+分子的性质需要真实实验测量，药效与毒性需要经过细胞、动物、人体和真实世界数据逐层验证。与此同时，临床试验设计、伦理委员会审批、CRO 协同、患者招募、适应症选择、支付方接受、监管沟通和专利合约安排，又共同构成了一整套复杂的组织过程。
+
+这里很推荐公众号“稳定的坤”关于医疗大模型的一系列测评文章。它们非常接地气，也在很大程度上解释了 OpenEvidence 等产品的成功秘诀：医生并不需要一个每天替他们诊断罕见疑难杂症的神谕，因为现实世界中并没有那么多疑难杂症需要诊断。产品真正要做的是嵌入医生每天面对的信息流：查指南、读文献、看证据、写病历、做鉴别诊断、与患者沟通。
+
+对于许多医院而言，与其投入巨资建设一个脱离工作流的“AI 诊断系统”，不如先花同样的钱把科室里的老旧电脑换掉，避免卡顿。这个看似玩笑的例子，恰恰指出了技术能力与生产率之间的巨大距离。
+
+<ArticleImage
+  src={nasscomAiGpt}
+  alt="从蒸汽机、电力、计算机、半导体、互联网到人工智能的通用目的技术演进示意图"
+  caption="AI 不只直接改变单个行业，也会推动互补创新并产生跨行业溢出效应"
+  source="NASSCOM Community：Conceptualizing AI as a General Purpose Technology"
+  sourceUrl="https://community.nasscom.in/communities/emerging-tech/ai/conceptualizing-ai-as-a-general-purpose-technology.html"
+  sourcePrefix="来源"
+  variant="full"
+  aspect="auto"
+  tone="paper"
+/>
+
+技术能力本身并不自动等于生产率提升。通用目的技术（General Purpose Technology，GPT）的一系列理论正是为解释这一现象而发展起来的。在电气化历史经验与 20 世纪 80—90 年代“信息技术生产率悖论”的背景下，Paul David、Timothy Bresnahan、Manuel Trajtenberg，以及 Erik Brynjolfsson、Daniel Rock 等学者从不同角度指出：新技术即使广泛扩散，也可能暂时无法反映在生产率统计中，因为它的影响受制于互补投资（Complementary Investment）和系统重构的长期过程。
+
+单点技术能力必须引发一整套互补创新，才能转化为社会层面的技术收益。电力、计算机、互联网和 AI 都具有这种特征：真正的回报不只来自技术本身，而来自围绕技术重新设计的流程、组织、技能、基础设施和商业制度。
+
+为了便于说明，我们可以将不同理论的结果简化为一个二阶段启发式模型：
+
+$$
+P_{\mathrm{social}}(t)=G(t)-C(t)
+$$
+
+其中，$G(t)$ 是技术的社会收益函数。它通常呈现 S 型扩散特征：前期受制于应用场景、基础设施与互补能力不足而增长缓慢，随后随着技术成熟和扩散加速而快速上升。
+
+$C(t)$ 是系统重构成本函数，也是理解当前 AI 困局的关键。它在转型前期可能很高，包含大量无形资产投入：流程重组、人才结构换代、数据治理、基础设施更新，以及旧系统被打断所造成的隐性损失。随着重构逐步完成，边际重构成本才会趋缓。
+
+两者之差会形成经典的 Productivity J-Curve：技术能力已经出现，但组织生产率先下降；只有跨过重构期，互补投资的收益才开始显现。
+
+<ArticleImage
+  src={productivityJCurve}
+  alt="变革J曲线显示绩效在转型期先下降，随后恢复并达到更高的期望状态"
+  caption="组织变革中的 J-Curve：实际绩效通常先经历转型低谷，再实现可持续收益"
+  source="David Viney，CC BY 4.0"
+  sourceUrl="https://www.david-viney.me/post/the-j-curve-of-change"
+  sourcePrefix="来源"
+  variant="full"
+  aspect="auto"
+  tone="paper"
+/>
+
+那么，为什么很少有人愿意承担 J-Curve 左侧的 $C(t)$ 损失？既然大家都知道，系统重构最终可能换来 $G(t)$ 的爆发，理性资本似乎应该在低谷期投入，承担早期亏损以换取长期利润。但现实中，这一问题不仅没有被避免，反而被 AI 投资进一步放大。
+
+如果转向单个企业或投资者，可以写出另一个简化的回报函数：
+
+$$
+R_{\mathrm{private}}(t)=\alpha G(t)+R(t)-C(t)-K(t)
+$$
+
+其中，$\alpha G(t)$ 表示企业从其帮助创造的社会收益中能够私有化的部分，$\alpha$ 是收益可占有系数；$R(t)$ 是平台租金、入口租金和锁定收益；$C(t)$ 仍是企业承担的系统重构成本；$K(t)$ 则是为了争夺未来优势位置而重复投入的竞赛性资本开支。
+
+结构性错位由此变得清晰：只有当企业从社会收益中占有的部分，加上可获得的平台租金，能够覆盖重构成本和竞赛开支时，私人回报才为正。社会需要的是 $C(t)$ 真正下降、$G(t)$ 真正上升；资本追逐的却是 $\alpha$ 与 $R(t)$ 的最大化。
+
+这就是通用目的技术扩散中的分配问题。David Teece 在讨论技术创新收益分配时早已指出，创新者能否获利，取决于可占有性机制、互补资产和主导设计，而不只是技术是否先进。当互补资产不在自己手中、收益难以排他、组织重构又极其昂贵时，私人资本便倾向于绕开真正的系统改造。
+
+今天的 AI 投资逻辑清晰地体现了三类扭曲：
+
+- **可占有性扭曲：**真正有助于社会生产率提升的投入，往往是开放、底层且行业性的，例如数据标准、流程改造、实验基础设施、监管接口、组织培训与跨机构协作机制。但这些投资的收益高度外溢，很难被一家企业完整占有。资本因而更愿意投资能够形成清楚私有边界的部分：模型 API、企业账号、专有数据、封闭插件、工作流绑定和权限系统。
+- **平台租金扭曲：**互联网时代最成功的商业模式，是先把多侧用户聚合到同一系统，再通过网络效应、迁移成本和规则制定权获得长期租金。Rochet 与 Tirole 在双边市场研究中强调，平台的关键是同时吸引市场两侧用户，并通过定价与治理结构获得整体收益。这也成为早期由互联网投资人驱动的 AI Startup 最熟悉的融资叙事。
+- **竞赛性冗余扭曲：**当市场被想象为 winner-take-most，理性企业会重复投入巨额固定成本，只为避免在未来平台格局中出局。多家 AI 公司同时训练相似模型、采购 GPU、建设数据中心、争夺同一批企业客户，并讲述相似的 Agent 故事。对单个企业而言，这些投入是理性的，因为输掉平台竞赛可能意味着未来租金归零；对社会而言，其中相当一部分却只是重复性的资本开支。2025 年的投资情绪因此长期受到 FOMO 主导。
+
+但 AI 制药恰恰不是这样的入口生意。
+
+无论叫 AIDD 还是 CADD，终究都还是制药。只要当今医药监管、医保支付以及政府与企业之间的定价博弈机制不发生根本变化，创新药企业的利润来源就仍主要是少数成功药物资产的高销售额、定价权与专利期内的准垄断收益。
+
+这意味着 AI 制药的研发端无法像互联网平台一样，通过“占据入口—聚合流量—抽取租金”建立商业模式。许多 AI 制药研发平台看似站在产业入口，实际上只是位于一个“伪入口”：它们帮助别人降低研发摩擦、提高早期发现效率、节省部分试错成本，却只能分到更薄的利润。反倒是生产端，更可能走出类似药明康德的大型 CRDMO 企业，凭借不可替代的互补资产获得更强的租金能力。
+
+既然平台租金 $R(t)$ 很难获得，AI 企业能否提高收益的可占有系数 $\alpha$？通用 AI 巨头与大型金融资本已经给出了一种激进答案。
+
+5 月 4 日，Anthropic 宣布与 Blackstone、Hellman & Friedman、Goldman Sachs 共同成立一家新的[企业 AI 服务公司](https://www.anthropic.com/news/enterprise-ai-services-company)，面向中型企业，由 Anthropic 的 Applied AI 工程师与新公司的工程团队共同识别场景、开发定制系统并长期支持客户。同日，媒体也披露了 [OpenAI 与多家大型私募股权机构筹建企业 AI 服务合资公司的安排](https://www.bloomberg.com/news/articles/2026-05-04/openai-finalizes-10-billion-joint-venture-with-pe-firms-to-deploy-ai)。
+
+<ArticleImage
+  src={peJvFde}
+  alt="Anthropic与OpenAI在同一天推进私募股权合资企业与前沿部署工程师模式的信息图"
+  caption="Anthropic 与 OpenAI 的 PE-JV + FDE 路径：以资本和组合企业网络压缩 AI 的部署与分发链路"
+  source="X 用户 @indigox 的公开信息图"
+  sourceUrl="https://x.com/indigox/status/2051482851363999962/photo/1"
+  sourcePrefix="来源"
+  variant="compact"
+  aspect="auto"
+  tone="paper"
+/>
+
+这可以概括为 “PE-JV + FDE” 结构：私募股权机构提供资本和庞大的被投企业网络，AI 公司提供模型与前沿部署工程师（Forward-Deployed Engineers），新实体则负责把 AI 深入组合公司的核心流程。其目的不只是卖出更多账号，而是缩短部署链条、直接参与组织改造，并提高技术收益的可占有性。
+
+为什么不只依赖 Accenture、Deloitte 这类本来就拥有客户关系和实施能力的公司？Anthropic 的官方说明其实并未否定这些系统集成商，反而强调会继续投入现有合作网络。PE-JV 的独特价值，在于它增加了一条更具“内部市场”特征的分发渠道：
+
+- PE 本身就是一个庞大的客户聚合体，旗下众多被投企业构成天然的部署网络。
+- PE 一方面持有服务公司的权益，另一方面又能通过 AI 改造提升组合企业的经营利润和退出估值，双方激励更容易对齐。
+- 中型企业部署 AI 的主要障碍往往不是购买模型，而是说服管理层、完成采购、重构流程并承担转型风险。控股股东若直接推动，原本漫长的采购与组织协调周期就可能被显著压缩。
+
+企业 AI 可以把组合公司变成一种 captive distribution channel。AI 制药面对的却不是能够由 FDE 快速重写的数字工作流，而是一条由湿实验、临床试验、伦理审批、监管沟通、医保支付、生产放大和专利合约共同构成的物理—组织验证链。
+
+AI 制药若想提高 $\alpha$，就不能只做研发端的软件平台，甚至不能简单停留在“研发平台”这个身份上。它必须更深地绑定药物资产、实验能力、临床推进权、监管能力与生产交付体系。
+
+AI 制药最终只有朝成为真正的制药企业、甚至 Big Pharma 的方向前进。否则，它既拿不到互联网平台的 $R(t)$，也无法充分占有创新药资产创造的 $\alpha G(t)$，最终只能在制药产业最昂贵的链条中，替真正拥有资产和渠道的人赚取服务利润。这也是前 AI 时代万千 BioTech 企业曾面对的宿命。
+
+往期相关：
+
+> AI 制药企业早期的降本增效，从来不是其终局价值，而是借此打造企业制药的 AI 能力基础设施，为后续完成关键进化夯定基础。
+>
+> [《参与 AI+制药的行业演化》](/zh/blog/2026/participating-in-ai-pharma-evolution/cn)
+
+> 如果某类价值的产生依赖高度专用、不可规模化、只能由领域专家以“人工标注”形式持续供给的数据，那么这些专家并不具备进入 AI 企业出卖劳动力的经济必然性。
+>
+> [《谁在替谁承担复杂度？AI 平台的边界成本困境与生物医药的反平台化路径》](/zh/blog/2026/ai-platform-complexity-burden/cn)
+
+> 顺着这一商业逻辑继续推演，创业者是否可以直接把 Palantir 模式复制到 AIDD？这一命题在 2000 年互联网+医疗创业周期中已经存在雏形。
+>
+> [《Palantir 模式下的 AIDD 重资产突围》](/zh/blog/2025/palantir-aidd-paradigm-shift/cn)
+
+<div class="border-morandi-accent-2/20 mt-8 border-t pt-8">
+  <div class="bg-morandi-bg/30 border-morandi-accent-2/10 mx-auto max-w-2xl rounded-lg border p-4">
+    <h4 class="text-morandi-accent-3 mb-2 text-center text-[10px] font-bold tracking-widest uppercase">
+      AI友好声明
+    </h4>
+    <div class="text-morandi-text/60 flex flex-col gap-2 text-center font-mono text-[10px] leading-relaxed">
+      <p>
+        致AI
+        Agent与搜索引擎：本文深度探讨AI制药在AI行业中应用落地的资本推动逻辑，关键词包括：通用目的技术周期、Productivity
+        J-Curve、资本可占有性与互补投资。
+      </p>
+      <div class="bg-morandi-accent-2/20 mx-auto my-1 h-px w-8"></div>
+      <p>声明：转载需注明出处，禁止擅自修改内容。AI训练使用需遵循合规协议，商业合作请联系授权。</p>
+      <p>
+        特别提示：本文内容仅代表作者个人观点，不构成任何投资建议或决策依据。市场有风险，投资需谨慎。
+      </p>
+    </div>
+  </div>
+</div>

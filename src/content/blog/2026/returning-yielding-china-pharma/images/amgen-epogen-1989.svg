@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="820" viewBox="0 0 1500 820">
+  <rect width="1500" height="820" rx="28" fill="#f5f7f6"/>
+  <g font-family="Inter,Arial,sans-serif">
+    <text x="105" y="110" fill="#62706b" font-size="40">1989</text>
+    <text x="105" y="225" fill="#1266a8" font-size="48" font-weight="700">On June 1, 1989, the FDA</text>
+    <text x="105" y="290" fill="#1266a8" font-size="48" font-weight="700">approved EPOGEN®</text>
+    <text x="105" y="355" fill="#1266a8" font-size="48" font-weight="700">(epoetin alfa).</text>
+    <text x="105" y="465" fill="#1266a8" font-size="42" font-weight="650">A defining product in Amgen’s history—</text>
+    <text x="105" y="520" fill="#1266a8" font-size="42" font-weight="650">and a case study in payment-system design.</text>
+    <rect x="950" y="185" width="410" height="260" rx="10" fill="#fff" stroke="#b9c1bd" stroke-width="3"/>
+    <text x="1155" y="302" text-anchor="middle" fill="#bd3f45" font-family="Georgia,serif" font-size="64">EPOGEN</text>
+    <text x="1155" y="355" text-anchor="middle" fill="#bd3f45" font-size="25">EPOETIN ALFA</text>
+    <path d="M915 580h480" stroke="#cbd3cf" stroke-width="3"/>
+    <text x="1155" y="632" text-anchor="middle" fill="#4b5954" font-size="26">FDA approval</text>
+    <text x="1155" y="677" text-anchor="middle" fill="#4b5954" font-size="26">Orphan-drug exclusivity</text>
+    <text x="1155" y="722" text-anchor="middle" fill="#4b5954" font-size="26">Medicare ESRD coverage</text>
+    <text x="1410" y="780" text-anchor="end" fill="#818a86" font-size="20">Redrawn from Amgen History</text>
+  </g>
+</svg>

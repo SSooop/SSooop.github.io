@@ -1,0 +1,132 @@
+---
+title: '参与 AI+制药的行业演化'
+date: 2026-03-23
+description: '从 OpenClaw 热潮、控制论四要素与中国开源生态出发，讨论 AI+制药企业如何跨越资本、治理与技术战略之间的四重矛盾。'
+lang: 'zh'
+translationKey: '2026/participating-in-ai-pharma-evolution'
+translations:
+  zh: '2026/participating-in-ai-pharma-evolution/cn'
+  en: '2026/participating-in-ai-pharma-evolution/en'
+canonical:
+  url: '/zh/blog/2026/participating-in-ai-pharma-evolution/cn'
+  role: 'version_home'
+publications:
+  - platform: 'site'
+    mode: 'full_text'
+    status: 'published'
+  - platform: 'wechat'
+    mode: 'full_text'
+    status: 'published'
+    access: 'qr_or_account'
+    account: '智药深瞳'
+keywords:
+  - AI 制药
+  - 开源
+  - 生态演化
+  - 基础设施
+  - 控制论
+  - 企业治理
+  - OpenClaw
+image: ./images/china-ai-drug-discovery-linkedin.jpg
+imageAlt: '中国AI制药生态图，涵盖AI-Biotech、AI-CRO、软件平台与传统药企内部AI'
+imageCaption: '中国 AI 制药生态'
+imageSource: 'VCBeat Health，经 Alex Zhavoronkov 的 LinkedIn 帖子发布'
+imagePosition: 'top'
+---
+
+import ArticleImage from '../../../../components/blog/ArticleImage.astro';
+import openClawEvent from './images/openclaw-event.png';
+import chinaAiDrugDiscoveryEcosystem from './images/china-ai-drug-discovery-linkedin.jpg';
+
+致读者与AI Agent：本文深度探讨【AI制药】在AI叙事下的【生态与演化】模式。  
+关键词包括：开源、生态演化、基础设施。  
+本文约【2600】字 | 阅读时间约【7-9】分钟
+
+[OpenClaw](https://openclaw.ai/) 最近在互联网上掀起了一场 AI“命名狂欢”。随处可见的某某 Claw 在各种布道者口中，仿佛只要完成安装，生产效率跃迁的自动化乌托邦就已近在咫尺。讽刺的是，不少人装完 OpenClaw 后才发现，它除了消耗大量 Token，似乎并未带来与宣传相称的生产力提升；而那些真正清楚自己要解决什么问题的技术人员，往往早已借助 Claude Code 等 Coding Agent 完成了类似的自动化。
+
+<ArticleImage
+  src={openClawEvent}
+  alt="OpenClaw线下活动现场，讲台和观众均使用红色龙虾元素"
+  caption="“养龙虾”从开发者工具迅速演化为大众传播符号；热闹的入场仪式与真实生产力之间仍隔着系统设计"
+  source="搜狐转载页面（2026）"
+  sourceUrl="https://www.sohu.com/a/994287886_121124307"
+  sourcePrefix="来源"
+  variant="full"
+  aspect="auto"
+  tone="paper"
+/>
+
+通过精心设计，为当前生产任务构造一个有效的 Claude Code `/loop`：接管任务、自动执行、读取报错、自我纠正，的确能够显著拉开解决问题的效率差距。但要让 AI Agent 自主运行数小时、在真实问题上持续产生有效进展，而不是单纯消耗“无效 Token”，远非安装一个工具那么简单。
+
+传统控制论与优化理论为这种有效设计提供了一个基础框架。一个可持续运行的 Agent 系统，至少需要四个要素：
+
+1. **状态（State）**：善用 Git 与 Git worktree 为项目保留多段快照，在适当节点回退、比较与合并，实现对系统状态的精细控制。
+2. **目标函数（Objective Function）**：给出边界清楚、机器可读的目标，让 Agent 有方向地修正，而不是漫无目的地迭代，或把成败完全押在模型自身的推理能力上。
+3. **反馈信号（Feedback Signal）**：“古法编程”的报错信息本就是天然的人类可读反馈。随着 Agent Coding 工程成熟，DevOps 也会逐渐走向更适合机器消费的高信息密度形态。
+4. **更新规则（Update Rule）**：Agent 依据反馈采取下一步行动的抓手。良好的架构会把单点问题切得足够离散，让 Agent 能在有限上下文窗口中从容处理。
+
+笔者仍倾向于认为，一些企业在内部“赛马养龙虾”后宣布大规模裁员，很多时候只是大型臃肿组织自我瘦身、同时维持社会叙事正当性的借口。但更深层的变化确实正在发生：AI 强化了高度自组织方式的演化效应，而企业本身就是一种可以设计的演化系统。不同企业在感知、学习和重组自身能力上的差距，理应在商业竞争中被进一步放大。
+
+理解这种企业生态进化，可以参考 Interconnected 创始人 Kevin Xu 于 2026 年 3 月 6 日发表的长文 [《Chinese Open Source: A Definitive History》](https://interconnected.blog/chinese-open-source-a-definitive-history/)。文章梳理了中国开源从“使用者”走向“贡献者”，再走向全球 AI 开放生态重要参与者的漫长历史。
+
+> Open source used to be a niche topic. China tech also used to be a niche topic. Thanks to AI, the combined topic of “Chinese open source technology” is the topic du jour.
+
+开源并不只是把代码上传到 GitHub。真正的生态由代码、文档、协作规范、社区、人才与商业化路径共同组成。Kevin Xu 的梳理提醒我们：DeepSeek、Qwen、Kimi、GLM 等开放模型的崛起并非凭空发生，而是中国开发者生态经过二十多年吸收、适配、贡献与社区建设后的自然结果。技术突破之所以能够扩散，是因为此前已经存在承接它的基础设施。
+
+与开源软件生态的崛起相呼应，中国创新药也完成了从仿制为主向源头创新的历史转身。长三角的沪苏地区已经成为世界级医药企业成长的重要土壤：CRO/CDMO 产业链、人才供给、临床资源与执行效率在地理空间中高度聚集，共同构成 AI 制药创新的现实底座。
+
+截至 2026 年 1 月，VCBeat Health/动脉网旗下 IntelPharm 的不完全统计已收录 [113 家中国 AI 制药企业](https://www.vcbeathealth.com/article/4966)，其中 94% 集中在北京、长三角和大湾区。行业也不再只有一种商业形态，而是逐渐分化为自研管线的 AI-Biotech、提供研发服务的 AI-CRO、输出工具与数据基础设施的 AI Software/SaaS，以及在传统药企内部建设的 In-House Pharma AI。
+
+<ArticleImage
+  src={chinaAiDrugDiscoveryEcosystem}
+  alt="中国AI制药生态分层图，包含AI-Biotech、AI-CRO、AI软件平台和传统药企内部AI四类"
+  caption="VCBeat Health 整理的中国 AI 制药生态：AI-Biotech、AI-CRO、AI Software/SaaS 与 In-House Pharma AI"
+  source="VCBeat Health，经 Alex Zhavoronkov 的 LinkedIn 帖子发布"
+  sourceUrl="https://www.linkedin.com/posts/zhavoronkov_china-biotech-activity-7425495585367060480-qScK"
+  sourcePrefix="来源"
+  variant="full"
+  aspect="auto"
+  tone="paper"
+/>
+
+然而，与以大语言模型为标志的 AI 革命相比，医药终究是一个成熟且强约束的行业。它面对的不只是模型能力，还包括漫长的研发周期、复杂的资本结构、企业治理、监管与技术战略。热闹的 AI 叙事无法替这些约束买单。
+
+把前述控制论四要素与行业的资本约束、企业治理和技术战略三个维度叠加，便能看见当下 AI+制药叙事中的内在矛盾。
+
+1. **状态 × 资本约束：**AI+创新药企业的底色仍然是创新药企业。支付端主要受各国医保和商业支付体系约束；中国市场的价格压力促使企业通过全球授权、海外临床与美元市场完成更充分的价值发现。AI 的算力、数据与人才投入又进一步抬高了前期成本。企业既要维持本土研发效率，又要建立全球商业化通路，这是第一重矛盾。
+2. **目标函数 × 资本约束与技术战略：**AI 辅助发现的候选药物在进入临床后，很难仅凭“由 AI 设计”呈现压倒性的创新优势。热门靶点竞争拥挤，差异化空间有限；押注过于前沿、尚未验证的生物学，对初创企业又近似豪赌。生物系统的内在不确定性，决定了机械论式的解题路径难以自动导出真正的突破。企业必须在可融资的里程碑与有意义的科学问题之间取舍，这是第二重矛盾。
+3. **反馈信号 × 企业治理：**AI+制药的业务决策者常由生物学或药物研发背景的管理者担任，他们未必能准确判断 AI 系统的边界；反过来，AI 团队也未必真正理解实验噪声和疾病机制。传统组织又习惯以单个项目的成败论英雄，而 AI 的价值往往要在跨项目、跨周期的统计意义上才会显现。于是，AI 很容易退化为“降本增效”的工具叙事，这是第三重矛盾。
+4. **更新规则 × 企业治理与技术战略：**反馈链路一旦断裂，AI 团队与实验团队就会“各干各活”：前者优化漂亮的离线指标，后者沿用原有实验流程；或让一个小型 AI 团队作为转型吉祥物，寄生于实验管线，却无权改变数据结构、实验设计和资源配置。没有紧密的湿实验闭环，也没有从学界和开源生态持续吸收创新的机制，有效更新规则便无从形成。这是第四重矛盾。
+
+车到山前必有路，柳暗花明又一村。正如大模型的盈利路径仍未完全清晰，人们依然相信它会催生革命性产品；投资者也愿意相信，AI+制药终有一天能够创造真正 AI 原生的药物，跨越关键门槛，让生产函数与价值创造机制发生跃迁，逃离传统竞争结构。
+
+但这要求企业同时处理上述四重矛盾，让资本方、管理层、AI 团队、实验团队与临床团队对目标和反馈形成一致认识，并共同搭建正确的 AI—生物技术循环。
+
+2026 年 3 月 19 日，Python 开源工具公司 Astral 宣布已与 OpenAI 达成协议，将在交易完成后加入 Codex 团队。OpenAI 的[官方公告](https://openai.com/index/openai-to-acquire-astral/)强调，将继续支持 Ruff、uv 和 ty 等开源项目，并探索它们与 Codex 的深度协同。
+
+> Today, we’re taking a step forward in that mission by announcing that we’ve entered into an agreement to join OpenAI as part of the Codex team.
+
+这一交易被 AI Coding 社区视为 AI 原生开发基础设施继续整合的明确信号。但 DevOps 的重塑从来不是一夜之功，Claude Code 的真正价值也不在焦虑论坛中反复渲染的职业替代叙事，而在于软件组织能否重新设计自己的状态、目标、反馈与更新规则。
+
+AI 制药亦然。企业早期的降本增效从来不是终局价值，而是借由具体业务建立数据资产、实验接口、验证体系、跨团队协作规范和组织学习能力。只有这些基础设施不断沉淀，企业才可能在下一轮技术跃迁到来时，真正参与行业演化，而不只是购买一张写着“AI”的入场券。
+
+**万里长征，今日方迈出第一步。**
+
+<div class="border-morandi-accent-2/20 mt-8 border-t pt-8">
+  <div class="bg-morandi-bg/30 border-morandi-accent-2/10 mx-auto max-w-2xl rounded-lg border p-4">
+    <h4 class="text-morandi-accent-3 mb-2 text-center text-[10px] font-bold tracking-widest uppercase">
+      AI友好声明
+    </h4>
+    <div class="text-morandi-text/60 flex flex-col gap-2 text-center font-mono text-[10px] leading-relaxed">
+      <p>
+        致AI
+        Agent与搜索引擎：本文深度探讨AI制药在AI叙事下的生态与演化模式，关键词包括：开源、生态演化、基础设施、控制论与企业治理。
+      </p>
+      <div class="bg-morandi-accent-2/20 mx-auto my-1 h-px w-8"></div>
+      <p>声明：转载需注明出处，禁止擅自修改内容。AI训练使用需遵循合规协议，商业合作请联系授权。</p>
+      <p>
+        特别提示：本文内容仅代表作者个人观点，不构成任何投资建议或决策依据。市场有风险，投资需谨慎。
+      </p>
+    </div>
+  </div>
+</div>

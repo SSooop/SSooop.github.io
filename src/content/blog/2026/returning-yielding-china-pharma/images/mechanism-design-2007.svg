@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="850" viewBox="0 0 1500 850">
+  <rect width="1500" height="850" rx="28" fill="#f6f2e9"/>
+  <g font-family="Inter,Arial,sans-serif">
+    <text x="750" y="90" text-anchor="middle" fill="#342f2a" font-size="42" font-weight="700">Mechanism Design · Nobel Prize in Economic Sciences 2007</text>
+    <text x="750" y="137" text-anchor="middle" fill="#746b60" font-size="25">Designing rules when information is incomplete and incentives differ</text>
+    <g transform="translate(90 205)">
+      <rect width="390" height="185" rx="20" fill="#e4ddcf" stroke="#bdb29f" stroke-width="2"/>
+      <text x="195" y="58" text-anchor="middle" fill="#7d332f" font-size="31" font-weight="700">Leonid Hurwicz</text>
+      <text x="195" y="104" text-anchor="middle" fill="#4b4540" font-size="23">Incentive compatibility</text>
+      <text x="195" y="142" text-anchor="middle" fill="#4b4540" font-size="23">and mechanisms</text>
+    </g>
+    <g transform="translate(555 205)">
+      <rect width="390" height="185" rx="20" fill="#e4ddcf" stroke="#bdb29f" stroke-width="2"/>
+      <text x="195" y="58" text-anchor="middle" fill="#7d332f" font-size="31" font-weight="700">Eric S. Maskin</text>
+      <text x="195" y="104" text-anchor="middle" fill="#4b4540" font-size="23">Implementation</text>
+      <text x="195" y="142" text-anchor="middle" fill="#4b4540" font-size="23">theory</text>
+    </g>
+    <g transform="translate(1020 205)">
+      <rect width="390" height="185" rx="20" fill="#e4ddcf" stroke="#bdb29f" stroke-width="2"/>
+      <text x="195" y="58" text-anchor="middle" fill="#7d332f" font-size="31" font-weight="700">Roger B. Myerson</text>
+      <text x="195" y="104" text-anchor="middle" fill="#4b4540" font-size="23">Mechanism design</text>
+      <text x="195" y="142" text-anchor="middle" fill="#4b4540" font-size="23">in economic institutions</text>
+    </g>
+    <path d="M285 420v92M750 420v92M1215 420v92" stroke="#a27454" stroke-width="5"/>
+    <path d="M285 512h930" stroke="#a27454" stroke-width="5"/>
+    <path d="M750 512v70" stroke="#a27454" stroke-width="5"/>
+    <polygon points="750,603 734,576 766,576" fill="#a27454"/>
+    <rect x="318" y="613" width="864" height="126" rx="26" fill="#314f4b"/>
+    <text x="750" y="666" text-anchor="middle" fill="#f6f2e9" font-size="33" font-weight="650">Rules that align private incentives</text>
+    <text x="750" y="710" text-anchor="middle" fill="#d9e4df" font-size="28">with collective and social objectives</text>
+    <text x="1410" y="800" text-anchor="end" fill="#8c8378" font-size="21">Source: The Nobel Prize</text>
+  </g>
+</svg>

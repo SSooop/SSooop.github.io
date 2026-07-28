@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="820" viewBox="0 0 1500 820">
+  <rect width="1500" height="820" rx="28" fill="#111715"/>
+  <g font-family="Inter,'PingFang SC',sans-serif">
+    <text x="90" y="110" fill="#c7d0cc" font-size="34">01093 · 石药集团 / CSPC Pharmaceutical</text>
+    <text x="90" y="225" fill="#39c27f" font-size="92" font-weight="700">HK$ 9.590</text>
+    <text x="625" y="215" fill="#39c27f" font-size="48">▼ 10.29%</text>
+    <text x="90" y="286" fill="#75827d" font-size="28">2026-01-30 close · Hong Kong</text>
+    <line x1="90" y1="342" x2="1410" y2="342" stroke="#31413b"/>
+    <text x="90" y="423" fill="#eef3f0" font-size="42" font-weight="650">AstraZeneca collaboration</text>
+    <text x="90" y="485" fill="#c7d0cc" font-size="32">Obesity and type 2 diabetes programs</text>
+    <text x="90" y="580" fill="#f0b76e" font-size="64" font-weight="700">Up to US$18.5B</text>
+    <text x="90" y="659" fill="#9aa8a2" font-size="29">The agreement landed; the stock was sold.</text>
+    <text x="90" y="710" fill="#9aa8a2" font-size="29">Shares fell more than 12% intraday after a ~26% January rally.</text>
+    <path d="M1030 445l90 48 82-92 91 47 78-134" fill="none" stroke="#39c27f" stroke-width="9"/>
+    <circle cx="1371" cy="314" r="14" fill="#39c27f"/>
+    <text x="1410" y="765" text-anchor="end" fill="#65736d" font-size="22">Data: CSPC market disclosure and public market reporting</text>
+  </g>
+</svg>

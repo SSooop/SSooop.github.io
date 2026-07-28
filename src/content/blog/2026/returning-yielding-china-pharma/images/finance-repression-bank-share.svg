@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="930" viewBox="0 0 1500 930">
+  <rect width="1500" height="930" rx="28" fill="#faf9f5"/>
+  <g font-family="Inter,'PingFang SC',sans-serif">
+    <text x="750" y="72" text-anchor="middle" fill="#283230" font-size="38" font-weight="700">金融抑制与银行融资占比 · 2015</text>
+    <text x="750" y="112" text-anchor="middle" fill="#6c7470" font-size="23">Financial repression rises with the banking share of financial assets</text>
+    <line x1="140" y1="790" x2="1380" y2="790" stroke="#36413d" stroke-width="3"/>
+    <line x1="140" y1="790" x2="140" y2="150" stroke="#36413d" stroke-width="3"/>
+    <g stroke="#d9ddd9" stroke-width="1">
+      <path d="M140 630h1240M140 470h1240M140 310h1240M450 150v640M760 150v640M1070 150v640M1380 150v640"/>
+    </g>
+    <text x="760" y="870" text-anchor="middle" fill="#3d4945" font-size="28">银行在金融资产中的比重 / Banking share</text>
+    <text x="46" y="475" text-anchor="middle" fill="#3d4945" font-size="28" transform="rotate(-90 46 475)">金融抑制指数 / Financial repression</text>
+    <path d="M145 603C430 540 730 485 1375 402" fill="none" stroke="#a14b3f" stroke-width="5"/>
+    <g fill="#344e47">
+      <circle cx="215" cy="548" r="10"/><circle cx="280" cy="650" r="10"/><circle cx="335" cy="566" r="10"/>
+      <circle cx="455" cy="438" r="10"/><circle cx="500" cy="510" r="10"/><circle cx="548" cy="482" r="10"/>
+      <circle cx="615" cy="351" r="10"/><circle cx="675" cy="448" r="10"/><circle cx="720" cy="412" r="10"/>
+      <circle cx="785" cy="335" r="10"/><circle cx="840" cy="458" r="10"/><circle cx="890" cy="388" r="10"/>
+      <circle cx="935" cy="505" r="10"/><circle cx="985" cy="336" r="10"/><circle cx="1030" cy="360" r="10"/>
+      <circle cx="1090" cy="286" r="10"/><circle cx="1150" cy="400" r="10"/><circle cx="1210" cy="270" r="10"/>
+      <circle cx="1260" cy="368" r="10"/><circle cx="1320" cy="310" r="10"/>
+    </g>
+    <g fill="#596560" font-size="20">
+      <text x="218" y="535">美国</text><text x="270" y="682">中国香港</text><text x="315" y="550">南非</text>
+      <text x="428" y="426">菲律宾</text><text x="498" y="540">新加坡</text><text x="590" y="338">印度尼西亚</text>
+      <text x="690" y="438">法国</text><text x="770" y="322">日本</text><text x="836" y="490">荷兰</text>
+      <text x="878" y="378">德国</text><text x="920" y="535">瑞典</text><text x="970" y="326">中国</text>
+      <text x="1080" y="273">巴西</text><text x="1135" y="430">奥地利</text><text x="1200" y="258">埃及</text>
+      <text x="1285" y="398">匈牙利</text>
+    </g>
+    <circle cx="985" cy="336" r="23" fill="none" stroke="#c74d40" stroke-width="4"/>
+    <text x="1410" y="905" text-anchor="end" fill="#7b817e" font-size="19">Source: Wang Xun; EFW Dataset and GFDD · redrawn</text>
+  </g>
+</svg>

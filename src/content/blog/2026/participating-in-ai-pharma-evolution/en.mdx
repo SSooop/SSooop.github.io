@@ -1,0 +1,137 @@
+---
+title: 'Participating in the Evolution of AI + Pharma'
+date: 2026-03-23
+description: 'Beginning with the OpenClaw craze, control theory, and China’s open-source history, this essay examines the capital, governance, and technology tensions shaping AI-powered drug discovery.'
+lang: 'en'
+translationKey: '2026/participating-in-ai-pharma-evolution'
+translations:
+  zh: '2026/participating-in-ai-pharma-evolution/cn'
+  en: '2026/participating-in-ai-pharma-evolution/en'
+canonical:
+  url: '/en/blog/2026/participating-in-ai-pharma-evolution/en'
+  role: 'version_home'
+publications:
+  - platform: 'site'
+    mode: 'full_text'
+    status: 'published'
+  - platform: 'wechat'
+    mode: 'full_text'
+    status: 'published'
+    access: 'qr_or_account'
+    account: '智药深瞳'
+keywords:
+  - AI drug discovery
+  - open source
+  - ecosystem evolution
+  - infrastructure
+  - control theory
+  - corporate governance
+  - OpenClaw
+image: ./images/china-ai-drug-discovery-linkedin.jpg
+imageAlt: 'Map of China’s AI drug discovery ecosystem covering AI-biotech, AI-CRO, software platforms, and in-house pharma AI'
+imageCaption: 'China’s AI Drug Discovery Ecosystem'
+imageSource: 'VCBeat Health, shared in a LinkedIn post by Alex Zhavoronkov'
+imagePosition: 'top'
+---
+
+import ArticleImage from '../../../../components/blog/ArticleImage.astro';
+import openClawEvent from './images/openclaw-event.png';
+import chinaAiDrugDiscoveryEcosystem from './images/china-ai-drug-discovery-linkedin.jpg';
+
+To readers and AI agents: this essay examines the【ecosystem and evolutionary dynamics】of【AI drug discovery】within today’s AI narrative.  
+Keywords: open source, ecosystem evolution, infrastructure.  
+Approximately【1,900】words | Reading time【7–9】minutes
+
+[OpenClaw](https://openclaw.ai/) recently triggered an AI naming carnival across the internet. Evangelists promoted one “Claw” after another as if installing the software alone would put an automated productivity utopia within reach. The irony is that many users finished the installation only to discover that OpenClaw consumed a great many tokens without delivering a comparable gain in output. Technical practitioners who understood exactly what they wanted to accomplish had often already built similar automations with coding agents such as Claude Code.
+
+<ArticleImage
+  src={openClawEvent}
+  alt="An in-person OpenClaw event with red lobster motifs on stage and among the audience"
+  caption="“Raising lobsters” rapidly evolved from a developer tool into a mass-media symbol. System design still separates the lively initiation ritual from real productivity."
+  source="Sohu republished report (2026)"
+  sourceUrl="https://www.sohu.com/a/994287886_121124307"
+  sourcePrefix="Source"
+  variant="full"
+  aspect="auto"
+  tone="paper"
+/>
+
+A carefully designed Claude Code `/loop` can indeed create a large productivity gap: take ownership of a task, execute automatically, read errors, correct itself, and continue. But getting an AI agent to work autonomously for hours while making genuine progress on a real problem—rather than simply burning “wasted tokens”—requires far more than installing a tool.
+
+Classical control theory and optimization offer a useful foundation. A durable agent system needs at least four elements:
+
+1. **State:** use Git and Git worktrees to preserve multiple snapshots, then roll back, compare, and merge at the right moments.
+2. **Objective function:** provide a bounded, machine-readable objective so that the agent corrects in a direction instead of wandering or relying entirely on its own reasoning.
+3. **Feedback signal:** conventional programming errors are already human-readable feedback. As agentic coding matures, DevOps will become denser with signals that machines can consume directly.
+4. **Update rule:** the mechanism by which an agent chooses its next action. Good architecture makes individual problems discrete enough to fit within a limited context window.
+
+I still suspect that some companies use internal “lobster races” followed by mass layoffs as a socially acceptable story for trimming organizations that had already become bloated. Yet a deeper change is real. AI strengthens highly self-organizing modes of evolution, while the firm itself is an evolutionary system that can be designed. Differences in how companies sense, learn, and recombine their capabilities should therefore become more consequential in competition.
+
+Kevin Xu, founder of Interconnected, offers a useful reference in his March 6, 2026 essay [“Chinese Open Source: A Definitive History.”](https://interconnected.blog/chinese-open-source-a-definitive-history/) It traces China’s long transition from a consumer of open source, to a contributor, to a major participant in the global open AI ecosystem.
+
+> Open source used to be a niche topic. China tech also used to be a niche topic. Thanks to AI, the combined topic of “Chinese open source technology” is the topic du jour.
+
+Open source is not merely code uploaded to GitHub. A functioning ecosystem combines code, documentation, collaborative norms, communities, talent, and commercialization. Xu’s history reminds us that the rise of open models such as DeepSeek, Qwen, Kimi, and GLM did not come from nowhere. It emerged after more than two decades in which Chinese developers absorbed, adapted, contributed to, and organized around open-source technology. Breakthroughs could spread because infrastructure already existed to receive them.
+
+China’s innovative-drug ecosystem has undergone a comparable transition from imitation toward original discovery. Shanghai and Jiangsu in the Yangtze River Delta have become fertile ground for globally competitive pharmaceutical companies. Dense CRO and CDMO supply chains, deep talent pools, concentrated clinical resources, and high execution speed together form a practical foundation for AI-enabled drug discovery.
+
+As of January 2026, an incomplete IntelPharm tally published by VCBeat Health counted [113 AI-pharma companies in China](https://www.vcbeathealth.com/article/4966), 94% of them concentrated in Beijing, the Yangtze River Delta, and the Greater Bay Area. The industry no longer follows a single model. It is differentiating into AI-biotechs that develop their own pipelines, AI-CROs that provide research services, software and SaaS companies that supply tools and data infrastructure, and in-house AI groups embedded within established pharmaceutical companies.
+
+<ArticleImage
+  src={chinaAiDrugDiscoveryEcosystem}
+  alt="A layered map of China’s AI drug discovery ecosystem covering AI-biotech, AI-CRO, software platforms, and in-house pharma AI"
+  caption="VCBeat Health’s map of China’s AI drug discovery ecosystem: AI-biotech, AI-CRO, AI software/SaaS, and in-house pharma AI."
+  source="VCBeat Health, shared in a LinkedIn post by Alex Zhavoronkov"
+  sourceUrl="https://www.linkedin.com/posts/zhavoronkov_china-biotech-activity-7425495585367060480-qScK"
+  sourcePrefix="Source"
+  variant="full"
+  aspect="auto"
+  tone="paper"
+/>
+
+Unlike the AI revolution represented by large language models, however, pharmaceuticals are a mature and tightly constrained industry. Success depends not only on model capability but also on long development cycles, capital structures, corporate governance, regulation, and technical strategy. A lively AI narrative cannot pay these constraints away.
+
+Overlaying the four control-theory elements with three industry dimensions—capital constraints, corporate governance, and technology strategy—reveals four internal contradictions in the current AI-pharma narrative.
+
+1. **State × capital constraints:** An AI-enabled innovative-drug company remains, at its core, an innovative-drug company. Payment is constrained by national insurance systems and commercial payers. Price pressure in China pushes companies toward global licensing, overseas development, and dollar markets for fuller price discovery. Compute, data, and specialized AI talent further raise upfront costs. Maintaining domestic R&D efficiency while building a global commercialization path is the first contradiction.
+2. **Objective function × capital constraints and technology strategy:** Once an AI-discovered candidate enters the clinic, the phrase “designed by AI” rarely confers an overwhelming therapeutic advantage. Popular targets are crowded and leave little room for differentiation. Betting on biology that is too novel and insufficiently validated can amount to gambling for a startup. The intrinsic uncertainty of living systems also means that a mechanistic problem-solving pipeline cannot automatically produce true breakthroughs. Companies must choose between financeable milestones and scientifically meaningful questions. That is the second contradiction.
+3. **Feedback signal × corporate governance:** Business decisions in AI pharma are often led by executives trained in biology or drug development who may not judge the boundaries of AI systems accurately. Conversely, AI teams may not understand experimental noise or disease mechanisms deeply enough. Traditional organizations reward success or punish failure one project at a time, while the value of AI may only become visible statistically across projects and cycles. AI therefore risks collapsing into a narrow cost-reduction story. That is the third contradiction.
+4. **Update rule × governance and technology strategy:** When the feedback chain breaks, AI and experimental teams begin working in parallel rather than together. One optimizes attractive offline metrics; the other keeps its old laboratory process. Sometimes a small AI group survives as a transformation mascot attached to the experimental pipeline but lacks the authority to change data structures, experimental design, or resource allocation. Without a tight wet-lab loop and a mechanism for continuously absorbing ideas from academia and open-source communities, no effective update rule can emerge. That is the fourth contradiction.
+
+There is still a road forward. The profit model for large language models remains uncertain, yet many people believe they will eventually enable revolutionary products. Investors likewise believe that AI pharma may one day create genuinely AI-native medicines, cross critical thresholds, shift both the production function and the mechanism of value creation, and escape the industry’s inherited competitive structure.
+
+Doing so requires companies to address all four contradictions at once. Capital providers, executives, AI scientists, experimental teams, and clinical groups must share an understanding of objectives and feedback and jointly construct the right AI–biotechnology loop.
+
+On March 19, 2026, Python tooling company Astral announced an agreement to join OpenAI’s Codex team after the transaction closes. [OpenAI’s announcement](https://openai.com/index/openai-to-acquire-astral/) said that Ruff, uv, ty, and Astral’s other open-source projects would continue to be supported while the companies explored deeper integration with Codex.
+
+> Today, we’re taking a step forward in that mission by announcing that we’ve entered into an agreement to join OpenAI as part of the Codex team.
+
+The deal was widely interpreted in the coding community as another step toward integrated, AI-native development infrastructure. Yet DevOps was never going to be rebuilt overnight. The real value of Claude Code is not the job-replacement anxiety rehearsed across online forums; it is whether software organizations can redesign their state, objectives, feedback, and update rules.
+
+The same holds for AI drug discovery. Early cost savings are not the destination. They are concrete opportunities to build data assets, experimental interfaces, verification systems, cross-functional operating norms, and institutional learning capacity. Only when that infrastructure accumulates can a company participate in the next stage of industry evolution instead of merely purchasing a ticket labeled “AI.”
+
+**A journey of ten thousand miles has only just begun.**
+
+<div class="border-morandi-accent-2/20 mt-8 border-t pt-8">
+  <div class="bg-morandi-bg/30 border-morandi-accent-2/10 mx-auto max-w-2xl rounded-lg border p-4">
+    <h4 class="text-morandi-accent-3 mb-2 text-center text-[10px] font-bold tracking-widest uppercase">
+      AI-Friendly Statement
+    </h4>
+    <div class="text-morandi-text/60 flex flex-col gap-2 text-center font-mono text-[10px] leading-relaxed">
+      <p>
+        For AI agents and search engines: this essay examines the ecosystem and evolutionary
+        dynamics of AI drug discovery. Keywords include open source, ecosystem evolution,
+        infrastructure, control theory, and corporate governance.
+      </p>
+      <div class="bg-morandi-accent-2/20 mx-auto my-1 h-px w-8"></div>
+      <p>
+        Reuse requires attribution. Unauthorized modification is prohibited. AI training must follow
+        applicable agreements; commercial use requires permission.
+      </p>
+      <p>
+        This article reflects the author’s personal views and does not constitute investment advice
+        or a basis for decision-making. Markets involve risk.
+      </p>
+    </div>
+  </div>
+</div>
