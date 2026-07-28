@@ -60,11 +60,55 @@ test.describe('production smoke test', () => {
       /Rethinking Mental Labor/
     );
     await expect(page.locator('[itemprop="articleBody"]')).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Switch to Chinese language' })).toHaveAttribute(
+      'href',
+      '/zh/blog/2026/ai-agent-biopharma-labor/cn'
+    );
+    await expect(page.getByText('FR', { exact: true })).toHaveCount(0);
+    await expect(page.getByText('RU', { exact: true })).toHaveCount(0);
   });
 
   test('Chinese article page renders article body', async ({ page }) => {
     await expectPageHealthy(page, '/zh/blog/2026/ai-agent-biopharma-labor/cn/', /新说脑力劳动/);
     await expect(page.locator('[itemprop="articleBody"]')).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Switch to English language' })).toHaveAttribute(
+      'href',
+      '/en/blog/2026/ai-agent-biopharma-labor/en'
+    );
+  });
+
+  test('article routes do not mix site and content languages', async ({ request }) => {
+    const chineseArticleInEnglishSite = await request.get(
+      '/en/blog/2026/ai-agent-biopharma-labor/cn/'
+    );
+    expect(chineseArticleInEnglishSite.status()).toBe(404);
+
+    const englishArticleInChineseSite = await request.get(
+      '/zh/blog/2026/ai-agent-biopharma-labor/en/'
+    );
+    expect(englishArticleInChineseSite.status()).toBe(404);
+  });
+
+  test('curated related posts lead and fill to three items', async ({ page }) => {
+    await expectPageHealthy(
+      page,
+      '/zh/blog/2026/no-silver-bullet-scientific-intelligence/cn/',
+      /没有银弹/
+    );
+
+    const articleBody = page.locator('[itemprop="articleBody"]');
+    await expect(articleBody).not.toContainText('往期相关');
+
+    const relatedLinks = page.locator('aside[aria-label="Related posts"] > div > a');
+    await expect(relatedLinks).toHaveCount(3);
+    await expect(relatedLinks.nth(0)).toHaveAttribute(
+      'href',
+      '/zh/blog/2026/why-ai-drug-discovery-is-not-alphago/cn'
+    );
+    await expect(relatedLinks.nth(1)).toHaveAttribute(
+      'href',
+      '/zh/blog/2026/predicting-pharma-innovation/cn'
+    );
   });
 
   test('robots and sitemap endpoints are published', async ({ request }) => {

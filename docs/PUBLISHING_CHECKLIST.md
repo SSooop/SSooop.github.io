@@ -13,6 +13,9 @@ Use this checklist when publishing a new article or updating existing content.
   source metadata.
 - Do not add placeholder publication URLs.
 - Do not add hand-written citation modules in article bodies.
+- Do not add hand-written summaries, reading-time labels, AI-friendly statements, distribution
+  blocks, or serial links to WeChat Official Account articles. The shared article template owns
+  these elements.
 
 ## Frontmatter
 
@@ -21,11 +24,15 @@ Use this checklist when publishing a new article or updating existing content.
 - `image`, `imageAlt`, `imageCaption`, `imageSource`, and `imageSourceUrl` are optional, but
   `imageAlt` is required when `image` is present.
 - `translationKey` must be `YYYY/slug`.
+- `related` is optional and accepts up to three ordered `YYYY/slug` translation keys. Use it
+  instead of adding past-article or related-reading sections to the body.
 - `canonical.url` must be the stable site URL path for that language version.
 - The `site` publication must be `published`.
 - Use WeChat `access: "qr_or_account"` and `account: "智药深瞳"` until a real URL exists.
 - Add `x` or `linkedin` only when that full-text surface is actually published or intentionally
   planned.
+- Record the real external URL once it exists. The article footer combines publication metadata
+  from both language editions, so Chinese and English pages expose the same complete channel list.
 
 ## Local Verification
 
@@ -67,4 +74,5 @@ Use this model for future automation:
 - Internal links pass `pnpm links:check`.
 - External links are either reachable or documented for manual review.
 - Publication metadata matches the surfaces where the full text actually appears.
+- Both language versions show the same end-of-article distribution list and editorial boundary.
 - No private notes, local agent files, or credentials are committed.

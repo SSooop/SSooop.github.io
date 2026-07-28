@@ -29,6 +29,10 @@ const blogCollection = defineCollection({
         zh: translationPathSchema.optional(),
         en: translationPathSchema.optional(),
       }),
+      related: z
+        .array(z.string().regex(/^\d{4}\/[^/]+$/))
+        .max(3)
+        .optional(),
       canonical: z.object({
         url: z.string().regex(/^\/(en|zh)\/blog\/\d{4}\/[^/]+\/(cn|en)$/),
         role: z.literal('version_home'),

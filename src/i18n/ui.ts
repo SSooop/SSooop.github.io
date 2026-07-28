@@ -22,7 +22,9 @@ export const ui = {
     'meta.title': 'Alex Su | Digital Space',
     'meta.desc': 'Alex Su - Personal Website',
     'blog.transmissions': 'Transmissions',
-    'blog.subtitle': 'Thoughts on AI, Design, and Future',
+    'blog.subtitle': 'Technology, philosophy of science, and the long-term logic of AI × biopharma',
+    'blog.description':
+      'IntelliPharma Insights follows the technological evolution of AI and biopharma through the lens of philosophy of science. Drawing on bioengineering, software engineering, AI and blockchain, economics, and management, it examines the underlying logic of industry and long-term value. The column analyzes value logic rather than individual companies or securities; its technology-driven essays do not present specific technical solutions; and all views are personal perspectives, not investment advice.',
     'blog.read': 'READ TRANSMISSION',
     'action.scan': 'Scan to Follow',
     'action.read': 'Read',
@@ -50,7 +52,9 @@ export const ui = {
     'meta.title': '苏晨鹏 | 数字空间',
     'meta.desc': '苏晨鹏 - 个人网站',
     'blog.transmissions': '文章',
-    'blog.subtitle': '记录 AI、生物医药、产品与科学软件中的长期问题',
+    'blog.subtitle': '以技术与科学哲学，理解 AI × 制药的长期价值逻辑',
+    'blog.description':
+      '智药深瞳聚焦 AI 与制药产业的技术演化，以科学哲学为主线，交叉分析生物工程、软件工程、AI 与区块链、经济学与管理学，理解产业演化与长期价值的底层逻辑。栏目只分析价值逻辑，不分析具体企业或个股；文章为技术驱动的科学哲学讨论，不涉及具体技术方案；所有内容仅代表个人观点，不构成投资建议。',
     'blog.read': '阅读文章',
     'action.scan': '扫码关注',
     'action.read': '阅读',

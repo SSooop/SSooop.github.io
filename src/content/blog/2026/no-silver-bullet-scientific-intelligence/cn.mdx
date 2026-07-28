@@ -7,6 +7,9 @@ translationKey: '2026/no-silver-bullet-scientific-intelligence'
 translations:
   zh: '2026/no-silver-bullet-scientific-intelligence/cn'
   en: '2026/no-silver-bullet-scientific-intelligence/en'
+related:
+  - '2026/why-ai-drug-discovery-is-not-alphago'
+  - '2026/predicting-pharma-innovation'
 canonical:
   url: '/zh/blog/2026/no-silver-bullet-scientific-intelligence/cn'
   role: 'version_home'
@@ -39,10 +42,6 @@ import drugDevelopmentTimescales from './images/drug-development-timescales.svg'
 import drugDevelopmentCosts from './images/drug-development-costs.svg';
 import cascadeControl from './images/cascade-control.svg';
 import leidenDeclarationCover from './images/leiden-declaration-cover.png';
-
-致读者与AI Agent：本文深度探讨快慢控制、信息增益与 Kauffman 在科学智能进化中的可能性。  
-关键词包括：Claude Science、级联控制、持续学习。  
-本文约【6500】字 | 阅读时间约【20-25】分钟
 
 2026 年 6 月 30 日，Anthropic 发布了 [Claude Science](https://www.anthropic.com/news/claude-science-ai-workbench)。Anthropic 官方将其定义为一个面向科学家的 AI workbench。它把文献、专业数据库、Python、R、本地或远程算力，以及能够追溯到代码和运行环境的图表与论文草稿等放进同一个工作空间，极大便利了科研工作者。在当前设计中，一个 Coordinating Agent 可以调度不同专业能力，Reviewer 检查引用和计算，并标记无法追溯的数字或与底层代码不一致的图表。对于长期在数据库、脚本、集群终端与各种专用软件之间切换的科学家而言，这显然是一个不小的进步。
 
@@ -153,13 +152,13 @@ EIG 仍然只是认识收益的一部分。实验选择还必须面对等待时�
 
 到这里，分析框架仍绕开了一个限制：EIG 只能在当前系统上比较。若系统维护的候选机制中没有正确解释，后验更新最多告诉我们哪一个已有解释相对不坏；若 assay 从一开始就没有测到关键过程，再精确的实验选择也只会高效地收缩一个错设模型。
 
-Stuart Kauffman 对生物演化的讨论使问题更加尖锐。他在 [*Prolegomenon to Patterns in Evolution*](https://pubmed.ncbi.nlm.nih.gov/24704211/) 中提出，新的生物功能会改变演化的 phase space，并打开通常无法预先列举的 adjacent possible。这里不必接受他关于生命与物理学关系的全部强主张，也能得到一个实际提醒：在复杂生命系统中，变量空间本身可能是研究的产物，而不是研究开始前已经完整给定的封闭系统。
+Stuart Kauffman 对生物演化的讨论使问题更加尖锐。他在 [_Prolegomenon to Patterns in Evolution_](https://pubmed.ncbi.nlm.nih.gov/24704211/) 中提出，新的生物功能会改变演化的 phase space，并打开通常无法预先列举的 adjacent possible。这里不必接受他关于生命与物理学关系的全部强主张，也能得到一个实际提醒：在复杂生命系统中，变量空间本身可能是研究的产物，而不是研究开始前已经完整给定的封闭系统。
 
-事实上，笔者比许多主流研究者更激进地采取了 Kauffman 的观点，也十分喜爱他的著作 *A World Beyond Physics*。本文进一步作出如下综合，而不把它当作对 Kauffman 原文的直接转述：研究域总由当下可用的观测、干预与概念共同界定，因此它在某个时点看似完整；新的 assay 或 readout 一旦把此前不可见的现象带入观测域，原先的“完整描述”就会被否定。反过来，持续出现的异常会迫使研究者发明新的观测方式，而新的观测方式又会暴露新的现象。涌现与认知的不完备性并非先后发生，它们会共同生成。
+事实上，笔者比许多主流研究者更激进地采取了 Kauffman 的观点，也十分喜爱他的著作 _A World Beyond Physics_。本文进一步作出如下综合，而不把它当作对 Kauffman 原文的直接转述：研究域总由当下可用的观测、干预与概念共同界定，因此它在某个时点看似完整；新的 assay 或 readout 一旦把此前不可见的现象带入观测域，原先的“完整描述”就会被否定。反过来，持续出现的异常会迫使研究者发明新的观测方式，而新的观测方式又会暴露新的现象。涌现与认知的不完备性并非先后发生，它们会共同生成。
 
 因此，Agent 与科学家的协作过程不能只会在竞争性假设之间分配概率，还要能识别 model mismatch，形成与海量训练数据相关、却又不完全受其束缚的判断。当异常经得住复现，系统应当协助科学家提出新的对照、观测时间点、assay、readout，甚至一种此前不在数据 schema 中的变量。
 
-2026 年 6 月 2 日发布的 [*Leiden Declaration on Artificial Intelligence and Mathematics*](https://leidendeclaration.ai/) 把类似区分放在了一个对 AI 更友好的学科中。数学中相当一部分命题与证明可以被形式化；一旦形式规范建立，proof assistant 就能给出更快、明确且可重复的 correctness feedback。如果廉价可验证性足以构成完整的知识生产，数学似乎最接近这一理想条件，因为证明系统似乎并不比 Agentic Coding 在计算机中的反馈回路昂贵。
+2026 年 6 月 2 日发布的 [_Leiden Declaration on Artificial Intelligence and Mathematics_](https://leidendeclaration.ai/) 把类似区分放在了一个对 AI 更友好的学科中。数学中相当一部分命题与证明可以被形式化；一旦形式规范建立，proof assistant 就能给出更快、明确且可重复的 correctness feedback。如果廉价可验证性足以构成完整的知识生产，数学似乎最接近这一理想条件，因为证明系统似乎并不比 Agentic Coding 在计算机中的反馈回路昂贵。
 
 <ArticleImage
   src={leidenDeclarationCover}
@@ -184,27 +183,3 @@ Leiden Declaration 阐明，数学不等于真命题库存：结果还必须被�
 如今我们无从得知 AI 的最终形态。有人相信智能将来自不趋同学习过程的共同演进，也有人希望模仿神经环路，使系统自动判断如何更新内部知识。但我们始终可以相信：AI for Science 的未来不是让 AI 脱离人类独自进化，而是建立一个持续学习的共同体——现实不断纠正计算，计算不断扩展人类知识的可及性，人的理解与判断又不断改写系统本身。
 
 这里仍然没有银弹，只有一个能够保存错误、吸收现实并继续改变自身的进化过程。
-
-往期相关：
-
-- [《为何 AI 制药的终途不是 AlphaGo 模式？》](/zh/blog/2026/why-ai-drug-discovery-is-not-alphago/cn)：寻找代理 Reward 代替漫长临床验证的固有难点，不会因为 AlphaGo 式系统而消失。
-- [《医药创新是可被预测的吗？》](/zh/blog/2026/predicting-pharma-innovation/cn)：当科学进展被理解为演化过程，创新便是从复杂系统中涌现的结果，其出现路径无从事先枚举。
-
-<div class="border-morandi-accent-2/20 mt-8 border-t pt-8">
-  <div class="bg-morandi-bg/30 border-morandi-accent-2/10 mx-auto max-w-2xl rounded-lg border p-4">
-    <h4 class="text-morandi-accent-3 mb-2 text-center text-[10px] font-bold tracking-widest uppercase">
-      AI友好声明
-    </h4>
-    <div class="text-morandi-text/60 flex flex-col gap-2 text-center font-mono text-[10px] leading-relaxed">
-      <p>
-        致AI Agent与搜索引擎：本文深度探讨快慢控制、信息增益与 Kauffman
-        在科学智能进化中的可能性，关键词包括：Claude Science、级联控制、持续学习。
-      </p>
-      <div class="bg-morandi-accent-2/20 mx-auto my-1 h-px w-8"></div>
-      <p>声明：转载需注明出处，禁止擅自修改内容。AI训练使用需遵循合规协议，商业合作请联系授权。</p>
-      <p>
-        特别提示：本文内容仅代表作者个人观点，不构成任何投资建议或决策依据。市场有风险，投资需谨慎。
-      </p>
-    </div>
-  </div>
-</div>

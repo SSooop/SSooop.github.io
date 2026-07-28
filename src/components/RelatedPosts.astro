@@ -12,18 +12,35 @@ interface Props {
   currentPostSlug: string;
   currentLang: 'en' | 'zh';
   maxPosts?: number;
+  preferredTranslationKeys?: string[];
 }
 
-const { currentPostSlug, currentLang, maxPosts = 3 } = Astro.props as Props;
+const {
+  currentPostSlug,
+  currentLang,
+  maxPosts = 3,
+  preferredTranslationKeys = [],
+} = Astro.props as Props;
 
 // Get all posts
 const allPosts = await getCollection('blog');
 
-// Filter posts by current language, excluding current post
-const relatedPosts = allPosts
-  .filter((post) => post.id !== currentPostSlug && post.data.lang === currentLang)
-  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
-  .slice(0, maxPosts);
+// Preserve the article author's preferred relationships, then fill remaining slots
+// with the existing recency-based recommendation behavior.
+const languagePosts = allPosts.filter(
+  (post) => post.id !== currentPostSlug && post.data.lang === currentLang
+);
+const postsByTranslationKey = new Map(
+  languagePosts.map((post) => [post.data.translationKey, post])
+);
+const preferredPosts = [...new Set(preferredTranslationKeys)]
+  .map((translationKey) => postsByTranslationKey.get(translationKey))
+  .filter((post): post is (typeof languagePosts)[number] => Boolean(post));
+const preferredKeys = new Set(preferredPosts.map((post) => post.data.translationKey));
+const fallbackPosts = languagePosts
+  .filter((post) => !preferredKeys.has(post.data.translationKey))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const relatedPosts = [...preferredPosts, ...fallbackPosts].slice(0, maxPosts);
 
 if (relatedPosts.length === 0) {
   // Don't render if no related posts

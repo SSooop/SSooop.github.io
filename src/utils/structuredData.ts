@@ -96,6 +96,9 @@ export function generateBlogPostingSchema(post: {
   modifiedDate?: Date;
   lang: 'en' | 'zh';
   image?: string;
+  keywords?: string[];
+  wordCount?: number;
+  sameAs?: string[];
 }): BlogPostingSchema {
   const isEn = post.lang === 'en';
   const fullUrl = absoluteUrl(post.url || `/${post.lang}/blog/${post.slug}`);
@@ -117,6 +120,9 @@ export function generateBlogPostingSchema(post: {
     },
     genre: isEn ? 'Technology' : '科技',
     articleSection: isEn ? 'Technology & Philosophy' : '科技与哲学',
+    keywords: post.keywords,
+    wordCount: post.wordCount,
+    sameAs: post.sameAs?.length ? post.sameAs : undefined,
   };
 }
 

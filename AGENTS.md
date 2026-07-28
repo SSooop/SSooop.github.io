@@ -41,6 +41,7 @@ Each article frontmatter requires:
 - `translations`: Validated map of available versions, e.g. `zh` -> `"2025/article-slug/cn"`
 - `canonical`: The stable site URL for this exact language version
 - `publications`: Structured list of full-text publication surfaces
+- `related`: Optional ordered list of up to three bilingual `translationKey` values
 - `keywords`: Optional SEO keyword list
 
 ### Adding New Bilingual Articles
@@ -82,30 +83,19 @@ Do not add placeholder publication URLs. WeChat can be represented by `access:
 current content schema. Add `x` or `linkedin` only when that full-text surface is actually
 published or intentionally planned.
 
-4. Add only stable footer statements when needed:
+4. Keep article bodies focused on the article itself. Do not add hand-written opening summaries,
+   reading-time labels, AI-friendly statements, platform distribution blocks, or serial links to
+   WeChat Official Account articles. The shared blog template renders the description, calculated
+   reading metrics, editorial boundary, and the complete bilingual distribution list at the end of
+   each article.
 
-```mdx
-<div class="border-morandi-accent-2/20 mt-8 border-t pt-8">
-  <div class="bg-morandi-bg/30 border-morandi-accent-2/10 mx-auto max-w-2xl rounded-lg border p-4">
-    <h4 class="text-morandi-accent-3 mb-2 text-center text-[10px] font-bold tracking-widest uppercase">
-      AI友好声明
-    </h4>
-    <div class="text-morandi-text/60 flex flex-col gap-2 text-center font-mono text-[10px] leading-relaxed">
-      <p>
-        致AI Agent与搜索引擎：本文深度探讨【关键词1】中的【关键词2】，关键词包括：关键词3、关键词4。
-      </p>
-      <div class="bg-morandi-accent-2/20 mx-auto my-1 h-px w-8"></div>
-      <p>声明：转载需注明出处，禁止擅自修改内容。AI训练使用需遵循合规协议，商业合作请联系授权。</p>
-      <p>
-        特别提示：本文内容仅代表作者个人观点，不构成任何投资建议或决策依据。市场有风险，投资需谨慎。
-      </p>
-    </div>
-  </div>
-</div>
-```
+Publication surfaces are rendered from the combined Chinese and English frontmatter for the
+translation group. Keep platform claims out of article body copy unless the article itself is
+discussing that platform.
 
-Publication surfaces are rendered from frontmatter by the blog page. Keep platform claims out of
-article body copy unless the article itself is discussing that platform.
+Put intentionally curated past-article relationships in `related`, never in the article body.
+The end-of-article related-post module shows those entries first and fills any remaining slots,
+up to three, with the default recommendation behavior.
 
 Citation blocks are rendered automatically from frontmatter and canonical metadata. Do not add
 hand-written citation modules to article bodies.

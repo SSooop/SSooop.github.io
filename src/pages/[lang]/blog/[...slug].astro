@@ -5,27 +5,47 @@ import Layout from '../../../layouts/Layout.astro';
 import StructuredData from '../../../components/StructuredData.astro';
 import RelatedPosts from '../../../components/RelatedPosts.astro';
 import CitationBox from '../../../components/CitationBox';
+import ArticleDistribution from '../../../components/blog/ArticleDistribution.astro';
 import { SITE, absoluteUrl } from '../../../config/site';
 import { generateBlogPostingSchema, getBlogBreadcrumbs } from '../../../utils/structuredData';
+import { getReadingMetrics } from '../../../utils/article';
 
 export async function getStaticPaths() {
   const blogEntries = await getCollection('blog');
-  const uiLangs = ['en', 'zh'];
 
-  return uiLangs.flatMap((lang) =>
-    blogEntries.map((entry) => ({
-      params: { lang, slug: entry.id },
-      props: { entry },
-    }))
-  );
+  return blogEntries.map((entry) => ({
+    params: { lang: entry.data.lang, slug: entry.id },
+    props: { entry },
+  }));
 }
 
 const { entry } = Astro.props;
 const { lang } = Astro.params;
 const { Content } = await render(entry);
+const allBlogEntries = await getCollection('blog');
 const heroImage = entry.data.image;
 const heroImageAlt = entry.data.imageAlt || entry.data.title;
 const heroImageUrl = heroImage ? absoluteUrl(heroImage.src) : undefined;
+const readingMetrics = getReadingMetrics(entry.body, entry.data.lang);
+const editions = allBlogEntries
+  .filter((candidate) => candidate.data.translationKey === entry.data.translationKey)
+  .map((candidate) => ({
+    lang: candidate.data.lang,
+    canonicalUrl: candidate.data.canonical.url,
+    publications: candidate.data.publications,
+    related: candidate.data.related ?? [],
+  }))
+  .sort((a, b) => (a.lang === 'zh' ? -1 : b.lang === 'zh' ? 1 : 0));
+const preferredRelatedTranslationKeys = [
+  ...new Set(editions.flatMap((edition) => edition.related)),
+];
+const publicationUrls = [
+  ...new Set(
+    editions.flatMap((edition) =>
+      edition.publications.flatMap((publication) => (publication.url ? [publication.url] : []))
+    )
+  ),
+];
 
 // Generate structured data for this blog post
 const blogSchema = generateBlogPostingSchema({
@@ -36,6 +56,9 @@ const blogSchema = generateBlogPostingSchema({
   date: entry.data.date,
   lang: entry.data.lang,
   image: heroImageUrl,
+  keywords: entry.data.keywords,
+  wordCount: readingMetrics.units,
+  sameAs: publicationUrls,
 });
 
 const breadcrumbSchema = getBlogBreadcrumbs(entry.data.title, entry.data.lang);
@@ -43,25 +66,6 @@ const breadcrumbSchema = getBlogBreadcrumbs(entry.data.title, entry.data.lang);
 // Extract keywords from blog post (if available in frontmatter in the future)
 const maybeKeywords = 'keywords' in entry.data ? entry.data.keywords : undefined;
 const blogKeywords = Array.isArray(maybeKeywords) ? maybeKeywords : [];
-
-const contentLinks = {
-  en: entry.data.translations.en || null,
-  zh: entry.data.translations.zh || null,
-  // Future placeholders
-  fr: null,
-  ru: null,
-  ar: null,
-  es: null,
-};
-
-const languages = [
-  { code: 'en', label: 'EN', name: 'English' },
-  { code: 'zh', label: 'CN', name: '中文' },
-  { code: 'fr', label: 'FR', name: 'Français' },
-  { code: 'ru', label: 'RU', name: 'Русский' },
-  { code: 'ar', label: 'AR', name: 'العربية' },
-  { code: 'es', label: 'ES', name: 'Español' },
-];
 
 const alternateLanguages = {
   ...(entry.data.translations.en ? { en: `/en/blog/${entry.data.translations.en}` } : {}),
@@ -71,39 +75,22 @@ const alternateLanguages = {
     : entry.data.canonical.url,
 };
 
-const platformLabels = {
-  wechat: 'WeChat',
-  x: 'X',
-  linkedin: 'LinkedIn',
-} as const;
-
 const articleCopy =
   lang === 'zh'
     ? {
         back: '返回智药深瞳',
-        unavailable: '暂未提供',
         source: '来源',
-        alsoPublished: '其他发布渠道',
-        publicationNote: '本站保存稳定、可检索的正文版本；部分平台也会同步全文，方便讨论与传播。',
-        published: '已发布',
-        planned: '计划中',
-        qrAccount: '二维码 / 账号',
+        abstract: '摘要',
+        readingTime: `${readingMetrics.minutes} 分钟阅读`,
+        wordCount: `约 ${readingMetrics.units.toLocaleString('zh-CN')} 字`,
       }
     : {
         back: 'BACK TO TRANSMISSIONS',
-        unavailable: 'Not available yet',
         source: 'Source',
-        alsoPublished: 'Also Published On',
-        publicationNote:
-          'This site keeps the stable, indexed version. Some platforms carry the full text directly for discussion and discovery.',
-        published: 'Published',
-        planned: 'Planned',
-        qrAccount: 'QR / account',
+        abstract: 'Abstract',
+        readingTime: `${readingMetrics.minutes} min read`,
+        wordCount: `About ${readingMetrics.units.toLocaleString('en-US')} words`,
       };
-
-const externalPublications = entry.data.publications.filter(
-  (publication) => publication.platform !== 'site'
-);
 
 const citationSource = {
   id: entry.id,
@@ -152,7 +139,7 @@ const citationSource = {
   >
     {/* Header */}
     <header class="mb-12">
-      <div class="mb-6 flex flex-wrap items-center justify-between gap-4">
+      <div class="mb-6">
         <time
           class="text-morandi-accent-3 border-morandi-accent-2/30 rounded-full border px-2 py-1 font-mono text-xs"
           datetime={entry.data.date.toISOString()}
@@ -166,50 +153,6 @@ const citationSource = {
             })
           }
         </time>
-
-        {/* Content Language Matrix Switcher */}
-        <div
-          class="bg-morandi-bg/50 border-morandi-accent-2/30 flex items-center gap-1 rounded-lg border p-1"
-        >
-          {
-            languages.map((l) => {
-              const slug = contentLinks[l.code];
-              // Active if this language matches the current POST's language
-              const isActive = entry.data.lang === l.code;
-              // Disabled if we don't have a slug for this language
-              const isDisabled = !slug && !isActive;
-
-              if (isActive) {
-                return (
-                  <span class="bg-track-intellipharma cursor-default rounded px-2 py-1 font-mono text-xs font-bold text-white">
-                    {l.label}
-                  </span>
-                );
-              }
-
-              if (isDisabled) {
-                return (
-                  <span
-                    class="text-morandi-accent-3/50 cursor-not-allowed rounded px-2 py-1 font-mono text-xs"
-                    title={articleCopy.unavailable}
-                  >
-                    {l.label}
-                  </span>
-                );
-              }
-
-              // Link to the same UI Lang, but different Content Slug
-              return (
-                <a
-                  href={`/${lang}/blog/${slug}`}
-                  class="text-morandi-accent-3 hover:bg-track-intellipharma-surface hover:text-track-intellipharma rounded px-2 py-1 font-mono text-xs transition-colors"
-                >
-                  {l.label}
-                </a>
-              );
-            })
-          }
-        </div>
       </div>
 
       <h1
@@ -221,6 +164,16 @@ const citationSource = {
 
       <meta itemprop="description" content={entry.data.description} />
       {heroImageUrl && <meta itemprop="image" content={heroImageUrl} />}
+
+      <div class="article-deck">
+        <p class="article-deck__label">{articleCopy.abstract}</p>
+        <p class="article-deck__summary">{entry.data.description}</p>
+        <p class="article-deck__metrics">
+          <span>{articleCopy.wordCount}</span>
+          <span aria-hidden="true">/</span>
+          <span>{articleCopy.readingTime}</span>
+        </p>
+      </div>
 
       {
         heroImage && (
@@ -259,53 +212,6 @@ const citationSource = {
           </figure>
         )
       }
-
-      {
-        externalPublications.length > 0 && (
-          <div class="bg-morandi-bg/30 border-morandi-accent-2/30 flex flex-wrap gap-4 rounded-lg border p-6">
-            <div class="min-w-[200px] flex-1">
-              <h3 class="text-morandi-text mb-2 font-serif text-lg italic">
-                {articleCopy.alsoPublished}
-              </h3>
-              <p class="text-morandi-text/70 mb-4 font-sans text-sm">
-                {articleCopy.publicationNote}
-              </p>
-            </div>
-            <div class="flex flex-col justify-center gap-2">
-              {externalPublications.map((publication) => {
-                const label = platformLabels[publication.platform];
-                const statusLabel =
-                  publication.status === 'published' ? articleCopy.published : articleCopy.planned;
-
-                if (publication.url) {
-                  return (
-                    <a
-                      href={publication.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="bg-morandi-text flex items-center justify-between gap-3 rounded px-4 py-2 text-sm font-bold text-white transition-opacity hover:opacity-85"
-                    >
-                      <span>{label}</span>
-                      <span aria-hidden="true">→</span>
-                    </a>
-                  );
-                }
-
-                return (
-                  <div class="border-morandi-accent-2/30 bg-morandi-bg/40 text-morandi-text flex items-center justify-between gap-3 rounded border px-4 py-2 text-sm">
-                    <span class="font-bold">{label}</span>
-                    <span class="text-morandi-text/60 font-mono text-xs">
-                      {publication.access === 'qr_or_account'
-                        ? publication.account || articleCopy.qrAccount
-                        : statusLabel}
-                    </span>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        )
-      }
     </header>
 
     {/* Article Content */}
@@ -313,10 +219,17 @@ const citationSource = {
       <Content />
     </section>
 
+    <ArticleDistribution editions={editions} uiLang={lang === 'zh' ? 'zh' : 'en'} />
+
     <CitationBox client:load source={citationSource} uiLang={lang === 'zh' ? 'zh' : 'en'} />
 
     {/* Related Posts */}
-    <RelatedPosts currentPostSlug={entry.id} currentLang={entry.data.lang} maxPosts={3} />
+    <RelatedPosts
+      currentPostSlug={entry.id}
+      currentLang={entry.data.lang}
+      maxPosts={3}
+      preferredTranslationKeys={preferredRelatedTranslationKeys}
+    />
 
     <meta itemprop="author" content="Alex Su" />
     <meta itemprop="inLanguage" content={entry.data.lang} />
@@ -324,6 +237,40 @@ const citationSource = {
 </Layout>
 
 <style>
+  .article-deck {
+    margin: -0.5rem 0 2.75rem;
+    border-left: 2px solid var(--color-track-intellipharma);
+    padding: 0.15rem 0 0.15rem 1.25rem;
+  }
+
+  .article-deck__label,
+  .article-deck__metrics {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .article-deck__label {
+    margin: 0 0 0.55rem;
+    color: var(--color-track-intellipharma);
+  }
+
+  .article-deck__summary {
+    margin: 0;
+    color: color-mix(in srgb, var(--color-morandi-text), transparent 18%);
+    font-size: 1.05rem;
+    line-height: 1.8;
+  }
+
+  .article-deck__metrics {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+    margin: 0.85rem 0 0;
+    color: color-mix(in srgb, var(--color-morandi-text), transparent 48%);
+  }
+
   .article-hero-image {
     width: min(100%, 44rem);
     margin: 0 auto 2.75rem;
@@ -385,6 +332,7 @@ const citationSource = {
       sans-serif;
     font-size: 1.02rem;
     line-height: 2.05;
+    text-wrap: pretty;
   }
 
   .blog-article-body :global(p) {

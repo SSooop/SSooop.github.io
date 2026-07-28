@@ -36,18 +36,6 @@ const {
 
 const currentPath = Astro.url.pathname;
 const targetLang = lang === 'en' ? 'zh' : 'en';
-
-// Replace /en/ with /zh/ or vice versa
-// We assume the path always starts with /en or /zh due to middleware or structure,
-// but we just need to swap the first segment if it matches or prepend if missing (though we are in [lang] structure now).
-// A robust way for this structure:
-const segments = currentPath.split('/').filter(Boolean);
-if (segments[0] === 'en' || segments[0] === 'zh') {
-  segments[0] = targetLang;
-} else {
-  segments.unshift(targetLang);
-}
-const targetPath = '/' + segments.join('/');
 const isHome = currentPath === `/${lang}/` || currentPath === `/${lang}`;
 
 const t = useTranslations(lang as SupportedLocale);
@@ -61,12 +49,19 @@ const defaultAlternateLanguages = {
   'x-default': currentPath.replace(/^\/zh\//, '/en/').replace(/^\/en\//, '/en/'),
 };
 const alternateLanguages = alternateLanguagesOverride || defaultAlternateLanguages;
+const targetPath = alternateLanguages[targetLang] || `/${targetLang}/`;
 ---
 
 <!doctype html>
 <html lang={lang}>
   <head>
     <meta charset="UTF-8" />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="IntelliPharma Insights"
+      href="/rss.xml"
+    />
 
     <!-- Meta Tags -->
     <MetaTags

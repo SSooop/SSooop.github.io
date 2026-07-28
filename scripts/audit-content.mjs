@@ -18,6 +18,31 @@ const expectedTranslationSuffix = {
   en: 'en',
 };
 const localImageExtensionPattern = /\.(avif|gif|jpe?g|png|svg|webp)$/i;
+const handwrittenArticleShellPatterns = [
+  {
+    pattern: /致读者与\s*AI Agent|To readers and AI agents/i,
+    message: 'hand-written article summary must be rendered by the article template',
+  },
+  {
+    pattern: /阅读时间约|Reading time:/i,
+    message: 'hand-written reading time must be rendered by the article template',
+  },
+  {
+    pattern: /AI友好声明|AI-Friendly (?:Statement|Notice)/i,
+    message: 'hand-written AI statement must be rendered by the article template',
+  },
+  {
+    pattern:
+      /mp\.weixin\.qq\.com|公众号：智药深瞳|WeChat Official Account: IntelliPharma Insights/i,
+    message:
+      'WeChat serialization links and labels belong in publication metadata, not article body',
+  },
+  {
+    pattern:
+      /^(?:#{1,6}\s*)?(?:往期相关|往期文章|相关阅读|相关文章|延伸阅读|Related (?:Posts|Articles|Reading)|Previous (?:Posts|Articles)|Further Reading)\s*[：:]?\s*$/im,
+    message: 'related article lists belong in related frontmatter, not the article body',
+  },
+];
 
 const errors = [];
 const warnings = [];
@@ -96,6 +121,25 @@ function parseIndentedMap(frontmatter, key) {
   }
 
   return map;
+}
+
+function parseIndentedList(frontmatter, key) {
+  const lines = frontmatter.split('\n');
+  const start = lines.findIndex((line) => line.trim() === `${key}:`);
+  const values = [];
+
+  if (start === -1) return values;
+
+  for (const line of lines.slice(start + 1)) {
+    if (!line.startsWith('  ')) break;
+
+    const match = line.match(/^\s{2}-\s+(.*)$/);
+    if (match) {
+      values.push(unquote(match[1]));
+    }
+  }
+
+  return values;
 }
 
 function parsePublications(frontmatter) {
@@ -242,6 +286,7 @@ for (const filePath of files) {
     translationKey: parseScalar(frontmatter, 'translationKey'),
     lang: parseScalar(frontmatter, 'lang'),
     translations: parseIndentedMap(frontmatter, 'translations'),
+    related: parseIndentedList(frontmatter, 'related'),
     canonical: parseIndentedMap(frontmatter, 'canonical'),
     publications: parsePublications(frontmatter),
     image: parseScalar(frontmatter, 'image'),
@@ -255,9 +300,22 @@ for (const filePath of files) {
   records.set(id, record);
 }
 
+const availableTranslationKeys = new Set(
+  [...records.values()].map((record) => record.translationKey)
+);
+
 for (const record of records.values()) {
-  const { displayPath, id, parts, translationKey, lang, translations, canonical, publications } =
-    record;
+  const {
+    displayPath,
+    id,
+    parts,
+    translationKey,
+    lang,
+    translations,
+    related,
+    canonical,
+    publications,
+  } = record;
 
   if (parts.length !== 3 || !expectedFileLang[parts[2]]) {
     addError(displayPath, `unexpected content id "${id}"; expected YYYY/slug/cn or YYYY/slug/en`);
@@ -280,6 +338,22 @@ for (const record of records.values()) {
 
   if (translationKey !== expectedKey) {
     addError(displayPath, `translationKey "${translationKey}" should be "${expectedKey}"`);
+  }
+
+  if (related.length > 3) {
+    addError(displayPath, 'related must contain no more than three translation keys');
+  }
+
+  for (const relatedKey of related) {
+    if (relatedKey === translationKey) {
+      addError(displayPath, 'related must not reference the current article');
+    } else if (!availableTranslationKeys.has(relatedKey)) {
+      addError(displayPath, `related points to missing translation group "${relatedKey}"`);
+    }
+  }
+
+  for (const duplicate of related.filter((key, index) => related.indexOf(key) !== index)) {
+    addError(displayPath, `related contains duplicate translation key "${duplicate}"`);
   }
 
   if (translations[expectedLang] !== id) {
@@ -347,6 +421,12 @@ for (const record of records.values()) {
 
   if (!record.image && (record.imageAlt || record.imageCaption || record.imageSource)) {
     addWarning(displayPath, 'image metadata is present without a frontmatter image');
+  }
+
+  for (const rule of handwrittenArticleShellPatterns) {
+    if (rule.pattern.test(record.body)) {
+      addError(displayPath, rule.message);
+    }
   }
 
   const sitePublications = publications.filter((publication) => publication.platform === 'site');

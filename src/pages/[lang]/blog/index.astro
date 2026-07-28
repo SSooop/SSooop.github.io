@@ -36,7 +36,11 @@ const blogLabel = lang === 'en' ? 'Blog' : '智药深瞳';
 const breadcrumbSchema = getPageBreadcrumbs(blogLabel, lang as 'en' | 'zh');
 ---
 
-<Layout title={`${t('blog.transmissions')} | ${t('home.name')}`} lang={lang}>
+<Layout
+  title={`${t('blog.transmissions')} | ${t('home.name')}`}
+  lang={lang}
+  description={t('blog.description')}
+>
   <StructuredData data={breadcrumbSchema} type="BreadcrumbList" />
   <main class="relative min-h-screen overflow-hidden px-5 py-24 md:px-10 md:py-28 lg:px-14">
     <AtlasField class="absolute inset-0 h-full w-full opacity-55" variant="ocean" />
@@ -54,6 +58,9 @@ const breadcrumbSchema = getPageBreadcrumbs(blogLabel, lang as 'en' | 'zh');
           </h1>
           <p class="text-track-intellipharma mt-6 font-mono text-xs tracking-[0.16em] uppercase">
             {t('blog.subtitle')}
+          </p>
+          <p class="text-morandi-text/70 mt-6 max-w-4xl font-sans text-sm leading-7 md:text-base">
+            {t('blog.description')}
           </p>
         </div>
       </header>

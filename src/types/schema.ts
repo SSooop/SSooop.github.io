@@ -78,6 +78,7 @@ export interface BlogPostingSchema extends BaseSchema {
   genre?: string;
   articleSection?: string;
   wordCount?: number;
+  sameAs?: string[];
 }
 
 // WebPage Schema

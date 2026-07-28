@@ -1,0 +1,241 @@
+---
+interface Publication {
+  platform: 'site' | 'wechat' | 'x' | 'linkedin';
+  mode: 'full_text';
+  status: 'published' | 'planned';
+  url?: string;
+  access?: 'url' | 'qr_or_account';
+  account?: string;
+}
+
+interface Edition {
+  lang: 'en' | 'zh';
+  canonicalUrl: string;
+  publications: Publication[];
+}
+
+interface Props {
+  editions: Edition[];
+  uiLang: 'en' | 'zh';
+}
+
+const { editions, uiLang } = Astro.props as Props;
+const copy =
+  uiLang === 'zh'
+    ? {
+        eyebrow: '全文分发',
+        title: '本文的公开版本',
+        note: '本站为稳定的规范版本。以下列出这篇文章已登记的全部中英文全文渠道；未提供直达链接的平台请通过账号检索标题。',
+        officialSite: '本站',
+        published: '已发布',
+        planned: '计划中',
+        account: '账号',
+        language: { zh: '中文', en: 'English' },
+        boundary:
+          '编辑边界：本文只讨论产业与长期价值逻辑，不分析具体企业或个股；不提供具体技术方案；内容仅代表个人观点，不构成投资建议。',
+      }
+    : {
+        eyebrow: 'FULL-TEXT DISTRIBUTION',
+        title: 'Public editions of this essay',
+        note: 'This site is the stable canonical edition. Below are all registered Chinese and English full-text channels for this essay; where no direct URL is available, search the platform by account and title.',
+        officialSite: 'Official site',
+        published: 'Published',
+        planned: 'Planned',
+        account: 'Account',
+        language: { zh: '中文', en: 'English' },
+        boundary:
+          'Editorial boundary: This essay examines industry and long-term value logic, not individual companies or securities. It does not provide specific technical solutions, and its views are personal perspectives rather than investment advice.',
+      };
+
+const platformLabels = {
+  site: copy.officialSite,
+  wechat: 'WeChat',
+  x: 'X',
+  linkedin: 'LinkedIn',
+};
+
+const siteChannels = editions.map((edition) => ({
+  key: `site-${edition.lang}`,
+  platform: 'site' as const,
+  status: 'published' as const,
+  url: edition.canonicalUrl,
+  account: undefined,
+  languages: [edition.lang],
+}));
+
+const externalChannels = new Map<
+  string,
+  {
+    key: string;
+    platform: Publication['platform'];
+    status: Publication['status'];
+    url?: string;
+    account?: string;
+    languages: Array<'en' | 'zh'>;
+  }
+>();
+
+for (const edition of editions) {
+  for (const publication of edition.publications) {
+    if (publication.platform === 'site') continue;
+
+    const key = `${publication.platform}:${publication.url || publication.account || publication.status}`;
+    const existing = externalChannels.get(key);
+
+    if (existing) {
+      if (!existing.languages.includes(edition.lang)) existing.languages.push(edition.lang);
+      if (publication.status === 'published') existing.status = 'published';
+      continue;
+    }
+
+    externalChannels.set(key, {
+      key,
+      platform: publication.platform,
+      status: publication.status,
+      url: publication.url,
+      account: publication.account,
+      languages: [edition.lang],
+    });
+  }
+}
+
+const channels = [...siteChannels, ...externalChannels.values()];
+---
+
+<aside class="article-distribution" aria-labelledby="article-distribution-heading">
+  <p class="article-distribution__eyebrow">{copy.eyebrow}</p>
+  <div class="article-distribution__intro">
+    <h2 id="article-distribution-heading">{copy.title}</h2>
+    <p>{copy.note}</p>
+  </div>
+
+  <ul class="article-distribution__channels">
+    {
+      channels.map((channel) => (
+        <li>
+          {channel.url ? (
+            <a
+              href={channel.url}
+              target={channel.platform === 'site' ? undefined : '_blank'}
+              rel={channel.platform === 'site' ? undefined : 'noopener noreferrer'}
+            >
+              <span>{platformLabels[channel.platform]}</span>
+              <span aria-hidden="true">↗</span>
+            </a>
+          ) : (
+            <div>
+              <span>{platformLabels[channel.platform]}</span>
+              <span>
+                {channel.account
+                  ? `${copy.account}: ${channel.account}`
+                  : channel.status === 'published'
+                    ? copy.published
+                    : copy.planned}
+              </span>
+            </div>
+          )}
+          <p>
+            {channel.languages.map((language) => copy.language[language]).join(' / ')}
+            <span aria-hidden="true"> · </span>
+            {channel.status === 'published' ? copy.published : copy.planned}
+          </p>
+        </li>
+      ))
+    }
+  </ul>
+
+  <p class="article-distribution__boundary">{copy.boundary}</p>
+</aside>
+
+<style>
+  .article-distribution {
+    margin-top: 4.5rem;
+    border-block: 1px solid color-mix(in srgb, var(--color-morandi-accent-2), transparent 18%);
+    padding: 2rem 0;
+  }
+
+  .article-distribution__eyebrow {
+    margin: 0 0 0.75rem;
+    color: var(--color-track-intellipharma);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+  }
+
+  .article-distribution__intro h2 {
+    margin: 0;
+    color: var(--color-morandi-text);
+    font-family: var(--font-serif);
+    font-size: clamp(1.65rem, 4vw, 2.15rem);
+    font-weight: 400;
+    line-height: 1.2;
+  }
+
+  .article-distribution__intro p,
+  .article-distribution__boundary {
+    color: color-mix(in srgb, var(--color-morandi-text), transparent 32%);
+    font-size: 0.9rem;
+    line-height: 1.75;
+  }
+
+  .article-distribution__intro p {
+    margin: 0.75rem 0 0;
+  }
+
+  .article-distribution__channels {
+    display: grid;
+    gap: 0.75rem;
+    margin: 1.5rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .article-distribution__channels li {
+    margin: 0;
+    border: 1px solid color-mix(in srgb, var(--color-morandi-accent-2), transparent 24%);
+    background: color-mix(in srgb, var(--color-morandi-bg), white 26%);
+    padding: 0.9rem 1rem;
+  }
+
+  .article-distribution__channels a,
+  .article-distribution__channels li > div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    color: var(--color-morandi-text);
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .article-distribution__channels a:hover {
+    color: var(--color-track-intellipharma);
+  }
+
+  .article-distribution__channels li > div span:last-child {
+    color: color-mix(in srgb, var(--color-morandi-text), transparent 42%);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 400;
+  }
+
+  .article-distribution__channels li p {
+    margin: 0.35rem 0 0;
+    color: color-mix(in srgb, var(--color-morandi-text), transparent 48%);
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.04em;
+  }
+
+  .article-distribution__boundary {
+    margin: 1.5rem 0 0;
+    border-left: 2px solid var(--color-track-intellipharma);
+    padding-left: 1rem;
+  }
+
+  @media (min-width: 640px) {
+    .article-distribution__channels {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+</style>
