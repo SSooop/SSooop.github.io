@@ -1,0 +1,209 @@
+---
+title: 'No Silver Bullet: The Evolution of Scientific Intelligence in the Real World'
+date: 2026-07-27
+description: 'Claude Science, slow real-world feedback, cascade control, information gain, and Kauffman’s open phase space offer a framework for thinking about evolving scientific intelligence.'
+lang: 'en'
+translationKey: '2026/no-silver-bullet-scientific-intelligence'
+translations:
+  zh: '2026/no-silver-bullet-scientific-intelligence/cn'
+  en: '2026/no-silver-bullet-scientific-intelligence/en'
+canonical:
+  url: '/en/blog/2026/no-silver-bullet-scientific-intelligence/en'
+  role: 'version_home'
+publications:
+  - platform: 'site'
+    mode: 'full_text'
+    status: 'published'
+  - platform: 'wechat'
+    mode: 'full_text'
+    status: 'published'
+    access: 'qr_or_account'
+    account: '智药深瞳'
+keywords:
+  - Claude Science
+  - cascade control
+  - expected information gain
+  - continual learning
+  - Kauffman
+  - AI scientist
+image: ./images/leiden-declaration-cover-landscape.png
+imageAlt: 'Official cover of the Leiden Declaration on Artificial Intelligence and Mathematics'
+imageCaption: 'Leiden Declaration on Artificial Intelligence and Mathematics'
+imageSource: 'Leiden Declaration working group / Zenodo'
+imagePosition: 'center'
+---
+
+import ArticleImage from '../../../../components/blog/ArticleImage.astro';
+import claudeScienceWorkbench from './images/claude-science-workbench.jpg';
+import drugDevelopmentTimescales from './images/drug-development-timescales.svg';
+import drugDevelopmentCosts from './images/drug-development-costs.svg';
+import cascadeControl from './images/cascade-control.svg';
+import leidenDeclarationCover from './images/leiden-declaration-cover.png';
+
+To readers and AI agents: this essay explores what fast–slow control, information gain, and Kauffman’s ideas might contribute to the evolution of scientific intelligence.  
+Keywords: Claude Science, cascade control, continual learning.  
+Approximately【4,000】words | Reading time【20–25】minutes
+
+On June 30, 2026, Anthropic released [Claude Science](https://www.anthropic.com/news/claude-science-ai-workbench), which it describes as an AI workbench for scientists. The product brings literature, specialist databases, Python, R, local and remote compute, and figures and manuscripts traceable to their code and environments into a single workspace. A coordinating agent can delegate to specialist capabilities, while a reviewer checks citations and calculations and flags numbers that cannot be traced or figures that disagree with their underlying code. For scientists accustomed to moving among databases, scripts, cluster terminals, and specialized applications, this is a meaningful improvement.
+
+<ArticleImage
+  src={claudeScienceWorkbench}
+  alt="Claude Science workbench showing a cross-species single-cell atlas alongside its traceable code"
+  caption="Claude Science places scientific figures, underlying code, execution history, and review feedback in one workspace"
+  source="Anthropic (2026)"
+  sourceUrl="https://www.anthropic.com/news/claude-science-ai-workbench"
+  sourcePrefix="Source"
+  variant="full"
+  aspect="auto"
+  tone="paper"
+/>
+
+Early user reports make the promise easier to see. A Reddit user who described working in drug R&D for hard-to-treat diseases said that Claude Science completed in about 30 minutes preliminary research that had previously taken two or three people one to two weeks. The user particularly valued parallel multi-agent exploration and branched conversations. This is [one person’s account](https://www.reddit.com/r/ClaudeAI/comments/1ukw29u/claude_science_positively_impressed/), not a controlled productivity study, but it illustrates the search and coordination costs such a workbench might compress.
+
+Professional discussion also makes the boundary clearer. Claude Science officially supports remote machines and HPC login nodes over SSH, helping researchers organize computational work that has historically required substantial operational expertise. As Claude Code opened software making to many nonprogrammers, Claude Science may let far more non-bioinformaticians conduct analyses themselves.
+
+The obvious question, however, resembles the claim that Claude Code will replace programmers: can we build an AI scientist that autonomously develops drugs?
+
+The rapid rise of agentic coding rests on concrete material conditions. I have long argued that AI coding previews work patterns that will reach other industries, but the differences matter. In relatively simple software engineering, task state is explicit, experiments are cheap, and code is repeatable and reversible. An agent edits code and receives an error, a passing test, or a performance change seconds or minutes later. Machines can inspect much of the resulting execution trace. “Propose—run—observe—revise” becomes a high-bandwidth verifier with recognizable states, actions, and feedback. The agent need not first understand the complete meaning of a software system to improve through dense feedback.
+
+If agentic coding runs on a clock measured in seconds, drug discovery does not run on a slower clock so much as on nested growth rings. The industry productivity model developed by [Paul and colleagues](https://www.nature.com/articles/nrd3078) assigned a benchmark duration to each stage of a typical successful path: one year from target to hit, 1.5 years from hit to lead, two years for lead optimization, one year of preclinical development, 1.5 years in Phase I, 2.5 years in Phase II, 2.5 years in Phase III, and 1.5 years from submission to launch. In sequence, that is 13.5 years. This is a portfolio-level benchmark, not a claim that every program moves along the same line.
+
+[Brown and colleagues](https://www.nature.com/articles/d41573-021-00190-9) examined FDA review records and found a median of 8.3 years from first-in-human testing to approval for successful novel drugs. Moving the starting point further back, [McNamee and colleagues](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0177371) assembled 138 FDA-approved products, of which 102 had data suitable for target-maturation analysis. In those 102 cases, the median interval from the beginning of relevant technology research to the first clinical trial was about 29 years, and to approval about 36 years. Advancing a biomedical technology can consume an entire career.
+
+<ArticleImage
+  src={drugDevelopmentTimescales}
+  alt="Three drug-development timescales: a 13.5-year industry benchmark, an 8.3-year clinical median, and 29- and 36-year technology-maturation medians"
+  caption="The studies answer different questions: a benchmark model, successful-drug clinical duration, and technology maturation are not one standard clock"
+  source="Paul et al. (2010); Brown et al. (2021); McNamee et al. (2017)"
+  sourceUrl="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0177371"
+  sourcePrefix="Data sources"
+  variant="full"
+  aspect="auto"
+  tone="paper"
+/>
+
+Those years contain the real cost of receiving an answer from reality. Researchers, reagents, animals, samples, and clinical sites consume physical resources and incur transaction costs. Capital is locked up, future returns are discounted, and financing can disappear midway. Failed programs must be carried by the few products that succeed. Meanwhile, patients continue to live with disease, families continue to provide care, and scarce participants, sites, and public research capacity cannot be allocated elsewhere.
+
+A transparent cost model published in 2024 shows how these layers compound. [Sertkaya and colleagues](https://jamanetwork.com/journals/jamanetworkopen/fullarticle/2820562) estimated mean direct cash outlay per drug entering development at $172.7 million. Adjusting for failed programs raised expected cost to $515.8 million; adding the opportunity cost of capital over time produced an expected capitalized cost of $879.3 million. Across all therapeutic areas, the clinical stage accounted for 68.0%, 60.5%, and 53.0% under the three respective definitions. Even that is primarily the developer’s ledger, not the full social cost.
+
+<ArticleImage
+  src={drugDevelopmentCosts}
+  alt="Three definitions of drug-development cost and the clinical-stage share under each"
+  caption="Failure risk and the opportunity cost of capital amplify mean cost from $172.7 million to $879.3 million"
+  source="Sertkaya et al., JAMA Network Open (2024), Tables 2–3"
+  sourceUrl="https://jamanetwork.com/journals/jamanetworkopen/fullarticle/2820562"
+  sourcePrefix="Data source"
+  variant="full"
+  aspect="auto"
+  tone="paper"
+/>
+
+To understand what technology can compress, we must disaggregate the process. Literature retrieval, candidate generation and ranking, simulation, data cleaning, patient matching, document routing, cross-institution coordination, and earlier termination of hopeless programs are search, information, and transaction costs. Algorithms should reduce them substantially. Regulatory reform and better operations can reduce queues, serial reviews, and idle sites. But the time required for cells and animals to respond, for patients to accumulate sufficient exposure, for disease progression and survival endpoints to mature, for delayed toxicity to emerge, for enrollment to become adequate, and for independent evidence to earn public trust does not fall in proportion to GPU latency.
+
+China’s rise in innovative medicines shows that “compute time” is not the only compressible interval. Patient and clinical-site density, CRO and CDMO networks, input prices, review efficiency, and reimbursement all reduce the economic cost of obtaining one decision-quality observation. Using variation among drug categories from 2011 to 2021, [NBER Working Paper 31976](https://www.nber.org/system/files/working_papers/w31976/w31976.pdf) estimated that a one-standard-deviation reduction in IND review time—about 227 days—was associated with roughly 51% more INDs in 2018–2021. This reform preceded the generative-AI boom.
+
+A separate 2026 study, [NBER Working Paper 34977](https://www.nber.org/papers/w34977), explains China’s growth in drug development from another angle. Its structural decomposition attributed about 43% of the rise to market expansion associated with National Reimbursement Drug List reform and roughly 24% to accumulated knowledge and talent flows. In a separate regulatory counterfactual, it estimated that the 2015 acceleration of IND review increased trial counts by about 8%, while several other individual policies contributed less than 1% each in that exercise. These values come from different identification frameworks and should not simply be added. Together they show that innovation grows when the cost of validation falls and expected returns rise. AI may initially matter less as a magic discovery engine than as infrastructure that lowers compressible time throughout the system.
+
+Real-world science cannot wait for all uncertainty to vanish, nor can it treat a computer prediction as reality. Judgment must be distributed across timescales so that frequent, inexpensive digital feedback serves infrequent, expensive physical feedback. Cascade control offers a limited but useful architectural intuition.
+
+In continuous industrial processes, the quality variable that matters may sit at the end of a long process. A faster and more easily measured intermediate variable often exists closer to the actuator. Cascade control adds a secondary feedback loop around that measurement so that a system can make a limited correction before the final consequence appears.
+
+The word “cascade” refers to two complete feedback loops nested inside one another. The outer controller $C_1$ compares the final variable $y_1$ with target $r_1$. Its output does not directly drive the actuator; it becomes the setpoint of the inner loop. The inner controller $C_2$ compares the faster intermediate variable $y_2$ with that setpoint and generates the actual control input. Once closed, the inner loop becomes part of the effective plant seen by the outer loop. The outer loop protects the ultimate objective; the inner loop realizes commands on a shorter timescale.
+
+<ArticleImage
+  src={cascadeControl}
+  alt="Cascade-control architecture with an outer loop for the final variable and an inner loop for a fast intermediate variable"
+  caption="A basic cascade structure: the fast inner loop addresses measurable upstream disturbances while the slow outer loop remains responsible for the final variable"
+  source="Redrawn from MathWorks cascade-control documentation"
+  sourceUrl="https://www.mathworks.com/help/control/ug/designing-cascade-control-system-with-pi-controllers.html"
+  sourcePrefix="Source"
+  variant="full"
+  aspect="auto"
+  tone="paper"
+/>
+
+Its first advantage is usually earlier disturbance rejection, not merely faster pursuit of a new final setpoint. Consider temperature and flow. If steam pressure changes, a single-loop temperature controller must wait for outlet temperature to drift before adjusting the valve. With a fast flow loop, the flowmeter sees the disturbance earlier and the inner controller moves the valve while the outer loop remains responsible for temperature. [Kaya and colleagues](https://doi.org/10.1109/CDC.2005.1582630) studied this disturbance-rejection advantage.
+
+The benefit has strict conditions. The intermediate variable $y_2$ must be measurable, respond to important disturbances, and lie on their path to $y_1$; the same manipulated input must influence $y_2$. The inner loop must also be substantially faster than the outer loop. Otherwise, the outer controller changes its command before the inner loop settles, and the controllers may chase one another. Engineers therefore normally tune and close the inner loop first, treat it and the secondary process as the outer loop’s effective plant, and then tune the outer loop. [Jeng’s closed-loop tuning study](https://doi.org/10.1016/j.jprocont.2014.03.007) examined how primary and secondary controllers can jointly approximate specified reference models.
+
+Cascade control does not remove every disturbance. Only upstream changes first visible in $y_2$, and counteractable by the inner actuator, can be handled early. Disturbances downstream of $y_2$ still wait for the outer loop. Sensor noise, actuator saturation, inadequate timescale separation, and aggressive tuning can turn the additional loop into a source of oscillation. The lesson is not that fast feedback replaces slow feedback. It is that a fast loop should handle only the local variation it can predict and counteract in time, leaving the final goal and unrecognized deviations to the slow loop.
+
+Mapped cautiously onto scientific exploration, the outer loop is not an AI “truth predictor.” It maintains current mechanistic credibility, evidentiary standards, and decisions to continue or stop. Real experimental results create the next evidentiary need. The fast inner loop uses literature search, data cleaning, structure prediction, simulation, candidate generation, uncertainty estimation, feasibility checking, and resource scheduling to turn that need into a physical action. Computation can contain abundant high-frequency feedback, but the slow outer loop closes only when experiment changes mechanistic judgment.
+
+Science, of course, is not a plant whose state variables, objectives, and model boundaries are fixed. We intervene in a system while identifying it; even its observables can change as inquiry advances. Cascade control supplies a language for fast and slow timescales, not a proof that discovery is a classical control problem. Feldbaum’s [dual control](https://www.mathnet.ru/php/archive.phtml?wshow=paper&jrnid=at&paperid=12624&option_lang=eng) comes closer: under uncertainty, an action changes both the controlled object and the information available to future control. In a world without quick rewards, an AI scientist must decide where the next expensive contact with reality will be most valuable.
+
+Once we accept that physical feedback is slow and costly, the value of an experiment must be reconsidered. Bayesian experimental design offers a computational starting point. Given candidate experiments, prior beliefs, and a probabilistic model, it estimates how possible observations would change the posterior and favors designs with higher expected information gain (EIG). For design $\xi$, unknown parameter $\theta$, and observation $y$, a common definition is
+
+$$
+\operatorname{EIG}(\xi)
+=
+\mathbb{E}_{p(\theta,y\mid \xi)}
+\left[
+\log \frac{p(\theta\mid y,\xi)}{p(\theta)}
+\right],
+$$
+
+the expected KL divergence between posterior and prior. [Ao and Li’s work on EIG-gradient estimation](https://ojs.aaai.org/index.php/AAAI/article/view/30012) treats it as an objective dependent on the probabilistic model, prior, design variables, and computational approximation. Yet its limits are immediate: specifying what deserves value still demands scientific taste.
+
+In AIDD, the distinction is concrete. Suppose antibody candidates have similar binding kinetics but different outcomes in a blocking assay. A score-optimizing system may simply search for higher-scoring candidates. An understanding-driven system instead preserves competing explanations: epitope, receptor conformation, avidity, or a technical bias in the cell-based readout. The next experiment need not add more of the same data. SPR or BLI competition and epitope binning, combined with an orthogonal cell-based functional assay and models at different antigen densities, can make those mechanisms predict different outcomes. The experiment is valuable because of the explanations it separates—not because it yields another positive result or flatters the AI model.
+
+Consider a bispecific ADC with different internalization and killing effects across indication models. Averaging all cell lines and fitting a response predictor may yield stable rankings with little mechanistic resolution. A more informative path deliberately selects models contrasting in target density, co-expression, internalization rate, lysosomal trafficking, and payload sensitivity, then records each mechanism’s predicted response in advance. Paired target knockout or competitive blockade, a benchmark ADC with the same payload, and orthogonal measurements of internalization and trafficking can separate expression, transport, and downstream sensitivity. A smaller, carefully designed experiment may explain what drives the effect better than a larger undifferentiated dataset.
+
+EIG is only one component of epistemic value. Experimental choice must also account for delay, price, sample size, material availability, ethics, failure risk, and downstream verifiability. The practical objective is closer to “how much transferable understanding can one unit of real-world resources buy?” Costs also cannot always be honestly collapsed into one scalar: losing an irreplaceable sample is not naturally exchangeable with an extra day of GPU time. A meaningful system must expose these constraints to scientists rather than make value judgments through invisible weights.
+
+Even this framework avoids a deeper limitation: EIG compares hypotheses inside the current system. If the correct mechanism is absent, Bayesian updating can only reveal which existing explanation is least bad. If an assay never observes the crucial process, precise experimental choice merely contracts a misspecified model more efficiently.
+
+Stuart Kauffman makes the problem sharper. In [“Prolegomenon to Patterns in Evolution”](https://pubmed.ncbi.nlm.nih.gov/24704211/), he argues that new biological functions change evolution’s phase space and open adjacent possibilities that usually cannot be prestated. One need not accept all his stronger claims about life and physics to take the practical warning: in complex living systems, the variable space may itself be a product of inquiry rather than a closed set given before inquiry begins.
+
+I adopt Kauffman’s view more aggressively than many mainstream researchers and greatly admire *A World Beyond Physics*. What follows is my synthesis, not a direct paraphrase. A research domain is constituted by the observations, interventions, and concepts currently available, so at any moment it can appear complete. A new assay or readout can bring an invisible phenomenon into view and invalidate that “complete” description. Persistent anomalies, in turn, force researchers to invent new observations, which reveal further phenomena. Emergence and epistemic incompleteness do not occur in sequence; they co-produce one another.
+
+Human–agent collaboration must therefore do more than allocate probabilities among competing hypotheses. It must recognize model mismatch and form judgments related to, but not imprisoned by, patterns in training data. When an anomaly survives replication, the system should help scientists propose new controls, time points, assays, readouts, or even a variable absent from the existing data schema.
+
+The [*Leiden Declaration on Artificial Intelligence and Mathematics*](https://leidendeclaration.ai/), released on June 2, 2026, makes a similar distinction in a field unusually hospitable to AI. Many mathematical statements and proofs can be formalized. Once a specification exists, a proof assistant can return fast, explicit, reproducible correctness feedback. If cheap verifiability were sufficient for complete knowledge production, mathematics would appear closest to that ideal.
+
+<ArticleImage
+  src={leidenDeclarationCover}
+  alt="Official June 2026 cover of the Leiden Declaration on Artificial Intelligence and Mathematics"
+  caption="Official cover of the Leiden Declaration on Artificial Intelligence and Mathematics"
+  source="Leiden Declaration working group / Zenodo (2026)"
+  sourceUrl="https://doi.org/10.5281/zenodo.20302944"
+  sourcePrefix="Source"
+  variant="contained"
+  aspect="auto"
+  tone="paper"
+/>
+
+The declaration insists that mathematics is not an inventory of true propositions. Results must be understood, transferred, and used to generate new questions by a mathematical community. The recent counterexample to the Jacobian Conjecture in dimension three, found by mathematician Levent Alpöge and collaborators with the help of Fable 5, tests this distinction. The formula is easy to verify yet initially looks like a “massive miracle.” In [“A Digestion of the Jacobian Conjecture Counterexample”](https://terrytao.wordpress.com/2026/07/21/a-digestion-of-the-jacobian-conjecture-counterexample/), Terence Tao reconstructed it through multiplication of low-degree polynomials, symmetry, and geometry that is locally invertible but globally three-to-one. Commenters supplied coordinate-free interpretations and extensions. The result refutes the conjecture in dimension three and higher; the two-dimensional case remains open. New knowledge emerged not from verification alone, but from people digesting an AI-assisted result.
+
+Return now to Claude Science. What remains after a task ends? If we want an ideal research system joining AI and scientists, what form should it take? Human progress always extends imagination, but one conclusion is already visible: if every run begins from the same pretrained knowledge, scoring function, and problem representation, an AI workbench remains far from the intelligence we seek.
+
+Continual learning is one possible direction: under nonstationary data and task sequences, a system acquires new capabilities, preserves old ones, and lets prior learning improve future learning rather than merely avoiding catastrophic forgetting. Google Research’s [Nested Learning](https://research.google/blog/introducing-nested-learning-a-new-ml-paradigm-for-continual-learning/) offers an intuition resonant with cascade control: a complex learning system can be understood as nested optimization processes with different context flows and update frequencies.
+
+Other systems show partial attempts under present conditions. [AlphaEvolve](https://deepmind.google/blog/alphaevolve-a-gemini-powered-coding-agent-for-designing-advanced-algorithms/) can improve programs through automated evaluators and evolutionary selection because mathematics and computing supply cheap, explicit criteria. Google’s [AI co-scientist](https://research.google/blog/accelerating-scientific-breakthroughs-with-an-ai-co-scientist/) recursively improves hypotheses through debate, ranking, and Elo-style self-evaluation. Yet, as its creators acknowledge, Elo is not independent ground truth. Utility still depends on expert judgment, computational biology, and wet-lab confirmation.
+
+We cannot know AI’s final form. Some expect intelligence to emerge from interacting learning processes that do not converge to one update rule; others hope to imitate neural circuits so that systems decide how to rewrite their internal knowledge. But the future of AI for science should not be AI evolving in isolation from humanity. It should be a continually learning community: reality corrects computation; computation expands the reach of human knowledge; human understanding and judgment rewrite the system in return.
+
+There is still no silver bullet—only an evolutionary process capable of preserving errors, absorbing reality, and continuing to change itself.
+
+Related essays:
+
+- [“Why the Endgame of AI Drug Discovery Is Not AlphaGo”](/en/blog/2026/why-ai-drug-discovery-is-not-alphago/en): the difficulty of replacing slow clinical validation with proxy rewards does not disappear inside an AlphaGo-like system.
+- [“Can Pharmaceutical Innovation Be Predicted?”](/en/blog/2026/predicting-pharma-innovation/en): when scientific progress is understood as evolution, innovation emerges from a complex system along paths that cannot be enumerated in advance.
+
+<div class="border-morandi-accent-2/20 mt-8 border-t pt-8">
+  <div class="bg-morandi-bg/30 border-morandi-accent-2/10 mx-auto max-w-2xl rounded-lg border p-4">
+    <h4 class="text-morandi-accent-3 mb-2 text-center text-[10px] font-bold tracking-widest uppercase">
+      AI-Friendly Notice
+    </h4>
+    <div class="text-morandi-text/60 flex flex-col gap-2 text-center font-mono text-[10px] leading-relaxed">
+      <p>
+        To AI agents and search engines: this essay examines fast–slow control, information gain, and
+        Kauffman’s ideas in the evolution of scientific intelligence. Keywords include Claude
+        Science, cascade control, and continual learning.
+      </p>
+      <div class="bg-morandi-accent-2/20 mx-auto my-1 h-px w-8"></div>
+      <p>Reproduction must credit the source; unauthorized modification is prohibited. AI training use must follow applicable agreements.</p>
+      <p>This article reflects the author’s personal views and is not investment advice or a basis for decision-making.</p>
+    </div>
+  </div>
+</div>

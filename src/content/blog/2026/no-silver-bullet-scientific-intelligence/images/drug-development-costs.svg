@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">Three lenses on drug development cost</title>
+  <desc id="desc">Mean cash cost, expected cost adjusted for failures, and expected capitalized cost, with the clinical-stage share under each definition.</desc>
+  <defs>
+    <style>
+      text{font-family:Inter,Arial,"Noto Sans SC",sans-serif;fill:#243531}.muted{fill:#6b7773}.white{fill:#fff}
+    </style>
+  </defs>
+  <rect width="1200" height="760" rx="28" fill="#f7f5ef"/>
+  <text x="64" y="70" font-size="36" font-weight="750">同一项开发，三种成本口径</text>
+  <text x="64" y="106" font-size="19" class="muted">全部治疗领域汇总 · 2024 年美元 · 均值</text>
+  <line x1="64" y1="142" x2="1136" y2="142" stroke="#d8ddd9"/>
+
+  <g transform="translate(64 184)">
+    <text x="0" y="0" font-size="23" font-weight="700">直接现金支出</text>
+    <text x="0" y="34" font-size="18" class="muted">实际研发现金流</text>
+    <rect x="285" y="-28" width="205" height="68" rx="12" fill="#5f8981"/>
+    <text x="387" y="15" text-anchor="middle" font-size="24" font-weight="750" class="white">$172.7M</text>
+    <text x="540" y="0" font-size="20" font-weight="650">临床阶段占比</text>
+    <rect x="540" y="18" width="500" height="22" rx="11" fill="#e0e5e2"/>
+    <rect x="540" y="18" width="340" height="22" rx="11" fill="#5f8981"/>
+    <text x="1060" y="38" font-size="24" font-weight="750" text-anchor="end">68.0%</text>
+  </g>
+  <line x1="64" y1="282" x2="1136" y2="282" stroke="#d8ddd9"/>
+  <g transform="translate(64 330)">
+    <text x="0" y="0" font-size="23" font-weight="700">计入失败项目</text>
+    <text x="0" y="34" font-size="18" class="muted">按技术失败概率调整</text>
+    <rect x="285" y="-28" width="425" height="68" rx="12" fill="#7f779b"/>
+    <text x="497" y="15" text-anchor="middle" font-size="24" font-weight="750" class="white">$515.8M</text>
+    <text x="760" y="0" font-size="20" font-weight="650">临床阶段占比</text>
+    <rect x="760" y="18" width="280" height="22" rx="11" fill="#e0e5e2"/>
+    <rect x="760" y="18" width="169" height="22" rx="11" fill="#7f779b"/>
+    <text x="1060" y="38" font-size="24" font-weight="750" text-anchor="end">60.5%</text>
+  </g>
+  <line x1="64" y1="428" x2="1136" y2="428" stroke="#d8ddd9"/>
+  <g transform="translate(64 476)">
+    <text x="0" y="0" font-size="23" font-weight="700">再计入资本占用</text>
+    <text x="0" y="34" font-size="18" class="muted">失败风险 + 资金时间价值</text>
+    <rect x="285" y="-28" width="725" height="68" rx="12" fill="#b66c67"/>
+    <text x="647" y="15" text-anchor="middle" font-size="24" font-weight="750" class="white">$879.3M</text>
+    <text x="285" y="80" font-size="20" font-weight="650">临床阶段占比</text>
+    <rect x="285" y="98" width="725" height="22" rx="11" fill="#e0e5e2"/>
+    <rect x="285" y="98" width="384" height="22" rx="11" fill="#b66c67"/>
+    <text x="1060" y="118" font-size="24" font-weight="750" text-anchor="end">53.0%</text>
+  </g>
+  <rect x="64" y="646" width="1072" height="58" rx="14" fill="#ece8dd"/>
+  <text x="86" y="682" font-size="18" class="muted">这仍主要是开发者的成本账本，并不包含患者等待、照护与稀缺公共资源的完整社会成本。</text>
+  <text x="64" y="735" font-size="17" class="muted">Source: Sertkaya et al., JAMA Network Open (2024), Tables 2–3</text>
+</svg>

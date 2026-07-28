@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="560" viewBox="0 0 1200 560" role="img" aria-labelledby="title desc">
+  <title id="title">A basic cascade control architecture</title>
+  <desc id="desc">An outer controller sets the target of a faster inner controller, which rejects upstream disturbances before they reach the final controlled variable.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0l10 5-10 5z" fill="#405853"/></marker>
+    <style>text{font-family:Inter,Arial,"Noto Sans SC",sans-serif;fill:#243531}.small{font-size:18px;fill:#65736f}.label{font-size:22px;font-weight:700}.line{stroke:#405853;stroke-width:3;fill:none;marker-end:url(#arrow)}</style>
+  </defs>
+  <rect width="1200" height="560" rx="28" fill="#f6f3ec"/>
+  <text x="60" y="68" font-size="34" font-weight="750">级联控制：让快回路服务于慢目标</text>
+  <text x="60" y="102" class="small">内环提前处理可测的上游扰动；外环仍对最终结果负责</text>
+
+  <text x="62" y="250" class="label">目标 r₁</text>
+  <path d="M145 242H205" class="line"/>
+  <circle cx="230" cy="242" r="25" fill="#fff" stroke="#405853" stroke-width="3"/>
+  <text x="230" y="250" text-anchor="middle" font-size="24">Σ</text>
+  <path d="M255 242H330" class="line"/>
+  <rect x="330" y="196" width="130" height="92" rx="15" fill="#dbe7e2" stroke="#537d75" stroke-width="3"/>
+  <text x="395" y="235" text-anchor="middle" class="label">C₁</text><text x="395" y="264" text-anchor="middle" class="small">慢外环</text>
+  <path d="M460 242H530" class="line"/>
+  <circle cx="555" cy="242" r="25" fill="#fff" stroke="#405853" stroke-width="3"/>
+  <text x="555" y="250" text-anchor="middle" font-size="24">Σ</text>
+  <path d="M580 242H650" class="line"/>
+  <rect x="650" y="196" width="130" height="92" rx="15" fill="#e5e0ef" stroke="#7f779b" stroke-width="3"/>
+  <text x="715" y="235" text-anchor="middle" class="label">C₂</text><text x="715" y="264" text-anchor="middle" class="small">快内环</text>
+  <path d="M780 242H845" class="line"/>
+  <rect x="845" y="196" width="130" height="92" rx="15" fill="#eee3d9" stroke="#b6815e" stroke-width="3"/>
+  <text x="910" y="235" text-anchor="middle" class="label">P₂</text><text x="910" y="264" text-anchor="middle" class="small">次级过程</text>
+  <path d="M975 242H1040" class="line"/>
+  <circle cx="1065" cy="242" r="25" fill="#fff" stroke="#405853" stroke-width="3"/>
+  <text x="1065" y="250" text-anchor="middle" font-size="24">Σ</text>
+  <path d="M1090 242H1140" class="line"/>
+  <text x="1138" y="217" text-anchor="end" class="label">y₁</text>
+
+  <path d="M910 288V360H555V267" class="line"/>
+  <text x="820" y="348" class="small">中间变量 y₂ 反馈</text>
+  <path d="M1120 242V450H230V267" class="line"/>
+  <text x="430" y="438" class="small">最终变量 y₁ 反馈</text>
+  <path d="M910 136V192" class="line"/>
+  <text x="910" y="122" text-anchor="middle" class="label">上游扰动 d₂</text>
+  <path d="M1065 136V192" class="line"/>
+  <text x="1065" y="122" text-anchor="middle" class="label">下游扰动 d₁</text>
+
+  <rect x="520" y="170" width="480" height="220" rx="22" fill="none" stroke="#7f779b" stroke-width="2" stroke-dasharray="8 8"/>
+  <text x="542" y="382" class="small">闭合的内环成为外环所见“对象”的一部分</text>
+  <text x="60" y="520" class="small">Adapted from MathWorks cascade-control documentation; redrawn for this article.</text>
+</svg>

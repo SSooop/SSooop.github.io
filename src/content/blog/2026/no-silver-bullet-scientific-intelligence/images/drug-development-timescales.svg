@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="780" viewBox="0 0 1200 780" role="img" aria-labelledby="title desc">
+  <title id="title">Drug development operates across nested timescales</title>
+  <desc id="desc">Paul and colleagues' 13.5-year benchmark path, Brown and colleagues' 8.3-year clinical median, and McNamee and colleagues' 29- and 36-year technology maturation medians.</desc>
+  <defs>
+    <style>
+      text{font-family:Inter,Arial,"Noto Sans SC",sans-serif;fill:#243531}
+      .small{font-size:18px;fill:#64736f}.label{font-size:22px;font-weight:650}.value{font-size:20px;font-weight:700;fill:#fff}
+      .rule{stroke:#d7ddd8;stroke-width:1}.tick{font-size:16px;fill:#7c8985}
+    </style>
+  </defs>
+  <rect width="1200" height="780" rx="28" fill="#f5f2ea"/>
+  <text x="62" y="66" font-size="36" font-weight="750">药物发现不是一只时钟</text>
+  <text x="62" y="102" class="small">三项研究回答不同问题，不能拼成一条“标准工期”</text>
+
+  <text x="62" y="160" class="label">Paul et al. · 行业基准模型</text>
+  <text x="62" y="188" class="small">成功路径的八个连续阶段 · 合计 13.5 年</text>
+  <g transform="translate(62 216)">
+    <rect x="0" y="0" width="71" height="62" rx="10" fill="#537d75"/><text x="35.5" y="38" text-anchor="middle" class="value">1</text>
+    <rect x="75" y="0" width="107" height="62" rx="10" fill="#5f8981"/><text x="128.5" y="38" text-anchor="middle" class="value">1.5</text>
+    <rect x="186" y="0" width="142" height="62" rx="10" fill="#6f9890"/><text x="257" y="38" text-anchor="middle" class="value">2</text>
+    <rect x="332" y="0" width="71" height="62" rx="10" fill="#b6815e"/><text x="367.5" y="38" text-anchor="middle" class="value">1</text>
+    <rect x="407" y="0" width="107" height="62" rx="10" fill="#7f779b"/><text x="460.5" y="38" text-anchor="middle" class="value">1.5</text>
+    <rect x="518" y="0" width="178" height="62" rx="10" fill="#8880a4"/><text x="607" y="38" text-anchor="middle" class="value">2.5</text>
+    <rect x="700" y="0" width="178" height="62" rx="10" fill="#9188aa"/><text x="789" y="38" text-anchor="middle" class="value">2.5</text>
+    <rect x="882" y="0" width="107" height="62" rx="10" fill="#b66c67"/><text x="935.5" y="38" text-anchor="middle" class="value">1.5</text>
+    <text x="35" y="91" text-anchor="middle" class="small">靶点→命中</text>
+    <text x="128" y="91" text-anchor="middle" class="small">命中→先导</text>
+    <text x="257" y="91" text-anchor="middle" class="small">先导优化</text>
+    <text x="367" y="91" text-anchor="middle" class="small">临床前</text>
+    <text x="460" y="91" text-anchor="middle" class="small">I 期</text>
+    <text x="607" y="91" text-anchor="middle" class="small">II 期</text>
+    <text x="789" y="91" text-anchor="middle" class="small">III 期</text>
+    <text x="935" y="91" text-anchor="middle" class="small">申报→上市</text>
+  </g>
+
+  <line x1="62" y1="356" x2="1138" y2="356" class="rule"/>
+  <text x="62" y="410" class="label">Brown et al. · 已成功创新药的临床开发</text>
+  <text x="62" y="440" class="small">首次人体试验 → FDA 批准 · 中位数</text>
+  <rect x="350" y="392" width="502" height="52" rx="12" fill="#537d75"/>
+  <text x="601" y="426" text-anchor="middle" class="value">8.3 年</text>
+
+  <line x1="62" y1="488" x2="1138" y2="488" class="rule"/>
+  <text x="62" y="542" class="label">McNamee et al. · 技术与靶点成熟</text>
+  <text x="62" y="572" class="small">研究收集 138 个 FDA 批准产品；以下成熟度分析基于其中可分析的 102 个产品</text>
+  <g transform="translate(62 612)">
+    <line x1="0" y1="40" x2="1000" y2="40" stroke="#c7cfca" stroke-width="8" stroke-linecap="round"/>
+    <line x1="0" y1="40" x2="806" y2="40" stroke="#7f779b" stroke-width="18" stroke-linecap="round"/>
+    <line x1="806" y1="40" x2="1000" y2="40" stroke="#b66c67" stroke-width="18" stroke-linecap="round"/>
+    <circle cx="0" cy="40" r="13" fill="#243531"/><circle cx="806" cy="40" r="13" fill="#7f779b"/><circle cx="1000" cy="40" r="13" fill="#b66c67"/>
+    <text x="0" y="86" class="small">技术研究启动</text>
+    <text x="806" y="12" text-anchor="middle" class="label">首次临床 · 29 年</text>
+    <text x="1000" y="86" text-anchor="end" class="label">批准 · 36 年</text>
+  </g>
+  <text x="62" y="746" class="small">Sources: Paul et al. (2010); Brown et al. (2021); McNamee et al. (2017)</text>
+</svg>

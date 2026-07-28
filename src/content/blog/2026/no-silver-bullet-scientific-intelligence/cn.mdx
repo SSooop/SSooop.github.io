@@ -1,0 +1,210 @@
+---
+title: '没有银弹：现实科学智能进化'
+date: 2026-07-27
+description: '从 Claude Science、药物研发的慢反馈、级联控制、信息增益与 Kauffman 的开放相空间出发，讨论现实科学智能如何持续进化。'
+lang: 'zh'
+translationKey: '2026/no-silver-bullet-scientific-intelligence'
+translations:
+  zh: '2026/no-silver-bullet-scientific-intelligence/cn'
+  en: '2026/no-silver-bullet-scientific-intelligence/en'
+canonical:
+  url: '/zh/blog/2026/no-silver-bullet-scientific-intelligence/cn'
+  role: 'version_home'
+publications:
+  - platform: 'site'
+    mode: 'full_text'
+    status: 'published'
+  - platform: 'wechat'
+    mode: 'full_text'
+    status: 'published'
+    access: 'qr_or_account'
+    account: '智药深瞳'
+keywords:
+  - Claude Science
+  - 级联控制
+  - 信息增益
+  - 持续学习
+  - Kauffman
+  - AI Scientist
+image: ./images/leiden-declaration-cover-landscape.png
+imageAlt: '《人工智能与数学莱顿宣言》官方封面'
+imageCaption: 'Leiden Declaration on Artificial Intelligence and Mathematics'
+imageSource: 'Leiden Declaration working group / Zenodo'
+imagePosition: 'center'
+---
+
+import ArticleImage from '../../../../components/blog/ArticleImage.astro';
+import claudeScienceWorkbench from './images/claude-science-workbench.jpg';
+import drugDevelopmentTimescales from './images/drug-development-timescales.svg';
+import drugDevelopmentCosts from './images/drug-development-costs.svg';
+import cascadeControl from './images/cascade-control.svg';
+import leidenDeclarationCover from './images/leiden-declaration-cover.png';
+
+致读者与AI Agent：本文深度探讨快慢控制、信息增益与 Kauffman 在科学智能进化中的可能性。  
+关键词包括：Claude Science、级联控制、持续学习。  
+本文约【6500】字 | 阅读时间约【20-25】分钟
+
+2026 年 6 月 30 日，Anthropic 发布了 [Claude Science](https://www.anthropic.com/news/claude-science-ai-workbench)。Anthropic 官方将其定义为一个面向科学家的 AI workbench。它把文献、专业数据库、Python、R、本地或远程算力，以及能够追溯到代码和运行环境的图表与论文草稿等放进同一个工作空间，极大便利了科研工作者。在当前设计中，一个 Coordinating Agent 可以调度不同专业能力，Reviewer 检查引用和计算，并标记无法追溯的数字或与底层代码不一致的图表。对于长期在数据库、脚本、集群终端与各种专用软件之间切换的科学家而言，这显然是一个不小的进步。
+
+<ArticleImage
+  src={claudeScienceWorkbench}
+  alt="Claude Science 工作台中的跨物种单细胞图谱与可追溯代码"
+  caption="Claude Science 把科学图表、底层代码、执行记录与审阅反馈放在同一工作空间中"
+  source="Anthropic（2026）"
+  sourceUrl="https://www.anthropic.com/news/claude-science-ai-workbench"
+  sourcePrefix="来源"
+  variant="full"
+  aspect="auto"
+  tone="paper"
+/>
+
+首批用户反馈让没有开通 Claude 的旁观者可以更直观地理解这一点。一位自称从事疑难疾病药物研发的 Reddit 用户表示，Claude Science 用大约 30 分钟完成了此前需要 2–3 人一至两周完成的前期研究；他尤其认可多 Agent 并行探索与分支对话。这个数字只是[单一用户的自述](https://www.reddit.com/r/ClaudeAI/comments/1ukw29u/claude_science_positively_impressed/)，不能等同于经过控制的生产率研究，但确实展示了这类工作台可能压缩的搜索与协调成本。
+
+与此同时，专业讨论也把边界说得更加直接。Claude Science 官方支持通过 SSH 连接远程机器或 HPC 登录节点，能够帮助研究者组织过去门槛很高的计算任务。正如 Claude Code 之于非程序员的产品爱好者一样，Claude Science 也可能为大量非专业生物信息人员打开亲手进行分析的大门。
+
+然而，和“Claude Code 将代替程序员”的论调一样，一个更自然的问题随之出现：我们是否可以得到一个真正能够自主研发药物的 AI Scientist？
+
+Agentic Coding 的快速发展有非常具体的物质基础。笔者一贯的观点是，AI Coding 会提前展现其他行业未来的工作模式，不妨在这里回顾它与科学研究的区别。在简单软件工程中，任务状态相对明确，试错成本极低，代码可重复且可以回滚。Agent 修改一段代码，几秒或几分钟后便能得到错误、通过或性能变化；大量执行轨迹还可以被机器直接检查。在这样的环境里，“提出修改—运行—获得反馈—修正”构成了高带宽校验器，也具备强化学习所需的状态、动作与反馈。因此，Agent 并不需要先完全理解软件的全部意义，也能通过密集反馈持续提高完成任务的能力。
+
+如果说 Agentic Coding 运行在分秒变化的时钟上，药物发现面对的就不是一只更慢的时钟，而是一组彼此嵌套的年轮。[Paul 等人的研发生产率模型](https://www.nature.com/articles/nrd3078)为一条典型成功路径设定的行业基准周期依次是：靶点到命中 1 年、命中到先导 1.5 年、先导优化 2 年、临床前 1 年、I 期 1.5 年、II 期 2.5 年、III 期 2.5 年、申报到上市 1.5 年，顺序相加得到 13.5 年。这是一种组合层面的基准模型，并非每个项目都会严格沿着同一条线行进。
+
+[Brown 等人](https://www.nature.com/articles/d41573-021-00190-9)回看 FDA 审评档案，发现成功创新药从首次人体试验到获批的中位数为 8.3 年。若把起点继续前移，[McNamee 等人的研究](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0177371)收集了 138 个 FDA 批准产品，其中 102 个产品具备可用于靶点成熟度分析的数据；在这 102 个样本中，从相关新技术研究启动到首次临床试验的中位数约为 29 年，到批准则约为 36 年。生物医药中的一项新技术，往往需要从业者一生的努力来推动。
+
+<ArticleImage
+  src={drugDevelopmentTimescales}
+  alt="药物研发三种时间尺度：13.5年行业基准、8.3年临床中位数，以及29年和36年的技术成熟中位数"
+  caption="三项研究回答不同问题：行业基准模型、成功药物临床周期与技术成熟周期不能混为一条标准工期"
+  source="Paul et al.（2010）；Brown et al.（2021）；McNamee et al.（2017）"
+  sourceUrl="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0177371"
+  sourcePrefix="数据来源"
+  variant="full"
+  aspect="auto"
+  tone="paper"
+/>
+
+巨大的时间成本中蕴含着从真实世界获得反馈的真实代价。实验人员、试剂、动物、样本与临床中心消耗的是真实资源和交易成本；资金被多年锁定、未来收益被贴现、融资可能中途断裂，形成资本占用与融资摩擦；大量失败路线最终由少数成功产品共同承担，形成技术风险与组合成本；患者在等待中继续承受疾病，家庭继续照护，稀缺的受试者、中心与公共科研资源无法投向其他用途，形成社会机会成本。
+
+一项 2024 年发表的透明成本模型很好地展示了成本如何层层放大：[Sertkaya 等人](https://jamanetwork.com/journals/jamanetworkopen/fullarticle/2820562)估计，每个进入开发流程的药物平均直接现金支出为 1.727 亿美元；计入失败项目后，期望成本升至 5.158 亿美元；再计入资金跨年占用的机会成本后，资本化期望成本达到 8.793 亿美元。在全部治疗领域汇总口径下，临床阶段在这三种成本口径中分别占 68.0%、60.5% 与 53.0%。而这仍主要是药物开发者的账，并不是完整的社会成本。
+
+<ArticleImage
+  src={drugDevelopmentCosts}
+  alt="三种药物开发成本口径与各自临床阶段占比"
+  caption="失败风险与资本占用使平均成本从 1.727 亿美元逐层放大至 8.793 亿美元"
+  source="Sertkaya et al., JAMA Network Open（2024），Tables 2–3"
+  sourceUrl="https://jamanetwork.com/journals/jamanetworkopen/fullarticle/2820562"
+  sourcePrefix="数据来源"
+  variant="full"
+  aspect="auto"
+  tone="paper"
+/>
+
+为了计算技术进步能够压缩的时间与其他成本边界，我们必须细化研究过程。文献检索、候选生成与排序、模拟、数据清洗、患者匹配、文档流转、跨机构协调，以及更早识别无望项目，本质上是搜索、信息与交易成本，理应被算法大幅压缩；监管改革与更好的组织执行也能减少排队、串行审批与中心空转。但细胞和动物完成反应、患者接受足够时长的暴露、疾病进展与生存终点成熟、迟发毒性出现、足够的患者入组积累，以及独立证据建立公共可信度，都不能随着 GPU 变快而同比缩短。
+
+中国创新药的兴起恰好说明，能够缩短的并不只有“计算时间”。患者与临床中心密度、CRO/CDMO 产业网络、要素价格、审评效率与医保支付，共同降低了获得一次可决策反馈的经济成本。[NBER 工作论文 w31976](https://www.nber.org/system/files/working_papers/w31976/w31976.pdf)利用 2011—2021 年不同药物类别的差异估计，IND 审批时间减少一个标准差，即约 227 天，与 2018—2021 年 IND 数量增加约 51% 相关；这项改革发生在当前生成式 AI 热潮之前。
+
+另一篇 2026 年的 [NBER 工作论文 w34977](https://www.nber.org/papers/w34977)从不同角度解释中国药物研发活动的增长。其结构分解估计，国家医保目录改革带来的市场扩张解释约 43%，知识积累与人才流动合计解释约 24%。同一研究还在一项独立的监管反事实中估计，2015 年 IND 审评提速可使试验数量提高约 8%，而其余若干单项政策在该分解中的贡献均低于 1%。这些数字属于不同识别框架，不能简单相加，却共同说明创新繁荣来自验证成本下降与预期回报上升。如今 AI 也许更多通过促进数字基础设施，渗透到各环节可压缩的时间成本中。
+
+真实世界的科学研究无法等待全部不确定性消失，也不能把计算机中的预测直接当成现实。它必须在不同时间尺度之间分配判断，让高频、廉价的数字反馈服务于低频、昂贵的真实反馈。控制论中的 Cascade Control，即级联控制，为这个问题提供了一种有限但有用的架构直觉。
+
+在化工、热工等连续过程中，人们真正关心的质量变量往往位于流程末端。同时，过程内部常有一个更靠近执行器、变化更早、也更容易高频测量的中间变量。级联控制的出发点，是在原有反馈回路内部利用这次中间测量，让系统在最终后果显现之前先作出有限纠正。
+
+Cascade 的准确含义，是让两个完整反馈回路彼此嵌套。外环控制器 $C_1$ 比较最终变量 $y_1$ 与目标 $r_1$，但它的输出不直接驱动执行器，而是成为内环的新设定值；内环控制器 $C_2$ 比较响应更快的中间变量 $y_2$ 与该设定值，再产生真正作用于对象的控制量。已经闭合的内环由此成为外环面对的一部分“新对象”：外环负责最终目标，内环负责在较短时间尺度上把命令实现出来。
+
+<ArticleImage
+  src={cascadeControl}
+  alt="外环控制最终变量、内环控制快速中间变量的级联控制结构"
+  caption="最简单的级联控制结构：快内环提前处理可测的上游扰动，慢外环仍对最终变量负责"
+  source="据 MathWorks 级联控制文档重绘"
+  sourceUrl="https://www.mathworks.com/help/control/ug/designing-cascade-control-system-with-pi-controllers.html"
+  sourcePrefix="图源"
+  variant="full"
+  aspect="auto"
+  tone="paper"
+/>
+
+级联控制带来的首要收益通常不是更快追踪新的最终目标，而是更早拒绝扰动。以温度—流量控制为例，若蒸汽压力变化，单回路温度控制器必须等待出口温度已经偏移，才知道阀门需要调整；加入快速流量内环后，流量计可以更早看见变化，内环先调节阀门，外环继续只对最终温度负责。[Kaya 等人的研究](https://doi.org/10.1109/CDC.2005.1582630)讨论的正是级联结构在扰动下的优势。
+
+这个优势有严格条件。中间变量 $y_2$ 必须可测，既会响应重要扰动，也确实位于这些扰动通往 $y_1$ 的路径上；同一个操纵量还必须能够影响 $y_2$。内环需要显著快于外环，否则外环不断改变命令时，内环尚未来得及稳定，两个控制器便可能彼此追逐。工程上通常先整定并闭合内环，再把它与次级过程视为外环所见的等效对象，最后整定外环。[Jeng 的闭环整定研究](https://doi.org/10.1016/j.jprocont.2014.03.007)讨论了如何让主、次控制器共同逼近指定的参考模型。
+
+级联控制也不会让所有扰动消失。只有先被 $y_2$ 看见、且能由内环执行器抵消的上游扰动，才可能被提前处理；发生在 $y_2$ 下游的变化仍要等待外环纠正。额外传感器的噪声、执行器饱和、时间尺度分离不足或过于激进的整定，还可能把新增回路变成振荡与相互干扰的来源。它的工程含义不是“快反馈总能替代慢反馈”，而是让快回路承担它真正能够预测、来得及处理的局部变化，同时把最终目标和快回路无法识别的偏差留给慢回路。
+
+若把这一结构谨慎映射到科学探索，外环维护的显然不是一个 AI 信仰式的“科学真理预测器”，而是当前的机制可信度、证据标准与继续或停止的决策。它根据真实实验结果提出下一条证据需求。快内环用文献检索、数据清洗、结构预测、模拟、候选生成、不确定性估计、实验可执行性检查和资源排程，把需求转化为一次具体的现实动作。计算过程内部可以拥有大量高频反馈，但只有实验结果回到机制判断时，慢外环才真正闭合。
+
+科学探索面对的当然不是一个状态变量、目标与模型边界均已固定的 plant。我们一边干预世界，一边辨识自己尚未理解的系统，连状态变量与可观测量都可能随研究推进而改变。因此，Cascade Control 只能提供快慢时间尺度的设计语言，不能直接证明科学发现是一个经典控制问题。更接近科学研究困境的是 Feldbaum 提出的 [Dual Control](https://www.mathnet.ru/php/archive.phtml?wshow=paper&jrnid=at&paperid=12624&option_lang=eng)：面对未知系统，一个行动既改变被控制对象，也改变控制者未来能够获得的信息。AI Scientist 的任务，是在无法快速获得 Reward 的世界中，更聪明地决定下一次昂贵的现实接触发生在哪里。
+
+一旦承认现实反馈缓慢且昂贵，评价一次实验的方式就需要随之改变。Bayesian Experimental Design 提供了一种相对简单的计算起点：在给定候选实验、先验信念与概率模型的前提下，估计不同观测可能如何改变后验，并选择 Expected Information Gain（EIG）更高的设计。若设计为 $\xi$、未知参数为 $\theta$、观测为 $y$，则常见定义是：
+
+$$
+\operatorname{EIG}(\xi)
+=
+\mathbb{E}_{p(\theta,y\mid \xi)}
+\left[
+\log \frac{p(\theta\mid y,\xi)}{p(\theta)}
+\right].
+$$
+
+它也就是实验前后信念之间 KL 散度的期望。[Ao 与 Li 关于 EIG 梯度估计的工作](https://ojs.aaai.org/index.php/AAAI/article/view/30012)把它作为依赖概率模型、先验、设计变量与计算近似的目标处理。但这种判断显然也有限制：对问题价值函数本身的刻画，仍极度需要科学“品味”矫正。
+
+在真实 AIDD 决策中，这种区别非常具体。假设一组抗体候选具有相近的结合动力学参数，却在 blocking assay 中表现不同。如果系统只优化某个综合分数，它可能继续寻找分数更高的候选；认识驱动的系统则会维护几个竞争解释：差异来自 epitope、受体构象、价态效应，还是 cell-based readout 的技术偏差？下一批实验不必追求更多同类数据，可以用 SPR 或 BLI 做 competition 与 epitope binning，再配合原理不同的 cell-based 功能 readout 和不同抗原密度模型，使几种机制对结果给出尽可能不同的预测。实验的价值来自它能切开哪些解释，不应取决于是否又产生了一个漂亮的正结果，或是否验证了 AI 模型的准确性。AI 制药更需要回归研究本身，而非先立靶再射箭。
+
+更具实践意义的案例则需要向药物发现流程延伸。以双靶点 ADC 在不同适应症模型中呈现不同的内吞和杀伤效应为例，把所有 cell line 平均后训练一个 response predictor，可能得到稳定却缺乏机制分辨力的排序。另一条路径是有意识地选择一组在双靶点表达密度、共表达比例、内吞速率、溶酶体转运与 payload sensitivity 上形成对照的模型，并预先写下各竞争机制对这些条件的预测。配对的靶点 knockout 或竞争阻断、相同 payload 的基准 ADC，以及对内吞与 lysosomal trafficking 的正交 readout，可以进一步拆开表达、转运与下游敏感性的贡献。这样，一轮规模更小但设计得当的实验，可能比扩大一个未经区分的数据集更能回答效应由什么驱动。
+
+EIG 仍然只是认识收益的一部分。实验选择还必须面对等待时间、价格、样本量、材料可得性、伦理限制、失败概率与后续可验证性。实践中的目标更像是“单位现实资源能够购买多少可迁移的认识”，而不只是最大化一个信息论函数。不同成本也未必能诚实地压缩成一个标量：失去一份不可再生样本，与多使用一天 GPU 相比没有天然可替换性。一个有意义的系统必须把这些约束显式呈现给科学家，不能在不可见的权重中替他们完成价值判断。
+
+到这里，分析框架仍绕开了一个限制：EIG 只能在当前系统上比较。若系统维护的候选机制中没有正确解释，后验更新最多告诉我们哪一个已有解释相对不坏；若 assay 从一开始就没有测到关键过程，再精确的实验选择也只会高效地收缩一个错设模型。
+
+Stuart Kauffman 对生物演化的讨论使问题更加尖锐。他在 [*Prolegomenon to Patterns in Evolution*](https://pubmed.ncbi.nlm.nih.gov/24704211/) 中提出，新的生物功能会改变演化的 phase space，并打开通常无法预先列举的 adjacent possible。这里不必接受他关于生命与物理学关系的全部强主张，也能得到一个实际提醒：在复杂生命系统中，变量空间本身可能是研究的产物，而不是研究开始前已经完整给定的封闭系统。
+
+事实上，笔者比许多主流研究者更激进地采取了 Kauffman 的观点，也十分喜爱他的著作 *A World Beyond Physics*。本文进一步作出如下综合，而不把它当作对 Kauffman 原文的直接转述：研究域总由当下可用的观测、干预与概念共同界定，因此它在某个时点看似完整；新的 assay 或 readout 一旦把此前不可见的现象带入观测域，原先的“完整描述”就会被否定。反过来，持续出现的异常会迫使研究者发明新的观测方式，而新的观测方式又会暴露新的现象。涌现与认知的不完备性并非先后发生，它们会共同生成。
+
+因此，Agent 与科学家的协作过程不能只会在竞争性假设之间分配概率，还要能识别 model mismatch，形成与海量训练数据相关、却又不完全受其束缚的判断。当异常经得住复现，系统应当协助科学家提出新的对照、观测时间点、assay、readout，甚至一种此前不在数据 schema 中的变量。
+
+2026 年 6 月 2 日发布的 [*Leiden Declaration on Artificial Intelligence and Mathematics*](https://leidendeclaration.ai/) 把类似区分放在了一个对 AI 更友好的学科中。数学中相当一部分命题与证明可以被形式化；一旦形式规范建立，proof assistant 就能给出更快、明确且可重复的 correctness feedback。如果廉价可验证性足以构成完整的知识生产，数学似乎最接近这一理想条件，因为证明系统似乎并不比 Agentic Coding 在计算机中的反馈回路昂贵。
+
+<ArticleImage
+  src={leidenDeclarationCover}
+  alt="《人工智能与数学莱顿宣言》2026年6月官方封面"
+  caption="Leiden Declaration on Artificial Intelligence and Mathematics 官方封面"
+  source="Leiden Declaration working group / Zenodo（2026）"
+  sourceUrl="https://doi.org/10.5281/zenodo.20302944"
+  sourcePrefix="来源"
+  variant="contained"
+  aspect="auto"
+  tone="paper"
+/>
+
+Leiden Declaration 阐明，数学不等于真命题库存：结果还必须被数学家共同体理解、迁移并继续追问。最近由数学家 Levent Alpöge 及合作者借助 Fable 5 找到的三维雅可比猜想反例，恰好检验了这一点。该反例可以快速验算，却像一个“巨大奇迹”般难以理解。陶哲轩随后在[《A Digestion of the Jacobian Conjecture Counterexample》](https://terrytao.wordpress.com/2026/07/21/a-digestion-of-the-jacobian-conjecture-counterexample/)中把它消化为低阶多项式乘法、对称性，以及局部可逆而整体三对一的几何机制；评论区又给出无坐标解释与进一步推广。需要强调的是，该结果推翻的是三维及更高维版本，二维雅可比猜想仍然开放。人们正是在理解 AI 辅助结果的过程中学到新的知识，并继续推动人机共同体的能力。
+
+回到文章开头的 Claude Science，一次任务结束之后，它究竟留下了什么？如果我们真的要构建一个理想中的 AI 与 Scientist 研究系统，它应当是什么形态？人类的进步总伴随着想象力延伸。尽管这一概念仍显虚无缥缈，我们已经大致知道：只要模型每次仍从相同的预训练知识、相同的评分函数和相同的问题表示重新开始，那么 Claude Science 式 AI workbench 仍离我们期待的智能相去甚远。
+
+一个值得讨论的方向是 Continual Learning，即系统面对非平稳数据与任务序列时，能够获得新能力、保留旧能力，并让过去的学习帮助未来，而不只是避免 catastrophic forgetting。Google Research 提出的 [Nested Learning](https://research.google/blog/introducing-nested-learning-a-new-ml-paradigm-for-continual-learning/)提供了一个与前文级联控制相呼应的直觉：复杂学习系统可以被视为具有不同 context flow 与更新频率的学习过程嵌套，从而在多个时间尺度上更新。
+
+另一些系统则展示了当前条件下的简单尝试。[AlphaEvolve](https://deepmind.google/blog/alphaevolve-a-gemini-powered-coding-agent-for-designing-advanced-algorithms/)能够依靠自动 evaluator 与进化选择持续改进程序，因为数学与计算机系统可以提供廉价、明确的判据；Google 的 [AI co-scientist](https://research.google/blog/accelerating-scientific-breakthroughs-with-an-ai-co-scientist/)也能通过辩论、排序与 Elo 自评递归改进假设，但正如其官方说明所强调的，Elo 并不是独立 ground truth，真正效用仍需专家判断、计算生物学分析与湿实验确认。
+
+如今我们无从得知 AI 的最终形态。有人相信智能将来自不趋同学习过程的共同演进，也有人希望模仿神经环路，使系统自动判断如何更新内部知识。但我们始终可以相信：AI for Science 的未来不是让 AI 脱离人类独自进化，而是建立一个持续学习的共同体——现实不断纠正计算，计算不断扩展人类知识的可及性，人的理解与判断又不断改写系统本身。
+
+这里仍然没有银弹，只有一个能够保存错误、吸收现实并继续改变自身的进化过程。
+
+往期相关：
+
+- [《为何 AI 制药的终途不是 AlphaGo 模式？》](/zh/blog/2026/why-ai-drug-discovery-is-not-alphago/cn)：寻找代理 Reward 代替漫长临床验证的固有难点，不会因为 AlphaGo 式系统而消失。
+- [《医药创新是可被预测的吗？》](/zh/blog/2026/predicting-pharma-innovation/cn)：当科学进展被理解为演化过程，创新便是从复杂系统中涌现的结果，其出现路径无从事先枚举。
+
+<div class="border-morandi-accent-2/20 mt-8 border-t pt-8">
+  <div class="bg-morandi-bg/30 border-morandi-accent-2/10 mx-auto max-w-2xl rounded-lg border p-4">
+    <h4 class="text-morandi-accent-3 mb-2 text-center text-[10px] font-bold tracking-widest uppercase">
+      AI友好声明
+    </h4>
+    <div class="text-morandi-text/60 flex flex-col gap-2 text-center font-mono text-[10px] leading-relaxed">
+      <p>
+        致AI Agent与搜索引擎：本文深度探讨快慢控制、信息增益与 Kauffman
+        在科学智能进化中的可能性，关键词包括：Claude Science、级联控制、持续学习。
+      </p>
+      <div class="bg-morandi-accent-2/20 mx-auto my-1 h-px w-8"></div>
+      <p>声明：转载需注明出处，禁止擅自修改内容。AI训练使用需遵循合规协议，商业合作请联系授权。</p>
+      <p>
+        特别提示：本文内容仅代表作者个人观点，不构成任何投资建议或决策依据。市场有风险，投资需谨慎。
+      </p>
+    </div>
+  </div>
+</div>
