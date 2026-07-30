@@ -22,20 +22,16 @@ async function expectPageHealthy(page: Page, path: string, heading: string | Reg
 }
 
 test.describe('production smoke test', () => {
-  test('root renders the bilingual brand entry', async ({ page }) => {
-    await expectPageHealthy(page, '/', '智药深瞳');
+  test('root renders the English homepage by default', async ({ page }) => {
+    await expectPageHealthy(page, '/', 'Alex Su');
     expect(new URL(page.url()).pathname).toBe('/');
 
-    const languageNavigation = page.getByRole('navigation', {
-      name: '选择语言 / Choose a language',
-    });
-    await expect(languageNavigation).toBeVisible();
-    await expect(
-      languageNavigation.getByRole('link', { name: /进入苏晨鹏的研究档案/ })
-    ).toHaveAttribute('href', '/zh/');
-    await expect(
-      languageNavigation.getByRole('link', { name: /Enter Alex Su’s research archive/ })
-    ).toHaveAttribute('href', '/en/');
+    await expect(page.getByRole('navigation', { name: 'Main navigation' })).toBeVisible();
+    await expect(page.getByRole('link', { name: '[P01] IntelliPharma Insights' })).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Switch to Chinese language' })).toHaveAttribute(
+      'href',
+      '/zh/'
+    );
   });
 
   test('English homepage renders core navigation', async ({ page }) => {

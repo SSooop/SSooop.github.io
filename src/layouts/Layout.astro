@@ -39,8 +39,9 @@ const {
 
 const currentPath = Astro.url.pathname;
 const targetLang = lang === 'en' ? 'zh' : 'en';
-const isHome = currentPath === `/${lang}/` || currentPath === `/${lang}`;
 const isSiteRoot = currentPath === '/';
+const isHome =
+  currentPath === `/${lang}/` || currentPath === `/${lang}` || (isSiteRoot && lang === 'en');
 
 const t = useTranslations(lang as SupportedLocale);
 const pageTitle = title;
@@ -107,7 +108,7 @@ const pageSchema =
   >
     <!-- Global Controls - Navigation -->
     {
-      !isSiteRoot && (
+      (!isSiteRoot || lang === 'en') && (
         <nav
           class="fixed top-5 right-5 z-50 flex items-center border border-[color:var(--atlas-line)] bg-[color:color-mix(in_srgb,var(--color-morandi-bg)_86%,transparent)] font-mono text-[10px] tracking-[0.14em] uppercase shadow-[0_12px_36px_rgb(35_38_36/0.08)] backdrop-blur-md md:top-7 md:right-7"
           aria-label={lang === 'zh' ? '语言与导航' : 'Language and navigation'}

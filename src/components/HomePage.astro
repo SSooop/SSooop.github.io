@@ -1,0 +1,434 @@
+---
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+import Layout from '../layouts/Layout.astro';
+import AtlasField from './AtlasField.astro';
+import SpecimenImage from './SpecimenImage.astro';
+import { useTranslations, type SupportedLocale } from '../i18n/ui';
+import { visualAssets } from '../config/visualAssets';
+
+interface Props {
+  lang: SupportedLocale;
+  canonical: string;
+}
+
+const { lang, canonical } = Astro.props;
+const t = useTranslations(lang);
+const posts = await getCollection('blog');
+const alternateLanguages = {
+  en: '/en/',
+  zh: '/zh/',
+  'x-default': '/',
+};
+
+// A single chronological feed for every project. Future P02/P03 publications can be
+// appended here with their own track metadata and will share the same date ordering.
+const publicationFeed = [
+  ...posts
+    .filter((post) => post.data.lang === lang)
+    .map((post) => ({
+      id: `p01-${post.id}`,
+      publishedAt: post.data.date,
+      title: post.data.title,
+      description: post.data.description,
+      href: `/${lang}/blog/${post.id}`,
+      cover: post.data.image,
+      coverAlt: post.data.imageAlt || post.data.title,
+      trackCode: 'P01',
+      trackName: lang === 'zh' ? '智药深瞳' : 'IntelliPharma Insights',
+      accent: 'var(--color-track-intellipharma)',
+    })),
+]
+  .sort((a, b) => b.publishedAt.valueOf() - a.publishedAt.valueOf())
+  .slice(0, 5);
+
+const copy = {
+  en: {
+    archive: 'Personal research archive / Beijing / 2026',
+    manifesto: 'Biology is not a vertical. It is the operating system of the future.',
+    field: 'Living Systems Atlas',
+    fieldNote:
+      'A public field of research, writing, and long-horizon projects across AI, biopharma, economics, and AI–biology pathways toward planetary ecosystem engineering.',
+    projectsKicker: 'OPEN PROJECT FIELD / GROWING ARCHIVE',
+    projectsHeading: 'Long-horizon projects',
+    projectsNote: 'New work enters the field whenever a question proves worth pursuing.',
+    latest: 'Latest updates',
+    latestKicker: 'ALL PROJECTS / PUBLICATION FEED',
+    allPosts: 'Explore all projects',
+    read: 'Open entry',
+    coverPending: 'Cover study pending',
+    lifeHeading: 'Life is infrastructure.',
+    lifeNote:
+      'Within evolving systems, diverse individuals and environments select one another and co-evolve. Ecosystems can reshape environments—and transform planets.',
+    projects: [
+      {
+        code: 'P01',
+        name: 'IntelliPharma Insights',
+        scale: 'MOLECULE → INDUSTRY',
+        description:
+          'Technology-driven essays on AI and biopharma through the lens of philosophy of science—focused on long-term value logic, not individual companies, securities, specific technical solutions, or investment advice.',
+        href: `/${lang}/blog`,
+        color: 'var(--color-track-intellipharma)',
+      },
+      {
+        code: 'P02',
+        name: 'Economics After AI',
+        scale: 'INSTITUTION → SOCIETY',
+        description:
+          'Economic reasoning for intelligence, circulation, growth, and social reproduction.',
+        href: `/${lang}/economics-after-ai`,
+        color: 'var(--color-track-economics)',
+      },
+      {
+        code: 'P03',
+        name: 'Gaia Project',
+        scale: 'ECOSYSTEM → PLANET',
+        description:
+          'Synthetic biology, controlled evolution, and engineered planetary habitability.',
+        href: `/${lang}/gaia-project`,
+        color: 'var(--color-track-gaia)',
+      },
+    ],
+  },
+  zh: {
+    archive: '个人研究档案 / 北京 / 2026',
+    manifesto: '生物学不是一个垂直行业，而是未来世界的操作系统。',
+    field: '生命系统图谱',
+    fieldNote:
+      '这里公开记录我的研究、写作和各种长期项目：AI、生物医药、经济学，以及用 AI 与生物工程重塑星球生态、让人类走向多行星生存的探索。',
+    projectsKicker: '持续生长的项目档案',
+    projectsHeading: '长期项目',
+    projectsNote:
+      '有些问题值得一直走下去，便让它在这里长成新的项目；方向随好奇心舒展，不由分类预先划定。',
+    latest: '最近更新',
+    latestKicker: '全部项目 / 最新发表',
+    allPosts: '浏览全部项目',
+    read: '阅读全文',
+    coverPending: '封面待补',
+    lifeHeading: '生态系统，是自组织与自我演化的复杂系统。',
+    lifeNote:
+      '进化系统中，多样的个体与环境相互选择、协同进化。生态系统能够重塑环境，也能改造行星。',
+    projects: [
+      {
+        code: 'P01',
+        name: '智药深瞳',
+        scale: '分子 → 产业',
+        description:
+          '以科学哲学视角分析 AI 与制药产业的技术演化和长期价值逻辑；不讨论具体企业、个股或技术方案，不构成投资建议。',
+        href: `/${lang}/blog`,
+        color: 'var(--color-track-intellipharma)',
+      },
+      {
+        code: 'P02',
+        name: 'AI 时代的经济学',
+        scale: '制度 → 社会',
+        description: '关于智能、循环、增长与社会再生产的经济学推演。',
+        href: `/${lang}/economics-after-ai`,
+        color: 'var(--color-track-economics)',
+      },
+      {
+        code: 'P03',
+        name: '盖亚计划',
+        scale: '生态系统 → 行星',
+        description: '借助 AI、生物工程与人工生态系统，探索可持续的星体生态改造。',
+        href: `/${lang}/gaia-project`,
+        color: 'var(--color-track-gaia)',
+      },
+    ],
+  },
+}[lang];
+---
+
+<Layout
+  title={t('meta.title')}
+  lang={lang}
+  description={t('meta.desc')}
+  canonical={canonical}
+  alternateLanguages={alternateLanguages}
+>
+  <main class="relative overflow-hidden">
+    <section class="relative min-h-[100svh] px-5 pt-6 pb-20 md:px-10 md:pt-8 lg:px-14">
+      <AtlasField class="absolute inset-0 h-full w-full opacity-70" variant="ocean" />
+
+      <div class="relative z-10 mx-auto max-w-[1500px]">
+        <header class="border-b border-[color:var(--atlas-line)] pr-20 pb-4">
+          <div class="flex flex-wrap items-center justify-between gap-3">
+            <p class="atlas-kicker">{copy.archive}</p>
+            <p class="atlas-kicker">39.9042° N / 116.4074° E</p>
+          </div>
+        </header>
+
+        <div class="mt-7 grid gap-8 sm:grid-cols-12 sm:items-stretch">
+          <div
+            class="relative z-20 flex flex-col justify-between sm:col-span-6 sm:py-6 lg:col-span-5"
+          >
+            <div>
+              <p class="atlas-kicker mb-5">
+                {copy.field} / {lang === 'zh' ? '总览 000' : 'INDEX 000'}
+              </p>
+              <div class="relative pb-24 sm:pb-28 lg:pb-32">
+                <h1
+                  class="text-atlas-ink font-serif text-[clamp(5.5rem,15vw,12rem)] leading-[0.67] tracking-[-0.075em]"
+                >
+                  <span class="block">Alex</span>
+                  <span class="ml-[0.36em] block">Su</span>
+                </h1>
+                <img
+                  src="/images/site/alex-su-signature-watermark.png"
+                  alt=""
+                  aria-hidden="true"
+                  width="1565"
+                  height="644"
+                  class="pointer-events-none absolute right-0 bottom-0 w-[86%] max-w-[26rem] -rotate-3 opacity-[0.14] mix-blend-multiply select-none sm:right-2 sm:w-[82%] lg:right-0 lg:w-[78%]"
+                  loading="eager"
+                  decoding="async"
+                />
+              </div>
+            </div>
+
+            <div
+              class="mt-12 grid gap-5 border-t border-[color:var(--atlas-line)] pt-5 sm:grid-cols-2 lg:mt-16"
+            >
+              <p class="text-atlas-ink/75 max-w-sm text-sm leading-relaxed">{copy.fieldNote}</p>
+              <div
+                class="font-mono text-[10px] leading-relaxed tracking-[0.12em] uppercase opacity-60"
+              >
+                {t('home.location')}<br />
+                {t('home.focus')}<br />
+                {lang === 'zh' ? '人类 / 机器 / 生物圈' : 'HUMAN / MACHINE / BIOSPHERE'}
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="relative min-h-[34rem] sm:col-span-6 sm:min-h-[42rem] lg:col-span-7 lg:min-h-[48rem]"
+          >
+            <SpecimenImage
+              src={visualAssets.jellyfish.src}
+              alt={visualAssets.jellyfish.alt[lang]}
+              label={visualAssets.jellyfish.label[lang]}
+              credit={visualAssets.jellyfish.credit}
+              sourceUrl={visualAssets.jellyfish.sourceUrl}
+              index={lang === 'zh' ? '编号 01 / 深海' : 'NO. 01 / OCEAN'}
+              class="inset-0"
+              position="absolute"
+              edge="hero"
+              eager
+            />
+          </div>
+        </div>
+
+        <div
+          class="mt-20 grid items-end gap-7 border-t border-[color:var(--atlas-line)] pt-5 lg:grid-cols-12"
+        >
+          <p class="atlas-kicker lg:col-span-3">{copy.manifesto}</p>
+          <nav
+            class="grid gap-x-5 gap-y-3 sm:grid-cols-2 lg:col-span-9 lg:grid-cols-5"
+            aria-label="Main navigation"
+          >
+            <a class="atlas-home-link" href={`/${lang}/projects`}>[00] {t('nav.projects')}</a>
+            <a class="atlas-home-link" href={`/${lang}/blog`}>[P01] {t('nav.blog')}</a>
+            <a class="atlas-home-link" href={`/${lang}/economics-after-ai`}
+              >[P02] {t('nav.economics')}</a
+            >
+            <a class="atlas-home-link" href={`/${lang}/gaia-project`}>[P03] {t('nav.gaia')}</a>
+            <a class="atlas-home-link" href={`/${lang}/social`}>[N01] {t('nav.social')}</a>
+          </nav>
+        </div>
+      </div>
+    </section>
+
+    <section
+      class="relative border-y border-[color:var(--atlas-line)] px-5 py-16 md:px-10 lg:px-14 lg:py-24"
+    >
+      <AtlasField class="absolute inset-0 h-full w-full opacity-45" variant="forest" />
+      <div class="relative z-10 mx-auto max-w-[1500px]">
+        <header class="mb-10 flex flex-wrap items-end justify-between gap-6">
+          <div>
+            <p class="atlas-kicker mb-4">{copy.projectsKicker}</p>
+            <h2 class="text-atlas-ink font-serif text-4xl leading-none md:text-5xl">
+              {copy.projectsHeading}
+            </h2>
+          </div>
+          <p class="text-atlas-ink/65 max-w-xl text-sm leading-relaxed">{copy.projectsNote}</p>
+        </header>
+
+        <div
+          class="grid border-t border-[color:var(--atlas-line-strong)] md:grid-cols-2 xl:grid-cols-3"
+        >
+          {
+            copy.projects.map((project) => (
+              <a
+                href={project.href}
+                class="group relative min-h-72 overflow-hidden border-b border-[color:var(--atlas-line)] p-6 transition-colors hover:bg-white/25 md:border-r md:nth-[2n]:border-r-0 xl:nth-[2n]:border-r xl:nth-[3n]:border-r-0"
+                style={`--project-accent:${project.color}`}
+              >
+                <div class="flex items-start justify-between gap-6">
+                  <span class="font-mono text-xs tracking-[0.16em] text-[color:var(--project-accent)]">
+                    {project.code}
+                  </span>
+                  <span class="atlas-kicker text-right">{project.scale}</span>
+                </div>
+                <div class="absolute inset-x-6 bottom-6">
+                  <span class="mb-5 block h-2 w-2 rounded-full bg-[color:var(--project-accent)] transition-transform group-hover:scale-[1.8]" />
+                  <h3 class="text-atlas-ink max-w-md font-serif text-4xl leading-none md:text-5xl">
+                    {project.name}
+                  </h3>
+                  <p class="text-atlas-ink/65 mt-5 max-w-md text-sm leading-relaxed">
+                    {project.description}
+                  </p>
+                </div>
+              </a>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <section
+      class="bg-atlas-ocean relative overflow-hidden px-5 py-20 text-white md:px-10 lg:px-14 lg:py-28"
+    >
+      <div class="mx-auto grid max-w-[1500px] items-center gap-8 lg:grid-cols-12">
+        <div class="relative z-10 lg:col-span-4">
+          <p class="font-mono text-[10px] tracking-[0.16em] text-white/55 uppercase">
+            {lang === 'zh' ? '生态观察 / 01' : 'FIELD NOTE / 01'}
+          </p>
+          <p class="mt-6 font-serif text-5xl leading-none md:text-7xl">{copy.lifeHeading}</p>
+          <p class="mt-6 max-w-sm text-sm leading-relaxed text-white/65">
+            {copy.lifeNote}
+          </p>
+        </div>
+        <SpecimenImage
+          src={visualAssets.corals.src}
+          alt={visualAssets.corals.alt[lang]}
+          label={visualAssets.corals.label[lang]}
+          credit={visualAssets.corals.credit}
+          sourceUrl={visualAssets.corals.sourceUrl}
+          index={lang === 'zh' ? '编号 03 / 海底生态' : 'NO. 03 / BENTHIC'}
+          class="h-[26rem] lg:col-span-8 lg:h-[38rem]"
+        />
+      </div>
+    </section>
+
+    <section
+      class="px-5 py-24 md:px-10 lg:px-14 lg:py-36"
+      aria-label={lang === 'zh' ? '全部项目的最近更新' : 'Latest updates across all projects'}
+    >
+      <div class="mx-auto max-w-[1500px]">
+        <header
+          class="mb-12 flex flex-wrap items-end justify-between gap-5 border-b border-[color:var(--atlas-line)] pb-5"
+        >
+          <div>
+            <p class="atlas-kicker mb-4">{copy.latestKicker}</p>
+            <h2 class="text-atlas-ink font-serif text-5xl md:text-7xl">{copy.latest}</h2>
+          </div>
+          <a
+            class="atlas-kicker hover:text-track-intellipharma transition-colors"
+            href={`/${lang}/projects`}
+          >
+            {copy.allPosts} →
+          </a>
+        </header>
+
+        <div
+          class="grid border-t border-l border-[color:var(--atlas-line-strong)] md:grid-cols-2 lg:grid-cols-4"
+        >
+          {
+            publicationFeed.map((entry, index) => {
+              return (
+                <a
+                  href={entry.href}
+                  class:list={[
+                    'group relative flex flex-col border-r border-b border-[color:var(--atlas-line)] transition-colors hover:bg-white/20',
+                    index === 0
+                      ? 'min-h-[34rem] md:col-span-2 lg:col-span-2 lg:row-span-2 lg:min-h-[48rem]'
+                      : 'min-h-[26rem] lg:min-h-[24rem]',
+                  ]}
+                  style={`--entry-accent:${entry.accent}`}
+                >
+                  <div
+                    class:list={[
+                      'relative overflow-hidden border-b border-[color:var(--atlas-line)] bg-[color:var(--atlas-surface)]',
+                      index === 0 ? 'h-72 lg:h-[24rem]' : 'h-48 lg:h-40',
+                    ]}
+                  >
+                    {entry.cover ? (
+                      <Image
+                        src={entry.cover}
+                        alt={entry.coverAlt}
+                        widths={[480, 720, 1080]}
+                        sizes={
+                          index === 0
+                            ? '(min-width: 1024px) 50vw, 100vw'
+                            : '(min-width: 1024px) 25vw, 50vw'
+                        }
+                        loading="lazy"
+                        class="atlas-image-treatment h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.025]"
+                      />
+                    ) : (
+                      <div class="absolute inset-0 flex items-center justify-center">
+                        <span class="atlas-kicker opacity-50">
+                          {copy.coverPending} / {entry.trackCode}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+
+                  <div class="flex flex-1 flex-col justify-between p-5 md:p-6">
+                    <div class="flex items-center justify-between gap-5">
+                      <time class="atlas-kicker" datetime={entry.publishedAt.toISOString()}>
+                        {entry.publishedAt.toISOString().split('T')[0]}
+                      </time>
+                      <span class="font-mono text-[10px] tracking-[0.14em] text-[color:var(--entry-accent)] uppercase">
+                        {entry.trackCode} / {entry.trackName}
+                      </span>
+                    </div>
+                    <div class:list={[index === 0 ? 'mt-12' : 'mt-7']}>
+                      <h3
+                        class:list={[
+                          'text-atlas-ink font-serif leading-[1.05] transition-colors group-hover:text-[color:var(--entry-accent)]',
+                          index === 0 ? 'text-4xl md:text-5xl' : 'text-3xl',
+                        ]}
+                      >
+                        {entry.title}
+                      </h3>
+                      <p
+                        class:list={[
+                          'text-atlas-ink/60 mt-5 text-sm leading-relaxed',
+                          index === 0 ? 'line-clamp-3' : 'line-clamp-2',
+                        ]}
+                      >
+                        {entry.description}
+                      </p>
+                      <span class="atlas-kicker mt-7 block">{copy.read} →</span>
+                    </div>
+                  </div>
+                </a>
+              );
+            })
+          }
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<style>
+  .atlas-home-link {
+    border-bottom: 1px solid var(--atlas-line);
+    padding-block: 0.5rem;
+    color: var(--color-atlas-ink);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    transition:
+      color 180ms ease,
+      border-color 180ms ease,
+      transform 180ms ease;
+  }
+
+  .atlas-home-link:hover {
+    border-color: var(--color-atlas-signal);
+    color: var(--color-atlas-signal);
+    transform: translateX(0.2rem);
+  }
+</style>

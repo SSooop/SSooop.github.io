@@ -41,11 +41,6 @@ ${urls}
 export async function GET() {
   const entries = [
     {
-      url: absoluteUrl('/'),
-      changeFrequency: 'weekly' as const,
-      priority: 1.0,
-    },
-    {
       url: absoluteUrl('/en/'),
       changeFrequency: 'weekly' as const,
       priority: 1.0,

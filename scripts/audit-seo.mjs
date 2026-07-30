@@ -42,7 +42,9 @@ function collectStructuredData(value, filePath, websiteDefinitions) {
 }
 
 const htmlFiles = collectHtmlFiles(distRoot);
+const rootPath = path.join(distRoot, 'index.html');
 const pagesByCanonical = new Map();
+const pagesByFile = new Map();
 const websiteDefinitions = new Set();
 let jsonLdCount = 0;
 
@@ -61,10 +63,22 @@ for (const filePath of htmlFiles) {
 
   if (canonicals.length !== 1) {
     issues.push(`${relativePath}: expected one canonical URL, found ${canonicals.length}`);
-  } else if (pagesByCanonical.has(canonicals[0])) {
-    issues.push(`${relativePath}: duplicate canonical URL ${canonicals[0]}`);
   } else {
-    pagesByCanonical.set(canonicals[0], { filePath, alternates });
+    const canonical = canonicals[0];
+    const page = { canonical, filePath, alternates };
+    const existingPage = pagesByCanonical.get(canonical);
+    const isRootEnglishAlias =
+      existingPage &&
+      new URL(canonical).pathname === '/en/' &&
+      (filePath === rootPath || existingPage.filePath === rootPath);
+
+    pagesByFile.set(filePath, page);
+
+    if (existingPage && !isRootEnglishAlias) {
+      issues.push(`${relativePath}: duplicate canonical URL ${canonical}`);
+    } else if (!existingPage || existingPage.filePath === rootPath) {
+      pagesByCanonical.set(canonical, page);
+    }
   }
 
   const alternateKeys = Object.keys(alternates).sort();
@@ -100,9 +114,16 @@ for (const filePath of htmlFiles) {
 
 for (const [canonical, page] of pagesByCanonical) {
   const relativePath = path.relative(projectRoot, page.filePath);
+  const rootPage = pagesByFile.get(rootPath);
 
   for (const langCode of ['en', 'zh', 'x-default']) {
-    if (!pagesByCanonical.has(page.alternates[langCode])) {
+    const isRootDefaultAlias =
+      langCode === 'x-default' &&
+      rootPage &&
+      rootPage.canonical === page.alternates.en &&
+      rootPage.alternates['x-default'] === page.alternates['x-default'];
+
+    if (!pagesByCanonical.has(page.alternates[langCode]) && !isRootDefaultAlias) {
       issues.push(
         `${relativePath}: ${langCode} alternate is not a canonical page (${page.alternates[langCode]})`
       );
@@ -126,10 +147,23 @@ for (const sitemapName of ['sitemap-main.xml', 'sitemap-blog.xml']) {
   }
 }
 
-const rootPath = path.join(distRoot, 'index.html');
 const rootHtml = fs.readFileSync(rootPath, 'utf8');
 if (/http-equiv=["']refresh|window\.location|location\.href/i.test(rootHtml)) {
-  issues.push('dist/index.html: root language entry must not depend on a client-side redirect');
+  issues.push('dist/index.html: root English homepage must not depend on a client-side redirect');
+}
+
+const rootPage = pagesByFile.get(rootPath);
+const canonicalEnglishPage = rootPage ? pagesByCanonical.get(rootPage.canonical) : undefined;
+if (
+  !rootPage ||
+  rootPage.canonical !== rootPage.alternates.en ||
+  !canonicalEnglishPage ||
+  canonicalEnglishPage.filePath === rootPath ||
+  JSON.stringify(rootPage.alternates) !== JSON.stringify(canonicalEnglishPage.alternates)
+) {
+  issues.push(
+    'dist/index.html: root must be a reciprocal English alias whose canonical is the /en/ homepage'
+  );
 }
 
 if (websiteDefinitions.size !== 1 || !websiteDefinitions.has(rootPath)) {
@@ -149,5 +183,5 @@ if (issues.length > 0) {
 }
 
 console.log(
-  `SEO audit passed: ${htmlFiles.length} canonical pages, ${jsonLdCount} JSON-LD blocks, reciprocal hreflang clusters, and aligned sitemaps.`
+  `SEO audit passed: ${pagesByCanonical.size} canonical URLs across ${htmlFiles.length} HTML pages, ${jsonLdCount} JSON-LD blocks, reciprocal hreflang clusters, and aligned sitemaps.`
 );
