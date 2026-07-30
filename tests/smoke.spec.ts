@@ -22,9 +22,20 @@ async function expectPageHealthy(page: Page, path: string, heading: string | Reg
 }
 
 test.describe('production smoke test', () => {
-  test('root redirects to the English homepage', async ({ page }) => {
-    await expectPageHealthy(page, '/', 'Alex Su');
-    await expect(page).toHaveURL(/\/en\/?$/);
+  test('root renders the bilingual brand entry', async ({ page }) => {
+    await expectPageHealthy(page, '/', '智药深瞳');
+    expect(new URL(page.url()).pathname).toBe('/');
+
+    const languageNavigation = page.getByRole('navigation', {
+      name: '选择语言 / Choose a language',
+    });
+    await expect(languageNavigation).toBeVisible();
+    await expect(
+      languageNavigation.getByRole('link', { name: /进入苏晨鹏的研究档案/ })
+    ).toHaveAttribute('href', '/zh/');
+    await expect(
+      languageNavigation.getByRole('link', { name: /Enter Alex Su’s research archive/ })
+    ).toHaveAttribute('href', '/en/');
   });
 
   test('English homepage renders core navigation', async ({ page }) => {
