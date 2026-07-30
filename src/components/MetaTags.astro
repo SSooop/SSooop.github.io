@@ -12,7 +12,7 @@
  * - Viewport and theme-color meta tags
  */
 
-import { absoluteUrl } from '../config/site';
+import { SITE, absoluteUrl, withBasePath } from '../config/site';
 
 interface MetaTagProps {
   title: string;
@@ -38,7 +38,7 @@ interface CitationMeta {
 const {
   title,
   description,
-  image = absoluteUrl('/og-image.png'),
+  image,
   type = 'website',
   keywords = [],
   canonical,
@@ -52,6 +52,11 @@ const fullUrl = canonical ? absoluteUrl(canonical) : absoluteUrl(Astro.url.pathn
 const citationUrl = citation ? absoluteUrl(citation.url) : fullUrl;
 const citationDate = citation ? new Date(citation.publicationDate).toISOString().slice(0, 10) : '';
 const citationLanguage = citation?.language === 'zh' ? 'zh-CN' : 'en-US';
+const imageUrl = image ? absoluteUrl(image) : undefined;
+const imageAlt = `${title} — ${SITE.name}`;
+const alternateLocales = Object.keys(alternateLanguages)
+  .filter((langCode) => langCode !== 'x-default' && langCode !== lang)
+  .map((langCode) => (langCode === 'zh' ? 'zh_CN' : 'en_US'));
 
 // Generate keywords meta content
 const keywordsContent = keywords.length > 0 ? keywords.join(', ') : undefined;
@@ -66,22 +71,33 @@ const twitterCardType = type === 'article' ? 'summary_large_image' : 'summary';
 <meta name="description" content={description} />
 {keywordsContent && <meta name="keywords" content={keywordsContent} />}
 {noindex && <meta name="robots" content="noindex, nofollow" />}
-{!noindex && <meta name="robots" content="index, follow" />}
+{
+  !noindex && (
+    <meta
+      name="robots"
+      content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+    />
+  )
+}
 
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content={type} />
 <meta property="og:url" content={fullUrl} />
+<meta property="og:site_name" content={SITE.name} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
-<meta property="og:image" content={image} />
+{imageUrl && <meta property="og:image" content={imageUrl} />}
+{imageUrl && <meta property="og:image:alt" content={imageAlt} />}
 <meta property="og:locale" content={lang === 'zh' ? 'zh_CN' : 'en_US'} />
+{alternateLocales.map((locale) => <meta property="og:locale:alternate" content={locale} />)}
 
 <!-- Twitter -->
-<meta property="twitter:card" content={twitterCardType} />
-<meta property="twitter:url" content={fullUrl} />
-<meta property="twitter:title" content={title} />
-<meta property="twitter:description" content={description} />
-<meta property="twitter:image" content={image} />
+<meta name="twitter:card" content={twitterCardType} />
+<meta name="twitter:url" content={fullUrl} />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+{imageUrl && <meta name="twitter:image" content={imageUrl} />}
+{imageUrl && <meta name="twitter:image:alt" content={imageAlt} />}
 
 <!-- Canonical URL -->
 <link rel="canonical" href={fullUrl} />
@@ -89,6 +105,9 @@ const twitterCardType = type === 'article' ? 'summary_large_image' : 'summary';
 {
   type === 'article' && citation && (
     <>
+      <meta property="article:published_time" content={citation.publicationDate} />
+      <meta property="article:author" content={SITE.authorName} />
+      <meta property="article:section" content={SITE.name} />
       <meta name="citation_title" content={citation.title} />
       <meta name="citation_author" content={citation.author} />
       <meta name="citation_publication_date" content={citationDate} />
@@ -112,12 +131,12 @@ const twitterCardType = type === 'article' ? 'summary_large_image' : 'summary';
 }
 
 <!-- Favicon and App Icons -->
-<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="icon" type="image/svg+xml" href={withBasePath('/favicon.svg')} />
 
 <!-- Viewport and Theme -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="theme-color" content="#1a1a1a" />
 
 <!-- Additional SEO -->
-<meta name="author" content="Alex Su" />
+<meta name="author" content={`${SITE.authorName} (${SITE.authorNameZh})`} />
 <meta name="generator" content={Astro.generator} />

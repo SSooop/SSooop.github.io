@@ -4,6 +4,10 @@ User-agent: *
 Allow: /
 Disallow: /api/
 
+# Bing Search and Copilot grounding
+User-agent: Bingbot
+Allow: /
+
 # ChatGPT Search
 User-agent: OAI-SearchBot
 Allow: /
@@ -36,4 +40,6 @@ Allow: /
 User-agent: CCBot
 Allow: /
 
+# The wildcard policy also permits standards-compliant crawlers used by
+# Tencent, ByteDance, and other discovery services.
 Sitemap: https://ssooop.github.io/sitemap-index.xml

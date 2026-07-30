@@ -1,21 +1,23 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import StructuredData from '../../components/StructuredData.astro';
-import { useTranslations, type SupportedLocale } from '../../i18n/ui';
-import { getPageBreadcrumbs } from '../../utils/structuredData';
+import type { SupportedLocale } from '../../i18n/ui';
+import { generateProfilePageSchema, getPageBreadcrumbs } from '../../utils/structuredData';
 
 export function getStaticPaths() {
   return [{ params: { lang: 'en' } }, { params: { lang: 'zh' } }];
 }
 
 const lang: SupportedLocale = Astro.params.lang === 'zh' ? 'zh' : 'en';
-const t = useTranslations(lang);
 const aboutLabel = lang === 'zh' ? '关于我' : 'About';
 const breadcrumbSchema = getPageBreadcrumbs(aboutLabel, lang);
 
 const copy = {
   en: {
     eyebrow: 'About',
+    name: 'Alex Su',
+    alternateName: '苏晨鹏',
+    publication: 'Author and founder of IntelliPharma Insights / 智药深瞳',
     title:
       'AI-native scientist and engineer working at the edge of software, cognition, and drug discovery.',
     intro:
@@ -40,6 +42,9 @@ const copy = {
   },
   zh: {
     eyebrow: '关于',
+    name: '苏晨鹏',
+    alternateName: 'Alex Su',
+    publication: '智药深瞳（IntelliPharma Insights）作者与创办者',
     title: '在软件、认知与药物发现交界处工作的 AI 原生科学家与工程师。',
     intro:
       '我关注能够帮助专家更好推理的系统：AI 原生科研流程、科学软件，以及面向制药行业的新产品形态。',
@@ -61,19 +66,32 @@ const copy = {
     ],
   },
 }[lang];
+const pageTitle =
+  lang === 'zh' ? '苏晨鹏（Alex Su）｜智药深瞳作者' : 'Alex Su | Author of IntelliPharma Insights';
+const profileSchema = generateProfilePageSchema(lang, pageTitle, copy.intro);
 ---
 
-<Layout title={`${aboutLabel} | ${t('home.name')}`} lang={lang} description={copy.intro}>
+<Layout title={pageTitle} lang={lang} description={copy.intro} emitWebPageSchema={false}>
   <StructuredData data={breadcrumbSchema} type="BreadcrumbList" />
+  <StructuredData data={profileSchema} />
 
   <main class="container mx-auto min-h-screen max-w-5xl px-4 py-20 md:py-28">
     <header class="mb-16 max-w-4xl">
       <p class="text-morandi-accent-3 mb-4 font-mono text-xs tracking-widest uppercase">
         {copy.eyebrow}
       </p>
-      <h1 class="text-morandi-text font-serif text-4xl leading-tight md:text-6xl">
-        {copy.title}
+      <h1 class="text-morandi-text font-serif text-6xl leading-tight md:text-8xl">
+        {copy.name}
       </h1>
+      <p class="text-morandi-accent-3 mt-3 font-mono text-sm tracking-widest uppercase">
+        {copy.alternateName}
+      </p>
+      <p class="text-morandi-text/70 mt-8 font-mono text-xs tracking-[0.1em] uppercase">
+        {copy.publication}
+      </p>
+      <h2 class="text-morandi-text mt-7 max-w-4xl font-serif text-3xl leading-tight md:text-5xl">
+        {copy.title}
+      </h2>
       <p class="text-morandi-text/75 mt-8 max-w-3xl font-sans text-lg leading-loose">
         {copy.intro}
       </p>

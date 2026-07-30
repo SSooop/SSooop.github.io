@@ -5,7 +5,7 @@ import StructuredData from '../../../components/StructuredData.astro';
 import AtlasField from '../../../components/AtlasField.astro';
 import { getCollection } from 'astro:content';
 import { useTranslations, type SupportedLocale } from '../../../i18n/ui';
-import { getPageBreadcrumbs } from '../../../utils/structuredData';
+import { generateBlogCollectionSchema, getPageBreadcrumbs } from '../../../utils/structuredData';
 
 export function getStaticPaths() {
   return [{ params: { lang: 'en' } }, { params: { lang: 'zh' } }];
@@ -34,14 +34,25 @@ const archiveCopy =
 // Generate breadcrumb for blog listing
 const blogLabel = lang === 'en' ? 'Blog' : '智药深瞳';
 const breadcrumbSchema = getPageBreadcrumbs(blogLabel, lang as 'en' | 'zh');
+const collectionSchema = generateBlogCollectionSchema(
+  lang as 'en' | 'zh',
+  sortedPosts.map((post) => ({
+    title: post.data.title,
+    url: post.data.canonical.url,
+  }))
+);
 ---
 
 <Layout
-  title={`${t('blog.transmissions')} | ${t('home.name')}`}
+  title={lang === 'zh'
+    ? '智药深瞳｜苏晨鹏的 AI 制药与生命科学专栏'
+    : 'IntelliPharma Insights | AI & Biopharma by Alex Su'}
   lang={lang}
   description={t('blog.description')}
+  emitWebPageSchema={false}
 >
   <StructuredData data={breadcrumbSchema} type="BreadcrumbList" />
+  <StructuredData data={collectionSchema} />
   <main class="relative min-h-screen overflow-hidden px-5 py-24 md:px-10 md:py-28 lg:px-14">
     <AtlasField class="absolute inset-0 h-full w-full opacity-55" variant="ocean" />
     <div class="relative z-10 mx-auto max-w-[1500px]">
@@ -61,6 +72,12 @@ const breadcrumbSchema = getPageBreadcrumbs(blogLabel, lang as 'en' | 'zh');
           </p>
           <p class="text-morandi-text/70 mt-6 max-w-4xl font-sans text-sm leading-7 md:text-base">
             {t('blog.description')}
+          </p>
+          <p class="text-atlas-ink/60 mt-5 font-mono text-xs tracking-[0.1em] uppercase">
+            {lang === 'zh' ? '作者：' : 'By '}
+            <a href={`/${lang}/about`} rel="author" class="hover:text-track-intellipharma">
+              {lang === 'zh' ? '苏晨鹏（Alex Su）' : 'Alex Su (苏晨鹏)'}
+            </a>
           </p>
         </div>
       </header>

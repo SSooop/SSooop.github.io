@@ -29,14 +29,14 @@ export const FONTS = {
 // Metadata
 export const METADATA = {
   defaultTitle: {
-    en: 'Alex Su | Digital Space',
-    zh: '苏晨鹏 | 数字空间',
+    en: 'IntelliPharma Insights | Alex Su on AI & Biopharma',
+    zh: '智药深瞳｜苏晨鹏的 AI 制药与生命科学研究',
   },
   defaultDescription: {
-    en: 'Alex Su - Personal Website',
-    zh: '苏晨鹏 - 个人网站',
+    en: 'Alex Su (苏晨鹏) writes IntelliPharma Insights, a bilingual research archive on AI, biopharma, scientific software, and long-term value.',
+    zh: '智药深瞳是苏晨鹏（Alex Su）的双语研究与写作网站，聚焦 AI、生物医药、科学软件与长期价值。',
   },
-  author: 'Alex Su',
+  author: 'Alex Su (苏晨鹏)',
   siteUrl: SITE.url,
 } as const;
 

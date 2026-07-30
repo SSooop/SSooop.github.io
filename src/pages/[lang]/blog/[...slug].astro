@@ -83,6 +83,9 @@ const articleCopy =
         abstract: '摘要',
         readingTime: `${readingMetrics.minutes} 分钟阅读`,
         wordCount: `约 ${readingMetrics.units.toLocaleString('zh-CN')} 字`,
+        authorPrefix: '作者：',
+        authorName: '苏晨鹏（Alex Su）',
+        publicationName: '智药深瞳',
       }
     : {
         back: 'BACK TO TRANSMISSIONS',
@@ -90,6 +93,9 @@ const articleCopy =
         abstract: 'Abstract',
         readingTime: `${readingMetrics.minutes} min read`,
         wordCount: `About ${readingMetrics.units.toLocaleString('en-US')} words`,
+        authorPrefix: 'By ',
+        authorName: 'Alex Su (苏晨鹏)',
+        publicationName: 'IntelliPharma Insights',
       };
 
 const citationSource = {
@@ -101,12 +107,12 @@ const citationSource = {
   publicationDate: entry.data.date.toISOString(),
   url: absoluteUrl(entry.data.canonical.url),
   language: entry.data.lang,
-  siteName: SITE.name,
+  siteName: entry.data.lang === 'zh' ? SITE.name : SITE.nameEn,
 };
 ---
 
 <Layout
-  title={`${entry.data.title} | ${lang === 'zh' ? '苏晨鹏' : 'Alex Su'}`}
+  title={`${entry.data.title}${lang === 'zh' ? '｜智药深瞳 · 苏晨鹏' : ' | IntelliPharma Insights · Alex Su'}`}
   lang={lang}
   description={entry.data.description}
   type="article"
@@ -154,6 +160,24 @@ const citationSource = {
           }
         </time>
       </div>
+
+      <p class="text-morandi-text/60 mb-6 font-mono text-xs tracking-[0.08em]">
+        {articleCopy.authorPrefix}
+        <span itemprop="author" itemscope itemtype="https://schema.org/Person">
+          <a
+            href={`/${lang}/about`}
+            rel="author"
+            itemprop="url"
+            class="hover:text-track-intellipharma transition-colors"
+          >
+            <span itemprop="name">{articleCopy.authorName}</span>
+          </a>
+        </span>
+        <span aria-hidden="true"> · </span>
+        <a href={`/${lang}/blog`} class="hover:text-track-intellipharma transition-colors">
+          {articleCopy.publicationName}
+        </a>
+      </p>
 
       <h1
         class="text-morandi-text mb-8 font-serif text-4xl leading-tight md:text-6xl"
@@ -231,7 +255,6 @@ const citationSource = {
       preferredTranslationKeys={preferredRelatedTranslationKeys}
     />
 
-    <meta itemprop="author" content="Alex Su" />
     <meta itemprop="inLanguage" content={entry.data.lang} />
   </article>
 </Layout>

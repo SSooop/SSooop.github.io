@@ -14,6 +14,11 @@ export function getStaticPaths() {
 const lang: SupportedLocale = Astro.params.lang === 'zh' ? 'zh' : 'en';
 const t = useTranslations(lang);
 const posts = await getCollection('blog');
+const alternateLanguages = {
+  en: '/en/',
+  zh: '/zh/',
+  'x-default': '/',
+};
 
 // A single chronological feed for every project. Future P02/P03 publications can be
 // appended here with their own track metadata and will share the same date ordering.
@@ -133,7 +138,12 @@ const copy = {
 }[lang];
 ---
 
-<Layout title="Alex Su | Digital Space" lang={lang}>
+<Layout
+  title={t('meta.title')}
+  lang={lang}
+  description={t('meta.desc')}
+  alternateLanguages={alternateLanguages}
+>
   <main class="relative overflow-hidden">
     <section class="relative min-h-[100svh] px-5 pt-6 pb-20 md:px-10 md:pt-8 lg:px-14">
       <AtlasField class="absolute inset-0 h-full w-full opacity-70" variant="ocean" />

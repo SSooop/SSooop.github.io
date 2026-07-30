@@ -41,6 +41,11 @@ ${urls}
 export async function GET() {
   const entries = [
     {
+      url: absoluteUrl('/'),
+      changeFrequency: 'weekly' as const,
+      priority: 1.0,
+    },
+    {
       url: absoluteUrl('/en/'),
       changeFrequency: 'weekly' as const,
       priority: 1.0,
@@ -51,62 +56,62 @@ export async function GET() {
       priority: 1.0,
     },
     {
-      url: absoluteUrl('/en/about'),
+      url: absoluteUrl('/en/about/'),
       changeFrequency: 'monthly' as const,
       priority: 0.8,
     },
     {
-      url: absoluteUrl('/zh/about'),
+      url: absoluteUrl('/zh/about/'),
       changeFrequency: 'monthly' as const,
       priority: 0.8,
     },
     {
-      url: absoluteUrl('/en/projects'),
+      url: absoluteUrl('/en/projects/'),
       changeFrequency: 'monthly' as const,
       priority: 0.8,
     },
     {
-      url: absoluteUrl('/zh/projects'),
+      url: absoluteUrl('/zh/projects/'),
       changeFrequency: 'monthly' as const,
       priority: 0.8,
     },
     {
-      url: absoluteUrl('/en/economics-after-ai'),
+      url: absoluteUrl('/en/economics-after-ai/'),
       changeFrequency: 'monthly' as const,
       priority: 0.8,
     },
     {
-      url: absoluteUrl('/zh/economics-after-ai'),
+      url: absoluteUrl('/zh/economics-after-ai/'),
       changeFrequency: 'monthly' as const,
       priority: 0.8,
     },
     {
-      url: absoluteUrl('/en/gaia-project'),
+      url: absoluteUrl('/en/gaia-project/'),
       changeFrequency: 'monthly' as const,
       priority: 0.8,
     },
     {
-      url: absoluteUrl('/zh/gaia-project'),
+      url: absoluteUrl('/zh/gaia-project/'),
       changeFrequency: 'monthly' as const,
       priority: 0.8,
     },
     {
-      url: absoluteUrl('/en/social'),
+      url: absoluteUrl('/en/social/'),
       changeFrequency: 'monthly' as const,
       priority: 0.8,
     },
     {
-      url: absoluteUrl('/zh/social'),
+      url: absoluteUrl('/zh/social/'),
       changeFrequency: 'monthly' as const,
       priority: 0.8,
     },
     {
-      url: absoluteUrl('/en/blog'),
+      url: absoluteUrl('/en/blog/'),
       changeFrequency: 'daily' as const,
       priority: 0.9,
     },
     {
-      url: absoluteUrl('/zh/blog'),
+      url: absoluteUrl('/zh/blog/'),
       changeFrequency: 'daily' as const,
       priority: 0.9,
     },

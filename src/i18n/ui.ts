@@ -19,8 +19,9 @@ export const ui = {
     'nav.social': 'Social Media',
     'footer.share': 'Share',
     'footer.scan': 'Scan to share',
-    'meta.title': 'Alex Su | Digital Space',
-    'meta.desc': 'Alex Su - Personal Website',
+    'meta.title': 'IntelliPharma Insights | Alex Su on AI & Biopharma',
+    'meta.desc':
+      'Alex Su (苏晨鹏) writes IntelliPharma Insights, a bilingual research archive on AI, biopharma, scientific software, and long-term value.',
     'blog.transmissions': 'Transmissions',
     'blog.subtitle': 'Technology, philosophy of science, and the long-term logic of AI × biopharma',
     'blog.description':
@@ -49,8 +50,9 @@ export const ui = {
     'nav.social': '社交网络',
     'footer.share': '分享',
     'footer.scan': '扫码分享',
-    'meta.title': '苏晨鹏 | 数字空间',
-    'meta.desc': '苏晨鹏 - 个人网站',
+    'meta.title': '智药深瞳｜苏晨鹏的 AI 制药与生命科学研究',
+    'meta.desc':
+      '智药深瞳是苏晨鹏（Alex Su）的双语研究与写作网站，聚焦 AI、生物医药、科学软件与长期价值。',
     'blog.transmissions': '文章',
     'blog.subtitle': '以技术与科学哲学，理解 AI × 制药的长期价值逻辑',
     'blog.description':

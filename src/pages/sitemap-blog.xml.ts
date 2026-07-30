@@ -45,7 +45,7 @@ export async function GET() {
   const posts = await getCollection('blog');
 
   const entries = posts.map((post: BlogPost) => ({
-    url: absoluteUrl(`/${post.data.lang}/blog/${post.id}`),
+    url: absoluteUrl(post.data.canonical.url),
     lastModified: post.data.date,
     changeFrequency: 'monthly' as const,
     priority: 0.7,

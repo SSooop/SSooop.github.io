@@ -14,11 +14,13 @@ export async function GET() {
     )
     .join('\n');
 
-  const text = `# IntelliPharma Insights / 智药深瞳
+  const text = `# 智药深瞳 / IntelliPharma Insights
 
-> A bilingual archive of technology-driven essays examining AI and biopharma through philosophy of science, bioengineering, software engineering, economics, and management.
+> The canonical bilingual research and writing site of Alex Su (苏晨鹏), focused on AI, biopharma, scientific software, and long-term value.
 
-The canonical editions are hosted at ${absoluteUrl('/en/blog')} and ${absoluteUrl('/zh/blog')}.
+智药深瞳 is the preferred Chinese site name. IntelliPharma Insights is the English brand name. Alex Su and 苏晨鹏 identify the same author and founder.
+
+The canonical publication editions are hosted at ${absoluteUrl('/zh/blog/')} and ${absoluteUrl('/en/blog/')}.
 Each article exposes a canonical URL, reciprocal language alternates, BlogPosting structured data, citation metadata, and registered full-text distribution channels.
 
 Editorial boundary: the archive analyzes industry and long-term value logic rather than individual companies or securities. It does not provide specific technical solutions or investment advice.
@@ -27,8 +29,11 @@ Editorial boundary: the archive analyzes industry and long-term value logic rath
 
 - [RSS feed](${absoluteUrl('/rss.xml')})
 - [Sitemap index](${absoluteUrl('/sitemap-index.xml')})
-- [English archive](${absoluteUrl('/en/blog')})
-- [Chinese archive](${absoluteUrl('/zh/blog')})
+- [Chinese archive](${absoluteUrl('/zh/blog/')})
+- [English archive](${absoluteUrl('/en/blog/')})
+- [Alex Su — English profile](${absoluteUrl('/en/about/')})
+- [苏晨鹏 — 中文简介](${absoluteUrl('/zh/about/')})
+- [Verified public profiles](${absoluteUrl('/en/social/')})
 
 ## Articles
 

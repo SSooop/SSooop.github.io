@@ -8,14 +8,14 @@
 
 interface StructuredDataProps {
   data: Record<string, unknown>;
-  type: string;
+  type?: string;
 }
 
 const { data, type } = Astro.props as StructuredDataProps;
 
 const jsonData = {
   '@context': 'https://schema.org',
-  '@type': type,
+  ...(type ? { '@type': type } : {}),
   ...data,
 };
 ---

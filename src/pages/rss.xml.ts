@@ -1,5 +1,5 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
-import { SITE, absoluteUrl } from '../config/site';
+import { absoluteUrl } from '../config/site';
 
 type BlogPost = CollectionEntry<'blog'>;
 
@@ -28,17 +28,20 @@ export async function GET() {
       <pubDate>${post.data.date.toUTCString()}</pubDate>
       <description>${escapeXml(post.data.description)}</description>
       <language>${post.data.lang === 'zh' ? 'zh-CN' : 'en-US'}</language>
+      <dc:creator>Alex Su (苏晨鹏)</dc:creator>
     </item>`;
     })
     .join('\n');
 
   const rss = `<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0">
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>IntelliPharma Insights / 智药深瞳</title>
-    <link>${escapeXml(SITE.url)}</link>
-    <description>Technology-driven essays on AI, biopharma, and philosophy of science.</description>
-    <language>en-US</language>
+    <title>智药深瞳 / IntelliPharma Insights</title>
+    <link>${escapeXml(absoluteUrl('/'))}</link>
+    <atom:link href="${escapeXml(absoluteUrl('/rss.xml'))}" rel="self" type="application/rss+xml" />
+    <description>The bilingual research and writing archive of Alex Su (苏晨鹏) on AI, biopharma, scientific software, and long-term value.</description>
+    <language>zh-CN</language>
+    <dc:creator>Alex Su (苏晨鹏)</dc:creator>
     <lastBuildDate>${latestDate.toUTCString()}</lastBuildDate>
 ${items}
   </channel>

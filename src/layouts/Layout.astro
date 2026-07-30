@@ -7,7 +7,8 @@ import StructuredData from '../components/StructuredData.astro';
 import MetaTags from '../components/MetaTags.astro';
 
 import { useTranslations, type SupportedLocale } from '../i18n/ui';
-import { generateWebSiteSchema, generatePersonSchema } from '../utils/structuredData';
+import { generateSiteIdentityGraph, generateWebPageSchema } from '../utils/structuredData';
+import { absoluteUrl } from '../config/site';
 import type { CitationMeta } from '../utils/citation';
 
 interface Props {
@@ -20,6 +21,7 @@ interface Props {
   canonical?: string;
   alternateLanguages?: Record<string, string>;
   citation?: CitationMeta;
+  emitWebPageSchema?: boolean;
 }
 
 const {
@@ -32,15 +34,18 @@ const {
   canonical,
   alternateLanguages: alternateLanguagesOverride,
   citation,
+  emitWebPageSchema = true,
 } = Astro.props;
 
 const currentPath = Astro.url.pathname;
 const targetLang = lang === 'en' ? 'zh' : 'en';
 const isHome = currentPath === `/${lang}/` || currentPath === `/${lang}`;
+const isSiteRoot = currentPath === '/';
 
 const t = useTranslations(lang as SupportedLocale);
-const pageTitle = title === 'Alex Su | Digital Space' ? t('meta.title') : title; // Hack to allow specific titles but default to localized home title
+const pageTitle = title;
 const pageDescription = description || t('meta.desc');
+const canonicalPath = canonical || currentPath;
 
 // Generate alternate language links for hreflang
 const defaultAlternateLanguages = {
@@ -50,17 +55,26 @@ const defaultAlternateLanguages = {
 };
 const alternateLanguages = alternateLanguagesOverride || defaultAlternateLanguages;
 const targetPath = alternateLanguages[targetLang] || `/${targetLang}/`;
+const pageSchema =
+  type === 'article' || isSiteRoot || !emitWebPageSchema
+    ? undefined
+    : generateWebPageSchema({
+        title: pageTitle,
+        description: pageDescription,
+        url: canonicalPath,
+        lang,
+      });
 ---
 
 <!doctype html>
-<html lang={lang}>
+<html lang={lang === 'zh' ? 'zh-CN' : 'en'}>
   <head>
     <meta charset="UTF-8" />
     <link
       rel="alternate"
       type="application/rss+xml"
-      title="IntelliPharma Insights"
-      href="/rss.xml"
+      title="IntelliPharma Insights / 智药深瞳"
+      href={absoluteUrl('/rss.xml')}
     />
 
     <!-- Meta Tags -->
@@ -70,7 +84,7 @@ const targetPath = alternateLanguages[targetLang] || `/${targetLang}/`;
       image={image}
       type={type}
       keywords={keywords}
-      canonical={canonical || currentPath}
+      canonical={canonicalPath}
       alternateLanguages={alternateLanguages}
       lang={lang}
       citation={citation}
@@ -85,45 +99,45 @@ const targetPath = alternateLanguages[targetLang] || `/${targetLang}/`;
     />
 
     <!-- Structured Data -->
-    <StructuredData data={generateWebSiteSchema(lang)} type="WebSite" />
-    <StructuredData data={generatePersonSchema(lang)} type="Person" />
+    {isSiteRoot && <StructuredData data={generateSiteIdentityGraph()} />}
+    {pageSchema && <StructuredData data={pageSchema} />}
   </head>
   <body
     class="selection:bg-site-neutral-hover flex min-h-screen flex-col overflow-x-hidden selection:text-white"
   >
     <!-- Global Controls - Navigation -->
-    <nav
-      class="fixed top-5 right-5 z-50 flex items-center border border-[color:var(--atlas-line)] bg-[color:color-mix(in_srgb,var(--color-morandi-bg)_86%,transparent)] font-mono text-[10px] tracking-[0.14em] uppercase shadow-[0_12px_36px_rgb(35_38_36/0.08)] backdrop-blur-md md:top-7 md:right-7"
-      aria-label={lang === 'zh' ? '语言与导航' : 'Language and navigation'}
-    >
-      {
-        !isHome && (
+    {
+      !isSiteRoot && (
+        <nav
+          class="fixed top-5 right-5 z-50 flex items-center border border-[color:var(--atlas-line)] bg-[color:color-mix(in_srgb,var(--color-morandi-bg)_86%,transparent)] font-mono text-[10px] tracking-[0.14em] uppercase shadow-[0_12px_36px_rgb(35_38_36/0.08)] backdrop-blur-md md:top-7 md:right-7"
+          aria-label={lang === 'zh' ? '语言与导航' : 'Language and navigation'}
+        >
+          {!isHome && (
+            <a
+              href={`/${lang}/`}
+              class="text-atlas-ink hover:bg-atlas-ink border-r border-[color:var(--atlas-line)] px-3 py-2 transition-colors hover:text-white"
+              aria-label={lang === 'zh' ? '返回首页' : 'Go to home page'}
+            >
+              {lang === 'zh' ? '首页' : 'HOME'}
+            </a>
+          )}
           <a
-            href={`/${lang}/`}
-            class="text-atlas-ink hover:bg-atlas-ink border-r border-[color:var(--atlas-line)] px-3 py-2 transition-colors hover:text-white"
-            aria-label={lang === 'zh' ? '返回首页' : 'Go to home page'}
+            href={targetPath}
+            class="text-atlas-ink hover:bg-atlas-signal px-3 py-2 transition-colors hover:text-white"
+            aria-label={`Switch to ${lang === 'en' ? 'Chinese' : 'English'} language`}
           >
-            {lang === 'zh' ? '首页' : 'HOME'}
+            {lang === 'en' ? 'CN' : 'EN'}
           </a>
-        )
-      }
-      <a
-        href={targetPath}
-        class="text-atlas-ink hover:bg-atlas-signal px-3 py-2 transition-colors hover:text-white"
-        aria-label={`Switch to ${lang === 'en' ? 'Chinese' : 'English'} language`}
-      >
-        {lang === 'en' ? 'CN' : 'EN'}
-      </a>
-    </nav>
+        </nav>
+      )
+    }
 
     <!-- Main Content -->
-    <main class="flex-1">
+    <div class="flex-1">
       <slot />
-    </main>
+    </div>
 
     <!-- Footer -->
-    <footer>
-      <SocialFooter client:visible lang={lang} t={t} />
-    </footer>
+    <SocialFooter client:visible lang={lang} t={t} />
   </body>
 </html>

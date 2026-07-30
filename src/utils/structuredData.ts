@@ -11,29 +11,47 @@ import type {
   BlogPostingSchema,
   BreadcrumbListSchema,
   OrganizationSchema,
+  WebPageSchema,
+  EntityReference,
 } from '../types/schema';
 import { SITE, absoluteUrl } from '../config/site';
+
+export const ENTITY_IDS = {
+  website: absoluteUrl('/#website'),
+  person: absoluteUrl('/#alex-su'),
+  publisher: absoluteUrl('/#intellipharma-insights'),
+} as const;
+
+function entityReference(
+  type: 'WebSite' | 'Person' | 'Organization',
+  id: string,
+  name?: string,
+  url?: string
+): EntityReference {
+  return {
+    '@type': type,
+    '@id': id,
+    ...(name ? { name } : {}),
+    ...(url ? { url } : {}),
+  };
+}
 
 /**
  * Generate WebSite schema for the main site
  */
-export function generateWebSiteSchema(lang: 'en' | 'zh' = 'en'): WebSiteSchema {
-  const isEn = lang === 'en';
-
+export function generateWebSiteSchema(): WebSiteSchema {
   return {
+    '@id': ENTITY_IDS.website,
     '@type': 'WebSite',
-    name: isEn ? 'Alex Su - Digital Space' : 'Alex Su - 数字空间',
-    url: SITE.url,
-    description: isEn
-      ? 'Personal website of Alex Su - Exploring the intersection of technology, philosophy, and digital culture.'
-      : 'Alex Su 的个人网站 - 探索技术、哲学和数字文化的交叉领域。',
-    alternateName: isEn ? 'Alex Su' : 'Alex Su (苏)',
-    inLanguage: lang,
-    potentialAction: {
-      '@type': 'SearchAction',
-      target: absoluteUrl(`/${lang}/blog/?q={search_term_string}`),
-      'query-input': 'required name=search_term_string',
-    },
+    name: SITE.name,
+    alternateName: [...SITE.alternateNames],
+    url: absoluteUrl('/'),
+    description:
+      '智药深瞳（IntelliPharma Insights）是 Alex Su（苏晨鹏）的双语研究与写作网站，关注 AI、生物医药、科学软件与长期价值。',
+    author: { '@id': ENTITY_IDS.person },
+    creator: { '@id': ENTITY_IDS.person },
+    publisher: { '@id': ENTITY_IDS.publisher },
+    inLanguage: ['zh-CN', 'en'],
   };
 }
 
@@ -44,43 +62,168 @@ export function generatePersonSchema(lang: 'en' | 'zh' = 'en'): PersonSchema {
   const isEn = lang === 'en';
 
   return {
+    '@id': ENTITY_IDS.person,
     '@type': 'Person',
-    name: 'Alex Su',
-    url: absoluteUrl(`/${lang}/`),
-    jobTitle: isEn ? 'Software Engineer & Digital Creator' : '软件工程师与数字创作者',
+    name: SITE.authorName,
+    alternateName: SITE.authorNameZh,
+    url: absoluteUrl(`/${lang}/about/`),
+    jobTitle: isEn ? 'AI-native Scientist and Engineer' : 'AI 原生科学家与工程师',
     description: isEn
-      ? 'Alex Su is a software engineer exploring the intersection of technology, philosophy, and digital culture.'
-      : 'Alex Su 是一名软件工程师，探索技术、哲学和数字文化的交叉领域。',
-    email: 'mailto:contact@alexsu.dev',
+      ? 'Alex Su (苏晨鹏) builds AI-native research systems and writes about AI, biopharma, scientific software, and long-term value through IntelliPharma Insights.'
+      : '苏晨鹏（Alex Su）构建 AI 原生科研系统，并通过智药深瞳写作 AI、生物医药、科学软件与长期价值。',
     sameAs: [
-      'https://github.com/ssooop',
+      'https://github.com/SSooop',
       'https://x.com/ChenpengSu',
-      'https://linkedin.com/in/alexsu-dev',
+      'https://www.linkedin.com/in/alexsuhelixon/',
+      'https://scholar.google.com/citations?user=msA1c98AAAAJ&hl=en',
     ],
     knowsAbout: isEn
       ? [
-          'Software Engineering',
           'Artificial Intelligence',
-          'Digital Philosophy',
-          'Web Development',
-          'Pharmaceutical Sciences',
-          'Generative AI',
-          'Chinese Philosophy',
+          'AI Drug Discovery',
+          'Biopharmaceutical Industry',
+          'Scientific Software',
+          'Bioengineering',
+          'Philosophy of Science',
+          'Software Engineering',
+          'Economics',
         ]
-      : ['软件工程', '人工智能', '数字哲学', 'Web 开发', '制药科学', '生成式 AI', '中国哲学'],
-    inLanguage: lang,
+      : [
+          '人工智能',
+          'AI 药物发现',
+          '生物医药产业',
+          '科学软件',
+          '生物工程',
+          '科学哲学',
+          '软件工程',
+          '经济学',
+        ],
+    inLanguage: isEn ? 'en' : 'zh-CN',
   };
 }
 
 /**
  * Generate Organization schema for the site publisher
  */
-export function generateOrganizationSchema(): OrganizationSchema {
+export function generateOrganizationSchema(lang: 'en' | 'zh' = 'en'): OrganizationSchema {
+  const isEn = lang === 'en';
+
   return {
+    '@id': ENTITY_IDS.publisher,
     '@type': 'Organization',
-    name: 'Alex Su',
-    url: SITE.url,
-    description: 'Personal website and blog',
+    name: SITE.nameEn,
+    alternateName: [SITE.name, 'IntelliPharma Insight'],
+    url: absoluteUrl(`/${lang}/blog/`),
+    description: isEn
+      ? 'A bilingual publication by Alex Su about AI, biopharma, scientific software, and long-term value.'
+      : '苏晨鹏创办的双语研究与写作品牌，关注 AI、生物医药、科学软件与长期价值。',
+    founder: entityReference(
+      'Person',
+      ENTITY_IDS.person,
+      SITE.authorName,
+      absoluteUrl(`/${lang}/about/`)
+    ),
+    inLanguage: isEn ? 'en' : 'zh-CN',
+  };
+}
+
+export function generateSiteIdentityGraph(): Record<string, unknown> {
+  return {
+    '@graph': [
+      generateWebSiteSchema(),
+      generateOrganizationSchema('zh'),
+      generatePersonSchema('zh'),
+    ],
+  };
+}
+
+export function generateWebPageSchema(page: {
+  title: string;
+  description: string;
+  url: string;
+  lang: 'en' | 'zh';
+}): WebPageSchema {
+  const fullUrl = absoluteUrl(page.url);
+
+  return {
+    '@id': `${fullUrl}#webpage`,
+    '@type': 'WebPage',
+    name: page.title,
+    url: fullUrl,
+    description: page.description,
+    inLanguage: page.lang === 'zh' ? 'zh-CN' : 'en',
+    isPartOf: { '@id': ENTITY_IDS.website },
+    author: entityReference(
+      'Person',
+      ENTITY_IDS.person,
+      SITE.authorName,
+      absoluteUrl(`/${page.lang}/about/`)
+    ),
+    publisher: entityReference(
+      'Organization',
+      ENTITY_IDS.publisher,
+      SITE.nameEn,
+      absoluteUrl(`/${page.lang}/blog/`)
+    ),
+  };
+}
+
+export function generateProfilePageSchema(
+  lang: 'en' | 'zh',
+  title: string,
+  description: string
+): Record<string, unknown> {
+  const url = absoluteUrl(`/${lang}/about/`);
+
+  return {
+    '@id': `${url}#profile`,
+    '@type': 'ProfilePage',
+    name: title,
+    url,
+    description,
+    inLanguage: lang === 'zh' ? 'zh-CN' : 'en',
+    isPartOf: { '@id': ENTITY_IDS.website },
+    mainEntity: generatePersonSchema(lang),
+  };
+}
+
+export function generateBlogCollectionSchema(
+  lang: 'en' | 'zh',
+  posts: Array<{ title: string; url: string }>
+): Record<string, unknown> {
+  const isEn = lang === 'en';
+  const url = absoluteUrl(`/${lang}/blog/`);
+
+  return {
+    '@id': `${url}#collection`,
+    '@type': 'CollectionPage',
+    name: isEn ? SITE.nameEn : SITE.name,
+    alternateName: isEn ? SITE.name : SITE.nameEn,
+    url,
+    description: isEn
+      ? 'The English article archive of IntelliPharma Insights by Alex Su.'
+      : '苏晨鹏创办的智药深瞳中文文章档案。',
+    inLanguage: isEn ? 'en' : 'zh-CN',
+    isPartOf: { '@id': ENTITY_IDS.website },
+    about: [
+      entityReference(
+        'Organization',
+        ENTITY_IDS.publisher,
+        SITE.nameEn,
+        absoluteUrl(`/${lang}/blog/`)
+      ),
+      entityReference('Person', ENTITY_IDS.person, SITE.authorName, absoluteUrl(`/${lang}/about/`)),
+    ],
+    mainEntity: {
+      '@type': 'ItemList',
+      numberOfItems: posts.length,
+      itemListElement: posts.map((post, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        name: post.title,
+        url: absoluteUrl(post.url),
+      })),
+    },
   };
 }
 
@@ -104,22 +247,40 @@ export function generateBlogPostingSchema(post: {
   const fullUrl = absoluteUrl(post.url || `/${post.lang}/blog/${post.slug}`);
 
   return {
+    '@id': `${fullUrl}#article`,
     '@type': 'BlogPosting',
     headline: post.title,
     description: post.description,
     url: fullUrl,
-    image: post.image || absoluteUrl('/og-image.png'),
+    image: post.image,
     datePublished: post.date.toISOString(),
     dateModified: post.modifiedDate?.toISOString() || post.date.toISOString(),
-    inLanguage: post.lang,
-    author: generatePersonSchema(post.lang),
-    publisher: generateOrganizationSchema(),
+    inLanguage: post.lang === 'zh' ? 'zh-CN' : 'en',
+    author: entityReference(
+      'Person',
+      ENTITY_IDS.person,
+      SITE.authorName,
+      absoluteUrl(`/${post.lang}/about/`)
+    ),
+    publisher: entityReference(
+      'Organization',
+      ENTITY_IDS.publisher,
+      SITE.nameEn,
+      absoluteUrl(`/${post.lang}/blog/`)
+    ),
     mainEntityOfPage: {
       '@type': 'WebPage',
       '@id': fullUrl,
     },
-    genre: isEn ? 'Technology' : '科技',
-    articleSection: isEn ? 'Technology & Philosophy' : '科技与哲学',
+    isPartOf: { '@id': ENTITY_IDS.website },
+    copyrightHolder: entityReference(
+      'Person',
+      ENTITY_IDS.person,
+      SITE.authorName,
+      absoluteUrl(`/${post.lang}/about/`)
+    ),
+    genre: isEn ? 'AI and biopharma analysis' : 'AI 与生物医药分析',
+    articleSection: isEn ? SITE.nameEn : SITE.name,
     keywords: post.keywords,
     wordCount: post.wordCount,
     sameAs: post.sameAs?.length ? post.sameAs : undefined,

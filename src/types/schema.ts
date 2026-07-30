@@ -12,16 +12,24 @@ export interface BaseSchema {
   '@type': string;
 }
 
+export interface EntityReference {
+  '@id': string;
+  '@type'?: string;
+  name?: string;
+  url?: string;
+}
+
 // WebSite Schema
 export interface WebSiteSchema extends BaseSchema {
   '@type': 'WebSite';
   name: string;
   url: string;
   description?: string;
-  alternateName?: string;
-  author?: PersonSchema | OrganizationSchema;
-  publisher?: PersonSchema | OrganizationSchema;
-  inLanguage?: string;
+  alternateName?: string | string[];
+  author?: PersonSchema | OrganizationSchema | EntityReference;
+  creator?: PersonSchema | OrganizationSchema | EntityReference;
+  publisher?: PersonSchema | OrganizationSchema | EntityReference;
+  inLanguage?: string | string[];
   potentialAction?: SearchActionSchema;
 }
 
@@ -36,6 +44,7 @@ export interface SearchActionSchema {
 export interface PersonSchema extends BaseSchema {
   '@type': 'Person';
   name: string;
+  alternateName?: string | string[];
   url?: string;
   image?: string;
   sameAs?: string[]; // Social media links
@@ -47,18 +56,20 @@ export interface PersonSchema extends BaseSchema {
   birthPlace?: PlaceSchema;
   nationality?: string;
   knowsAbout?: string[]; // Topics of expertise
-  inLanguage?: string;
+  inLanguage?: string | string[];
 }
 
 // Organization Schema
 export interface OrganizationSchema extends BaseSchema {
   '@type': 'Organization';
   name: string;
+  alternateName?: string | string[];
   url?: string;
   logo?: string;
   description?: string;
   sameAs?: string[];
-  inLanguage?: string;
+  founder?: PersonSchema | EntityReference;
+  inLanguage?: string | string[];
 }
 
 // BlogPosting Schema (extends Article)
@@ -67,8 +78,8 @@ export interface BlogPostingSchema extends BaseSchema {
   headline: string;
   description?: string;
   image?: string | string[];
-  author: PersonSchema | OrganizationSchema;
-  publisher?: OrganizationSchema;
+  author: PersonSchema | OrganizationSchema | EntityReference;
+  publisher?: OrganizationSchema | EntityReference;
   datePublished: string; // ISO date format
   dateModified?: string; // ISO date format
   keywords?: string | string[];
@@ -79,6 +90,8 @@ export interface BlogPostingSchema extends BaseSchema {
   articleSection?: string;
   wordCount?: number;
   sameAs?: string[];
+  isPartOf?: WebSiteSchema | EntityReference;
+  copyrightHolder?: PersonSchema | OrganizationSchema | EntityReference;
 }
 
 // WebPage Schema
@@ -89,11 +102,11 @@ export interface WebPageSchema extends BaseSchema {
   description?: string;
   datePublished?: string;
   dateModified?: string;
-  author?: PersonSchema | OrganizationSchema;
-  publisher?: OrganizationSchema;
-  inLanguage?: string;
-  isPartOf?: WebSiteSchema;
-  about?: ThingSchema;
+  author?: PersonSchema | OrganizationSchema | EntityReference;
+  publisher?: OrganizationSchema | EntityReference;
+  inLanguage?: string | string[];
+  isPartOf?: WebSiteSchema | EntityReference;
+  about?: ThingSchema | EntityReference | Array<ThingSchema | EntityReference>;
 }
 
 // BreadcrumbList Schema

@@ -1,9 +1,15 @@
 ---
+import { Image } from 'astro:assets';
 import Layout from '../../layouts/Layout.astro';
 import StructuredData from '../../components/StructuredData.astro';
 import AtlasField from '../../components/AtlasField.astro';
 import { useTranslations, type SupportedLocale } from '../../i18n/ui';
 import { getPageBreadcrumbs } from '../../utils/structuredData';
+import martinHeideggerPortrait from '../../assets/economics-after-ai/martin-heidegger.png';
+import brianArthurPortrait from '../../assets/economics-after-ai/w-brian-arthur.png';
+import georgeGilderPortrait from '../../assets/economics-after-ai/george-gilder.png';
+import laoziPortrait from '../../assets/economics-after-ai/laozi.png';
+import karlMarxPortrait from '../../assets/economics-after-ai/karl-marx.png';
 
 export function getStaticPaths() {
   return [{ params: { lang: 'en' } }, { params: { lang: 'zh' } }];
@@ -17,6 +23,111 @@ const copy = {
     eyebrow: 'Online Book',
     title: 'Economics After AI',
     description: 'An online book outline on economics after AI.',
+    influences: {
+      profileLabels: {
+        life: 'Life',
+        works: 'Selected works',
+        thought: 'Ideas in brief',
+        source: 'Profile source',
+      },
+      people: [
+        {
+          number: '01 / 01',
+          column: 1,
+          row: 1,
+          name: 'W. Brian Arthur',
+          localName: '威廉·布莱恩·阿瑟',
+          years: '1946—',
+          discipline: 'Complexity economics',
+          portrait: brianArthurPortrait,
+          imageAlt: 'Black-and-gold illustrated portrait of economist W. Brian Arthur',
+          life: 'An economist and complexity scientist, formerly Morrison Professor at Stanford and now an External Professor at the Santa Fe Institute. In the late 1980s he led the Santa Fe group that helped establish complexity economics, and his work on increasing returns became foundational to the study of technology markets.',
+          works: [
+            'Increasing Returns and Path Dependence in the Economy',
+            'The Nature of Technology',
+            'Complexity and the Economy',
+          ],
+          thought:
+            'Arthur replaces the image of the economy as a machine at equilibrium with an adaptive system always in formation. Positive feedback can magnify small historical events into lock-in; technologies evolve by combining existing components; and each new technology helps reconstruct the economy that produced it. Economic structures are therefore emergent, path-dependent, and continually remade by innovation.',
+          sourceUrl: 'https://sites.santafe.edu/~wbarthur/',
+        },
+        {
+          number: '01 / 02',
+          column: 1,
+          row: 2,
+          name: 'Karl Marx',
+          localName: '卡尔·马克思',
+          years: '1818—1883',
+          discipline: 'Critique of political economy',
+          portrait: karlMarxPortrait,
+          imageAlt: 'Black-and-gold illustrated portrait of philosopher Karl Marx',
+          life: 'A German philosopher, political economist, and revolutionary writer. After periods in Paris and Brussels, he spent most of his later life in London, working closely with Friedrich Engels and conducting the research that culminated in the first volume of Capital in 1867.',
+          works: [
+            'Economic and Philosophic Manuscripts of 1844',
+            'The German Ideology',
+            'The Communist Manifesto',
+            'Capital, Volume I',
+          ],
+          thought:
+            'Marx analyzes human beings as productive and social, yet capable of becoming alienated from their work, its products, one another, and themselves. His materialist account of history relates social change to modes of production and class relations; his critique of capital examines commodities, surplus value, accumulation, and the way social relations appear as relations between things.',
+          sourceUrl: 'https://plato.stanford.edu/entries/marx/',
+        },
+        {
+          number: '02 / 01',
+          column: 2,
+          row: 1,
+          name: 'Laozi',
+          localName: '老子',
+          years: 'Trad. 6th c. BCE',
+          discipline: 'Daoist philosophy',
+          portrait: laoziPortrait,
+          imageAlt:
+            'Black-and-gold imagined illustration of the legendary ancient Chinese philosopher Laozi',
+          life: 'A foundational figure of the Daoist tradition, traditionally described as an older contemporary of Confucius and a keeper of archives at the Zhou court. Modern scholarship disputes whether Laozi was a single historical person and generally treats the Daodejing as a text formed through a longer process rather than the work of one securely identifiable author.',
+          works: ['Daodejing (Laozi)'],
+          thought:
+            'The Daodejing presents Dao as the inexhaustible way through which the ten thousand things arise, and de as its particular efficacy in beings. Naturalness and nonaction do not mean passivity, but action that avoids coercive overreach. Reversal, softness, emptiness, and knowing sufficiency describe a form of power that works by making room rather than by imposing control.',
+          sourceUrl: 'https://plato.stanford.edu/entries/laozi/',
+        },
+        {
+          number: '02 / 02',
+          column: 2,
+          row: 2,
+          name: 'Martin Heidegger',
+          localName: '马丁·海德格尔',
+          years: '1889—1976',
+          discipline: 'Philosophy of technology',
+          portrait: martinHeideggerPortrait,
+          imageAlt: 'Black-and-gold illustrated portrait of German philosopher Martin Heidegger',
+          life: 'A German philosopher who taught at Marburg and Freiburg and transformed twentieth-century continental philosophy with Being and Time (1927). His 1933 rectorship at Freiburg and membership in the Nazi Party remain inseparable from any responsible account of his legacy.',
+          works: [
+            'Being and Time',
+            'The Question Concerning Technology',
+            'Building Dwelling Thinking',
+          ],
+          thought:
+            'Heidegger asks about the conditions under which a world becomes meaningful to us. In his later work, technology is not merely a collection of tools: it is a mode of revealing that tends to order nature and people as resources on standby. His concept of enframing names this logic of ordering, while releasement points toward a less dominating relation to things.',
+          sourceUrl: 'https://plato.stanford.edu/entries/heidegger/',
+        },
+        {
+          number: '03 / 01',
+          column: 3,
+          row: 1,
+          name: 'George Gilder',
+          localName: '乔治·吉尔德',
+          years: '1939—',
+          discipline: 'Economics of knowledge',
+          portrait: georgeGilderPortrait,
+          imageAlt:
+            'Black-and-gold illustrated portrait of writer and technology thinker George Gilder',
+          life: 'An American writer, economist, investor, and co-founder of the Discovery Institute. From supply-side economics to semiconductors, telecommunications, and decentralized computing, his long career has focused on the relationship between entrepreneurship, information, and technological change.',
+          works: ['Wealth and Poverty', 'Microcosm', 'Knowledge and Power', 'Life After Google'],
+          thought:
+            'Gilder treats capitalism as a discovery system: wealth is knowledge, growth is learning, and entrepreneurial profit rewards surprising new information rather than the optimization of what is already known. His supply-side commitments and some social arguments are contested; his central epistemic claim is that creativity, experiment, and error—not static allocation alone—generate economic value.',
+          sourceUrl: 'https://georgegilder.org/books/',
+        },
+      ],
+    },
     parts: [
       {
         number: 'Part 1',
@@ -36,6 +147,101 @@ const copy = {
     eyebrow: '在线书',
     title: 'AI 时代的经济学',
     description: '一本关于 AI 时代经济学思考的在线书框架。',
+    influences: {
+      profileLabels: {
+        life: '生平',
+        works: '代表作',
+        thought: '思想概览',
+        source: '人物资料',
+      },
+      people: [
+        {
+          number: '01 / 01',
+          column: 1,
+          row: 1,
+          name: '威廉·布莱恩·阿瑟',
+          localName: 'W. Brian Arthur',
+          years: '1946—',
+          discipline: '复杂性经济学',
+          portrait: brianArthurPortrait,
+          imageAlt: '经济学家威廉·布莱恩·阿瑟的黑金线描插画肖像',
+          life: '经济学家与复杂性科学家，曾任斯坦福大学莫里森经济学与人口研究教授，现为圣塔菲研究所外聘教授。20 世纪 80 年代末，他领导圣塔菲团队开拓复杂性经济学；其“收益递增”研究也成为理解技术市场的重要基础。',
+          works: ['《收益递增与经济中的路径依赖》', '《技术的本质》', '《复杂经济学》'],
+          thought:
+            '阿瑟不把经济看成趋于均衡的机器，而把它视为始终生成中的适应性系统：正反馈会把微小的历史偶然放大为路径锁定；新技术通过既有技术的组合而产生；技术又不断重构孕育它的经济。经济结构因此具有涌现性、路径依赖性，并持续被创新重塑。',
+          sourceUrl: 'https://sites.santafe.edu/~wbarthur/',
+        },
+        {
+          number: '01 / 02',
+          column: 1,
+          row: 2,
+          name: '卡尔·马克思',
+          localName: 'Karl Marx',
+          years: '1818—1883',
+          discipline: '政治经济学批判',
+          portrait: karlMarxPortrait,
+          imageAlt: '哲学家卡尔·马克思的黑金线描插画肖像',
+          life: '德国哲学家、政治经济学家与革命思想家。辗转巴黎和布鲁塞尔后，他长期居住伦敦，与弗里德里希·恩格斯密切合作，并持续研究政治经济学，最终于 1867 年出版《资本论》第一卷。',
+          works: [
+            '《1844 年经济学哲学手稿》',
+            '《德意志意识形态》',
+            '《共产党宣言》',
+            '《资本论》第一卷',
+          ],
+          thought:
+            '马克思把人理解为从事生产活动并处于社会关系中的存在者，但人在特定劳动制度下可能与劳动、劳动产品、他人及自身相异化。他以生产方式和阶级关系解释历史变迁，并通过商品、剩余价值、资本积累与商品拜物教等概念，揭示资本主义社会关系如何表现为物与物之间的关系。',
+          sourceUrl: 'https://plato.stanford.edu/entries/marx/',
+        },
+        {
+          number: '02 / 01',
+          column: 2,
+          row: 1,
+          name: '老子',
+          localName: 'Laozi',
+          years: '传统上约公元前 6 世纪',
+          discipline: '道家哲学',
+          portrait: laoziPortrait,
+          imageAlt: '中国古代思想家老子的黑金线描想象性插画肖像',
+          life: '道家传统的核心人物。传统记载称其姓李名耳，是孔子的年长同时代人，曾任周王室守藏室之史；现代学界则对老子是否为单一历史人物存有争议，也多认为《道德经》经历了较长的汇编与成书过程，难以确认为一人一时之作。',
+          works: ['《道德经》（《老子》）'],
+          thought:
+            '《道德经》以“道”指向万物生成与运行的无尽根源，以“德”说明道在具体事物中的内在效力。“自然”与“无为”并非消极不动，而是不以强制和过度干预破坏事物自身进程。反转、柔弱、虚空与知足共同呈现了一种通过留出空间、而非施加强制来发挥作用的力量。',
+          sourceUrl: 'https://plato.stanford.edu/entries/laozi/',
+        },
+        {
+          number: '02 / 02',
+          column: 2,
+          row: 2,
+          name: '马丁·海德格尔',
+          localName: 'Martin Heidegger',
+          years: '1889—1976',
+          discipline: '技术哲学',
+          portrait: martinHeideggerPortrait,
+          imageAlt: '德国哲学家马丁·海德格尔的黑金线描插画肖像',
+          life: '德国哲学家，先后任教于马堡大学与弗赖堡大学，1927 年出版《存在与时间》，深刻改变了二十世纪欧陆哲学。他在 1933 年出任弗赖堡大学校长及加入纳粹党的经历，也构成评价其思想时无法回避的历史阴影。',
+          works: ['《存在与时间》', '《技术的追问》', '《筑·居·思》'],
+          thought:
+            '海德格尔追问的不是某件工具好不好用，而是世界如何向人显现。晚期的他把现代技术理解为一种“解蔽”方式：它倾向于把自然与人都编排为随时可调用的“持存物”。“座架”概括了这种编排逻辑，而“泰然任之”则指向一种不以支配为前提的事物关系。',
+          sourceUrl: 'https://plato.stanford.edu/entries/heidegger/',
+        },
+        {
+          number: '03 / 01',
+          column: 3,
+          row: 1,
+          name: '乔治·吉尔德',
+          localName: 'George Gilder',
+          years: '1939—',
+          discipline: '知识经济学',
+          portrait: georgeGilderPortrait,
+          imageAlt: '作家与技术思想家乔治·吉尔德的黑金线描插画肖像',
+          life: '美国作家、经济思想家与投资人，也是发现研究所的共同创办者。从供给侧经济学到半导体、通信网络与去中心化计算，他长期关注企业家精神、信息与技术变迁之间的关系。',
+          works: ['《财富与贫困》', '《微观世界》', '《知识与权力》', '《后谷歌时代》'],
+          thought:
+            '吉尔德把资本主义理解为一种发现系统：财富是知识，增长是学习，企业家利润回报的是出人意料的新信息，而非对已知世界的静态优化。他的供给侧立场及部分社会观点富有争议；其核心知识论主张是，创造、试错与惊奇，而不只是资源配置，才会生成新的经济价值。',
+          sourceUrl: 'https://georgegilder.org/books/',
+        },
+      ],
+    },
     parts: [
       {
         number: '第一部分',
@@ -112,6 +318,110 @@ const breadcrumbSchema = getPageBreadcrumbs(copy.title, lang);
           ))
         }
       </section>
+
+      <section
+        class="mt-24 md:mt-32"
+        aria-label={lang === 'zh' ? '思想人物' : 'Thinkers and their ideas'}
+      >
+        <div class="grid border-t border-[color:var(--atlas-line-strong)] lg:grid-cols-3">
+          {
+            copy.influences.people.map((person) => (
+              <article
+                class:list={[
+                  'thinker-card group flex flex-col border-b border-[color:var(--atlas-line)]',
+                  { 'lg:border-r': person.column < 3 },
+                ]}
+                style={`--thinker-column: ${person.column}; --thinker-row: ${person.row};`}
+              >
+                <div class="flex items-center justify-between gap-4 p-6 pb-5">
+                  <span class="text-track-economics font-mono text-xs tracking-[0.18em]">
+                    {person.number}
+                  </span>
+                  <span class="atlas-kicker">{person.discipline}</span>
+                </div>
+
+                <figure class="overflow-hidden border-y border-[color:var(--atlas-line)]">
+                  <Image
+                    src={person.portrait}
+                    alt={person.imageAlt}
+                    widths={[480, 720, 960]}
+                    sizes="(min-width: 1024px) 33vw, 100vw"
+                    loading="lazy"
+                    class="atlas-image-treatment aspect-square h-auto w-full object-cover"
+                  />
+                </figure>
+
+                <div class="flex flex-1 flex-col p-6 md:p-8">
+                  <div class="border-b border-[color:var(--atlas-line)] pb-7">
+                    <p class="atlas-credit text-track-economics">{person.years}</p>
+                    <h3 class="text-atlas-ink mt-3 font-serif text-4xl leading-tight">
+                      {person.name}
+                    </h3>
+                    <p class="mt-2 font-mono text-xs tracking-[0.08em] text-[color:color-mix(in_srgb,var(--color-atlas-ink)_56%,transparent)]">
+                      {person.localName}
+                    </p>
+                  </div>
+
+                  <div class="space-y-8 pt-8">
+                    <section>
+                      <h4 class="atlas-kicker text-track-economics">
+                        {copy.influences.profileLabels.life}
+                      </h4>
+                      <p class="mt-3 text-sm leading-7 text-[color:color-mix(in_srgb,var(--color-atlas-ink)_78%,transparent)]">
+                        {person.life}
+                      </p>
+                    </section>
+
+                    <section>
+                      <h4 class="atlas-kicker text-track-economics">
+                        {copy.influences.profileLabels.works}
+                      </h4>
+                      <ul class="mt-3 space-y-2">
+                        {person.works.map((work) => (
+                          <li class="text-atlas-ink flex gap-3 text-sm leading-6">
+                            <span class="text-track-economics" aria-hidden="true">
+                              /
+                            </span>
+                            <span>{work}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </section>
+
+                    <section>
+                      <h4 class="atlas-kicker text-track-economics">
+                        {copy.influences.profileLabels.thought}
+                      </h4>
+                      <p class="mt-3 text-sm leading-7 text-[color:color-mix(in_srgb,var(--color-atlas-ink)_78%,transparent)]">
+                        {person.thought}
+                      </p>
+                    </section>
+                  </div>
+
+                  <a
+                    href={person.sourceUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    class="text-track-economics mt-10 inline-flex w-fit items-center gap-2 border-b border-current pb-1 font-mono text-[0.625rem] tracking-[0.12em] uppercase transition-opacity hover:opacity-60"
+                  >
+                    {copy.influences.profileLabels.source}
+                    <span aria-hidden="true">↗</span>
+                  </a>
+                </div>
+              </article>
+            ))
+          }
+        </div>
+      </section>
     </div>
   </main>
 </Layout>
+
+<style>
+  @media (min-width: 64rem) {
+    .thinker-card {
+      grid-column: var(--thinker-column);
+      grid-row: var(--thinker-row);
+    }
+  }
+</style>

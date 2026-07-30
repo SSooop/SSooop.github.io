@@ -15,8 +15,11 @@ function normalizeBasePath(value: string | undefined): string {
 }
 
 export const SITE = {
-  name: 'SSooop.github.io',
-  alias: 'IntelliPharma Hub',
+  name: '智药深瞳',
+  nameEn: 'IntelliPharma Insights',
+  alternateNames: ['IntelliPharma Insights', 'IntelliPharma Insight', 'ssooop.github.io'],
+  authorName: 'Alex Su',
+  authorNameZh: '苏晨鹏',
   repositoryName: 'SSooop.github.io',
   url: trimTrailingSlash(import.meta.env.SITE_URL || DEFAULT_SITE_URL),
   base: normalizeBasePath(import.meta.env.PUBLIC_BASE || DEFAULT_BASE_PATH),
