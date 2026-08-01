@@ -1,0 +1,380 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface EconomistNode {
+  id: string;
+  track: number;
+  cardOffset: string;
+  trackCode: string;
+  trackLabel: string;
+  name: string;
+  localName: string;
+  years: string;
+  portrait: ImageMetadata;
+  idea: string;
+  works: string[];
+  href?: string;
+}
+
+interface Props {
+  person: EconomistNode;
+  plannedLabel: string;
+  readLabel: string;
+  worksLabel: string;
+}
+
+const { person, plannedLabel, readLabel, worksLabel } = Astro.props;
+const primaryWork = person.works[0];
+const additionalWorks = Math.max(0, person.works.length - 1);
+const worksSummary = `${worksLabel}: ${person.works.join(' · ')}`;
+---
+
+<article
+  id={person.id}
+  class:list={['economist-node', { 'economist-node--published': person.href }]}
+  style={`--track-column: ${person.track}; --card-offset: ${person.cardOffset};`}
+>
+  <div class="economist-node__stem" aria-hidden="true"></div>
+  {
+    person.href && (
+      <a class="economist-node__link" href={person.href}>
+        <span class="sr-only">
+          {readLabel}: {person.name}
+        </span>
+      </a>
+    )
+  }
+
+  <figure class="economist-node__portrait">
+    <Image
+      src={person.portrait}
+      alt=""
+      widths={[96, 160]}
+      sizes="(min-width: 1280px) 52px, 64px"
+      loading="lazy"
+      class="atlas-image-treatment h-full w-full object-cover"
+    />
+  </figure>
+
+  <div class="economist-node__body">
+    <div class="economist-node__eyebrow">
+      <p class="economist-node__track" title={person.trackLabel}>{person.trackCode}</p>
+      <p class="economist-node__years">{person.years}</p>
+    </div>
+
+    <h3>{person.name}</h3>
+    <p class="economist-node__local-name">{person.localName}</p>
+    <p class="economist-node__idea" title={person.idea}>{person.idea}</p>
+
+    <div class="economist-node__footer">
+      <p class="economist-node__work" aria-label={worksSummary} title={worksSummary}>
+        <span>{primaryWork}</span>
+        {additionalWorks > 0 && <b aria-hidden="true">+{additionalWorks}</b>}
+      </p>
+    </div>
+  </div>
+
+  <footer>
+    {
+      person.href ? (
+        <span class="economist-node__read" aria-hidden="true">
+          →
+        </span>
+      ) : (
+        <span class="economist-node__status" title={plannedLabel}>
+          <i aria-hidden="true" />
+          <span class="sr-only">{plannedLabel}</span>
+        </span>
+      )
+    }
+  </footer>
+</article>
+
+<style>
+  .economist-node {
+    position: relative;
+    grid-column: auto;
+    display: grid;
+    grid-template-columns: 2.75rem minmax(0, 1fr);
+    gap: 0.6rem;
+    align-items: start;
+    min-width: 0;
+    min-height: 8.75rem;
+    padding: 0.72rem;
+    border: 1px solid var(--economics-card-line, var(--atlas-line));
+    border-radius: var(--atlas-radius);
+    background: var(
+      --economics-card,
+      color-mix(in srgb, var(--color-morandi-paper) 92%, var(--color-track-economics) 8%)
+    );
+    box-shadow: 0 14px 34px rgb(82 70 45 / 0.09);
+    transition:
+      border-color 240ms ease,
+      box-shadow 240ms ease,
+      transform 240ms ease;
+  }
+
+  .economist-node::after {
+    position: absolute;
+    inset: 0 0 auto;
+    height: 2px;
+    content: '';
+    background: linear-gradient(
+      90deg,
+      var(--economics-rail-strong, var(--color-track-economics)),
+      transparent 78%
+    );
+  }
+
+  .economist-node--published:hover,
+  .economist-node:focus-within {
+    border-color: var(--economics-rail, var(--atlas-line-strong));
+    box-shadow: 0 18px 40px rgb(82 70 45 / 0.14);
+    transform: translateY(-2px);
+  }
+
+  .economist-node__link {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    border-radius: inherit;
+  }
+
+  .economist-node__link:focus-visible {
+    outline: 2px solid var(--economics-accent-ink, var(--color-atlas-ink));
+    outline-offset: 3px;
+  }
+
+  .economist-node__stem {
+    position: absolute;
+    top: -2rem;
+    left: 50%;
+    width: 1px;
+    height: 2rem;
+    background: var(--economics-rail-strong, var(--color-track-economics));
+  }
+
+  .economist-node__stem::before {
+    position: absolute;
+    top: -0.22rem;
+    left: 50%;
+    width: 0.45rem;
+    height: 0.45rem;
+    content: '';
+    border: 1px solid var(--economics-accent-ink, var(--color-track-economics));
+    border-radius: 999px;
+    background: var(--color-morandi-bg);
+    transform: translateX(-50%);
+  }
+
+  .economist-node__portrait {
+    width: 2.75rem;
+    height: 2.75rem;
+    overflow: hidden;
+    border: 1px solid var(--economics-rail-strong, var(--color-track-economics));
+    border-radius: 999px;
+    background: var(--economics-wash, var(--color-track-economics-surface));
+    box-shadow:
+      0 0 0 0.18rem color-mix(in srgb, var(--color-morandi-paper) 86%, transparent),
+      0 0 0 0.24rem color-mix(in srgb, var(--color-track-economics) 42%, transparent);
+  }
+
+  .economist-node__body {
+    min-width: 0;
+  }
+
+  .economist-node__eyebrow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 0.5rem;
+    align-items: baseline;
+  }
+
+  .economist-node__track,
+  .economist-node__years,
+  .economist-node__local-name,
+  .economist-node__work,
+  .economist-node__status,
+  .economist-node__read {
+    font-family: var(--font-mono);
+  }
+
+  .economist-node__track {
+    color: var(--economics-accent-ink, var(--color-atlas-ink));
+    font-size: 0.58rem;
+    line-height: 1.2;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .economist-node__years {
+    color: color-mix(in srgb, var(--color-atlas-ink) 76%, transparent);
+    font-size: 0.56rem;
+  }
+
+  h3 {
+    margin-top: 0.35rem;
+    padding-right: 0.65rem;
+    color: var(--color-atlas-ink);
+    font-family: var(--font-serif);
+    font-size: clamp(1.05rem, 1.25vw, 1.35rem);
+    line-height: 1.04;
+  }
+
+  .economist-node__local-name {
+    margin-top: 0.22rem;
+    overflow: hidden;
+    color: color-mix(in srgb, var(--color-atlas-ink) 74%, transparent);
+    font-size: 0.55rem;
+    letter-spacing: 0.04em;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .economist-node__idea {
+    display: -webkit-box;
+    margin-top: 0.6rem;
+    padding-top: 0.55rem;
+    overflow: hidden;
+    border-top: 1px solid var(--atlas-line-subtle);
+    color: color-mix(in srgb, var(--color-atlas-ink) 84%, transparent);
+    font-size: 0.7rem;
+    line-height: 1.5;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .economist-node__footer {
+    margin-top: 0.5rem;
+  }
+
+  .economist-node__work {
+    display: flex;
+    gap: 0.35rem;
+    align-items: baseline;
+    min-width: 0;
+    color: color-mix(in srgb, var(--color-atlas-ink) 78%, transparent);
+    font-size: 0.58rem;
+    line-height: 1.4;
+  }
+
+  .economist-node__work span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .economist-node__work b {
+    flex: none;
+    color: var(--economics-accent-ink, var(--color-atlas-ink));
+    font-weight: 500;
+  }
+
+  footer {
+    position: absolute;
+    top: 0.55rem;
+    right: 0.55rem;
+    z-index: 2;
+  }
+
+  .economist-node__status,
+  .economist-node__read {
+    display: grid;
+    width: 1.35rem;
+    height: 1.35rem;
+    place-items: center;
+    color: var(--economics-accent-ink, var(--color-atlas-ink));
+  }
+
+  .economist-node__status i {
+    width: 0.38rem;
+    height: 0.38rem;
+    border: 1px solid var(--economics-accent-ink, var(--color-track-economics));
+    border-radius: 999px;
+  }
+
+  .economist-node__read {
+    border-radius: 999px;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+  }
+
+  @media (min-width: 48rem) and (max-width: 89.999rem) {
+    .economist-node {
+      grid-column: auto;
+      min-height: 9.5rem;
+    }
+
+    .economist-node__stem {
+      display: none;
+    }
+  }
+
+  @media (max-width: 47.999rem) {
+    .economist-node {
+      grid-column: 1;
+      grid-template-columns: 3rem minmax(0, 1fr);
+      min-height: 7.5rem;
+      padding: 0.75rem;
+    }
+
+    .economist-node__stem {
+      top: 1.5rem;
+      left: -1.75rem;
+      width: 1.75rem;
+      height: 1px;
+    }
+
+    .economist-node__stem::before {
+      top: 50%;
+      left: 0;
+      transform: translate(-50%, -50%);
+    }
+
+    .economist-node__portrait {
+      width: 3rem;
+      height: 3rem;
+    }
+
+    h3 {
+      font-size: clamp(1.15rem, 4.6vw, 1.45rem);
+    }
+
+    .economist-node__idea {
+      margin-top: 0.4rem;
+      padding-top: 0.4rem;
+      font-size: 0.72rem;
+      -webkit-line-clamp: 1;
+    }
+
+    .economist-node__footer {
+      margin-top: 0.4rem;
+    }
+  }
+
+  @media (min-width: 90rem) {
+    .economist-node {
+      left: var(--card-offset);
+      grid-column: var(--track-column) / span 2;
+      width: calc(100% + 48px);
+    }
+
+    .economist-node__idea {
+      -webkit-line-clamp: 1;
+    }
+
+    .economist-node__stem {
+      top: -1rem;
+      left: calc((100% - 48px) / 2 - var(--card-offset));
+      height: 1rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .economist-node,
+    .atlas-image-treatment {
+      transition: none;
+    }
+  }
+</style>

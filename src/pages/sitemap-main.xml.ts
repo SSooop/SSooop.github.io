@@ -81,6 +81,16 @@ export async function GET() {
       priority: 0.8,
     },
     {
+      url: absoluteUrl('/en/economics-after-ai/a-map-of-economics/'),
+      changeFrequency: 'monthly' as const,
+      priority: 0.7,
+    },
+    {
+      url: absoluteUrl('/zh/economics-after-ai/a-map-of-economics/'),
+      changeFrequency: 'monthly' as const,
+      priority: 0.7,
+    },
+    {
       url: absoluteUrl('/en/gaia-project/'),
       changeFrequency: 'monthly' as const,
       priority: 0.8,

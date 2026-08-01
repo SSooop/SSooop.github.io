@@ -1,0 +1,1140 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import StructuredData from '../../../components/StructuredData.astro';
+import AtlasField from '../../../components/AtlasField.astro';
+import EconomistTreeNode from '../../../components/EconomistTreeNode.astro';
+import { useTranslations, type SupportedLocale } from '../../../i18n/ui';
+import { generateBreadcrumbSchema } from '../../../utils/structuredData';
+
+import aristotlePortrait from '../../../assets/economics-after-ai/map-of-economics/aristotle.png';
+import cantillonPortrait from '../../../assets/economics-after-ai/map-of-economics/richard-cantillon.png';
+import smithPortrait from '../../../assets/economics-after-ai/map-of-economics/adam-smith.png';
+import ricardoPortrait from '../../../assets/economics-after-ai/map-of-economics/david-ricardo.png';
+import marxPortrait from '../../../assets/economics-after-ai/karl-marx.png';
+import mengerPortrait from '../../../assets/economics-after-ai/map-of-economics/carl-menger.png';
+import marshallPortrait from '../../../assets/economics-after-ai/map-of-economics/alfred-marshall.png';
+import keynesPortrait from '../../../assets/economics-after-ai/map-of-economics/john-maynard-keynes.png';
+import hayekPortrait from '../../../assets/economics-after-ai/map-of-economics/friedrich-hayek.png';
+import samuelsonPortrait from '../../../assets/economics-after-ai/map-of-economics/paul-samuelson.png';
+import friedmanPortrait from '../../../assets/economics-after-ai/map-of-economics/milton-friedman.png';
+import coasePortrait from '../../../assets/economics-after-ai/map-of-economics/ronald-coase.png';
+import akerlofPortrait from '../../../assets/economics-after-ai/map-of-economics/george-akerlof.png';
+import kahnemanPortrait from '../../../assets/economics-after-ai/map-of-economics/daniel-kahneman.png';
+import ostromPortrait from '../../../assets/economics-after-ai/map-of-economics/elinor-ostrom.png';
+import romerPortrait from '../../../assets/economics-after-ai/map-of-economics/paul-romer.png';
+import arthurPortrait from '../../../assets/economics-after-ai/w-brian-arthur.png';
+
+export function getStaticPaths() {
+  return [{ params: { lang: 'en' } }, { params: { lang: 'zh' } }];
+}
+
+const lang: SupportedLocale = Astro.params.lang === 'zh' ? 'zh' : 'en';
+const t = useTranslations(lang);
+
+const tracks = {
+  capital: { column: 1, cardOffset: '0px', code: 'CAP' },
+  equilibrium: { column: 3, cardOffset: '-34px', code: 'EQ' },
+  macro: { column: 5, cardOffset: '0px', code: 'MAC' },
+  institution: { column: 7, cardOffset: '34px', code: 'INST' },
+  behavior: { column: 9, cardOffset: '68px', code: 'BEH' },
+  evolution: { column: 11, cardOffset: '-48px', code: 'EVO' },
+} as const;
+
+const peopleBase = [
+  { id: 'aristotle', era: 'prehistory', track: 'institution', portrait: aristotlePortrait },
+  { id: 'cantillon', era: 'formation', track: 'evolution', portrait: cantillonPortrait },
+  { id: 'adam-smith', era: 'formation', track: 'capital', portrait: smithPortrait },
+  { id: 'ricardo', era: 'classical', track: 'capital', portrait: ricardoPortrait },
+  { id: 'marx', era: 'classical', track: 'capital', portrait: marxPortrait },
+  { id: 'menger', era: 'marginal', track: 'equilibrium', portrait: mengerPortrait },
+  { id: 'marshall', era: 'marginal', track: 'equilibrium', portrait: marshallPortrait },
+  { id: 'keynes', era: 'macro', track: 'macro', portrait: keynesPortrait },
+  { id: 'hayek', era: 'macro', track: 'institution', portrait: hayekPortrait },
+  { id: 'coase', era: 'formal', track: 'institution', portrait: coasePortrait },
+  { id: 'samuelson', era: 'formal', track: 'equilibrium', portrait: samuelsonPortrait },
+  { id: 'friedman', era: 'formal', track: 'macro', portrait: friedmanPortrait },
+  { id: 'akerlof', era: 'plural', track: 'institution', portrait: akerlofPortrait },
+  { id: 'kahneman', era: 'plural', track: 'behavior', portrait: kahnemanPortrait },
+  { id: 'ostrom', era: 'plural', track: 'institution', portrait: ostromPortrait },
+  { id: 'arthur', era: 'contemporary', track: 'evolution', portrait: arthurPortrait },
+  { id: 'romer', era: 'contemporary', track: 'evolution', portrait: romerPortrait },
+] as const;
+
+const copy = {
+  en: {
+    eyebrow: 'Online book / Part 01',
+    title: 'A Map of Economics',
+    description:
+      'A chronological map of the questions, assumptions, and methods that formed modern economics.',
+    intro:
+      'Read from top to bottom. The vertical direction marks historical sequence; the parallel rails follow recurring intellectual cores. The map records conceptual continuities, not a claim that every later thinker was directly influenced by every earlier one.',
+    back: 'Back to Economics After AI',
+    mapLabel: 'Historical field / c. 4th century BCE—present',
+    legendTitle: 'Six recurring lines of inquiry',
+    bridgeLabel: 'Other turning points',
+    plannedLabel: 'Planned',
+    readLabel: 'Read',
+    worksLabel: 'Key work',
+    footerTitle: 'How this map will grow',
+    footer:
+      'Each portrait is a future chapter anchor. When a chapter is published in either language, its node will become an active link while retaining its place in the historical tree.',
+    tracks: {
+      capital: 'Production & distribution',
+      equilibrium: 'Choice & equilibrium',
+      macro: 'Money & macro',
+      institution: 'Institutions & information',
+      behavior: 'Behavior & evidence',
+      evolution: 'Innovation & evolution',
+    },
+    eras: [
+      {
+        id: 'prehistory',
+        number: '00',
+        period: 'c. 4th century BCE—16th century',
+        title: 'The ethical and political prehistory of economic thought',
+        note: 'Wealth, exchange, money, taxation, and household rule were still questions inside ethics, law, and statecraft.',
+        bridge: 'Xenophon · Scholastic just-price theory · Ibn Khaldun',
+      },
+      {
+        id: 'formation',
+        number: '01',
+        period: '1700—1776',
+        title: 'Political economy becomes a system',
+        note: 'The economy begins to appear as an interconnected circulation of production, income, prices, trade, and population.',
+        bridge: 'Hume · Quesnay and the Tableau économique · Turgot',
+      },
+      {
+        id: 'classical',
+        number: '02',
+        period: '1776—1867',
+        title: 'Classical political economy and its critique',
+        note: 'Production, value, class distribution, accumulation, trade, and the historical character of capitalism move to the center.',
+        bridge: 'Malthus · Say · J. S. Mill · List',
+      },
+      {
+        id: 'marginal',
+        number: '03',
+        period: '1871—1914',
+        title: 'The marginal revolution and neoclassical consolidation',
+        note: 'The unit of analysis shifts from social classes and surplus toward individual choice, scarcity, marginal trade-offs, and equilibrium.',
+        bridge: 'Jevons · Walras · Edgeworth · Pareto',
+      },
+      {
+        id: 'macro',
+        number: '04',
+        period: '1890—1945',
+        title: 'Money, cycles, knowledge, and the macroeconomic rupture',
+        note: 'Credit, expectations, uncertainty, unemployment, entrepreneurship, and coordination challenge the image of frictionless equilibrium.',
+        bridge: 'Wicksell · Fisher · Veblen · Schumpeter · Kalecki',
+      },
+      {
+        id: 'formal',
+        number: '05',
+        period: '1930—1970',
+        title: 'Formalization and the postwar synthesis',
+        note: 'Economics becomes more mathematical and econometric while general equilibrium, growth, strategic interaction, and policy are rebuilt in formal models.',
+        bridge: 'Frisch · Tinbergen · Haavelmo · Arrow–Debreu · Nash · Solow',
+      },
+      {
+        id: 'plural',
+        number: '06',
+        period: '1970—2000',
+        title: 'Information, behavior, contracts, and institutions',
+        note: 'Private information, cognitive limits, transaction costs, governance rules, and mechanism design move inside the analytical core.',
+        bridge: 'Spence · Stiglitz · Williamson · Thaler · Hurwicz–Maskin–Myerson',
+      },
+      {
+        id: 'contemporary',
+        number: '07',
+        period: '1980—present',
+        title: 'Endogenous growth, causal evidence, and complex adaptive economies',
+        note: 'Ideas, technology, institutions, heterogeneity, experiments, causal identification, path dependence, and emergence define an expanding contemporary toolkit.',
+        bridge: 'Lucas · Aghion–Howitt · Card–Angrist–Imbens · Duflo · Acemoglu',
+      },
+    ],
+    people: {
+      aristotle: {
+        name: 'Aristotle',
+        localName: '亚里士多德',
+        years: '384—322 BCE',
+        idea: 'Provision, exchange, and the boundary between use and accumulation.',
+        works: ['Politics, Book I'],
+      },
+      cantillon: {
+        name: 'Richard Cantillon',
+        localName: '理查德·坎蒂隆',
+        years: 'c. 1680s—1734',
+        idea: 'Entrepreneurship, uncertainty, and the circulation of an interdependent economy.',
+        works: ['Essay on the Nature of Trade in General'],
+      },
+      'adam-smith': {
+        name: 'Adam Smith',
+        localName: '亚当·斯密',
+        years: '1723—1790',
+        idea: 'Division of labor, exchange, institutions, and commercial society.',
+        works: ['The Theory of Moral Sentiments', 'The Wealth of Nations'],
+      },
+      ricardo: {
+        name: 'David Ricardo',
+        localName: '大卫·李嘉图',
+        years: '1772—1823',
+        idea: 'Distribution, rent, relative costs, and comparative advantage.',
+        works: ['On the Principles of Political Economy and Taxation'],
+      },
+      marx: {
+        name: 'Karl Marx',
+        localName: '卡尔·马克思',
+        years: '1818—1883',
+        idea: 'Surplus value, capital accumulation, class, and technological change.',
+        works: ['Capital, Volume I'],
+      },
+      menger: {
+        name: 'Carl Menger',
+        localName: '卡尔·门格尔',
+        years: '1840—1921',
+        idea: 'Subjective value, marginal utility, and spontaneously evolved institutions.',
+        works: ['Principles of Economics'],
+      },
+      marshall: {
+        name: 'Alfred Marshall',
+        localName: '阿尔弗雷德·马歇尔',
+        years: '1842—1924',
+        idea: 'Supply, demand, elasticity, time, and partial equilibrium.',
+        works: ['Principles of Economics'],
+      },
+      keynes: {
+        name: 'John Maynard Keynes',
+        localName: '约翰·梅纳德·凯恩斯',
+        years: '1883—1946',
+        idea: 'Uncertainty, effective demand, and persistent involuntary unemployment.',
+        works: ['The General Theory of Employment, Interest and Money'],
+      },
+      hayek: {
+        name: 'F. A. Hayek',
+        localName: '弗里德里希·哈耶克',
+        years: '1899—1992',
+        idea: 'Dispersed knowledge, price signals, and spontaneous order.',
+        works: ['The Use of Knowledge in Society', 'The Constitution of Liberty'],
+      },
+      samuelson: {
+        name: 'Paul Samuelson',
+        localName: '保罗·萨缪尔森',
+        years: '1915—2009',
+        idea: 'Optimization, comparative statics, and the neoclassical synthesis.',
+        works: ['Foundations of Economic Analysis'],
+      },
+      friedman: {
+        name: 'Milton Friedman',
+        localName: '米尔顿·弗里德曼',
+        years: '1912—2006',
+        idea: 'Money, permanent income, expectations, and policy rules.',
+        works: ['A Monetary History of the United States', 'The Role of Monetary Policy'],
+      },
+      coase: {
+        name: 'Ronald Coase',
+        localName: '罗纳德·科斯',
+        years: '1910—2013',
+        idea: 'Transaction costs, property rights, and institutional choice.',
+        works: ['The Nature of the Firm', 'The Problem of Social Cost'],
+      },
+      akerlof: {
+        name: 'George Akerlof',
+        localName: '乔治·阿克洛夫',
+        years: '1940—',
+        idea: 'Asymmetric information, adverse selection, and fragile markets.',
+        works: ['The Market for Lemons'],
+      },
+      kahneman: {
+        name: 'Daniel Kahneman',
+        localName: '丹尼尔·卡尼曼',
+        years: '1934—2024',
+        idea: 'Judgment, framing, reference points, and loss aversion.',
+        works: ['Prospect Theory', 'Thinking, Fast and Slow'],
+      },
+      ostrom: {
+        name: 'Elinor Ostrom',
+        localName: '埃莉诺·奥斯特罗姆',
+        years: '1933—2012',
+        idea: 'Commons, durable rules, and polycentric self-governance.',
+        works: ['Governing the Commons'],
+      },
+      romer: {
+        name: 'Paul Romer',
+        localName: '保罗·罗默',
+        years: '1955—',
+        idea: 'Ideas, knowledge spillovers, increasing returns, and endogenous growth.',
+        works: ['Endogenous Technological Change'],
+      },
+      arthur: {
+        name: 'W. Brian Arthur',
+        localName: '威廉·布莱恩·阿瑟',
+        years: '1946—',
+        idea: 'Increasing returns, path dependence, learning, and emergence.',
+        works: ['Increasing Returns and Path Dependence', 'Complexity and the Economy'],
+      },
+    },
+  },
+  zh: {
+    eyebrow: '在线书 / 第一部分',
+    title: '经济学概览',
+    description: '一张按照时间顺序梳理现代经济学问题、假设与方法演变的思想地图。',
+    intro:
+      '从上到下阅读：纵向表示思想出现的历史次序，彼此平行的轨道表示反复延伸的思想内核。这是一张概念谱系图，不意味着每一位后来的学者都直接受到了线上所有前人的影响。',
+    back: '返回《AI 时代的经济学》',
+    mapLabel: '历史视野 / 约公元前 4 世纪至今',
+    legendTitle: '六条反复延伸的问题线索',
+    bridgeLabel: '同期重要转折',
+    plannedLabel: '待写',
+    readLabel: '阅读',
+    worksLabel: '代表作',
+    footerTitle: '这张地图将如何生长',
+    footer:
+      '每一幅肖像都是一个未来章节的锚点。任一语言的章节完成并发布后，对应节点会变成可点击链接，同时继续保留在这棵历史树中的原有位置。',
+    tracks: {
+      capital: '生产与分配',
+      equilibrium: '选择与均衡',
+      macro: '货币与宏观',
+      institution: '制度与信息',
+      behavior: '行为与证据',
+      evolution: '创新与演化',
+    },
+    eras: [
+      {
+        id: 'prehistory',
+        number: '00',
+        period: '约公元前 4 世纪—16 世纪',
+        title: '经济思想的伦理学与政治学前史',
+        note: '财富、交换、货币、税收与家庭治理仍然属于伦理、法律和治国术中的问题。',
+        bridge: '色诺芬 · 经院哲学的公平价格 · 伊本·赫勒敦',
+      },
+      {
+        id: 'formation',
+        number: '01',
+        period: '1700—1776',
+        title: '政治经济学开始成为一个系统',
+        note: '经济逐渐被理解为生产、收入、价格、贸易和人口相互连接的循环整体。',
+        bridge: '休谟 · 魁奈《经济表》 · 杜尔哥',
+      },
+      {
+        id: 'classical',
+        number: '02',
+        period: '1776—1867',
+        title: '古典政治经济学及其批判',
+        note: '生产、价值、阶级分配、资本积累、贸易以及资本主义的历史性质成为中心问题。',
+        bridge: '马尔萨斯 · 萨伊 · 约翰·斯图亚特·穆勒 · 李斯特',
+      },
+      {
+        id: 'marginal',
+        number: '03',
+        period: '1871—1914',
+        title: '边际革命与新古典经济学的形成',
+        note: '分析单位从社会阶级和剩余转向个体选择、稀缺、边际权衡与市场均衡。',
+        bridge: '杰文斯 · 瓦尔拉斯 · 埃奇沃思 · 帕累托',
+      },
+      {
+        id: 'macro',
+        number: '04',
+        period: '1890—1945',
+        title: '货币、周期、知识与宏观断裂',
+        note: '信用、预期、不确定性、失业、企业家与协调问题共同挑战无摩擦均衡的图景。',
+        bridge: '维克塞尔 · 费雪 · 凡勃伦 · 熊彼特 · 卡莱茨基',
+      },
+      {
+        id: 'formal',
+        number: '05',
+        period: '1930—1970',
+        title: '形式化与战后综合',
+        note: '经济学加速数学化和计量化，一般均衡、增长、战略互动与宏观政策被重新写成形式模型。',
+        bridge: '弗里希 · 廷伯根 · 哈维尔莫 · 阿罗—德布鲁 · 纳什 · 索洛',
+      },
+      {
+        id: 'plural',
+        number: '06',
+        period: '1970—2000',
+        title: '信息、行为、契约与制度',
+        note: '私人信息、认知限制、交易成本、治理规则与机制设计进入经济分析的核心。',
+        bridge: '斯彭斯 · 斯蒂格利茨 · 威廉姆森 · 塞勒 · 赫维茨—马斯金—迈尔森',
+      },
+      {
+        id: 'contemporary',
+        number: '07',
+        period: '1980—至今',
+        title: '内生增长、因果证据与复杂适应经济',
+        note: '思想、技术、制度、异质性、实验、因果识别、路径依赖与涌现共同构成不断扩张的当代工具箱。',
+        bridge: '卢卡斯 · 阿吉翁—霍伊特 · 卡德—安格里斯—因本斯 · 迪弗洛 · 阿西莫格鲁',
+      },
+    ],
+    people: {
+      aristotle: {
+        name: '亚里士多德',
+        localName: 'Aristotle',
+        years: '约公元前 384—322',
+        idea: '家政管理、交换与无限积累的边界。',
+        works: ['《政治学》第一卷'],
+      },
+      cantillon: {
+        name: '理查德·坎蒂隆',
+        localName: 'Richard Cantillon',
+        years: '约 1680 年代—1734',
+        idea: '企业家、不确定性与相互依赖的经济循环。',
+        works: ['《商业性质概论》'],
+      },
+      'adam-smith': {
+        name: '亚当·斯密',
+        localName: 'Adam Smith',
+        years: '1723—1790',
+        idea: '分工、交换、制度与商业社会。',
+        works: ['《道德情操论》', '《国富论》'],
+      },
+      ricardo: {
+        name: '大卫·李嘉图',
+        localName: 'David Ricardo',
+        years: '1772—1823',
+        idea: '分配、地租、相对成本与比较优势。',
+        works: ['《政治经济学及赋税原理》'],
+      },
+      marx: {
+        name: '卡尔·马克思',
+        localName: 'Karl Marx',
+        years: '1818—1883',
+        idea: '剩余价值、资本积累、阶级关系与技术变迁。',
+        works: ['《资本论》第一卷'],
+      },
+      menger: {
+        name: '卡尔·门格尔',
+        localName: 'Carl Menger',
+        years: '1840—1921',
+        idea: '主观价值、边际效用与自发演化的制度。',
+        works: ['《国民经济学原理》'],
+      },
+      marshall: {
+        name: '阿尔弗雷德·马歇尔',
+        localName: 'Alfred Marshall',
+        years: '1842—1924',
+        idea: '供给、需求、弹性、时间与局部均衡。',
+        works: ['《经济学原理》'],
+      },
+      keynes: {
+        name: '约翰·梅纳德·凯恩斯',
+        localName: 'John Maynard Keynes',
+        years: '1883—1946',
+        idea: '不确定性、有效需求与持续的非自愿失业。',
+        works: ['《就业、利息和货币通论》'],
+      },
+      hayek: {
+        name: '弗里德里希·哈耶克',
+        localName: 'F. A. Hayek',
+        years: '1899—1992',
+        idea: '分散知识、价格信号与自发秩序。',
+        works: ['《知识在社会中的运用》', '《自由秩序原理》'],
+      },
+      samuelson: {
+        name: '保罗·萨缪尔森',
+        localName: 'Paul Samuelson',
+        years: '1915—2009',
+        idea: '最优化、比较静态与新古典综合。',
+        works: ['《经济分析基础》'],
+      },
+      friedman: {
+        name: '米尔顿·弗里德曼',
+        localName: 'Milton Friedman',
+        years: '1912—2006',
+        idea: '货币、永久收入、预期与政策规则。',
+        works: ['《美国货币史》', '《货币政策的作用》'],
+      },
+      coase: {
+        name: '罗纳德·科斯',
+        localName: 'Ronald Coase',
+        years: '1910—2013',
+        idea: '交易成本、产权与制度选择。',
+        works: ['《企业的性质》', '《社会成本问题》'],
+      },
+      akerlof: {
+        name: '乔治·阿克洛夫',
+        localName: 'George Akerlof',
+        years: '1940—',
+        idea: '信息不对称、逆向选择与脆弱的市场。',
+        works: ['《柠檬市场》'],
+      },
+      kahneman: {
+        name: '丹尼尔·卡尼曼',
+        localName: 'Daniel Kahneman',
+        years: '1934—2024',
+        idea: '判断、框架、参照点与损失厌恶。',
+        works: ['《前景理论》', '《思考，快与慢》'],
+      },
+      ostrom: {
+        name: '埃莉诺·奥斯特罗姆',
+        localName: 'Elinor Ostrom',
+        years: '1933—2012',
+        idea: '共有资源、持久规则与多中心自治。',
+        works: ['《公共事务的治理之道》'],
+      },
+      romer: {
+        name: '保罗·罗默',
+        localName: 'Paul Romer',
+        years: '1955—',
+        idea: '思想、知识溢出、收益递增与内生增长。',
+        works: ['《内生技术变迁》'],
+      },
+      arthur: {
+        name: '威廉·布莱恩·阿瑟',
+        localName: 'W. Brian Arthur',
+        years: '1946—',
+        idea: '收益递增、路径依赖、学习与涌现。',
+        works: ['《收益递增与路径依赖》', '《复杂经济学》'],
+      },
+    },
+  },
+}[lang];
+
+const people = peopleBase.map((person) => {
+  const track = tracks[person.track];
+  const translated = copy.people[person.id];
+  return {
+    ...person,
+    ...translated,
+    track: track.column,
+    cardOffset: track.cardOffset,
+    trackCode: track.code,
+    trackLabel: copy.tracks[person.track],
+  };
+});
+
+const breadcrumbSchema = generateBreadcrumbSchema(
+  [
+    { name: lang === 'zh' ? '首页' : 'Home', path: '/' },
+    {
+      name: lang === 'zh' ? 'AI 时代的经济学' : 'Economics After AI',
+      path: '/economics-after-ai',
+    },
+    { name: copy.title },
+  ],
+  lang
+);
+---
+
+<Layout title={`${copy.title} | ${t('home.name')}`} lang={lang} description={copy.description}>
+  <StructuredData data={breadcrumbSchema} />
+
+  <main
+    class="economics-map-page relative min-h-screen overflow-hidden px-5 py-20 md:px-10 md:py-24 lg:px-14"
+  >
+    <AtlasField class="absolute inset-0 h-full w-full opacity-[0.64]" variant="circulation" />
+
+    <div class="relative z-10 mx-auto max-w-[1680px]">
+      <a href={`/${lang}/economics-after-ai`} class="atlas-back-link">
+        <span aria-hidden="true">←</span>
+        {copy.back}
+      </a>
+
+      <header class="map-header mt-8 grid gap-8 border-b pb-10 xl:grid-cols-12 xl:items-end">
+        <div class="xl:col-span-4">
+          <p class="atlas-kicker economics-kicker">P02 / {copy.eyebrow}</p>
+          <p class="atlas-credit mt-6 max-w-sm">{copy.mapLabel}</p>
+        </div>
+        <div class="xl:col-span-8">
+          <h1 class="text-atlas-ink font-serif text-6xl leading-[0.9] md:text-7xl xl:text-8xl">
+            {copy.title}
+          </h1>
+          <p class="map-intro mt-6 max-w-4xl">{copy.intro}</p>
+        </div>
+      </header>
+
+      <section class="legend" aria-labelledby="map-legend-title">
+        <div>
+          <p id="map-legend-title" class="atlas-kicker">{copy.legendTitle}</p>
+        </div>
+        <ol>
+          {
+            Object.entries(tracks).map(([key, track]) => (
+              <li>
+                <span>{track.code}</span>
+                <b>{copy.tracks[key]}</b>
+              </li>
+            ))
+          }
+        </ol>
+      </section>
+
+      <section class="history-tree" aria-label={copy.title}>
+        <div class="tree-rails" aria-hidden="true">
+          {Object.values(tracks).map((track) => <i style={`--rail-column: ${track.column};`} />)}
+        </div>
+
+        <ol class="tree-eras">
+          {
+            copy.eras.map((era) => {
+              const eraPeople = people.filter((person) => person.era === era.id);
+              const activeTrackCodes = new Set(eraPeople.map((person) => person.trackCode));
+              return (
+                <li class="era-block">
+                  <header class="era-header">
+                    <div>
+                      <span>{era.number}</span>
+                      <span class="era-period">{era.period}</span>
+                    </div>
+                    <div>
+                      <h2>{era.title}</h2>
+                      <p>{era.note}</p>
+                    </div>
+                    <div class="era-bridge">
+                      <div class="era-track-index" aria-hidden="true">
+                        {Object.values(tracks).map((track) => (
+                          <i class:list={{ active: activeTrackCodes.has(track.code) }}>
+                            <b>{track.code}</b>
+                          </i>
+                        ))}
+                      </div>
+                      <div class="era-bridge-copy">
+                        <span>{copy.bridgeLabel}</span>
+                        <p title={era.bridge}>{era.bridge}</p>
+                      </div>
+                    </div>
+                  </header>
+
+                  <div class="era-grid">
+                    {eraPeople.map((person) => (
+                      <EconomistTreeNode
+                        person={person}
+                        plannedLabel={copy.plannedLabel}
+                        readLabel={copy.readLabel}
+                        worksLabel={copy.worksLabel}
+                      />
+                    ))}
+                  </div>
+                </li>
+              );
+            })
+          }
+        </ol>
+      </section>
+
+      <footer class="map-footer">
+        <p class="atlas-kicker economics-kicker">P02 / 01 / OPEN INDEX</p>
+        <h2>{copy.footerTitle}</h2>
+        <p>{copy.footer}</p>
+      </footer>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .economics-map-page {
+    --economics-accent: var(--color-track-economics);
+    --economics-accent-ink: #76623f;
+    --economics-wash: color-mix(in srgb, var(--economics-accent) 10%, transparent);
+    --economics-card: color-mix(
+      in srgb,
+      var(--color-morandi-paper) 94%,
+      var(--economics-accent) 6%
+    );
+    --economics-card-line: color-mix(in srgb, var(--economics-accent-ink) 38%, transparent);
+    --economics-rail: color-mix(in srgb, var(--economics-accent-ink) 60%, transparent);
+    --economics-rail-strong: color-mix(in srgb, var(--economics-accent-ink) 80%, transparent);
+    background:
+      radial-gradient(
+        circle at 82% 4%,
+        color-mix(in srgb, var(--economics-accent) 19%, transparent),
+        transparent 29rem
+      ),
+      linear-gradient(
+        180deg,
+        color-mix(in srgb, var(--color-morandi-bg) 91%, var(--economics-accent) 9%) 0,
+        var(--color-morandi-bg) 34rem,
+        color-mix(in srgb, var(--color-morandi-bg) 96%, var(--economics-accent) 4%) 100%
+      );
+  }
+
+  .economics-kicker {
+    color: var(--economics-accent-ink);
+  }
+
+  .atlas-back-link {
+    display: inline-flex;
+    gap: 0.65rem;
+    align-items: center;
+    min-height: 2.75rem;
+    color: var(--economics-accent-ink);
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .map-header {
+    position: relative;
+    border-color: var(--economics-card-line);
+  }
+
+  .map-header::after {
+    position: absolute;
+    right: 0;
+    bottom: -1px;
+    left: 0;
+    height: 2px;
+    content: '';
+    background: linear-gradient(
+      90deg,
+      var(--economics-rail-strong),
+      var(--economics-accent) 38%,
+      transparent 72%
+    );
+  }
+
+  .map-header h1 {
+    color: color-mix(in srgb, var(--color-atlas-ink) 90%, var(--economics-accent-ink) 10%);
+  }
+
+  .map-intro {
+    color: color-mix(in srgb, var(--color-atlas-ink) 75%, transparent);
+    font-size: clamp(1rem, 1.35vw, 1.25rem);
+    line-height: 1.85;
+  }
+
+  .legend {
+    display: grid;
+    gap: 1.5rem;
+    margin-top: 1px;
+    padding: 1.15rem;
+    border-bottom: 1px solid var(--economics-card-line);
+    background: linear-gradient(90deg, var(--economics-wash), transparent 76%);
+  }
+
+  .legend ol {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.65rem;
+  }
+
+  .legend li {
+    display: flex;
+    gap: 0.6rem;
+    align-items: center;
+    min-width: 0;
+    padding: 0.35rem;
+    border-left: 1px solid var(--economics-card-line);
+  }
+
+  .legend li span,
+  .legend li b {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .legend li span {
+    display: grid;
+    flex: none;
+    place-items: center;
+    min-width: 2.35rem;
+    min-height: 1.45rem;
+    color: var(--color-morandi-paper);
+    background: var(--economics-accent-ink);
+  }
+
+  .legend li b {
+    color: color-mix(in srgb, var(--color-atlas-ink) 62%, transparent);
+    font-weight: 400;
+  }
+
+  .history-tree {
+    position: relative;
+    margin-top: 2.5rem;
+    background: linear-gradient(180deg, var(--economics-wash), transparent 22rem);
+  }
+
+  .tree-rails {
+    display: none;
+  }
+
+  .tree-eras {
+    position: relative;
+  }
+
+  .era-block {
+    position: relative;
+    padding: 0 0 2.75rem 1.75rem;
+  }
+
+  .era-block::before {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 1px;
+    content: '';
+    background: var(--economics-rail);
+  }
+
+  .era-block::after {
+    position: absolute;
+    top: 0.3rem;
+    left: 0;
+    width: 0.7rem;
+    height: 0.7rem;
+    content: '';
+    border: 1px solid var(--economics-accent-ink);
+    border-radius: 999px;
+    background: var(--color-morandi-bg);
+    transform: translateX(-50%);
+  }
+
+  .era-header {
+    position: relative;
+    display: grid;
+    gap: 0.9rem;
+    padding: 1rem;
+    overflow: hidden;
+    border: 1px solid var(--economics-card-line);
+    border-left: 3px solid var(--economics-accent-ink);
+    background: linear-gradient(
+      120deg,
+      color-mix(in srgb, var(--color-morandi-paper) 86%, var(--economics-accent) 14%),
+      color-mix(in srgb, var(--color-morandi-bg) 96%, transparent)
+    );
+  }
+
+  .era-header > div:first-child {
+    display: flex;
+    gap: 1rem;
+    align-items: baseline;
+  }
+
+  .era-header > div:first-child span {
+    color: color-mix(in srgb, var(--economics-accent) 44%, transparent);
+    font-family: var(--font-serif);
+    font-size: 3rem;
+    line-height: 0.8;
+  }
+
+  .era-period,
+  .era-bridge span {
+    color: var(--economics-accent-ink);
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .era-header h2,
+  .map-footer h2 {
+    color: var(--color-atlas-ink);
+    font-family: var(--font-serif);
+  }
+
+  .era-header h2 {
+    font-size: clamp(1.65rem, 2.6vw, 2.7rem);
+    line-height: 1.03;
+  }
+
+  .era-header > div:nth-child(2) p,
+  .era-bridge p,
+  .map-footer > p:last-child {
+    color: color-mix(in srgb, var(--color-atlas-ink) 72%, transparent);
+    line-height: 1.75;
+  }
+
+  .era-header > div:nth-child(2) p {
+    max-width: 48rem;
+    margin-top: 0.55rem;
+    font-size: 0.78rem;
+  }
+
+  .era-bridge {
+    display: grid;
+    gap: 0.6rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--economics-card-line);
+  }
+
+  .era-bridge p {
+    display: -webkit-box;
+    margin-top: 0.3rem;
+    overflow: hidden;
+    font-size: 0.68rem;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .era-track-index {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 0.25rem;
+  }
+
+  .era-track-index i {
+    display: grid;
+    place-items: center;
+    min-height: 1.15rem;
+    border-top: 2px solid color-mix(in srgb, var(--economics-accent) 24%, transparent);
+    color: color-mix(in srgb, var(--color-atlas-ink) 42%, transparent);
+    font-family: var(--font-mono);
+    font-size: 0.45rem;
+    font-style: normal;
+    letter-spacing: 0.04em;
+    background: color-mix(in srgb, var(--color-morandi-paper) 44%, transparent);
+  }
+
+  .era-track-index i.active {
+    border-color: var(--economics-accent-ink);
+    color: var(--economics-accent-ink);
+    background: color-mix(in srgb, var(--economics-accent) 18%, transparent);
+  }
+
+  .era-track-index b {
+    font-weight: 500;
+  }
+
+  .era-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.7rem;
+    padding-top: 1rem;
+  }
+
+  .map-footer {
+    display: grid;
+    gap: 0.75rem;
+    padding: 2rem 1rem 1rem;
+    border-top: 2px solid var(--economics-accent-ink);
+    background: linear-gradient(90deg, var(--economics-wash), transparent 78%);
+  }
+
+  .map-footer h2 {
+    font-size: clamp(2rem, 3.2vw, 3.5rem);
+    line-height: 1;
+  }
+
+  .map-footer > p:last-child {
+    max-width: 48rem;
+    font-size: 0.95rem;
+  }
+
+  @media (min-width: 48rem) {
+    .legend {
+      grid-template-columns: 14rem minmax(0, 1fr);
+      align-items: start;
+    }
+
+    .legend ol {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .era-header {
+      grid-template-columns: 11rem minmax(0, 1fr);
+    }
+
+    .era-bridge {
+      grid-column: 2;
+    }
+
+    .era-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .map-footer {
+      grid-template-columns: 12rem minmax(0, 1fr);
+    }
+
+    .map-footer > p:last-child {
+      grid-column: 2;
+    }
+  }
+
+  @media (min-width: 64rem) and (max-width: 89.999rem) {
+    .era-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 90rem) {
+    .legend ol {
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+    }
+
+    .history-tree {
+      margin-top: 3rem;
+    }
+
+    .tree-rails {
+      position: absolute;
+      inset: 1.25rem 0 2.5rem calc(13rem + 1.25rem);
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: 1rem;
+      pointer-events: none;
+    }
+
+    .tree-rails i {
+      position: relative;
+      grid-column: var(--rail-column) / span 2;
+    }
+
+    .tree-rails i::after {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 1px;
+      content: '';
+      background: var(--economics-rail);
+      box-shadow: 0 0 0 1px var(--economics-wash);
+    }
+
+    .era-block {
+      display: grid;
+      grid-template-columns: 13rem minmax(0, 1fr);
+      gap: 1.25rem;
+      padding: 1.25rem 0 1.5rem;
+      border-top: 1px solid var(--economics-card-line);
+    }
+
+    .era-block::before,
+    .era-block::after {
+      display: none;
+    }
+
+    .era-header {
+      position: relative;
+      z-index: 2;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0.85rem;
+      align-items: start;
+      align-self: start;
+      padding: 1rem;
+      border-color: var(--economics-card-line);
+      border-left-color: var(--economics-accent-ink);
+      background: color-mix(in srgb, var(--color-morandi-paper) 88%, var(--economics-accent) 12%);
+      backdrop-filter: blur(8px);
+    }
+
+    .era-block:nth-child(even) .era-header {
+      background: color-mix(in srgb, var(--color-morandi-bg) 90%, var(--economics-accent) 10%);
+    }
+
+    .era-header > div:first-child {
+      display: grid;
+      gap: 0.55rem;
+    }
+
+    .era-header > div:first-child span {
+      font-size: 2.5rem;
+    }
+
+    .era-header h2 {
+      font-size: 1.35rem;
+    }
+
+    .era-header > div:nth-child(2) p {
+      display: none;
+    }
+
+    .era-bridge {
+      grid-column: auto;
+      gap: 0.45rem;
+      padding-top: 0.6rem;
+    }
+
+    .era-bridge-copy > span {
+      display: none;
+    }
+
+    .era-bridge p {
+      display: block;
+      margin-top: 0;
+      overflow: hidden;
+      line-height: 1.55;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .era-grid {
+      position: relative;
+      z-index: 2;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: 1rem;
+      align-items: start;
+      align-self: start;
+      padding-top: 0;
+    }
+  }
+
+  @media (max-width: 47.999rem) {
+    .map-intro {
+      font-size: 0.95rem;
+      line-height: 1.65;
+    }
+
+    .legend {
+      gap: 1rem;
+      padding: 0.9rem;
+    }
+
+    .legend ol {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.55rem;
+    }
+
+    .legend li {
+      display: grid;
+      gap: 0.4rem;
+      align-content: start;
+      align-items: start;
+      padding: 0 0 0 0.45rem;
+    }
+
+    .legend li span {
+      min-width: 2.1rem;
+      min-height: 1.3rem;
+      justify-self: start;
+    }
+
+    .legend li b {
+      font-size: 0.52rem;
+      line-height: 1.35;
+    }
+
+    .history-tree {
+      margin-top: 2rem;
+    }
+
+    .era-block {
+      padding-bottom: 1.5rem;
+    }
+
+    .era-header {
+      gap: 0.7rem;
+      padding: 0.85rem;
+    }
+
+    .era-header h2 {
+      font-size: 1.55rem;
+    }
+
+    .era-header > div:nth-child(2) p {
+      display: none;
+    }
+
+    .era-bridge {
+      gap: 0.4rem;
+      padding-top: 0.55rem;
+    }
+
+    .era-bridge p {
+      display: block;
+      margin-top: 0;
+      overflow: hidden;
+      line-height: 1.5;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .atlas-back-link {
+      scroll-behavior: auto;
+    }
+  }
+</style>

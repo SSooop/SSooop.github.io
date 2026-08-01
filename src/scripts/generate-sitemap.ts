@@ -116,6 +116,16 @@ export async function generateMainSitemap(): Promise<string> {
       priority: 0.8,
     },
     {
+      url: absoluteUrl('/en/economics-after-ai/a-map-of-economics'),
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    },
+    {
+      url: absoluteUrl('/zh/economics-after-ai/a-map-of-economics'),
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    },
+    {
       url: absoluteUrl('/en/gaia-project'),
       changeFrequency: 'monthly',
       priority: 0.8,

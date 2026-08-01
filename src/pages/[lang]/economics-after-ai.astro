@@ -132,14 +132,20 @@ const copy = {
       {
         number: 'Part 1',
         title: 'A Map of Economics',
+        href: '/en/economics-after-ai/a-map-of-economics',
+        action: 'Open the historical map',
       },
       {
         number: 'Part 2',
         title: 'The Philosophy of Economics',
+        href: undefined,
+        action: undefined,
       },
       {
         number: 'Part 3',
         title: 'Growth-Circulation Economics in Practice',
+        href: undefined,
+        action: undefined,
       },
     ],
   },
@@ -246,14 +252,20 @@ const copy = {
       {
         number: '第一部分',
         title: '经济学概览',
+        href: '/zh/economics-after-ai/a-map-of-economics',
+        action: '进入历史地图',
       },
       {
         number: '第二部分',
         title: '经济学哲学',
+        href: undefined,
+        action: undefined,
       },
       {
         number: '第三部分',
         title: '增长—循环经济学实践',
+        href: undefined,
+        action: undefined,
       },
     ],
   },
@@ -302,20 +314,42 @@ const breadcrumbSchema = getPageBreadcrumbs(copy.title, lang);
         aria-label={copy.title}
       >
         {
-          copy.parts.map((part, index) => (
-            <article class="group hover:bg-track-economics-surface relative flex min-h-[28rem] flex-col justify-between overflow-hidden border-b border-[color:var(--atlas-line)] p-6 transition-colors md:border-r md:last:border-r-0">
-              <div class="flex items-center justify-between gap-5">
-                <span class="text-track-economics font-mono text-xs tracking-widest uppercase">
-                  {part.number}
-                </span>
-                <span class="text-track-economics/20 font-serif text-7xl">0{index + 1}</span>
-              </div>
-              <div>
-                <span class="bg-track-economics mb-6 block h-2 w-2 rounded-full transition-transform group-hover:scale-[1.8]" />
-                <h2 class="text-atlas-ink font-serif text-4xl leading-none">{part.title}</h2>
-              </div>
-            </article>
-          ))
+          copy.parts.map((part, index) =>
+            part.href ? (
+              <a
+                href={part.href}
+                class="group hover:bg-track-economics-surface focus-visible:ring-track-economics relative flex min-h-[28rem] flex-col justify-between overflow-hidden border-b border-[color:var(--atlas-line)] p-6 transition-colors focus-visible:ring-2 focus-visible:outline-none focus-visible:ring-inset md:border-r md:last:border-r-0"
+              >
+                <div class="flex items-center justify-between gap-5">
+                  <span class="text-track-economics font-mono text-xs tracking-widest uppercase">
+                    {part.number}
+                  </span>
+                  <span class="text-track-economics/20 font-serif text-7xl">0{index + 1}</span>
+                </div>
+                <div>
+                  <span class="bg-track-economics mb-6 block h-2 w-2 rounded-full transition-transform group-hover:scale-[1.8]" />
+                  <h2 class="text-atlas-ink font-serif text-4xl leading-none">{part.title}</h2>
+                  <span class="text-track-economics mt-6 inline-flex items-center gap-3 font-mono text-[0.625rem] tracking-[0.12em] uppercase">
+                    {part.action}
+                    <span aria-hidden="true">→</span>
+                  </span>
+                </div>
+              </a>
+            ) : (
+              <article class="group hover:bg-track-economics-surface relative flex min-h-[28rem] flex-col justify-between overflow-hidden border-b border-[color:var(--atlas-line)] p-6 transition-colors md:border-r md:last:border-r-0">
+                <div class="flex items-center justify-between gap-5">
+                  <span class="text-track-economics font-mono text-xs tracking-widest uppercase">
+                    {part.number}
+                  </span>
+                  <span class="text-track-economics/20 font-serif text-7xl">0{index + 1}</span>
+                </div>
+                <div>
+                  <span class="bg-track-economics mb-6 block h-2 w-2 rounded-full transition-transform group-hover:scale-[1.8]" />
+                  <h2 class="text-atlas-ink font-serif text-4xl leading-none">{part.title}</h2>
+                </div>
+              </article>
+            )
+          )
         }
       </section>
 
