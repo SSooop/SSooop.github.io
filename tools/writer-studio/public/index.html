@@ -18,6 +18,42 @@
           </div>
         </header>
 
+        <label class="column-picker" for="column-select">
+          <span>当前栏目</span>
+          <select id="column-select" aria-label="选择写作栏目"></select>
+        </label>
+
+        <div class="studio-mode-tabs" role="tablist" aria-label="Writer Studio 工作区">
+          <button
+            id="writing-mode-tab"
+            class="studio-mode-tab active"
+            data-mode="writing"
+            role="tab"
+            aria-selected="true"
+            aria-controls="writing-area"
+            tabindex="0"
+            type="button"
+          >
+            写作
+          </button>
+          <button
+            id="ideas-mode-tab"
+            class="studio-mode-tab"
+            data-mode="ideas"
+            role="tab"
+            aria-selected="false"
+            aria-controls="ideas-workspace"
+            tabindex="-1"
+            type="button"
+          >
+            Ideas <span id="idea-count">0</span>
+          </button>
+        </div>
+
+        <button class="new-idea-button" id="new-idea-button" type="button">
+          <span aria-hidden="true">＋</span> 快速记录 Idea
+        </button>
+
         <button class="new-draft-button" id="new-draft-button" type="button">
           <span aria-hidden="true">＋</span> 新建文章草稿
         </button>
@@ -32,13 +68,13 @@
           <span class="status-dot" aria-hidden="true"></span>
           <div>
             <strong>仅限本机</strong>
-            <p>草稿保存在 .drafts/blog</p>
+            <p>草稿与 Ideas 保存在 .drafts/</p>
           </div>
         </footer>
       </aside>
 
       <main class="workspace">
-        <header class="topbar">
+        <header class="topbar" id="writing-topbar">
           <div class="document-heading">
             <p id="document-path">选择一篇草稿开始写作</p>
             <h2 id="document-title">Writer Studio</h2>
@@ -66,13 +102,22 @@
             <button class="button secondary" id="validate-button" type="button" disabled>
               检查文章
             </button>
+            <button
+              class="button codex"
+              id="publication-package-button"
+              type="button"
+              title="生成适合各平台编辑器的富文本或纯文本发布包"
+              disabled
+            >
+              平台发布包
+            </button>
             <button class="button primary" id="publish-button" type="button" disabled>
               发布到站点
             </button>
           </div>
         </header>
 
-        <section class="stage-bar" aria-label="文章任务阶段">
+        <section class="stage-bar" id="writing-stage-bar" aria-label="文章任务阶段">
           <div class="stage-heading">
             <span>单篇文章任务</span>
             <span id="sync-status">等待选择任务</span>
@@ -80,25 +125,70 @@
           <div class="stage-list" id="stage-list"></div>
         </section>
 
-        <section class="editor-toolbar" aria-label="编辑器工具栏">
+        <section class="editor-toolbar" id="writing-editor-toolbar" aria-label="编辑器工具栏">
           <div class="section-tabs" role="tablist" aria-label="任务文件">
-            <button class="section-tab active" data-section="outline" role="tab" type="button">
+            <button
+              id="section-outline-tab"
+              class="section-tab active"
+              data-section="outline"
+              role="tab"
+              aria-selected="true"
+              aria-controls="writing-area"
+              tabindex="0"
+              type="button"
+            >
               1 提纲
             </button>
             <span class="workflow-arrow" aria-hidden="true">→</span>
-            <button class="section-tab" data-section="style" role="tab" type="button">
+            <button
+              id="section-style-tab"
+              class="section-tab"
+              data-section="style"
+              role="tab"
+              aria-selected="false"
+              aria-controls="writing-area"
+              tabindex="-1"
+              type="button"
+            >
               2 本篇风格
             </button>
             <span class="workflow-arrow" aria-hidden="true">→</span>
-            <button class="section-tab" data-section="article" role="tab" type="button">
+            <button
+              id="section-article-tab"
+              class="section-tab"
+              data-section="article"
+              role="tab"
+              aria-selected="false"
+              aria-controls="writing-area"
+              tabindex="-1"
+              type="button"
+            >
               3 正文
             </button>
           </div>
           <div class="language-tabs hidden" role="tablist" aria-label="文章语言">
-            <button class="language-tab active" data-language="cn" role="tab" type="button">
+            <button
+              id="language-cn-tab"
+              class="language-tab active"
+              data-language="cn"
+              role="tab"
+              aria-selected="true"
+              aria-controls="writing-area"
+              tabindex="0"
+              type="button"
+            >
               中文
             </button>
-            <button class="language-tab" data-language="en" role="tab" type="button">
+            <button
+              id="language-en-tab"
+              class="language-tab"
+              data-language="en"
+              role="tab"
+              aria-selected="false"
+              aria-controls="writing-area"
+              tabindex="-1"
+              type="button"
+            >
               English
             </button>
           </div>
@@ -115,7 +205,13 @@
           <p>选择左侧示例草稿，或者创建一篇新文章。Codex 对文件的修改会在这里自动显示。</p>
         </section>
 
-        <section class="writing-area hidden" id="writing-area">
+        <section
+          class="writing-area hidden"
+          id="writing-area"
+          role="tabpanel"
+          aria-labelledby="writing-mode-tab section-outline-tab"
+          tabindex="0"
+        >
           <div class="editor-pane">
             <div class="pane-heading">
               <span id="editor-label">MDX 源文</span>
@@ -161,6 +257,84 @@
             </details>
           </div>
         </section>
+
+        <section
+          class="ideas-workspace hidden"
+          id="ideas-workspace"
+          role="tabpanel"
+          aria-labelledby="ideas-mode-tab"
+          tabindex="0"
+        >
+          <header class="ideas-heading">
+            <div>
+              <p class="eyebrow" id="ideas-column-code">IDEAS INBOX</p>
+              <h2 id="ideas-column-title">随时记录，择时写作</h2>
+              <p id="ideas-column-description">
+                先保留未经打磨的判断、问题和连接，再决定它属于文章、书稿还是长期研究。
+              </p>
+            </div>
+            <div class="privacy-badge"><span class="status-dot"></span> 本地私有</div>
+          </header>
+
+          <form class="idea-capture" id="idea-form">
+            <div class="idea-form-heading">
+              <div>
+                <p class="eyebrow">QUICK CAPTURE</p>
+                <h3 id="idea-form-title">记录一个想法</h3>
+              </div>
+              <button class="button secondary hidden" id="cancel-idea-edit" type="button">
+                取消编辑
+              </button>
+            </div>
+            <label>
+              一句话标题（可选）
+              <input name="title" autocomplete="off" maxlength="200" placeholder="它在讨论什么？" />
+            </label>
+            <label>
+              想法片段
+              <textarea
+                name="body"
+                rows="5"
+                maxlength="20000"
+                required
+                placeholder="先记下来，不必在此刻把它写完整。"
+              ></textarea>
+            </label>
+            <div class="idea-meta-grid">
+              <label>
+                来源链接（可选）
+                <input name="sourceUrl" type="url" placeholder="https://" />
+              </label>
+              <label>
+                标签（逗号分隔）
+                <input name="tags" autocomplete="off" placeholder="增长, 技术史, 待验证" />
+              </label>
+              <label>
+                目标日期（可选）
+                <input name="targetDate" type="date" />
+              </label>
+            </div>
+            <div class="idea-form-actions">
+              <span>⌘/Ctrl + Enter 保存</span>
+              <button class="button primary" id="save-idea-button" type="submit">存入 Ideas</button>
+            </div>
+          </form>
+
+          <div class="ideas-toolbar">
+            <div>
+              <p class="eyebrow">IDEA TRACK</p>
+              <h3>从收件箱走向写作</h3>
+            </div>
+            <label>
+              状态
+              <select id="idea-status-filter">
+                <option value="active">未归档</option>
+                <option value="all">全部</option>
+              </select>
+            </label>
+          </div>
+          <div class="ideas-list" id="ideas-list"></div>
+        </section>
       </main>
     </div>
 
@@ -173,6 +347,10 @@
           </div>
           <button class="icon-button" id="close-dialog" type="button" aria-label="关闭">×</button>
         </div>
+        <label>
+          所属栏目
+          <select name="columnId" id="new-draft-column" required></select>
+        </label>
         <label>
           文章标题
           <input name="title" required autocomplete="off" placeholder="例如：AI 制药中的产品边界" />
@@ -237,6 +415,110 @@
       <div class="dialog-actions">
         <button class="button secondary" id="copy-skill" type="button">复制 Skill 调用</button>
         <button class="button primary" id="confirm-skill" type="button">知道了</button>
+      </div>
+    </dialog>
+
+    <dialog
+      class="publication-package-dialog"
+      id="publication-package-dialog"
+      aria-labelledby="publication-package-title"
+      aria-describedby="publication-package-description"
+    >
+      <div class="dialog-heading publication-package-heading">
+        <div>
+          <p class="eyebrow">MANUAL DISTRIBUTION PACKAGE</p>
+          <h2 id="publication-package-title">一键复制平台发布包</h2>
+          <p id="publication-package-description">
+            正文和 Ideas 不会离开本机；只有你主动复制、粘贴的内容才会进入目标平台。
+          </p>
+        </div>
+        <button class="icon-button" id="close-publication-package" type="button" aria-label="关闭">
+          ×
+        </button>
+      </div>
+
+      <div class="publication-package-controls">
+        <label for="publication-platform">
+          目标平台
+          <select id="publication-platform"></select>
+        </label>
+        <label for="publication-language">
+          文章语言
+          <select id="publication-language"></select>
+        </label>
+      </div>
+
+      <section class="publication-package-note">
+        <span class="package-format-badge" id="publication-format">富文本</span>
+        <p id="publication-guidance"></p>
+      </section>
+
+      <section class="publication-metadata">
+        <div>
+          <span>标题</span>
+          <strong id="publication-title">—</strong>
+        </div>
+        <div>
+          <span>原文链接</span>
+          <a id="publication-canonical" target="_blank" rel="noopener noreferrer">—</a>
+        </div>
+      </section>
+
+      <section class="publication-preview-shell">
+        <div class="publication-section-heading">
+          <div>
+            <span>粘贴预览</span>
+            <small id="publication-count">0 字符</small>
+          </div>
+          <span id="publication-preview-label">正文（不含标题）</span>
+        </div>
+        <iframe id="publication-rich-preview" title="带排版发布正文预览" sandbox=""></iframe>
+        <textarea
+          class="hidden"
+          id="publication-plain-preview"
+          aria-label="纯文本发布文案预览"
+          readonly
+        ></textarea>
+      </section>
+
+      <section class="publication-assets hidden" id="publication-assets">
+        <div class="publication-section-heading">
+          <div>
+            <span>图片清单</span>
+            <small id="publication-asset-count">0 张</small>
+          </div>
+          <span>按顺序复制后替换正文标记</span>
+        </div>
+        <div class="publication-asset-list" id="publication-asset-list"></div>
+      </section>
+
+      <div class="publication-warnings hidden" id="publication-warnings"></div>
+
+      <div class="publication-package-actions">
+        <div>
+          <a
+            class="button secondary publication-platform-link"
+            id="open-publication-platform"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            打开平台编辑器
+          </a>
+          <button class="button secondary" id="copy-publication-title" type="button">
+            复制标题
+          </button>
+          <button class="button secondary" id="copy-publication-link" type="button">
+            复制链接
+          </button>
+        </div>
+        <div>
+          <button class="button secondary" id="copy-publication-plain" type="button">
+            复制纯文本
+          </button>
+          <button class="button primary" id="copy-publication-main" type="button">
+            复制带排版正文
+          </button>
+        </div>
       </div>
     </dialog>
 

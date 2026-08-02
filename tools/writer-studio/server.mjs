@@ -1,17 +1,36 @@
 import { createReadStream } from 'node:fs';
 import { spawn } from 'node:child_process';
-import { access, copyFile, mkdir, readFile, readdir, rm, stat, writeFile } from 'node:fs/promises';
+import { createHash, randomBytes } from 'node:crypto';
+import {
+  access,
+  copyFile,
+  mkdir,
+  readFile,
+  readdir,
+  rename,
+  rm,
+  stat,
+  writeFile,
+} from 'node:fs/promises';
 import http from 'node:http';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
+import { DEFAULT_COLUMN_ID, listColumns, requireColumn } from './columns.mjs';
+import {
+  createIdea,
+  IDEA_STATUSES,
+  listIdeas,
+  listIdeasWithDiagnostics,
+  updateIdea,
+} from './idea-store.mjs';
 import {
   ensureTaskWorkspace,
   publishTaskAssets,
   readTaskWorkspace,
   saveTaskAsset,
+  TASK_DOCUMENTS,
   taskAssetPath,
   updateTaskStage,
-  writeTaskDocument,
 } from './task-workspace.mjs';
 
 const moduleDir = path.dirname(fileURLToPath(import.meta.url));
@@ -21,6 +40,7 @@ const draftIdPattern = /^\d{4}\/[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const slugPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const languagePattern = /^(cn|en)$/;
 const maxBodyBytes = 12 * 1024 * 1024;
+const fileMutationQueues = new Map();
 
 const contentTypes = {
   '.css': 'text/css; charset=utf-8',
@@ -28,12 +48,80 @@ const contentTypes = {
   '.js': 'text/javascript; charset=utf-8',
 };
 
+const securityHeaders = {
+  'Content-Security-Policy':
+    "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; frame-src 'self'; frame-ancestors 'none'; connect-src 'self'; base-uri 'none'; form-action 'self'",
+  'Cross-Origin-Resource-Policy': 'same-origin',
+  'Referrer-Policy': 'no-referrer',
+  'X-Content-Type-Options': 'nosniff',
+};
+
 function sendJson(response, status, payload) {
   response.writeHead(status, {
+    ...securityHeaders,
     'Content-Type': 'application/json; charset=utf-8',
     'Cache-Control': 'no-store',
   });
   response.end(JSON.stringify(payload));
+}
+
+function contentHash(content) {
+  return createHash('sha256').update(content).digest('hex');
+}
+
+async function atomicWriteText(file, content, expectedHash, afterTemporaryWrite) {
+  const temporary = `${file}.${randomBytes(8).toString('hex')}.tmp`;
+  try {
+    await writeFile(temporary, content, 'utf8');
+    await afterTemporaryWrite?.({ target: file, temporary });
+    const current = await readFile(file, 'utf8');
+    const currentHash = contentHash(current);
+    if (currentHash !== expectedHash) return { conflict: true, currentHash };
+    await rename(temporary, file);
+    return { saved: true, hash: contentHash(content) };
+  } finally {
+    await rm(temporary, { force: true }).catch(() => {});
+  }
+}
+
+async function serializeFileMutation(file, mutation) {
+  const key = path.resolve(file);
+  const previous = fileMutationQueues.get(key) ?? Promise.resolve();
+  const result = previous.catch(() => {}).then(mutation);
+  const settled = result.then(
+    () => undefined,
+    () => undefined
+  );
+  fileMutationQueues.set(key, settled);
+
+  try {
+    return await result;
+  } finally {
+    if (fileMutationQueues.get(key) === settled) fileMutationQueues.delete(key);
+  }
+}
+
+function hasWriteConflict(current, input) {
+  return input.baseHash !== contentHash(current) && input.content !== current;
+}
+
+function isMutatingRequest(method) {
+  return ['POST', 'PUT', 'PATCH', 'DELETE'].includes(method || '');
+}
+
+function hasValidLocalOrigin(request) {
+  const origin = request.headers.origin;
+  if (!origin) return true;
+  try {
+    const parsed = new URL(origin);
+    return (
+      parsed.protocol === 'http:' &&
+      /^(127\.0\.0\.1|localhost)$/i.test(parsed.hostname) &&
+      parsed.host === request.headers.host
+    );
+  } catch {
+    return false;
+  }
 }
 
 function parseFrontmatter(content) {
@@ -194,13 +282,16 @@ export async function seedExampleDraft(root = defaultRoot) {
   return latest.id;
 }
 
-async function listDrafts(root) {
+async function listDrafts(root, options = {}) {
   const draftsRoot = path.join(root, '.drafts', 'blog');
-  await mkdir(draftsRoot, { recursive: true });
+  if (options.initialize) await mkdir(draftsRoot, { recursive: true });
   const results = [];
-  const years = (await readdir(draftsRoot, { withFileTypes: true })).filter((entry) =>
-    entry.isDirectory()
-  );
+  const years = (
+    await readdir(draftsRoot, { withFileTypes: true }).catch((error) => {
+      if (error?.code === 'ENOENT') return [];
+      throw error;
+    })
+  ).filter((entry) => entry.isDirectory());
 
   for (const year of years) {
     const yearRoot = path.join(draftsRoot, year.name);
@@ -220,7 +311,7 @@ async function listDrafts(root) {
         primary ||= parseFrontmatter(content);
         modifiedAt = Math.max(modifiedAt, (await stat(file)).mtimeMs);
       }
-      await ensureTaskWorkspace(root, id, primary || {});
+      if (options.initialize) await ensureTaskWorkspace(root, id, primary || {});
       const workspace = await readTaskWorkspace(root, id);
       modifiedAt = Math.max(
         modifiedAt,
@@ -238,6 +329,7 @@ async function listDrafts(root) {
         modifiedAt,
         published: await exists(contentDirectory(root, id)),
         stage: workspace.task.stage,
+        columnId: workspace.task.columnId || DEFAULT_COLUMN_ID,
         assetCount: workspace.assets.length,
       });
     }
@@ -398,10 +490,11 @@ function parseDraftRoute(pathname) {
 
 async function serveStatic(response, publicDir, pathname) {
   const requested = pathname === '/' ? 'index.html' : pathname.slice(1);
-  if (!/^(index\.html|app\.js|styles\.css)$/.test(requested)) return false;
+  if (!/^(index\.html|app\.js|publication-package\.js|styles\.css)$/.test(requested)) return false;
   const file = path.join(publicDir, requested);
   if (!(await exists(file))) return false;
   response.writeHead(200, {
+    ...securityHeaders,
     'Content-Type': contentTypes[path.extname(file)] || 'application/octet-stream',
     'Cache-Control': 'no-store',
   });
@@ -412,7 +505,10 @@ async function serveStatic(response, publicDir, pathname) {
 export async function createWriterServer(options = {}) {
   const root = options.root || defaultRoot;
   const publicDir = options.publicDir || defaultPublicDir;
+  const sessionToken = options.sessionToken || randomBytes(32).toString('base64url');
+  const afterTemporaryWrite = options.testHooks?.afterTemporaryWrite;
   await seedExampleDraft(root);
+  await listDrafts(root, { initialize: true });
 
   return http.createServer(async (request, response) => {
     try {
@@ -425,13 +521,63 @@ export async function createWriterServer(options = {}) {
         return;
       }
 
+      if (isMutatingRequest(request.method)) {
+        if (!hasValidLocalOrigin(request)) {
+          sendJson(response, 403, { error: 'Writer Studio rejected a cross-origin request.' });
+          return;
+        }
+        if (request.headers['x-writer-studio-token'] !== sessionToken) {
+          sendJson(response, 403, { error: 'Writer Studio session token is missing or invalid.' });
+          return;
+        }
+      }
+
       if (request.method === 'GET' && url.pathname === '/api/state') {
-        sendJson(response, 200, { drafts: await listDrafts(root) });
+        const ideas = await listIdeas(root);
+        const ideaCounts = Object.fromEntries(listColumns().map((column) => [column.id, 0]));
+        for (const idea of ideas) ideaCounts[idea.columnId] = (ideaCounts[idea.columnId] || 0) + 1;
+        sendJson(response, 200, {
+          sessionToken,
+          columns: listColumns(),
+          drafts: await listDrafts(root),
+          ideaCounts,
+        });
+        return;
+      }
+
+      if (request.method === 'GET' && url.pathname === '/api/ideas') {
+        const columnId = url.searchParams.get('column') || '';
+        const ideas = await listIdeasWithDiagnostics(root, columnId);
+        sendJson(response, 200, {
+          ideas: ideas.ideas,
+          statuses: IDEA_STATUSES,
+          invalidRecords: ideas.invalidRecords,
+        });
+        return;
+      }
+
+      if (request.method === 'POST' && url.pathname === '/api/ideas') {
+        sendJson(response, 201, { idea: await createIdea(root, await readBody(request)) });
+        return;
+      }
+
+      const ideaRoute = url.pathname.match(/^\/api\/ideas\/([a-z0-9-]+)$/i);
+      if (ideaRoute && request.method === 'PATCH') {
+        sendJson(response, 200, {
+          idea: await updateIdea(root, ideaRoute[1].toLowerCase(), await readBody(request)),
+        });
         return;
       }
 
       if (request.method === 'POST' && url.pathname === '/api/drafts') {
         const input = await readBody(request);
+        const column = requireColumn(String(input.columnId || DEFAULT_COLUMN_ID));
+        if (!column.capabilities.drafts) {
+          sendJson(response, 400, {
+            error: 'This column does not have a fixed draft and publication format yet.',
+          });
+          return;
+        }
         const year = String(input.year || '');
         const slug = String(input.slug || '');
         if (!/^\d{4}$/.test(year) || !slugPattern.test(slug)) {
@@ -463,7 +609,7 @@ export async function createWriterServer(options = {}) {
             'utf8'
           );
         }
-        await ensureTaskWorkspace(root, id, { title });
+        await ensureTaskWorkspace(root, id, { title, columnId: column.id });
         sendJson(response, 201, { id });
         return;
       }
@@ -481,6 +627,7 @@ export async function createWriterServer(options = {}) {
           id: route.id,
           language,
           content,
+          hash: contentHash(content),
           metadata: parseFrontmatter(content),
         });
         return;
@@ -493,13 +640,31 @@ export async function createWriterServer(options = {}) {
           sendJson(response, 400, { error: 'Content must be a string.' });
           return;
         }
+        if (typeof input.baseHash !== 'string') {
+          sendJson(response, 428, { error: 'A base content hash is required.' });
+          return;
+        }
         const directory = draftDirectory(root, route.id);
         if (!(await exists(directory))) {
           sendJson(response, 404, { error: 'Draft does not exist.' });
           return;
         }
-        await writeFile(path.join(directory, `${language}.mdx`), input.content, 'utf8');
-        sendJson(response, 200, { saved: true });
+        const file = path.join(directory, `${language}.mdx`);
+        const result = await serializeFileMutation(file, async () => {
+          const current = await readFile(file, 'utf8');
+          if (hasWriteConflict(current, input)) {
+            return { conflict: true, currentHash: contentHash(current) };
+          }
+          return atomicWriteText(file, input.content, contentHash(current), afterTemporaryWrite);
+        });
+        if (result.conflict) {
+          sendJson(response, 409, {
+            error: 'Draft changed on disk. The browser copy was not written.',
+            currentHash: result.currentHash,
+          });
+          return;
+        }
+        sendJson(response, 200, result);
         return;
       }
 
@@ -514,14 +679,45 @@ export async function createWriterServer(options = {}) {
       }
 
       if (route && request.method === 'GET' && route.action === 'workspace') {
-        sendJson(response, 200, await readTaskWorkspace(root, route.id));
+        const workspace = await readTaskWorkspace(root, route.id);
+        for (const document of Object.values(workspace.documents)) {
+          document.hash = contentHash(document.content);
+        }
+        sendJson(response, 200, workspace);
         return;
       }
 
       if (route && request.method === 'PUT' && route.action === 'documents') {
         const input = await readBody(request);
-        await writeTaskDocument(root, route.id, route.detail, input.content);
-        sendJson(response, 200, { saved: true });
+        if (typeof input.content !== 'string') {
+          sendJson(response, 400, { error: 'Content must be a string.' });
+          return;
+        }
+        if (typeof input.baseHash !== 'string') {
+          sendJson(response, 428, { error: 'A base content hash is required.' });
+          return;
+        }
+        const document = TASK_DOCUMENTS[route.detail];
+        if (!document) {
+          sendJson(response, 400, { error: 'Invalid task document.' });
+          return;
+        }
+        const file = path.join(draftDirectory(root, route.id), document.file);
+        const result = await serializeFileMutation(file, async () => {
+          const current = await readFile(file, 'utf8');
+          if (hasWriteConflict(current, input)) {
+            return { conflict: true, currentHash: contentHash(current) };
+          }
+          return atomicWriteText(file, input.content, contentHash(current), afterTemporaryWrite);
+        });
+        if (result.conflict) {
+          sendJson(response, 409, {
+            error: 'Task document changed on disk. The browser copy was not written.',
+            currentHash: result.currentHash,
+          });
+          return;
+        }
+        sendJson(response, 200, result);
         return;
       }
 
@@ -538,15 +734,17 @@ export async function createWriterServer(options = {}) {
       }
 
       if (route && request.method === 'GET' && route.action === 'assets' && route.detail) {
-        const asset = taskAssetPath(root, route.id, decodeURIComponent(route.detail));
+        const asset = await taskAssetPath(root, route.id, decodeURIComponent(route.detail));
         if (!(await exists(asset.file))) {
           sendJson(response, 404, { error: 'Image does not exist.' });
           return;
         }
         response.writeHead(200, {
+          ...securityHeaders,
+          'Content-Security-Policy':
+            "default-src 'none'; img-src 'self' data:; style-src 'unsafe-inline'; sandbox",
           'Content-Type': asset.contentType,
           'Cache-Control': 'no-store',
-          'X-Content-Type-Options': 'nosniff',
         });
         createReadStream(asset.file).pipe(response);
         return;
@@ -569,7 +767,7 @@ async function start() {
   const port = Number(process.env.WRITER_PORT || 4321);
   server.listen(port, '127.0.0.1', () => {
     console.log(`Writer Studio: http://127.0.0.1:${port}`);
-    console.log('Drafts stay local under .drafts/blog. Press Ctrl+C to stop.');
+    console.log('Drafts and ideas stay local under .drafts/. Press Ctrl+C to stop.');
   });
 }
 
