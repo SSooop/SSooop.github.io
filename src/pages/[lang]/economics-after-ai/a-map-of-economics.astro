@@ -17,6 +17,7 @@ import keynesPortrait from '../../../assets/economics-after-ai/map-of-economics/
 import hayekPortrait from '../../../assets/economics-after-ai/map-of-economics/friedrich-hayek.png';
 import samuelsonPortrait from '../../../assets/economics-after-ai/map-of-economics/paul-samuelson.png';
 import friedmanPortrait from '../../../assets/economics-after-ai/map-of-economics/milton-friedman.png';
+import lucasPortrait from '../../../assets/economics-after-ai/map-of-economics/robert-lucas.png';
 import coasePortrait from '../../../assets/economics-after-ai/map-of-economics/ronald-coase.png';
 import akerlofPortrait from '../../../assets/economics-after-ai/map-of-economics/george-akerlof.png';
 import kahnemanPortrait from '../../../assets/economics-after-ai/map-of-economics/daniel-kahneman.png';
@@ -53,6 +54,7 @@ const peopleBase = [
   { id: 'coase', era: 'formal', track: 'institution', portrait: coasePortrait },
   { id: 'samuelson', era: 'formal', track: 'equilibrium', portrait: samuelsonPortrait },
   { id: 'friedman', era: 'formal', track: 'macro', portrait: friedmanPortrait },
+  { id: 'lucas', era: 'plural', track: 'macro', portrait: lucasPortrait },
   { id: 'akerlof', era: 'plural', track: 'institution', portrait: akerlofPortrait },
   { id: 'kahneman', era: 'plural', track: 'behavior', portrait: kahnemanPortrait },
   { id: 'ostrom', era: 'plural', track: 'institution', portrait: ostromPortrait },
@@ -65,9 +67,9 @@ const copy = {
     eyebrow: 'Online book / Part 01',
     title: 'A Map of Economics',
     description:
-      'A chronological map of the questions, assumptions, and methods that formed modern economics.',
+      'A chronological map of the questions, assumptions, and methods that formed modern economics, flagging its five paradigm revolutions from Smith to rational expectations.',
     intro:
-      'Read from top to bottom. The vertical direction marks historical sequence; the parallel rails follow recurring intellectual cores. The map records conceptual continuities, not a claim that every later thinker was directly influenced by every earlier one.',
+      'Read from top to bottom. The vertical direction marks historical sequence; the parallel rails follow recurring intellectual cores. Alongside these continuities, the REV badges mark the paradigm-level ruptures: the Smithian, marginal, Keynesian, monetarist, and rational-expectations revolutions. The map records conceptual continuities, not a claim that every later thinker was directly influenced by every earlier one.',
     back: 'Back to Economics After AI',
     mapLabel: 'Historical field / c. 4th century BCE—present',
     legendTitle: 'Six recurring lines of inquiry',
@@ -78,6 +80,8 @@ const copy = {
     footerTitle: 'How this map will grow',
     footer:
       'Each portrait is a future chapter anchor. When a chapter is published in either language, its node will become an active link while retaining its place in the historical tree.',
+    footerHook:
+      'From Smith to rational expectations, every revolution began with phenomena the reigning paradigm could not explain. AI is generating the next such phenomena — whether it triggers the next revolution in economics is the question this book follows.',
     tracks: {
       capital: 'Production & distribution',
       equilibrium: 'Choice & equilibrium',
@@ -92,6 +96,7 @@ const copy = {
         number: '00',
         period: 'c. 4th century BCE—16th century',
         title: 'The ethical and political prehistory of economic thought',
+        revolution: '',
         note: 'Wealth, exchange, money, taxation, and household rule were still questions inside ethics, law, and statecraft.',
         bridge: 'Xenophon · Scholastic just-price theory · Ibn Khaldun',
       },
@@ -100,6 +105,7 @@ const copy = {
         number: '01',
         period: '1700—1776',
         title: 'Political economy becomes a system',
+        revolution: '',
         note: 'The economy begins to appear as an interconnected circulation of production, income, prices, trade, and population.',
         bridge: 'Hume · Quesnay and the Tableau économique · Turgot',
       },
@@ -108,6 +114,7 @@ const copy = {
         number: '02',
         period: '1776—1867',
         title: 'Classical political economy and its critique',
+        revolution: 'The Smithian revolution',
         note: 'Production, value, class distribution, accumulation, trade, and the historical character of capitalism move to the center.',
         bridge: 'Malthus · Say · J. S. Mill · List',
       },
@@ -116,7 +123,8 @@ const copy = {
         number: '03',
         period: '1871—1914',
         title: 'The marginal revolution and neoclassical consolidation',
-        note: 'The unit of analysis shifts from social classes and surplus toward individual choice, scarcity, marginal trade-offs, and equilibrium.',
+        revolution: 'The marginal revolution',
+        note: 'The unit of analysis shifts from social classes and surplus toward individual choice, scarcity, marginal trade-offs, and equilibrium; factor incomes become rewards to marginal productivity rather than outcomes of class relations.',
         bridge: 'Jevons · Walras · Edgeworth · Pareto',
       },
       {
@@ -124,15 +132,17 @@ const copy = {
         number: '04',
         period: '1890—1945',
         title: 'Money, cycles, knowledge, and the macroeconomic rupture',
-        note: 'Credit, expectations, uncertainty, unemployment, entrepreneurship, and coordination challenge the image of frictionless equilibrium.',
+        revolution: 'The Keynesian revolution',
+        note: 'Credit, expectations, entrepreneurship, and coordination kept stressing the image of frictionless equilibrium; the Great Depression then broke the faith in self-correcting markets, and Keynes rebuilt economics around aggregates, effective demand, and rigid wages and prices, founding macroeconomics and demand management.',
         bridge: 'Wicksell · Fisher · Veblen · Schumpeter · Kalecki',
       },
       {
         id: 'formal',
         number: '05',
         period: '1930—1970',
-        title: 'Formalization and the postwar synthesis',
-        note: 'Economics becomes more mathematical and econometric while general equilibrium, growth, strategic interaction, and policy are rebuilt in formal models.',
+        title: 'Formalization, the postwar synthesis, and the monetarist counter-revolution',
+        revolution: 'The monetarist counter-revolution',
+        note: 'Economics becomes more mathematical and econometric while general equilibrium, growth, strategic interaction, and policy are rebuilt in formal models. The neoclassical synthesis of Samuelson rests on the Phillips curve; Friedman and Hayek launch the counter-revolution with the natural rate of unemployment, long-run money neutrality, and a return to laissez-faire.',
         bridge: 'Frisch · Tinbergen · Haavelmo · Arrow–Debreu · Nash · Solow',
       },
       {
@@ -140,16 +150,19 @@ const copy = {
         number: '06',
         period: '1970—2000',
         title: 'Information, behavior, contracts, and institutions',
-        note: 'Private information, cognitive limits, transaction costs, governance rules, and mechanism design move inside the analytical core.',
-        bridge: 'Spence · Stiglitz · Williamson · Thaler · Hurwicz–Maskin–Myerson',
+        revolution: 'The rational-expectations revolution',
+        note: 'Stagflation ended the confidence of the postwar synthesis, and the rational-expectations revolution rebuilt macroeconomics on individually rational choice: expectations entered the models, the Phillips curve disappeared, and anticipated policy lost its bite. Private information, cognitive limits, transaction costs, governance rules, and mechanism design moved inside the analytical core.',
+        bridge:
+          'Spence · Stiglitz · Williamson · Thaler · Hurwicz–Maskin–Myerson · Phelps · Sargent · Sraffa and the two Cambridges debate',
       },
       {
         id: 'contemporary',
         number: '07',
         period: '1980—present',
         title: 'Endogenous growth, causal evidence, and complex adaptive economies',
+        revolution: '',
         note: 'Ideas, technology, institutions, heterogeneity, experiments, causal identification, path dependence, and emergence define an expanding contemporary toolkit.',
-        bridge: 'Lucas · Aghion–Howitt · Card–Angrist–Imbens · Duflo · Acemoglu',
+        bridge: 'Aghion–Howitt · Card–Angrist–Imbens · Duflo · Acemoglu',
       },
     ],
     people: {
@@ -230,6 +243,16 @@ const copy = {
         idea: 'Money, permanent income, expectations, and policy rules.',
         works: ['A Monetary History of the United States', 'The Role of Monetary Policy'],
       },
+      lucas: {
+        name: 'Robert Lucas Jr.',
+        localName: '小罗伯特·卢卡斯',
+        years: '1937—2023',
+        idea: 'Rational expectations, micro-foundations, and the limits of systematic policy.',
+        works: [
+          'Econometric Policy Evaluation: A Critique',
+          'Expectations and the Neutrality of Money',
+        ],
+      },
       coase: {
         name: 'Ronald Coase',
         localName: '罗纳德·科斯',
@@ -277,9 +300,10 @@ const copy = {
   zh: {
     eyebrow: '在线书 / 第一部分',
     title: '经济学概览',
-    description: '一张按照时间顺序梳理现代经济学问题、假设与方法演变的思想地图。',
+    description:
+      '一张按照时间顺序梳理现代经济学问题、假设与方法演变的思想地图，标出从斯密到理性预期的五次范式革命。',
     intro:
-      '从上到下阅读：纵向表示思想出现的历史次序，彼此平行的轨道表示反复延伸的思想内核。这是一张概念谱系图，不意味着每一位后来的学者都直接受到了线上所有前人的影响。',
+      '从上到下阅读：纵向表示思想出现的历史次序，彼此平行的轨道表示反复延伸的思想内核。在这些连续线索之外，REV 徽标标出几次范式级的断裂——斯密革命、边际革命、凯恩斯革命、货币主义反革命与理性预期革命。这是一张概念谱系图，不意味着每一位后来的学者都直接受到了线上所有前人的影响。',
     back: '返回《AI 时代的经济学》',
     mapLabel: '历史视野 / 约公元前 4 世纪至今',
     legendTitle: '六条反复延伸的问题线索',
@@ -290,6 +314,8 @@ const copy = {
     footerTitle: '这张地图将如何生长',
     footer:
       '每一幅肖像都是一个未来章节的锚点。任一语言的章节完成并发布后，对应节点会变成可点击链接，同时继续保留在这棵历史树中的原有位置。',
+    footerHook:
+      '从斯密到理性预期，每一次革命都始于旧范式解释不了的新现象。AI 正在制造下一批这样的现象——它是否会引发经济学的下一次革命，正是本书要追问的主线。',
     tracks: {
       capital: '生产与分配',
       equilibrium: '选择与均衡',
@@ -304,6 +330,7 @@ const copy = {
         number: '00',
         period: '约公元前 4 世纪—16 世纪',
         title: '经济思想的伦理学与政治学前史',
+        revolution: '',
         note: '财富、交换、货币、税收与家庭治理仍然属于伦理、法律和治国术中的问题。',
         bridge: '色诺芬 · 经院哲学的公平价格 · 伊本·赫勒敦',
       },
@@ -312,6 +339,7 @@ const copy = {
         number: '01',
         period: '1700—1776',
         title: '政治经济学开始成为一个系统',
+        revolution: '',
         note: '经济逐渐被理解为生产、收入、价格、贸易和人口相互连接的循环整体。',
         bridge: '休谟 · 魁奈《经济表》 · 杜尔哥',
       },
@@ -320,6 +348,7 @@ const copy = {
         number: '02',
         period: '1776—1867',
         title: '古典政治经济学及其批判',
+        revolution: '斯密革命',
         note: '生产、价值、阶级分配、资本积累、贸易以及资本主义的历史性质成为中心问题。',
         bridge: '马尔萨斯 · 萨伊 · 约翰·斯图亚特·穆勒 · 李斯特',
       },
@@ -328,7 +357,8 @@ const copy = {
         number: '03',
         period: '1871—1914',
         title: '边际革命与新古典经济学的形成',
-        note: '分析单位从社会阶级和剩余转向个体选择、稀缺、边际权衡与市场均衡。',
+        revolution: '边际革命',
+        note: '分析单位从社会阶级和剩余转向个体选择、稀缺、边际权衡与市场均衡；要素报酬被解释为边际生产力，而非阶级关系的结果。',
         bridge: '杰文斯 · 瓦尔拉斯 · 埃奇沃思 · 帕累托',
       },
       {
@@ -336,15 +366,17 @@ const copy = {
         number: '04',
         period: '1890—1945',
         title: '货币、周期、知识与宏观断裂',
-        note: '信用、预期、不确定性、失业、企业家与协调问题共同挑战无摩擦均衡的图景。',
+        revolution: '凯恩斯革命',
+        note: '信用、预期、企业家与协调问题持续冲击无摩擦均衡的图景；大萧条摧毁了市场自我出清的信心，凯恩斯以总量、有效需求与工资价格刚性重建经济学，开创宏观经济学与需求管理。',
         bridge: '维克塞尔 · 费雪 · 凡勃伦 · 熊彼特 · 卡莱茨基',
       },
       {
         id: 'formal',
         number: '05',
         period: '1930—1970',
-        title: '形式化与战后综合',
-        note: '经济学加速数学化和计量化，一般均衡、增长、战略互动与宏观政策被重新写成形式模型。',
+        title: '形式化、战后综合与货币主义反革命',
+        revolution: '货币主义反革命',
+        note: '经济学加速数学化和计量化，一般均衡、增长、战略互动与宏观政策被重新写成形式模型。萨缪尔森的新古典综合以菲利普斯曲线为支柱；弗里德曼与哈耶克发起反革命——自然失业率、货币长期中性、回归自由放任。',
         bridge: '弗里希 · 廷伯根 · 哈维尔莫 · 阿罗—德布鲁 · 纳什 · 索洛',
       },
       {
@@ -352,16 +384,19 @@ const copy = {
         number: '06',
         period: '1970—2000',
         title: '信息、行为、契约与制度',
-        note: '私人信息、认知限制、交易成本、治理规则与机制设计进入经济分析的核心。',
-        bridge: '斯彭斯 · 斯蒂格利茨 · 威廉姆森 · 塞勒 · 赫维茨—马斯金—迈尔森',
+        revolution: '理性预期革命',
+        note: '滞胀终结了战后综合的信心，理性预期革命把宏观模型重新建立在个体理性决策之上：预期进入模型，菲利普斯曲线消失，被预期到的系统性政策失去效力；同期，私人信息、认知限制、交易成本、治理规则与机制设计进入经济分析的核心。',
+        bridge:
+          '斯彭斯 · 斯蒂格利茨 · 威廉姆森 · 塞勒 · 赫维茨—马斯金—迈尔森 · 费尔普斯 · 萨金特 · 斯拉法与两个剑桥之争',
       },
       {
         id: 'contemporary',
         number: '07',
         period: '1980—至今',
         title: '内生增长、因果证据与复杂适应经济',
+        revolution: '',
         note: '思想、技术、制度、异质性、实验、因果识别、路径依赖与涌现共同构成不断扩张的当代工具箱。',
-        bridge: '卢卡斯 · 阿吉翁—霍伊特 · 卡德—安格里斯—因本斯 · 迪弗洛 · 阿西莫格鲁',
+        bridge: '阿吉翁—霍伊特 · 卡德—安格里斯—因本斯 · 迪弗洛 · 阿西莫格鲁',
       },
     ],
     people: {
@@ -442,6 +477,13 @@ const copy = {
         idea: '货币、永久收入、预期与政策规则。',
         works: ['《美国货币史》', '《货币政策的作用》'],
       },
+      lucas: {
+        name: '小罗伯特·卢卡斯',
+        localName: 'Robert Lucas Jr.',
+        years: '1937—2023',
+        idea: '理性预期、宏观模型的微观基础与系统性政策的局限。',
+        works: ['《经济计量学的政策评估：一个批判》', '《预期与货币中性》'],
+      },
       coase: {
         name: '罗纳德·科斯',
         localName: 'Ronald Coase',
@@ -487,6 +529,15 @@ const copy = {
     },
   },
 }[lang];
+
+const revolutionIndex = new Map<string, string>();
+let revolutionCount = 0;
+for (const era of copy.eras) {
+  if (era.revolution) {
+    revolutionCount += 1;
+    revolutionIndex.set(era.id, String(revolutionCount).padStart(2, '0'));
+  }
+}
 
 const people = peopleBase.map((person) => {
   const track = tracks[person.track];
@@ -575,8 +626,14 @@ const breadcrumbSchema = generateBreadcrumbSchema(
                       <span class="era-period">{era.period}</span>
                     </div>
                     <div>
+                      {era.revolution && (
+                        <p class="era-revolution">
+                          <span aria-hidden="true">★</span>
+                          REV {revolutionIndex.get(era.id) ?? '00'} · {era.revolution}
+                        </p>
+                      )}
                       <h2>{era.title}</h2>
-                      <p>{era.note}</p>
+                      <p class="era-note">{era.note}</p>
                     </div>
                     <div class="era-bridge">
                       <div class="era-track-index" aria-hidden="true">
@@ -613,7 +670,8 @@ const breadcrumbSchema = generateBreadcrumbSchema(
       <footer class="map-footer">
         <p class="atlas-kicker economics-kicker">P02 / 01 / OPEN INDEX</p>
         <h2>{copy.footerTitle}</h2>
-        <p>{copy.footer}</p>
+        <p class="map-footer-note">{copy.footer}</p>
+        <p class="map-footer-hook">{copy.footerHook}</p>
       </footer>
     </div>
   </main>
@@ -818,6 +876,26 @@ const breadcrumbSchema = generateBreadcrumbSchema(
     text-transform: uppercase;
   }
 
+  .era-revolution {
+    display: flex;
+    gap: 0.5rem;
+    align-items: flex-start;
+    width: fit-content;
+    margin-bottom: 0.65rem;
+    padding: 0.3rem 0.55rem;
+    color: var(--color-morandi-paper);
+    background: var(--economics-accent-ink);
+    font-family: var(--font-mono);
+    font-size: 0.58rem;
+    line-height: 1.4;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .era-revolution span {
+    color: color-mix(in srgb, var(--economics-accent) 78%, var(--color-morandi-paper));
+  }
+
   .era-header h2,
   .map-footer h2 {
     color: var(--color-atlas-ink);
@@ -829,14 +907,14 @@ const breadcrumbSchema = generateBreadcrumbSchema(
     line-height: 1.03;
   }
 
-  .era-header > div:nth-child(2) p,
+  .era-note,
   .era-bridge p,
-  .map-footer > p:last-child {
+  .map-footer-note {
     color: color-mix(in srgb, var(--color-atlas-ink) 72%, transparent);
     line-height: 1.75;
   }
 
-  .era-header > div:nth-child(2) p {
+  .era-note {
     max-width: 48rem;
     margin-top: 0.55rem;
     font-size: 0.78rem;
@@ -907,9 +985,22 @@ const breadcrumbSchema = generateBreadcrumbSchema(
     line-height: 1;
   }
 
-  .map-footer > p:last-child {
+  .map-footer-note {
     max-width: 48rem;
     font-size: 0.95rem;
+  }
+
+  .map-footer-hook {
+    max-width: 48rem;
+    margin-top: 0.4rem;
+    padding: 0.8rem 1rem;
+    border-left: 2px solid var(--economics-accent-ink);
+    background: var(--economics-wash);
+    color: color-mix(in srgb, var(--color-atlas-ink) 80%, transparent);
+    font-family: var(--font-serif);
+    font-size: 0.92rem;
+    font-style: italic;
+    line-height: 1.7;
   }
 
   @media (min-width: 48rem) {
@@ -938,7 +1029,8 @@ const breadcrumbSchema = generateBreadcrumbSchema(
       grid-template-columns: 12rem minmax(0, 1fr);
     }
 
-    .map-footer > p:last-child {
+    .map-footer-note,
+    .map-footer-hook {
       grid-column: 2;
     }
   }
@@ -1027,7 +1119,7 @@ const breadcrumbSchema = generateBreadcrumbSchema(
       font-size: 1.35rem;
     }
 
-    .era-header > div:nth-child(2) p {
+    .era-note {
       display: none;
     }
 
@@ -1113,7 +1205,7 @@ const breadcrumbSchema = generateBreadcrumbSchema(
       font-size: 1.55rem;
     }
 
-    .era-header > div:nth-child(2) p {
+    .era-note {
       display: none;
     }
 
