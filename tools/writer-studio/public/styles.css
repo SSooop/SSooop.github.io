@@ -242,6 +242,43 @@ dialog select:focus {
   cursor: pointer;
 }
 
+.draft-item:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.draft-item-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.draft-item-head strong {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.draft-delete {
+  flex: none;
+  margin: -2px -4px 0 0;
+  padding: 3px 6px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 12px;
+  line-height: 1.2;
+  opacity: 0.6;
+}
+
+.draft-delete:hover,
+.draft-delete:focus-visible {
+  opacity: 1;
+  color: #a34036;
+  background: rgba(163, 64, 54, 0.1);
+}
+
 .draft-item:hover {
   background: rgba(248, 245, 240, 0.45);
 }

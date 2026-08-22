@@ -472,22 +472,54 @@ function renderDraftList() {
   elements.draftCount.textContent = String(drafts.length);
   elements.draftList.innerHTML = drafts
     .map(
-      (draft) => `<button class="draft-item ${
+      (draft) => `<div class="draft-item ${
         draft.id === state.activeId && !isSiteMode() ? 'active' : ''
-      }" data-id="${escapeHtml(draft.id)}" type="button">
-        <strong>${escapeHtml(draft.title)}</strong>
+      }" data-id="${escapeHtml(draft.id)}" role="button" tabindex="0">
+        <div class="draft-item-head">
+          <strong>${escapeHtml(draft.title)}</strong>
+          <button
+            class="draft-delete"
+            data-delete-id="${escapeHtml(draft.id)}"
+            type="button"
+            aria-label="删除草稿「${escapeHtml(draft.title)}」"
+            title="删除草稿"
+          >✕</button>
+        </div>
         <span class="draft-meta"><span>${escapeHtml(draft.date)}</span>${draft.languages
           .map((language) => `<span class="language-badge">${language}</span>`)
           .join('')}<span>${escapeHtml(stageLabels[draft.stage] || draft.stage || '构思')}</span>${
           draft.assetCount ? `<span>${draft.assetCount} 图</span>` : ''
         }</span>
-      </button>`
+      </div>`
     )
     .join('');
   if (!drafts.length) {
     elements.draftList.innerHTML =
       '<div class="ideas-empty">这个栏目还没有固定格式的写作任务。先把碎片放入 Ideas，再决定章节或文章结构。</div>';
   }
+}
+
+async function deleteDraft(id) {
+  const draft = state.drafts.find((entry) => entry.id === id);
+  const label = draft?.title || id;
+  if (
+    !confirm(`确认删除草稿「${label}」吗？\n.drafts/blog/${id}/ 将被彻底移除，此操作不可恢复。`)
+  ) {
+    return;
+  }
+  try {
+    await api(`/api/drafts/${encodeURIComponent(id)}`, { method: 'DELETE' });
+  } catch (error) {
+    alert(`删除失败：${error.message}`);
+    return;
+  }
+  if (state.activeId === id && !isSiteMode()) {
+    state.activeId = '';
+    state.editingSource = { kind: 'draft' };
+    state.workspace = null;
+    await setMode('writing');
+  }
+  await refreshState();
 }
 
 function renderSiteArticles() {
@@ -1492,8 +1524,22 @@ async function openPublicationPackage() {
 }
 
 elements.draftList.addEventListener('click', async (event) => {
+  const deleteButton = event.target.closest('[data-delete-id]');
+  if (deleteButton) {
+    await deleteDraft(deleteButton.dataset.deleteId);
+    return;
+  }
   const button = event.target.closest('[data-id]');
   if (button && (await setMode('writing'))) await loadDraft(button.dataset.id);
+});
+
+elements.draftList.addEventListener('keydown', (event) => {
+  if (event.key !== 'Enter' && event.key !== ' ') return;
+  if (event.target.closest('[data-delete-id]')) return;
+  const item = event.target.closest('[data-id]');
+  if (!item) return;
+  event.preventDefault();
+  item.dispatchEvent(new MouseEvent('click', { bubbles: true }));
 });
 
 elements.siteArticleList.addEventListener('click', async (event) => {

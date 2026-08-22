@@ -700,6 +700,40 @@ test('does not force book and research columns into the blog article adapter', a
   );
 });
 
+test('deletes a local draft and keeps unknown deletions harmless', async (context) => {
+  const { root } = await fixture();
+  const server = await createWriterServer({ root });
+  context.after(() => server.close());
+  const base = await listen(server);
+
+  const missingToken = await fetch(
+    `${base}/api/drafts/${encodeURIComponent('2026/latest-article')}`,
+    {
+      method: 'DELETE',
+    }
+  );
+  assert.equal(missingToken.status, 403);
+
+  const id = encodeURIComponent('2026/latest-article');
+  const directory = path.join(root, '.drafts', 'blog', '2026', 'latest-article');
+  const before = await writerFetch(base, `/api/drafts/${id}?lang=cn`);
+  assert.equal(before.status, 200);
+  assert.equal((await readdir(directory)).length > 0, true);
+
+  const deleteResponse = await writerFetch(base, `/api/drafts/${id}`, { method: 'DELETE' });
+  assert.equal(deleteResponse.status, 200);
+  assert.deepEqual(await deleteResponse.json(), { id: '2026/latest-article' });
+
+  const after = await writerFetch(base, `/api/drafts/${id}?lang=cn`);
+  assert.equal(after.status, 404);
+  await assert.rejects(() => readdir(directory), /ENOENT/);
+
+  const unknown = await writerFetch(base, `/api/drafts/${encodeURIComponent('2026/not-a-draft')}`, {
+    method: 'DELETE',
+  });
+  assert.equal(unknown.status, 404);
+});
+
 test('creates a bilingual draft and publishes it without overwriting content', async (context) => {
   const { root } = await fixture();
   const server = await createWriterServer({ root });
@@ -908,7 +942,10 @@ test('lists, reads, edits, and validates a published site article directly', asy
   });
   assert.equal(saveResponse.status, 200);
   assert.equal(
-    await readFile(path.join(root, 'src', 'content', 'blog', '2026', 'latest-article', 'cn.mdx'), 'utf8'),
+    await readFile(
+      path.join(root, 'src', 'content', 'blog', '2026', 'latest-article', 'cn.mdx'),
+      'utf8'
+    ),
     updated
   );
   assert.equal(
@@ -942,7 +979,7 @@ test('prefills a missing site language, creates it on save, and surfaces sibling
     [
       "console.log('Audited 1 content files across 1 translation groups.');",
       "console.log('\\nErrors (1):');",
-      "console.log('  - src/content/blog/2026/latest-article/cn.mdx: translations.en should be \"2026/latest-article/en\"');",
+      'console.log(\'  - src/content/blog/2026/latest-article/cn.mdx: translations.en should be "2026/latest-article/en"\');',
       'process.exit(1);',
       '',
     ].join('\n'),
@@ -971,7 +1008,10 @@ test('prefills a missing site language, creates it on save, and surfaces sibling
   assert.ok(created.siblingAuditErrors.length === 1);
   assert.match(created.siblingAuditErrors[0], /translations\.en/);
   assert.equal(
-    await readFile(path.join(root, 'src', 'content', 'blog', '2026', 'latest-article', 'en.mdx'), 'utf8'),
+    await readFile(
+      path.join(root, 'src', 'content', 'blog', '2026', 'latest-article', 'en.mdx'),
+      'utf8'
+    ),
     english
   );
 });
@@ -996,9 +1036,7 @@ test('rolls back a site-article save when the saved file itself fails the audit'
   const base = await listen(server);
 
   const id = encodeURIComponent('2026/latest-article');
-  const article = await (
-    await writerFetch(base, `/api/site-articles/${id}?lang=cn`)
-  ).json();
+  const article = await (await writerFetch(base, `/api/site-articles/${id}?lang=cn`)).json();
   const rejected = await writerFetch(base, `/api/site-articles/${id}?lang=cn`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
@@ -1011,7 +1049,10 @@ test('rolls back a site-article save when the saved file itself fails the audit'
   const details = await rejected.json();
   assert.match(details.details.errors[0], /stub audit rejection/);
   assert.equal(
-    await readFile(path.join(root, 'src', 'content', 'blog', '2026', 'latest-article', 'cn.mdx'), 'utf8'),
+    await readFile(
+      path.join(root, 'src', 'content', 'blog', '2026', 'latest-article', 'cn.mdx'),
+      'utf8'
+    ),
     content
   );
 });
@@ -1023,9 +1064,7 @@ test('rejects site saves that break article structure and unknown articles', asy
   const base = await listen(server);
 
   const id = encodeURIComponent('2026/latest-article');
-  const article = await (
-    await writerFetch(base, `/api/site-articles/${id}?lang=cn`)
-  ).json();
+  const article = await (await writerFetch(base, `/api/site-articles/${id}?lang=cn`)).json();
   const broken = await writerFetch(base, `/api/site-articles/${id}?lang=cn`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
@@ -1033,13 +1072,20 @@ test('rejects site saves that break article structure and unknown articles', asy
   });
   assert.equal(broken.status, 422);
   assert.equal(
-    await readFile(path.join(root, 'src', 'content', 'blog', '2026', 'latest-article', 'cn.mdx'), 'utf8'),
+    await readFile(
+      path.join(root, 'src', 'content', 'blog', '2026', 'latest-article', 'cn.mdx'),
+      'utf8'
+    ),
     content
   );
 
-  const missing = await writerFetch(base, `/api/site-articles/${encodeURIComponent('2026/missing')}/validate`, {
-    method: 'POST',
-  });
+  const missing = await writerFetch(
+    base,
+    `/api/site-articles/${encodeURIComponent('2026/missing')}/validate`,
+    {
+      method: 'POST',
+    }
+  );
   assert.equal(missing.status, 404);
 });
 
@@ -1072,5 +1118,8 @@ test('serves and stores site article images inside the published directory', asy
   });
   assert.equal(uploadResponse.status, 201);
   assert.equal(png.equals(await readFile(path.join(images, 'figure.png'))), true);
-  assert.equal((await readdir(path.join(root, '.drafts', 'blog', '2026', 'latest-article'))).length > 0, true);
+  assert.equal(
+    (await readdir(path.join(root, '.drafts', 'blog', '2026', 'latest-article'))).length > 0,
+    true
+  );
 });

@@ -236,9 +236,9 @@ async function listSiteArticles(root) {
   const articles = [];
   for (const year of years) {
     const yearRoot = path.join(blogRoot, year.name);
-    const entries = (
-      await readdir(yearRoot, { withFileTypes: true }).catch(() => [])
-    ).filter((entry) => entry.isDirectory());
+    const entries = (await readdir(yearRoot, { withFileTypes: true }).catch(() => [])).filter(
+      (entry) => entry.isDirectory()
+    );
     for (const article of entries) {
       const directory = path.join(yearRoot, article.name);
       const id = `${year.name}/${article.name}`;
@@ -797,6 +797,17 @@ export async function createWriterServer(options = {}) {
         return;
       }
 
+      if (route && request.method === 'DELETE' && !route.action) {
+        const directory = draftDirectory(root, route.id);
+        if (!(await exists(directory))) {
+          sendJson(response, 404, { error: 'Draft does not exist.' });
+          return;
+        }
+        await rm(directory, { recursive: true, force: true });
+        sendJson(response, 200, { id: route.id });
+        return;
+      }
+
       if (route && request.method === 'POST' && route.action === 'validate') {
         sendJson(response, 200, await validateDraft(root, route.id));
         return;
@@ -881,19 +892,15 @@ export async function createWriterServer(options = {}) {
 
       if (request.method === 'GET' && url.pathname === '/api/site-articles') {
         const articles = await listSiteArticles(root);
-        sendJson(
-          response,
-          200,
-          {
-            articles: articles.map(({ id, title, date, languages, hasDraft }) => ({
-              id,
-              title,
-              date,
-              languages,
-              hasDraft,
-            })),
-          }
-        );
+        sendJson(response, 200, {
+          articles: articles.map(({ id, title, date, languages, hasDraft }) => ({
+            id,
+            title,
+            date,
+            languages,
+            hasDraft,
+          })),
+        });
         return;
       }
 
@@ -974,7 +981,12 @@ export async function createWriterServer(options = {}) {
         return;
       }
 
-      if (siteRoute && request.method === 'POST' && siteRoute.action === 'assets' && !siteRoute.detail) {
+      if (
+        siteRoute &&
+        request.method === 'POST' &&
+        siteRoute.action === 'assets' &&
+        !siteRoute.detail
+      ) {
         if (!(await exists(contentDirectory(root, siteRoute.id)))) {
           sendJson(response, 404, { error: 'Site article does not exist.' });
           return;
@@ -984,7 +996,12 @@ export async function createWriterServer(options = {}) {
         return;
       }
 
-      if (siteRoute && request.method === 'GET' && siteRoute.action === 'assets' && siteRoute.detail) {
+      if (
+        siteRoute &&
+        request.method === 'GET' &&
+        siteRoute.action === 'assets' &&
+        siteRoute.detail
+      ) {
         const asset = siteAssetPath(root, siteRoute.id, decodeURIComponent(siteRoute.detail));
         if (!(await exists(asset.file))) {
           sendJson(response, 404, { error: 'Image does not exist.' });
