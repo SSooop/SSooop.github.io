@@ -40,7 +40,8 @@ Each article frontmatter requires:
 - `translationKey`: Shared bilingual article key, e.g. `"2025/article-slug"`
 - `translations`: Validated map of available versions, e.g. `zh` -> `"2025/article-slug/cn"`
 - `canonical`: The stable site URL for this exact language version
-- `publications`: Structured list of full-text publication surfaces
+- `publications`: Structured list of full-text publication surfaces (`site`, `wechat`, `xueqiu`, `medium`, `x`, `linkedin`)
+- `updated`: Optional revision date (YYYY-MM-DD, must not be earlier than `date`); feeds `dateModified`, the "updated" chip, and the sitemap `lastmod`. RSS keeps the original publication date.
 - `related`: Optional ordered list of up to three bilingual `translationKey` values
 - `keywords`: Optional SEO keyword list
 
@@ -79,8 +80,9 @@ For `en.mdx`, set `lang: "en"`, `canonical.url: "/en/blog/[year]/[slug]/en"`, an
 `translations.en: "[year]/[slug]/en"`.
 
 Do not add placeholder publication URLs. WeChat can be represented by `access:
-"qr_or_account"` and `account` until a real article URL exists. Medium is not part of the
-current content schema. Add `x` or `linkedin` only when that full-text surface is actually
+"qr_or_account"` and `account` until a real article URL exists; once a real WeChat URL
+exists, keep `access: "qr_or_account"` and add `url` alongside it. Record `xueqiu`,
+`medium`, `x`, or `linkedin` entries only when that full-text surface is actually
 published or intentionally planned.
 
 4. Keep article bodies focused on the article itself. Do not add hand-written opening summaries,

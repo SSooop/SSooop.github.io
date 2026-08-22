@@ -225,7 +225,8 @@ dialog select:focus {
 
 .draft-list {
   display: flex;
-  flex: 1;
+  flex: 1 1 auto;
+  min-height: 120px;
   flex-direction: column;
   gap: 6px;
   overflow: auto;
@@ -278,6 +279,66 @@ dialog select:focus {
   color: var(--accent-dark);
   font-weight: 700;
   text-transform: uppercase;
+}
+
+.site-articles-heading {
+  margin-top: 22px;
+}
+
+.site-article-search {
+  width: calc(100% - 14px);
+  margin: 0 7px 8px;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(248, 245, 240, 0.6);
+  font-size: 12px;
+}
+
+.site-article-search:focus {
+  outline: 2px solid rgba(114, 141, 149, 0.4);
+  outline-offset: 1px;
+}
+
+.site-article-list {
+  display: flex;
+  flex: 1.6 1 auto;
+  min-height: 140px;
+  flex-direction: column;
+  gap: 6px;
+  overflow: auto;
+}
+
+.source-banner {
+  margin: 14px 0 0;
+  padding: 10px 14px;
+  border: 1px solid rgba(114, 141, 149, 0.35);
+  border-left: 3px solid #526e77;
+  border-radius: 8px;
+  background: rgba(244, 247, 247, 0.9);
+  color: #45575e;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.source-banner strong {
+  color: #33454c;
+}
+
+.source-banner ul {
+  margin: 6px 0 0;
+  padding-left: 16px;
+}
+
+.editor-toolbar.site-mode .section-tab[data-section='outline'],
+.editor-toolbar.site-mode .section-tab[data-section='style'],
+.editor-toolbar.site-mode .workflow-arrow {
+  display: none;
+}
+
+.topbar.site-mode #publish-button,
+.topbar.site-mode #draft-skill-button {
+  display: none;
 }
 
 .local-notice {

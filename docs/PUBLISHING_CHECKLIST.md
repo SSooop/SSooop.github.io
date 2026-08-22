@@ -21,6 +21,9 @@ Use this checklist when publishing a new article or updating existing content.
 
 - `title`, `date`, `description`, `lang`, `translationKey`, `translations`, `canonical`, and
   `publications` are required.
+- `updated` is optional (YYYY-MM-DD, never earlier than `date`). Set it when a published article
+  is materially revised; it drives `dateModified`, the "updated" chip, and the sitemap `lastmod`.
+  RSS always keeps the original publication date.
 - `image`, `imageAlt`, `imageCaption`, `imageSource`, and `imageSourceUrl` are optional, but
   `imageAlt` is required when `image` is present.
 - `translationKey` must be `YYYY/slug`.
@@ -28,11 +31,13 @@ Use this checklist when publishing a new article or updating existing content.
   instead of adding past-article or related-reading sections to the body.
 - `canonical.url` must be the stable site URL path for that language version.
 - The `site` publication must be `published`.
-- Use WeChat `access: "qr_or_account"` and `account: "智药深瞳"` until a real URL exists.
-- Add `x` or `linkedin` only when that full-text surface is actually published or intentionally
-  planned.
+- Use WeChat `access: "qr_or_account"` and `account: "智药深瞳"` until a real URL exists; when the
+  real URL exists, keep `access: "qr_or_account"` and add `url` alongside it.
+- Record `xueqiu`, `medium`, `x`, or `linkedin` entries only when that full-text surface is
+  actually published or intentionally planned.
 - Record the real external URL once it exists. The article footer combines publication metadata
-  from both language editions, so Chinese and English pages expose the same complete channel list.
+  from both language editions and shows per-language status when the two editions differ, so
+  Chinese and English pages expose the same complete channel list.
 
 ## Local Verification
 

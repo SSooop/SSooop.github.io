@@ -25,9 +25,12 @@ import {
 } from './idea-store.mjs';
 import {
   ensureTaskWorkspace,
+  listAssets,
   publishTaskAssets,
   readTaskWorkspace,
+  saveSiteAsset,
   saveTaskAsset,
+  siteAssetPath,
   TASK_DOCUMENTS,
   taskAssetPath,
   updateTaskStage,
@@ -74,7 +77,12 @@ async function atomicWriteText(file, content, expectedHash, afterTemporaryWrite)
   try {
     await writeFile(temporary, content, 'utf8');
     await afterTemporaryWrite?.({ target: file, temporary });
-    const current = await readFile(file, 'utf8');
+    let current = '';
+    try {
+      current = await readFile(file, 'utf8');
+    } catch (error) {
+      if (error?.code !== 'ENOENT') throw error;
+    }
     const currentHash = contentHash(current);
     if (currentHash !== expectedHash) return { conflict: true, currentHash };
     await rename(temporary, file);
@@ -216,37 +224,49 @@ function contentDirectory(root, id) {
   return path.join(root, 'src', 'content', 'blog', ...id.split('/'));
 }
 
-async function newestArticle(root) {
+async function listSiteArticles(root) {
   const blogRoot = path.join(root, 'src', 'content', 'blog');
-  const years = (await readdir(blogRoot, { withFileTypes: true })).filter((entry) =>
-    entry.isDirectory()
-  );
-  const candidates = [];
+  const years = (
+    await readdir(blogRoot, { withFileTypes: true }).catch((error) => {
+      if (error?.code === 'ENOENT') return [];
+      throw error;
+    })
+  ).filter((entry) => entry.isDirectory());
 
+  const articles = [];
   for (const year of years) {
     const yearRoot = path.join(blogRoot, year.name);
-    const articles = (await readdir(yearRoot, { withFileTypes: true })).filter((entry) =>
-      entry.isDirectory()
-    );
-    for (const article of articles) {
-      const articleRoot = path.join(yearRoot, article.name);
+    const entries = (
+      await readdir(yearRoot, { withFileTypes: true }).catch(() => [])
+    ).filter((entry) => entry.isDirectory());
+    for (const article of entries) {
+      const directory = path.join(yearRoot, article.name);
+      const id = `${year.name}/${article.name}`;
+      const languages = [];
+      let primary = null;
       for (const language of ['cn', 'en']) {
-        const file = path.join(articleRoot, `${language}.mdx`);
+        const file = path.join(directory, `${language}.mdx`);
         if (!(await exists(file))) continue;
-        const content = await readFile(file, 'utf8');
-        const metadata = parseFrontmatter(content);
-        if (metadata.date) {
-          candidates.push({
-            date: metadata.date,
-            id: `${year.name}/${article.name}`,
-            directory: articleRoot,
-          });
-        }
+        languages.push(language);
+        primary ||= parseFrontmatter(await readFile(file, 'utf8'));
       }
+      articles.push({
+        id,
+        title: primary?.title || article.name,
+        date: primary?.date || year.name,
+        languages,
+        hasDraft: await exists(draftDirectory(root, id)),
+        directory,
+      });
     }
   }
 
-  return candidates.sort((left, right) => right.date.localeCompare(left.date))[0] ?? null;
+  return articles.sort((left, right) => right.date.localeCompare(left.date));
+}
+
+async function newestArticle(root) {
+  const articles = await listSiteArticles(root);
+  return articles.find((article) => article.languages.length > 0) ?? null;
 }
 
 export async function seedExampleDraft(root = defaultRoot) {
@@ -387,8 +407,7 @@ function validateDraftContent(id, language, content) {
   return { errors, warnings, metadata };
 }
 
-async function validateDraft(root, id) {
-  const directory = draftDirectory(root, id);
+async function validateArticleDirectory(directory, id) {
   const results = {};
   const aggregateErrors = [];
   const aggregateWarnings = [];
@@ -413,6 +432,10 @@ async function validateDraft(root, id) {
     warnings: aggregateWarnings,
     results,
   };
+}
+
+async function validateDraft(root, id) {
+  return validateArticleDirectory(draftDirectory(root, id), id);
 }
 
 async function publishDraft(root, id) {
@@ -448,11 +471,12 @@ async function publishDraft(root, id) {
   return { target: path.relative(root, target).replace(/\\/g, '/') };
 }
 
-async function runContentAudit(root) {
+async function spawnContentAudit(root) {
   const script = path.join(root, 'scripts', 'audit-content.mjs');
-  if (!(await exists(script))) return;
-
-  await new Promise((resolve, reject) => {
+  if (!(await exists(script))) {
+    return { skipped: true, code: 0, output: '' };
+  }
+  return new Promise((resolve, reject) => {
     const child = spawn(process.execPath, [script], {
       cwd: root,
       env: { ...process.env, NO_COLOR: '1' },
@@ -468,21 +492,126 @@ async function runContentAudit(root) {
     });
     child.on('error', reject);
     child.on('close', (code) => {
-      if (code === 0) {
-        resolve();
-        return;
-      }
-      const error = new Error('Content audit failed; the published copy was rolled back.');
-      error.status = 422;
-      error.details = { errors: output.trim().split(/\r?\n/).slice(-12) };
-      reject(error);
+      resolve({ skipped: false, code: code ?? 1, output });
     });
+  });
+}
+
+async function runContentAudit(root) {
+  const { code, output } = await spawnContentAudit(root);
+  if (code === 0) return;
+
+  const error = new Error('Content audit failed; the published copy was rolled back.');
+  error.status = 422;
+  error.details = { errors: output.trim().split(/\r?\n/).slice(-12) };
+  throw error;
+}
+
+async function auditSiteArticle(root, id, language) {
+  const { output } = await spawnContentAudit(root);
+  const relativeDir = ['src', 'content', 'blog', ...id.split('/')].join('/');
+  const errorSection = output.split(/\r?\nErrors \(\d+\):\r?\n/)[1] || '';
+  const articleErrors = errorSection
+    .split(/\r?\n/)
+    .map((line) => line.trim())
+    .filter((line) => line.startsWith(`- ${relativeDir}/`))
+    .map((line) => line.slice(2));
+  const savedPrefix = `${relativeDir}/${language}.mdx:`;
+  return {
+    savedFileErrors: articleErrors.filter((line) => line.startsWith(savedPrefix)),
+    siblingFileErrors: articleErrors.filter((line) => !line.startsWith(savedPrefix)),
+  };
+}
+
+async function siteArticleTemplate(root, id, language) {
+  const directory = contentDirectory(root, id);
+  let metadata = null;
+  for (const sibling of ['cn', 'en']) {
+    if (sibling === language) continue;
+    const file = path.join(directory, `${sibling}.mdx`);
+    if (await exists(file)) {
+      metadata = parseFrontmatter(await readFile(file, 'utf8'));
+      break;
+    }
+  }
+  const fallbackTitle = id.split('/')[1] || id;
+  const date = /^\d{4}-\d{2}-\d{2}$/.test(metadata?.date || '')
+    ? metadata.date
+    : new Date().toISOString().slice(0, 10);
+  return articleTemplate({
+    title: metadata?.title || fallbackTitle,
+    date,
+    description: metadata?.description || metadata?.title || fallbackTitle,
+    language,
+    id,
+  });
+}
+
+async function saveSiteArticleLanguage(root, id, language, input, afterTemporaryWrite) {
+  const directory = contentDirectory(root, id);
+  if (!(await exists(directory))) {
+    const error = new Error('Site article does not exist; publish it from a draft first.');
+    error.status = 404;
+    throw error;
+  }
+
+  const file = path.join(directory, `${language}.mdx`);
+  return serializeFileMutation(file, async () => {
+    const fileExists = await exists(file);
+    const current = fileExists ? await readFile(file, 'utf8') : '';
+    if (hasWriteConflict(current, input)) {
+      return { conflict: true, currentHash: contentHash(current) };
+    }
+
+    const validation = validateDraftContent(id, language, input.content);
+    if (validation.errors.length) {
+      const error = new Error('Site article validation failed; nothing was written.');
+      error.status = 422;
+      error.details = {
+        errors: validation.errors.map((message) => `${language}: ${message}`),
+        warnings: validation.warnings.map((message) => `${language}: ${message}`),
+      };
+      throw error;
+    }
+
+    const writeResult = await atomicWriteText(
+      file,
+      input.content,
+      contentHash(current),
+      afterTemporaryWrite
+    );
+    const audit = await auditSiteArticle(root, id, language);
+    if (audit.savedFileErrors.length === 0) {
+      return {
+        ...writeResult,
+        languageCreated: !fileExists,
+        siblingAuditErrors: audit.siblingFileErrors,
+      };
+    }
+
+    if (fileExists) {
+      await atomicWriteText(file, current, contentHash(input.content));
+    } else {
+      await rm(file, { force: true });
+    }
+    const error = new Error('Content audit failed for this file; the site copy was rolled back.');
+    error.status = 422;
+    error.details = { errors: audit.savedFileErrors };
+    throw error;
   });
 }
 
 function parseDraftRoute(pathname) {
   const match = pathname.match(
     /^\/api\/drafts\/(\d{4}%2F[^/]+|\d{4}\/[^/]+)(?:\/([^/]+))?(?:\/([^/]+))?$/i
+  );
+  if (!match) return null;
+  return { id: safeDraftId(match[1]), action: match[2] ?? '', detail: match[3] ?? '' };
+}
+
+function parseSiteArticleRoute(pathname) {
+  const match = pathname.match(
+    /^\/api\/site-articles\/(\d{4}%2F[^/]+|\d{4}\/[^/]+)(?:\/([^/]+))?(?:\/([^/]+))?$/i
   );
   if (!match) return null;
   return { id: safeDraftId(match[1]), action: match[2] ?? '', detail: match[3] ?? '' };
@@ -735,6 +864,128 @@ export async function createWriterServer(options = {}) {
 
       if (route && request.method === 'GET' && route.action === 'assets' && route.detail) {
         const asset = await taskAssetPath(root, route.id, decodeURIComponent(route.detail));
+        if (!(await exists(asset.file))) {
+          sendJson(response, 404, { error: 'Image does not exist.' });
+          return;
+        }
+        response.writeHead(200, {
+          ...securityHeaders,
+          'Content-Security-Policy':
+            "default-src 'none'; img-src 'self' data:; style-src 'unsafe-inline'; sandbox",
+          'Content-Type': asset.contentType,
+          'Cache-Control': 'no-store',
+        });
+        createReadStream(asset.file).pipe(response);
+        return;
+      }
+
+      if (request.method === 'GET' && url.pathname === '/api/site-articles') {
+        const articles = await listSiteArticles(root);
+        sendJson(
+          response,
+          200,
+          {
+            articles: articles.map(({ id, title, date, languages, hasDraft }) => ({
+              id,
+              title,
+              date,
+              languages,
+              hasDraft,
+            })),
+          }
+        );
+        return;
+      }
+
+      const siteRoute = parseSiteArticleRoute(url.pathname);
+      if (siteRoute && request.method === 'GET' && !siteRoute.action) {
+        const language = safeLanguage(url.searchParams.get('lang'));
+        const directory = contentDirectory(root, siteRoute.id);
+        if (!(await exists(directory))) {
+          sendJson(response, 404, { error: 'Site article does not exist.' });
+          return;
+        }
+        const assets = (await listAssets(directory)).map((asset) => asset.name);
+        const file = path.join(directory, `${language}.mdx`);
+        if (await exists(file)) {
+          const content = await readFile(file, 'utf8');
+          sendJson(response, 200, {
+            id: siteRoute.id,
+            language,
+            content,
+            hash: contentHash(content),
+            metadata: parseFrontmatter(content),
+            assets,
+          });
+        } else {
+          const template = await siteArticleTemplate(root, siteRoute.id, language);
+          sendJson(response, 200, {
+            id: siteRoute.id,
+            language,
+            content: template,
+            hash: contentHash(''),
+            missing: true,
+            metadata: parseFrontmatter(template),
+            assets,
+          });
+        }
+        return;
+      }
+
+      if (siteRoute && request.method === 'PUT' && !siteRoute.action) {
+        const language = safeLanguage(url.searchParams.get('lang'));
+        const input = await readBody(request);
+        if (typeof input.content !== 'string') {
+          sendJson(response, 400, { error: 'Content must be a string.' });
+          return;
+        }
+        if (typeof input.baseHash !== 'string') {
+          sendJson(response, 428, { error: 'A base content hash is required.' });
+          return;
+        }
+        const result = await saveSiteArticleLanguage(
+          root,
+          siteRoute.id,
+          language,
+          input,
+          afterTemporaryWrite
+        );
+        if (result.conflict) {
+          sendJson(response, 409, {
+            error: 'Site article changed on disk. The browser copy was not written.',
+            currentHash: result.currentHash,
+          });
+          return;
+        }
+        sendJson(response, 200, result);
+        return;
+      }
+
+      if (siteRoute && request.method === 'POST' && siteRoute.action === 'validate') {
+        if (!(await exists(contentDirectory(root, siteRoute.id)))) {
+          sendJson(response, 404, { error: 'Site article does not exist.' });
+          return;
+        }
+        sendJson(
+          response,
+          200,
+          await validateArticleDirectory(contentDirectory(root, siteRoute.id), siteRoute.id)
+        );
+        return;
+      }
+
+      if (siteRoute && request.method === 'POST' && siteRoute.action === 'assets' && !siteRoute.detail) {
+        if (!(await exists(contentDirectory(root, siteRoute.id)))) {
+          sendJson(response, 404, { error: 'Site article does not exist.' });
+          return;
+        }
+        const input = await readBody(request);
+        sendJson(response, 201, { asset: await saveSiteAsset(root, siteRoute.id, input) });
+        return;
+      }
+
+      if (siteRoute && request.method === 'GET' && siteRoute.action === 'assets' && siteRoute.detail) {
+        const asset = siteAssetPath(root, siteRoute.id, decodeURIComponent(siteRoute.detail));
         if (!(await exists(asset.file))) {
           sendJson(response, 404, { error: 'Image does not exist.' });
           return;

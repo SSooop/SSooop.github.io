@@ -103,6 +103,7 @@ openSpec/
 .agents/
 .claude/
 .codex/
+.zcode/
 CLAUDE.md
 
 # ------------------------------------------

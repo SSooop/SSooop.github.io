@@ -35,10 +35,28 @@ It polls the task directory and reloads external Skill or editor changes when th
 local changes. The `$draft-from-outline` control exposes only the explicit Skill invocation for the
 active task; Writer Studio itself does not pretend to call a model or hide a generated prompt.
 
+## Published site articles
+
+The sidebar's **站点文章** section lists every published article under `src/content/blog/` with a
+search box. Clicking an article opens it directly in the editor as the **site canonical edition**:
+
+- Saves write straight into `src/content/blog/YYYY/slug/{cn,en}.mdx` through the same atomic,
+  conflict-checked path as drafts. Going live is still gated by git commit, push, and CI.
+- Structural validation runs before every write, and the repository content audit runs after it.
+  A write is rolled back only when the saved file itself fails the audit; follow-up work in the
+  sibling language file is reported as a toast instead of blocking the save.
+- A missing language file opens with a prefilled frontmatter template (title and date carried over
+  from the sibling edition) and is created on save. Update the sibling's `translations` afterwards.
+- Images upload into the published article's `images/` directory; nothing in `.drafts/` changes.
+- When a `.drafts/` copy exists for the same article, a banner warns that the two copies do not
+  sync — the site edition being edited is the canonical one.
+
 ## Manual distribution package
 
 For an active article, click **平台发布包**. Writer Studio creates platform-specific output without
-contacting or signing in to any external service:
+contacting or signing in to any external service. The package is built from the draft copy while an
+article is in progress, and from the published site copy (`src/content/blog/`) for any article
+opened from the **站点文章** list — so republishing existing essays never depends on a stale draft.
 
 - WeChat, Xueqiu, Medium, LinkedIn Article, and X Article receive conservative semantic HTML with
   inline styles, plus a plain-text fallback.
@@ -63,8 +81,9 @@ API guarantee from the destination platforms, so always inspect the pasted draft
 - Column definitions are explicit; book and research projects cannot accidentally publish through
   the blog adapter.
 - Draft identifiers are restricted to `YYYY/kebab-case-slug`.
-- The API can write only language files under `.drafts/blog/` and can publish only into
-  `src/content/blog/`.
+- The API can write language files under `.drafts/blog/`, publish new articles only into
+  `src/content/blog/` (create-only), and edit the language files and images of articles that
+  already exist in `src/content/blog/`. It can never create or delete an article directory.
 - Uploaded images are restricted to common raster formats, capped at 8 MB, and kept inside the
   active article task.
 - The two project Skills live under `.codex/skills/`; neither Skill publishes, commits, pushes, or

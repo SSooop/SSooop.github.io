@@ -46,7 +46,7 @@ export async function GET() {
 
   const entries = posts.map((post: BlogPost) => ({
     url: absoluteUrl(post.data.canonical.url),
-    lastModified: post.data.date,
+    lastModified: post.data.updated ?? post.data.date,
     changeFrequency: 'monthly' as const,
     priority: 0.7,
   }));

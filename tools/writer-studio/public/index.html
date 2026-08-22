@@ -64,6 +64,19 @@
         </div>
         <nav class="draft-list" id="draft-list" aria-label="草稿列表"></nav>
 
+        <div class="sidebar-section-heading site-articles-heading">
+          <span>站点文章</span>
+          <span class="count" id="site-article-count">0</span>
+        </div>
+        <input
+          class="site-article-search"
+          id="site-article-search"
+          type="search"
+          placeholder="搜索已发布文章…"
+          aria-label="搜索站点文章"
+        />
+        <nav class="site-article-list" id="site-article-list" aria-label="站点文章列表"></nav>
+
         <footer class="local-notice">
           <span class="status-dot" aria-hidden="true"></span>
           <div>
@@ -116,6 +129,8 @@
             </button>
           </div>
         </header>
+
+        <div class="source-banner hidden" id="source-banner" aria-live="polite"></div>
 
         <section class="stage-bar" id="writing-stage-bar" aria-label="文章任务阶段">
           <div class="stage-heading">

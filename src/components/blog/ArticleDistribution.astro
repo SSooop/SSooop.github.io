@@ -1,6 +1,6 @@
 ---
 interface Publication {
-  platform: 'site' | 'wechat' | 'x' | 'linkedin';
+  platform: 'site' | 'wechat' | 'xueqiu' | 'medium' | 'x' | 'linkedin';
   mode: 'full_text';
   status: 'published' | 'planned';
   url?: string;
@@ -30,6 +30,7 @@ const copy =
         published: '已发布',
         planned: '计划中',
         account: '账号',
+        statusColon: '：',
         language: { zh: '中文', en: 'English' },
         boundary:
           '编辑边界：本文只讨论产业与长期价值逻辑，不分析具体企业或个股；不提供具体技术方案；内容仅代表个人观点，不构成投资建议。',
@@ -42,6 +43,7 @@ const copy =
         published: 'Published',
         planned: 'Planned',
         account: 'Account',
+        statusColon: ': ',
         language: { zh: '中文', en: 'English' },
         boundary:
           'Editorial boundary: This essay examines industry and long-term value logic, not individual companies or securities. It does not provide specific technical solutions, and its views are personal perspectives rather than investment advice.',
@@ -50,6 +52,8 @@ const copy =
 const platformLabels = {
   site: copy.officialSite,
   wechat: 'WeChat',
+  xueqiu: 'Xueqiu',
+  medium: 'Medium',
   x: 'X',
   linkedin: 'LinkedIn',
 };
@@ -68,10 +72,9 @@ const externalChannels = new Map<
   {
     key: string;
     platform: Publication['platform'];
-    status: Publication['status'];
     url?: string;
     account?: string;
-    languages: Array<'en' | 'zh'>;
+    editions: Array<{ lang: 'en' | 'zh'; status: Publication['status'] }>;
   }
 >();
 
@@ -79,27 +82,62 @@ for (const edition of editions) {
   for (const publication of edition.publications) {
     if (publication.platform === 'site') continue;
 
-    const key = `${publication.platform}:${publication.url || publication.account || publication.status}`;
+    const key = `${publication.platform}:${publication.url || publication.account || ''}`;
     const existing = externalChannels.get(key);
 
     if (existing) {
-      if (!existing.languages.includes(edition.lang)) existing.languages.push(edition.lang);
-      if (publication.status === 'published') existing.status = 'published';
+      const priorEdition = existing.editions.find((item) => item.lang === edition.lang);
+      if (priorEdition) {
+        if (publication.status === 'published') priorEdition.status = 'published';
+      } else {
+        existing.editions.push({ lang: edition.lang, status: publication.status });
+      }
       continue;
     }
 
     externalChannels.set(key, {
       key,
       platform: publication.platform,
-      status: publication.status,
       url: publication.url,
       account: publication.account,
-      languages: [edition.lang],
+      editions: [{ lang: edition.lang, status: publication.status }],
     });
   }
 }
 
-const channels = [...siteChannels, ...externalChannels.values()];
+function channelStatusLine(
+  channelEditions: Array<{ lang: 'en' | 'zh'; status: Publication['status'] }>
+) {
+  const statuses = new Set(channelEditions.map((item) => item.status));
+  const languages = channelEditions.map((item) => copy.language[item.lang]);
+  const overall = statuses.has('published') ? copy.published : copy.planned;
+  if (statuses.size === 1) {
+    return `${languages.join(' / ')} · ${overall}`;
+  }
+  return channelEditions
+    .map(
+      (item) =>
+        `${copy.language[item.lang]}${copy.statusColon}${item.status === 'published' ? copy.published : copy.planned}`
+    )
+    .join(' · ');
+}
+
+const channels = [
+  ...siteChannels.map((channel) => ({
+    ...channel,
+    statusLine: channelStatusLine(
+      channel.languages.map((lang) => ({ lang, status: 'published' as const }))
+    ),
+  })),
+  ...[...externalChannels.values()].map((channel) => ({
+    ...channel,
+    status: channel.editions.every((item) => item.status === 'published')
+      ? ('published' as const)
+      : ('planned' as const),
+    languages: channel.editions.map((item) => item.lang),
+    statusLine: channelStatusLine(channel.editions),
+  })),
+];
 ---
 
 <aside class="article-distribution" aria-labelledby="article-distribution-heading">
@@ -134,11 +172,7 @@ const channels = [...siteChannels, ...externalChannels.values()];
               </span>
             </div>
           )}
-          <p>
-            {channel.languages.map((language) => copy.language[language]).join(' / ')}
-            <span aria-hidden="true"> · </span>
-            {channel.status === 'published' ? copy.published : copy.planned}
-          </p>
+          <p>{channel.statusLine}</p>
         </li>
       ))
     }

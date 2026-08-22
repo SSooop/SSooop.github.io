@@ -286,7 +286,7 @@ async function readTaskFile(directory, includeState = false) {
   return includeState ? state : state.task;
 }
 
-async function listAssets(directory, fallbackDirectory = '') {
+export async function listAssets(directory, fallbackDirectory = '') {
   const assets = new Map();
   for (const [sourceDirectory, origin] of [
     [directory, 'draft'],
@@ -412,6 +412,18 @@ function safeAssetName(value, allowedExtensions = imageExtensions, normalize = f
 }
 
 export async function saveTaskAsset(root, id, input) {
+  const directory = path.join(draftDirectory(root, id), 'images');
+  await mkdir(directory, { recursive: true });
+  return saveImageAsset(directory, input);
+}
+
+export async function saveSiteAsset(root, id, input) {
+  const directory = path.join(siteDirectory(root, id), 'images');
+  await mkdir(directory, { recursive: true });
+  return saveImageAsset(directory, input);
+}
+
+async function saveImageAsset(directory, input) {
   const name = safeAssetName(input.name, uploadImageExtensions, true);
   const bytes = Buffer.from(String(input.base64 || ''), 'base64');
   if (bytes.length === 0 || bytes.length > 8 * 1024 * 1024) {
@@ -419,8 +431,6 @@ export async function saveTaskAsset(root, id, input) {
     error.status = 400;
     throw error;
   }
-  const directory = path.join(draftDirectory(root, id), 'images');
-  await mkdir(directory, { recursive: true });
   try {
     await writeFile(path.join(directory, name), bytes, { flag: 'wx' });
   } catch (error) {
@@ -432,6 +442,19 @@ export async function saveTaskAsset(root, id, input) {
     throw error;
   }
   return { name, size: bytes.length };
+}
+
+function siteDirectory(root, id) {
+  return path.join(root, 'src', 'content', 'blog', ...id.split('/'));
+}
+
+export function siteAssetPath(root, id, value) {
+  const name = safeAssetName(value);
+  const file = path.join(siteDirectory(root, id), 'images', name);
+  return {
+    file,
+    contentType: imageContentTypes[path.extname(name).toLowerCase()],
+  };
 }
 
 export async function taskAssetPath(root, id, value) {

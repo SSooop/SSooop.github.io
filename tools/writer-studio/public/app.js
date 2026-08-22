@@ -9,6 +9,10 @@ const state = {
   ideaCounts: {},
   activeColumnId: 'intellipharma',
   activeId: '',
+  editingSource: { kind: 'draft' },
+  siteArticles: [],
+  siteArticleFilter: '',
+  activeSiteArticle: null,
   mode: 'writing',
   language: 'cn',
   section: 'outline',
@@ -52,6 +56,10 @@ const elements = Object.fromEntries(
   [
     'draft-list',
     'draft-count',
+    'site-article-list',
+    'site-article-count',
+    'site-article-search',
+    'source-banner',
     'column-select',
     'idea-count',
     'new-idea-button',
@@ -344,6 +352,33 @@ function currentDraft() {
   return state.drafts.find((draft) => draft.id === state.activeId);
 }
 
+function isSiteMode() {
+  return state.editingSource.kind === 'site';
+}
+
+function articleBase() {
+  const scope = isSiteMode() ? 'site-articles' : 'drafts';
+  return `/api/${scope}/${encodeURIComponent(state.activeId)}`;
+}
+
+function assetBase() {
+  return `${articleBase()}/assets`;
+}
+
+function activeSiteArticleEntry() {
+  return state.siteArticles.find((article) => article.id === state.activeId);
+}
+
+function publicationLanguages() {
+  if (isSiteMode()) return activeSiteArticleEntry()?.languages || [state.language];
+  return currentDraft()?.languages || [];
+}
+
+function availableAssetNames() {
+  if (isSiteMode()) return new Set(state.activeSiteArticle?.assets || []);
+  return new Set((state.workspace?.assets || []).map((asset) => asset.name));
+}
+
 function currentColumn() {
   return state.columns.find((column) => column.id === state.activeColumnId);
 }
@@ -438,7 +473,7 @@ function renderDraftList() {
   elements.draftList.innerHTML = drafts
     .map(
       (draft) => `<button class="draft-item ${
-        draft.id === state.activeId ? 'active' : ''
+        draft.id === state.activeId && !isSiteMode() ? 'active' : ''
       }" data-id="${escapeHtml(draft.id)}" type="button">
         <strong>${escapeHtml(draft.title)}</strong>
         <span class="draft-meta"><span>${escapeHtml(draft.date)}</span>${draft.languages
@@ -452,6 +487,123 @@ function renderDraftList() {
   if (!drafts.length) {
     elements.draftList.innerHTML =
       '<div class="ideas-empty">这个栏目还没有固定格式的写作任务。先把碎片放入 Ideas，再决定章节或文章结构。</div>';
+  }
+}
+
+function renderSiteArticles() {
+  const filter = state.siteArticleFilter.trim().toLowerCase();
+  const articles = state.siteArticles.filter(
+    (article) =>
+      !filter ||
+      article.title.toLowerCase().includes(filter) ||
+      article.id.toLowerCase().includes(filter)
+  );
+  elements.siteArticleCount.textContent = String(state.siteArticles.length);
+  elements.siteArticleList.innerHTML = articles
+    .map(
+      (article) => `<button class="draft-item site-article-item ${
+        isSiteMode() && article.id === state.activeId ? 'active' : ''
+      }" data-site-article="${escapeHtml(article.id)}" type="button">
+        <strong>${escapeHtml(article.title)}</strong>
+        <span class="draft-meta"><span>${escapeHtml(article.date)}</span>${article.languages
+          .map((language) => `<span class="language-badge">${language}</span>`)
+          .join('')}${article.hasDraft ? '<span>有草稿副本</span>' : '<span>正式版本</span>'}</span>
+      </button>`
+    )
+    .join('');
+}
+
+async function refreshSiteArticles() {
+  try {
+    const payload = await api('/api/site-articles');
+    state.siteArticles = payload.articles || [];
+    renderSiteArticles();
+  } catch {
+    elements.siteArticleList.innerHTML = '<div class="ideas-empty">站点文章目录暂时不可读。</div>';
+  }
+}
+
+function updateWritingModeChrome() {
+  const site = isSiteMode();
+  elements.writingStageBar.classList.toggle('hidden', site);
+  elements.writingTopbar.classList.toggle('site-mode', site);
+  elements.writingEditorToolbar.classList.toggle('site-mode', site);
+}
+
+function updateSourceBanner() {
+  if (!isSiteMode()) {
+    elements.sourceBanner.classList.add('hidden');
+    elements.sourceBanner.innerHTML = '';
+    return;
+  }
+  const entry = activeSiteArticleEntry();
+  const notes = [];
+  notes.push(
+    '正在编辑 <strong>站点正式版本</strong>（src/content/blog/）：保存直接写入正式目录，上线仍由 git push 与 CI 决定。'
+  );
+  if (entry?.hasDraft) {
+    notes.push('该文章存在本地草稿副本；此处编辑不会同步到草稿，草稿内容可能已过时。');
+  }
+  if (state.section === 'article' && entry && !entry.languages.includes(state.language)) {
+    notes.push(
+      `${state.language}.mdx 尚未创建：编辑器已预填模板，保存时将新建该语言文件；随后请更新另一语言的 translations。`
+    );
+  }
+  elements.sourceBanner.innerHTML = `<ul>${notes.map((note) => `<li>${note}</li>`).join('')}</ul>`;
+  elements.sourceBanner.classList.remove('hidden');
+}
+
+async function refreshActiveSiteArticleAssets() {
+  if (!isSiteMode()) return;
+  try {
+    const payload = await api(`${articleBase()}?lang=${encodeURIComponent(state.language)}`);
+    state.activeSiteArticle = {
+      ...(state.activeSiteArticle || {}),
+      assets: payload.assets || [],
+    };
+  } catch {
+    // 图片列表刷新失败时保留旧清单
+  }
+}
+
+async function openSiteArticle(id, preferredLanguage = 'cn') {
+  if (state.loading) return false;
+  state.loading = true;
+  try {
+    if (!(await saveCurrent())) return false;
+    const entry = state.siteArticles.find((article) => article.id === id);
+    if (!entry) return false;
+    state.editingSource = { kind: 'site' };
+    state.activeId = id;
+    state.activeSiteArticle = { id, languages: entry.languages, assets: [] };
+    state.language = entry.languages.includes(preferredLanguage)
+      ? preferredLanguage
+      : entry.languages[0] || 'cn';
+    state.section = 'article';
+    state.workspace = null;
+
+    elements.documentTitle.textContent = entry.title || id;
+    elements.documentPath.textContent = `src/content/blog/${id}/${state.language}.mdx`;
+    elements.emptyState.classList.add('hidden');
+    elements.writingArea.classList.remove('hidden');
+    elements.saveButton.disabled = false;
+    elements.validateButton.disabled = false;
+    elements.publicationPackageButton.disabled = false;
+    elements.publishButton.disabled = true;
+    elements.publishButton.textContent = '发布到站点';
+    document.querySelectorAll('.language-tab').forEach((tab) => {
+      setTabState(tab, tab.dataset.language === state.language);
+      tab.disabled = false;
+    });
+    updateWritingModeChrome();
+    updateSourceBanner();
+    renderDraftList();
+    renderSiteArticles();
+    await loadSection('article', { skipSave: true });
+    elements.syncStatus.textContent = '编辑站点正式版本';
+    return true;
+  } finally {
+    state.loading = false;
   }
 }
 
@@ -478,19 +630,22 @@ function renderStages() {
 }
 
 function renderAssets() {
-  const assets = state.workspace?.assets || [];
+  const assets = isSiteMode()
+    ? (state.activeSiteArticle?.assets || []).map((name) => ({ name, origin: 'site' }))
+    : state.workspace?.assets || [];
   elements.assetSummary.textContent = `${assets.length} 张 · 上传与插入`;
   if (!assets.length) {
-    elements.assetGrid.innerHTML =
-      '<div class="asset-empty">还没有图片。让 Codex 把生成或整理好的图片保存到本任务的 <code>images/</code>，或点击“上传图片”。</div>';
+    elements.assetGrid.innerHTML = isSiteMode()
+      ? '<div class="asset-empty">这篇正式文章还没有图片。上传的图片会直接写入站点内容目录的 <code>images/</code>。</div>'
+      : '<div class="asset-empty">还没有图片。让 Codex 把生成或整理好的图片保存到本任务的 <code>images/</code>，或点击“上传图片”。</div>';
     return;
   }
   elements.assetGrid.innerHTML = assets
     .map(
       (asset) => `<article class="asset-card">
-        <img src="/api/drafts/${encodeURIComponent(state.activeId)}/assets/${encodeURIComponent(
+        <img src="${assetBase()}/${encodeURIComponent(asset.name)}" alt="${escapeHtml(
           asset.name
-        )}" alt="${escapeHtml(asset.name)}" />
+        )}" />
         <div class="asset-card-body"><strong>${escapeHtml(
           asset.name
         )}</strong><button data-insert-asset="${escapeHtml(
@@ -652,7 +807,10 @@ async function setMode(mode) {
     await refreshIdeas();
     return true;
   }
-  if (state.activeId && currentDraft()?.columnId === state.activeColumnId) {
+  if (
+    (state.activeId && currentDraft()?.columnId === state.activeColumnId) ||
+    (isSiteMode() && state.activeId)
+  ) {
     elements.emptyState.classList.add('hidden');
     elements.writingArea.classList.remove('hidden');
   } else {
@@ -737,9 +895,9 @@ async function loadSection(section, options = {}) {
     let payload;
     let taskDocument;
     if (section === 'article') {
-      payload = await api(
-        `/api/drafts/${encodeURIComponent(requestedId)}?lang=${requestedLanguage}`
-      );
+      payload = await api(`${articleBase()}?lang=${encodeURIComponent(requestedLanguage)}`);
+    } else if (isSiteMode()) {
+      return false;
     } else {
       const workspace = await refreshWorkspace(requestedId);
       if (!workspace) return false;
@@ -761,12 +919,22 @@ async function loadSection(section, options = {}) {
     updateWritingPanelLabel();
 
     if (section === 'article') {
+      if (isSiteMode()) {
+        state.activeSiteArticle = {
+          ...(state.activeSiteArticle || {}),
+          assets: payload.assets || [],
+          missing: Boolean(payload.missing),
+        };
+      }
       setEditorContent(
         payload.content,
-        `.drafts/blog/${requestedId}/${requestedLanguage}.mdx`,
+        isSiteMode()
+          ? `src/content/blog/${requestedId}/${requestedLanguage}.mdx${payload.missing ? '（新建）' : ''}`
+          : `.drafts/blog/${requestedId}/${requestedLanguage}.mdx`,
         payload.hash
       );
       elements.documentTitle.textContent = payload.metadata.title || requestedId;
+      if (isSiteMode()) updateSourceBanner();
     } else {
       setEditorContent(
         taskDocument.content,
@@ -794,6 +962,8 @@ async function loadDraft(id, preferredLanguage = state.language) {
       state.activeColumnId = selectedDraft.columnId;
       renderColumnControls();
     }
+    state.editingSource = { kind: 'draft' };
+    state.activeSiteArticle = null;
     state.activeId = id;
     const draft = currentDraft();
     state.language = draft?.languages.includes(preferredLanguage)
@@ -819,7 +989,10 @@ async function loadDraft(id, preferredLanguage = state.language) {
       tab.disabled = !draft?.languages.includes(tab.dataset.language);
     });
     updateWritingPanelLabel();
+    updateWritingModeChrome();
+    updateSourceBanner();
     renderDraftList();
+    renderSiteArticles();
     await loadSection(entrySection, { skipSave: true });
     elements.syncStatus.textContent =
       state.workspace.taskMetadata && state.workspace.taskMetadata.status !== 'ready'
@@ -852,13 +1025,25 @@ async function saveSnapshot(manual) {
   try {
     let result;
     if (snapshot.section === 'article') {
-      result = await api(
-        `/api/drafts/${encodeURIComponent(snapshot.id)}?lang=${snapshot.language}`,
-        {
-          method: 'PUT',
-          body: JSON.stringify({ content: snapshot.content, baseHash: snapshot.baseHash }),
+      result = await api(`${articleBase()}?lang=${snapshot.language}`, {
+        method: 'PUT',
+        body: JSON.stringify({ content: snapshot.content, baseHash: snapshot.baseHash }),
+      });
+      if (isSiteMode()) {
+        if (result.languageCreated) {
+          const entry = activeSiteArticleEntry();
+          if (entry && !entry.languages.includes(snapshot.language)) {
+            entry.languages.push(snapshot.language);
+          }
+          renderSiteArticles();
+          refreshSiteArticles();
         }
-      );
+        if (result.siblingAuditErrors?.length) {
+          showToast(
+            `已保存；另一语言文件还需跟进：${result.siblingAuditErrors[0].replace(/^src\/content\/blog\/[^:]+:\s*/, '')}`
+          );
+        }
+      }
     } else {
       result = await api(
         `/api/drafts/${encodeURIComponent(snapshot.id)}/documents/${snapshot.section}`,
@@ -889,6 +1074,8 @@ async function saveSnapshot(manual) {
       showToast('Codex 或外部编辑器已修改此文件；浏览器内容没有覆盖磁盘');
     } else if (isCurrentDocument(snapshot)) {
       elements.saveStatus.textContent = `保存失败：${error.message}`;
+      const detail = error.payload?.details?.errors?.[0];
+      if (detail) showToast(`保存被拦截：${detail.replace(/^(cn|en):\s*/, '')}`);
     }
     return false;
   }
@@ -935,7 +1122,9 @@ async function saveCurrent(options = {}) {
   if (!saved) return false;
   if (state.dirty) return saveCurrent(options);
 
-  await Promise.allSettled([refreshState(), refreshWorkspace()]);
+  const refreshes = [refreshState()];
+  if (!isSiteMode()) refreshes.push(refreshWorkspace());
+  await Promise.allSettled(refreshes);
   if (manual) showToast('当前文件已手动保存');
   return true;
 }
@@ -950,16 +1139,19 @@ async function syncFromDisk() {
   )
     return;
   try {
-    const previousStage = state.workspace?.task?.stage;
-    await refreshWorkspace();
+    if (!isSiteMode()) {
+      const previousStage = state.workspace?.task?.stage;
+      await refreshWorkspace();
+      if (state.workspace?.task && previousStage !== state.workspace.task.stage) renderStages();
+    }
     let incoming;
     let incomingHash;
     if (state.section === 'article') {
-      incoming = await api(
-        `/api/drafts/${encodeURIComponent(state.activeId)}?lang=${state.language}`
-      );
-      incomingHash = incoming.hash;
-      incoming = incoming.content;
+      const payload = await api(`${articleBase()}?lang=${encodeURIComponent(state.language)}`);
+      incomingHash = payload.hash;
+      incoming = payload.content;
+    } else if (isSiteMode()) {
+      return;
     } else {
       incomingHash = state.workspace.documents[state.section].hash;
       incoming = state.workspace.documents[state.section].content;
@@ -968,11 +1160,15 @@ async function syncFromDisk() {
       setEditorContent(incoming, elements.documentPath.textContent, incomingHash);
       showToast('已载入 Codex 或外部软件写入的新内容');
     }
-    if (previousStage !== state.workspace.task.stage) renderStages();
-    elements.syncStatus.textContent = `已同步 ${new Date().toLocaleTimeString('zh-CN', {
-      hour: '2-digit',
-      minute: '2-digit',
-    })}`;
+    elements.syncStatus.textContent = isSiteMode()
+      ? `站点正式版本已同步 ${new Date().toLocaleTimeString('zh-CN', {
+          hour: '2-digit',
+          minute: '2-digit',
+        })}`
+      : `已同步 ${new Date().toLocaleTimeString('zh-CN', {
+          hour: '2-digit',
+          minute: '2-digit',
+        })}`;
   } catch {
     elements.syncStatus.textContent = '等待重新连接';
   }
@@ -1013,11 +1209,15 @@ async function uploadAsset(file) {
   for (let index = 0; index < bytes.length; index += chunkSize) {
     binary += String.fromCharCode(...bytes.subarray(index, index + chunkSize));
   }
-  await api(`/api/drafts/${encodeURIComponent(state.activeId)}/assets`, {
+  await api(assetBase(), {
     method: 'POST',
     body: JSON.stringify({ name: file.name, base64: btoa(binary) }),
   });
-  await refreshWorkspace();
+  if (isSiteMode()) {
+    await refreshActiveSiteArticleAssets();
+  } else {
+    await refreshWorkspace();
+  }
   renderAssets();
   showToast(`已保存图片 ${file.name}`);
 }
@@ -1136,9 +1336,7 @@ async function copyPublicationImage(fileName) {
   if (!navigator.clipboard?.write || !window.ClipboardItem) {
     throw new Error('当前浏览器不支持复制图片，请从文章图片面板手动上传');
   }
-  const response = await fetch(
-    `/api/drafts/${encodeURIComponent(state.activeId)}/assets/${encodeURIComponent(fileName)}`
-  );
+  const response = await fetch(`${assetBase()}/${encodeURIComponent(fileName)}`);
   if (!response.ok) throw new Error('本地任务中找不到这张图片');
   const png = await imageBlobAsPng(await response.blob());
   await navigator.clipboard.write([new window.ClipboardItem({ 'image/png': png })]);
@@ -1178,17 +1376,13 @@ function renderPublicationPackage() {
     elements.publicationPlainPreview.value = packageData.plainText;
   }
 
-  const workspaceAssets = new Set((state.workspace?.assets || []).map((asset) => asset.name));
+  const workspaceAssets = availableAssetNames();
   elements.publicationAssets.classList.toggle('hidden', !packageData.assets.length);
   elements.publicationAssetCount.textContent = `${packageData.assets.length} 张`;
   elements.publicationAssetList.innerHTML = packageData.assets
     .map((asset) => {
       const exists = asset.fileName && workspaceAssets.has(asset.fileName);
-      const url = exists
-        ? `/api/drafts/${encodeURIComponent(state.activeId)}/assets/${encodeURIComponent(
-            asset.fileName
-          )}`
-        : '';
+      const url = exists ? `${assetBase()}/${encodeURIComponent(asset.fileName)}` : '';
       const kind = asset.kind === 'cover' ? '封面' : `正文 ${asset.index}`;
       const description = asset.caption || asset.alt || asset.fileName || '未识别图片';
       return `<article class="publication-asset-item">
@@ -1244,18 +1438,16 @@ async function refreshPublicationPackage() {
   const platformId = elements.publicationPlatform.value;
   setPublicationPackageLoading();
   try {
-    const payload = await api(
-      `/api/drafts/${encodeURIComponent(state.activeId)}?lang=${encodeURIComponent(language)}`
-    );
+    const payload = await api(`${articleBase()}?lang=${encodeURIComponent(language)}`);
     if (requestSequence !== state.publicationRequestSequence) return;
     state.publicationPackage = buildPublicationPackage({
       source: payload.content,
       platformId,
       articleId: state.activeId,
       language,
-      published: Boolean(currentDraft()?.published),
+      published: isSiteMode() ? true : Boolean(currentDraft()?.published),
     });
-    const availableAssets = new Set((state.workspace?.assets || []).map((asset) => asset.name));
+    const availableAssets = availableAssetNames();
     const missingAssets = state.publicationPackage.assets.filter(
       (asset) => !asset.fileName || !availableAssets.has(asset.fileName)
     );
@@ -1272,14 +1464,18 @@ async function refreshPublicationPackage() {
 
 async function openPublicationPackage() {
   if (!state.activeId || !(await saveCurrent())) return;
-  await refreshWorkspace();
+  if (!isSiteMode()) await refreshWorkspace();
+  elements.publicationPackageDescription.textContent = isSiteMode()
+    ? '正在基于站点正式版本（src/content/blog）生成发布包；正文和 Ideas 不会离开本机，只有你主动复制、粘贴的内容才会进入目标平台。'
+    : '正文和 Ideas 不会离开本机；只有你主动复制、粘贴的内容才会进入目标平台。';
   elements.publicationPlatform.innerHTML = PUBLICATION_PLATFORMS.map(
     (platform) =>
       `<option value="${escapeHtml(platform.id)}">${escapeHtml(platform.label)}</option>`
   ).join('');
   const defaultPlatformId = state.language === 'en' ? 'medium' : 'wechat';
   elements.publicationPlatform.value = defaultPlatformId;
-  elements.publicationLanguage.innerHTML = (currentDraft()?.languages || [])
+  const languages = publicationLanguages();
+  elements.publicationLanguage.innerHTML = languages
     .map(
       (language) =>
         `<option value="${escapeHtml(language)}">${language === 'cn' ? '中文' : 'English'}</option>`
@@ -1288,7 +1484,7 @@ async function openPublicationPackage() {
   const preferredLanguage = PUBLICATION_PLATFORMS.find(
     (platform) => platform.id === defaultPlatformId
   )?.defaultLanguage;
-  elements.publicationLanguage.value = currentDraft()?.languages.includes(preferredLanguage)
+  elements.publicationLanguage.value = languages.includes(preferredLanguage)
     ? preferredLanguage
     : state.language;
   elements.publicationPackageDialog.showModal();
@@ -1298,6 +1494,16 @@ async function openPublicationPackage() {
 elements.draftList.addEventListener('click', async (event) => {
   const button = event.target.closest('[data-id]');
   if (button && (await setMode('writing'))) await loadDraft(button.dataset.id);
+});
+
+elements.siteArticleList.addEventListener('click', async (event) => {
+  const button = event.target.closest('[data-site-article]');
+  if (button && (await setMode('writing'))) await openSiteArticle(button.dataset.siteArticle);
+});
+
+elements.siteArticleSearch.addEventListener('input', () => {
+  state.siteArticleFilter = elements.siteArticleSearch.value;
+  renderSiteArticles();
 });
 
 elements.columnSelect.addEventListener('change', async () => {
@@ -1314,6 +1520,8 @@ elements.columnSelect.addEventListener('change', async () => {
   if (state.mode === 'ideas') resetIdeaForm();
   state.activeColumnId = nextColumnId;
   state.activeId = '';
+  state.editingSource = { kind: 'draft' };
+  state.activeSiteArticle = null;
   state.workspace = null;
   renderColumnControls();
   renderDraftList();
@@ -1473,7 +1681,8 @@ elements.publicationPlatform.addEventListener('change', async () => {
   const platform = PUBLICATION_PLATFORMS.find(
     (candidate) => candidate.id === elements.publicationPlatform.value
   );
-  if (currentDraft()?.languages.includes(platform?.defaultLanguage)) {
+  const languages = publicationLanguages();
+  if (languages.includes(platform?.defaultLanguage)) {
     elements.publicationLanguage.value = platform.defaultLanguage;
   }
   await refreshPublicationPackage();
@@ -1550,12 +1759,12 @@ elements.copySkill.addEventListener('click', async () => {
 elements.validateButton.addEventListener('click', async () => {
   if (!(await saveCurrent())) return;
   try {
-    const result = await api(`/api/drafts/${encodeURIComponent(state.activeId)}/validate`, {
+    const result = await api(`${articleBase()}/validate`, {
       method: 'POST',
     });
     showResult('文章检查结果', result);
   } catch (error) {
-    showResult('检查失败', { errors: [error.message] });
+    showResult('检查失败', error.payload?.details || { errors: [error.message] });
   }
 });
 
@@ -1568,6 +1777,7 @@ elements.publishButton.addEventListener('click', async () => {
     });
     showResult('已发布到站点目录', { ok: true, message: `已写入 ${result.target}` });
     await refreshState();
+    await refreshSiteArticles();
     await loadDraft(state.activeId);
   } catch (error) {
     showResult('暂时不能发布', error.payload?.details || { errors: [error.message] });
@@ -1637,12 +1847,16 @@ elements.newDraftForm.addEventListener('submit', async (event) => {
   }
 });
 
-window.addEventListener('focus', syncFromDisk);
+window.addEventListener('focus', () => {
+  syncFromDisk();
+  refreshSiteArticles();
+});
 state.syncTimer = setInterval(syncFromDisk, 2800);
 
 document.querySelectorAll('[role="tablist"]').forEach(enableTabKeyboardNavigation);
 
 await refreshState();
+refreshSiteArticles();
 const [initialDraft] = columnDrafts();
 if (initialDraft) await loadDraft(initialDraft.id);
 else await setMode('writing');

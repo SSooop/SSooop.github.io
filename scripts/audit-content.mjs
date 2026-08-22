@@ -8,7 +8,8 @@ const publicRoot = path.join(root, 'public');
 const shouldCheckNetwork = process.argv.includes('--network');
 
 const legacyFields = ['relatedPost', 'wechatLink', 'mediumLink'];
-const allowedPlatforms = new Set(['site', 'wechat', 'x', 'linkedin']);
+const allowedPlatforms = new Set(['site', 'wechat', 'xueqiu', 'medium', 'x', 'linkedin']);
+const isoDatePattern = /^\d{4}-\d{2}-\d{2}$/;
 const expectedFileLang = {
   cn: 'zh',
   en: 'en',
@@ -285,6 +286,8 @@ for (const filePath of files) {
     id,
     translationKey: parseScalar(frontmatter, 'translationKey'),
     lang: parseScalar(frontmatter, 'lang'),
+    date: parseScalar(frontmatter, 'date'),
+    updated: parseScalar(frontmatter, 'updated'),
     translations: parseIndentedMap(frontmatter, 'translations'),
     related: parseIndentedList(frontmatter, 'related'),
     canonical: parseIndentedMap(frontmatter, 'canonical'),
@@ -311,6 +314,8 @@ for (const record of records.values()) {
     parts,
     translationKey,
     lang,
+    date,
+    updated,
     translations,
     related,
     canonical,
@@ -394,6 +399,14 @@ for (const record of records.values()) {
 
   if (canonical.role !== 'version_home') {
     addError(displayPath, 'canonical.role must be "version_home"');
+  }
+
+  if (updated !== undefined) {
+    if (!isoDatePattern.test(updated)) {
+      addError(displayPath, `updated "${updated}" must use YYYY-MM-DD`);
+    } else if (isoDatePattern.test(date) && updated < date) {
+      addError(displayPath, `updated "${updated}" must not be earlier than date "${date}"`);
+    }
   }
 
   if (record.image) {

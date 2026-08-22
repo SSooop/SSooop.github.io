@@ -880,3 +880,197 @@ test('rolls back the site copy when the repository content audit fails', async (
     readFile(path.join(root, 'src', 'content', 'blog', '2026', 'rollback-draft', 'cn.mdx'))
   );
 });
+
+test('lists, reads, edits, and validates a published site article directly', async (context) => {
+  const { root, content } = await fixture();
+  const server = await createWriterServer({ root });
+  context.after(() => server.close());
+  const base = await listen(server);
+
+  const listResponse = await writerFetch(base, '/api/site-articles');
+  const list = await listResponse.json();
+  assert.equal(list.articles.length, 1);
+  assert.equal(list.articles[0].id, '2026/latest-article');
+  assert.deepEqual(list.articles[0].languages, ['cn']);
+  assert.equal(list.articles[0].hasDraft, true);
+
+  const id = encodeURIComponent('2026/latest-article');
+  const articleResponse = await writerFetch(base, `/api/site-articles/${id}?lang=cn`);
+  const article = await articleResponse.json();
+  assert.equal(article.content, content);
+  assert.deepEqual(article.assets, []);
+
+  const updated = content.replace('正文保持不变。', '直接修订正式版本。');
+  const saveResponse = await writerFetch(base, `/api/site-articles/${id}?lang=cn`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ content: updated, baseHash: article.hash }),
+  });
+  assert.equal(saveResponse.status, 200);
+  assert.equal(
+    await readFile(path.join(root, 'src', 'content', 'blog', '2026', 'latest-article', 'cn.mdx'), 'utf8'),
+    updated
+  );
+  assert.equal(
+    await readFile(path.join(root, '.drafts', 'blog', '2026', 'latest-article', 'cn.mdx'), 'utf8'),
+    content
+  );
+
+  const staleResponse = await writerFetch(base, `/api/site-articles/${id}?lang=cn`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      content: updated.replace('直接修订正式版本。', '基于过期版本的修改。'),
+      baseHash: article.hash,
+    }),
+  });
+  assert.equal(staleResponse.status, 409);
+
+  const validationResponse = await writerFetch(base, `/api/site-articles/${id}/validate`, {
+    method: 'POST',
+  });
+  const validation = await validationResponse.json();
+  assert.equal(validation.ok, true);
+});
+
+test('prefills a missing site language, creates it on save, and surfaces sibling audit follow-ups', async (context) => {
+  const { root } = await fixture();
+  const scripts = path.join(root, 'scripts');
+  await mkdir(scripts, { recursive: true });
+  await writeFile(
+    path.join(scripts, 'audit-content.mjs'),
+    [
+      "console.log('Audited 1 content files across 1 translation groups.');",
+      "console.log('\\nErrors (1):');",
+      "console.log('  - src/content/blog/2026/latest-article/cn.mdx: translations.en should be \"2026/latest-article/en\"');",
+      'process.exit(1);',
+      '',
+    ].join('\n'),
+    'utf8'
+  );
+  const server = await createWriterServer({ root });
+  context.after(() => server.close());
+  const base = await listen(server);
+
+  const id = encodeURIComponent('2026/latest-article');
+  const templateResponse = await writerFetch(base, `/api/site-articles/${id}?lang=en`);
+  const template = await templateResponse.json();
+  assert.equal(template.missing, true);
+  assert.match(template.content, /lang: "en"/);
+  assert.match(template.content, /\/en\/blog\/2026\/latest-article\/en/);
+
+  const english = template.content.replace('正文保持不变。', 'The direct English edition.');
+  const createResponse = await writerFetch(base, `/api/site-articles/${id}?lang=en`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ content: english, baseHash: template.hash }),
+  });
+  assert.equal(createResponse.status, 200);
+  const created = await createResponse.json();
+  assert.equal(created.languageCreated, true);
+  assert.ok(created.siblingAuditErrors.length === 1);
+  assert.match(created.siblingAuditErrors[0], /translations\.en/);
+  assert.equal(
+    await readFile(path.join(root, 'src', 'content', 'blog', '2026', 'latest-article', 'en.mdx'), 'utf8'),
+    english
+  );
+});
+
+test('rolls back a site-article save when the saved file itself fails the audit', async (context) => {
+  const { root, content } = await fixture();
+  const scripts = path.join(root, 'scripts');
+  await mkdir(scripts, { recursive: true });
+  await writeFile(
+    path.join(scripts, 'audit-content.mjs'),
+    [
+      "console.log('Audited 1 content files across 1 translation groups.');",
+      "console.log('\\nErrors (1):');",
+      "console.log('  - src/content/blog/2026/latest-article/cn.mdx: stub audit rejection');",
+      'process.exit(1);',
+      '',
+    ].join('\n'),
+    'utf8'
+  );
+  const server = await createWriterServer({ root });
+  context.after(() => server.close());
+  const base = await listen(server);
+
+  const id = encodeURIComponent('2026/latest-article');
+  const article = await (
+    await writerFetch(base, `/api/site-articles/${id}?lang=cn`)
+  ).json();
+  const rejected = await writerFetch(base, `/api/site-articles/${id}?lang=cn`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      content: article.content.replace('正文保持不变。', '不应落盘的修改。'),
+      baseHash: article.hash,
+    }),
+  });
+  assert.equal(rejected.status, 422);
+  const details = await rejected.json();
+  assert.match(details.details.errors[0], /stub audit rejection/);
+  assert.equal(
+    await readFile(path.join(root, 'src', 'content', 'blog', '2026', 'latest-article', 'cn.mdx'), 'utf8'),
+    content
+  );
+});
+
+test('rejects site saves that break article structure and unknown articles', async (context) => {
+  const { root, content } = await fixture();
+  const server = await createWriterServer({ root });
+  context.after(() => server.close());
+  const base = await listen(server);
+
+  const id = encodeURIComponent('2026/latest-article');
+  const article = await (
+    await writerFetch(base, `/api/site-articles/${id}?lang=cn`)
+  ).json();
+  const broken = await writerFetch(base, `/api/site-articles/${id}?lang=cn`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ content: '# 只有正文，没有 frontmatter\n', baseHash: article.hash }),
+  });
+  assert.equal(broken.status, 422);
+  assert.equal(
+    await readFile(path.join(root, 'src', 'content', 'blog', '2026', 'latest-article', 'cn.mdx'), 'utf8'),
+    content
+  );
+
+  const missing = await writerFetch(base, `/api/site-articles/${encodeURIComponent('2026/missing')}/validate`, {
+    method: 'POST',
+  });
+  assert.equal(missing.status, 404);
+});
+
+test('serves and stores site article images inside the published directory', async (context) => {
+  const { root } = await fixture();
+  const images = path.join(root, 'src', 'content', 'blog', '2026', 'latest-article', 'images');
+  await mkdir(images, { recursive: true });
+  const png = Buffer.from(
+    'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==',
+    'base64'
+  );
+  await writeFile(path.join(images, 'cover.png'), png);
+
+  const server = await createWriterServer({ root });
+  context.after(() => server.close());
+  const base = await listen(server);
+
+  const id = encodeURIComponent('2026/latest-article');
+  const article = await (await writerFetch(base, `/api/site-articles/${id}?lang=cn`)).json();
+  assert.deepEqual(article.assets, ['cover.png']);
+
+  const imageResponse = await writerFetch(base, `/api/site-articles/${id}/assets/cover.png`);
+  assert.equal(imageResponse.status, 200);
+  assert.equal(imageResponse.headers.get('content-type'), 'image/png');
+
+  const uploadResponse = await writerFetch(base, `/api/site-articles/${id}/assets`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name: 'figure.png', base64: png.toString('base64') }),
+  });
+  assert.equal(uploadResponse.status, 201);
+  assert.equal(png.equals(await readFile(path.join(images, 'figure.png'))), true);
+  assert.equal((await readdir(path.join(root, '.drafts', 'blog', '2026', 'latest-article'))).length > 0, true);
+});

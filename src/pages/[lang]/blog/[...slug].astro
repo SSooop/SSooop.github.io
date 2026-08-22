@@ -54,6 +54,7 @@ const blogSchema = generateBlogPostingSchema({
   slug: entry.id,
   url: entry.data.canonical.url,
   date: entry.data.date,
+  modifiedDate: entry.data.updated,
   lang: entry.data.lang,
   image: heroImageUrl,
   keywords: entry.data.keywords,
@@ -86,6 +87,7 @@ const articleCopy =
         authorPrefix: '作者：',
         authorName: '苏晨鹏（Alex Su）',
         publicationName: '智药深瞳',
+        updatedPrefix: '更新于',
       }
     : {
         back: 'BACK TO TRANSMISSIONS',
@@ -96,6 +98,7 @@ const articleCopy =
         authorPrefix: 'By ',
         authorName: 'Alex Su (苏晨鹏)',
         publicationName: 'IntelliPharma Insights',
+        updatedPrefix: 'Updated',
       };
 
 const citationSource = {
@@ -145,7 +148,7 @@ const citationSource = {
   >
     {/* Header */}
     <header class="mb-12">
-      <div class="mb-6">
+      <div class="mb-6 flex flex-wrap items-center gap-2">
         <time
           class="text-morandi-accent-3 border-morandi-accent-2/30 rounded-full border px-2 py-1 font-mono text-xs"
           datetime={entry.data.date.toISOString()}
@@ -159,6 +162,22 @@ const citationSource = {
             })
           }
         </time>
+        {
+          entry.data.updated && (
+            <time
+              class="text-morandi-accent-3 border-morandi-accent-2/30 rounded-full border px-2 py-1 font-mono text-xs"
+              datetime={entry.data.updated.toISOString()}
+              itemprop="dateModified"
+            >
+              {articleCopy.updatedPrefix}{' '}
+              {entry.data.updated.toLocaleDateString(lang === 'zh' ? 'zh-CN' : 'en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+              })}
+            </time>
+          )
+        }
       </div>
 
       <p class="text-morandi-text/60 mb-6 font-mono text-xs tracking-[0.08em]">
