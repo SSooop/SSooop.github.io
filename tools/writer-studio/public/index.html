@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="/styles.css" />
   </head>
   <body>
-    <div class="app-shell">
+    <div class="app-shell" id="app-shell">
       <aside class="sidebar">
         <header class="brand">
           <div class="brand-mark" aria-hidden="true">IP</div>
@@ -403,13 +403,14 @@
     <dialog class="result-dialog" id="result-dialog">
       <div class="dialog-heading">
         <div>
-          <p class="eyebrow">ARTICLE CHECK</p>
+          <p class="eyebrow" id="result-eyebrow">ARTICLE CHECK</p>
           <h2 id="result-title">检查结果</h2>
         </div>
         <button class="icon-button" id="close-result" type="button" aria-label="关闭">×</button>
       </div>
       <div id="result-content"></div>
       <div class="dialog-actions">
+        <button class="button secondary hidden" id="cancel-result" type="button">取消</button>
         <button class="button primary" id="confirm-result" type="button">知道了</button>
       </div>
     </dialog>

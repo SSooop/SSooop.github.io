@@ -30,6 +30,8 @@ const state = {
   toastTimer: null,
   publicationPackage: null,
   publicationRequestSequence: 0,
+  resultMode: 'info',
+  confirmResolver: null,
   baseHash: '',
   editRevision: 0,
   saveInFlight: null,
@@ -52,8 +54,15 @@ const stageLabels = {
   ready: '定稿',
 };
 
+const sectionStageMap = {
+  outline: 'outline',
+  style: 'outline',
+  article: 'draft',
+};
+
 const elements = Object.fromEntries(
   [
+    'app-shell',
     'draft-list',
     'draft-count',
     'site-article-list',
@@ -105,9 +114,11 @@ const elements = Object.fromEntries(
     'close-dialog',
     'cancel-dialog',
     'result-dialog',
+    'result-eyebrow',
     'result-title',
     'result-content',
     'close-result',
+    'cancel-result',
     'confirm-result',
     'skill-dialog',
     'skill-command',
@@ -116,6 +127,7 @@ const elements = Object.fromEntries(
     'confirm-skill',
     'publication-package-dialog',
     'close-publication-package',
+    'publication-package-description',
     'publication-platform',
     'publication-language',
     'publication-format',
@@ -194,14 +206,45 @@ function inlineMarkdown(value) {
     .replace(/\[([^\]]+)]\((https?:\/\/[^\s)]+)\)/g, '<a href="$2" target="_blank">$1</a>');
 }
 
+function parseComponentAttributes(tagText) {
+  const attributes = {};
+  for (const match of tagText.matchAll(/(\w+)=(?:\{([^}]*)\}|"([^"]*)"|'([^']*)')/g)) {
+    attributes[match[1]] = (match[2] ?? match[3] ?? match[4] ?? '').trim();
+  }
+  return attributes;
+}
+
+function componentPlaceholder(tagText) {
+  const attributes = parseComponentAttributes(tagText);
+  const name = tagText.match(/^<([A-Z][\w.]*)/)?.[1] || 'MDX 组件';
+  const caption = [attributes.alt, attributes.caption].filter(Boolean).join(' · ');
+  const source = attributes.source
+    ? attributes.sourceUrl
+      ? `${attributes.source}：${attributes.sourceUrl}`
+      : attributes.source
+    : '';
+  return `<figure class="mdx-figure"><div class="mdx-figure-box"><span aria-hidden="true">🖼</span><small>${escapeHtml(
+    name
+  )} · 站点渲染时显示</small></div>${
+    caption || source
+      ? `<figcaption>${escapeHtml(caption)}${
+          source ? `<span class="mdx-figure-source">${escapeHtml(source)}</span>` : ''
+        }</figcaption>`
+      : ''
+  }</figure>`;
+}
+
 function markdownToHtml(source, stripFrontmatter = true) {
   const body = stripFrontmatter ? source.replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n?/, '') : source;
   const lines = body.split(/\r?\n/);
   const output = [];
+  const imports = [];
   let paragraph = [];
   let list = null;
   let rawBlock = [];
   let rawDepth = 0;
+  let componentLines = null;
+  let inFence = false;
 
   const flushParagraph = () => {
     if (paragraph.length) output.push(`<p>${inlineMarkdown(paragraph.join(' '))}</p>`);
@@ -219,17 +262,57 @@ function markdownToHtml(source, stripFrontmatter = true) {
   const flushRaw = () => {
     if (!rawBlock.length) return;
     output.push(
-      `<div class="mdx-note"><strong>MDX 组件</strong><pre>${escapeHtml(
+      `<div class="mdx-note"><strong>未渲染的 MDX/HTML</strong><pre>${escapeHtml(
         rawBlock.join('\n')
       )}</pre></div>`
     );
     rawBlock = [];
     rawDepth = 0;
   };
+  const flushComponent = () => {
+    if (!componentLines) return;
+    const tagText = componentLines.join('\n');
+    componentLines = null;
+    if (/<\/[A-Z]/.test(tagText)) {
+      rawBlock.push(tagText);
+      flushRaw();
+    } else {
+      output.push(componentPlaceholder(tagText));
+    }
+  };
 
   for (const line of lines) {
     const trimmed = line.trim();
-    if (rawDepth > 0 || /^<\/?[A-Za-z]/.test(trimmed)) {
+    if (/^(```|~~~)/.test(trimmed)) inFence = !inFence;
+    if (inFence) {
+      flushParagraph();
+      flushList();
+      paragraph.push(trimmed);
+      continue;
+    }
+    if (componentLines) {
+      componentLines.push(line);
+      if (/\/>\s*$/.test(trimmed)) flushComponent();
+      continue;
+    }
+    if (/^import\s\S/.test(trimmed)) {
+      imports.push(trimmed);
+      continue;
+    }
+    if (/^<[A-Z][\w.]*[^>]*\/>\s*$/.test(trimmed)) {
+      flushParagraph();
+      flushList();
+      output.push(componentPlaceholder(trimmed));
+      continue;
+    }
+    if (/^<[A-Z][\w.]*/.test(trimmed)) {
+      flushParagraph();
+      flushList();
+      componentLines = [line];
+      if (/\/>\s*$/.test(trimmed)) flushComponent();
+      continue;
+    }
+    if (rawDepth > 0 || /^<\/?[a-z]/.test(trimmed)) {
       flushParagraph();
       flushList();
       rawBlock.push(line);
@@ -278,17 +361,25 @@ function markdownToHtml(source, stripFrontmatter = true) {
   }
   flushParagraph();
   flushList();
+  flushComponent();
   flushRaw();
-  return output.join('\n');
+  const importNote = imports.length
+    ? `<div class="mdx-imports">MDX 导入 × ${imports.length}（站点构建时生效，不显示在正文）</div>`
+    : '';
+  return `${importNote}${output.join('\n')}`;
 }
 
 function frontmatterMetadata(content) {
   const frontmatter = content.match(/^---\r?\n([\s\S]*?)\r?\n---/)?.[1] || '';
-  const scalar = (key) =>
-    frontmatter
-      .match(new RegExp(`^${key}:\\s*(.+)$`, 'm'))?.[1]
-      ?.trim()
-      .replace(/^['"]|['"]$/g, '') || '';
+  const scalar = (key) => {
+    const value = frontmatter.match(new RegExp(`^${key}:\\s*(.+)$`, 'm'))?.[1]?.trim();
+    if (!value) return '';
+    const doubleQuoted = value.match(/^"([\s\S]*)"$/);
+    if (doubleQuoted) return doubleQuoted[1].replace(/\\(["\\])/g, '$1');
+    const singleQuoted = value.match(/^'([\s\S]*)'$/);
+    if (singleQuoted) return singleQuoted[1].replaceAll("''", "'");
+    return value;
+  };
   return {
     title: scalar('title'),
     date: scalar('date'),
@@ -303,20 +394,36 @@ function showToast(message) {
   state.toastTimer = setTimeout(() => elements.toast.classList.remove('visible'), 2400);
 }
 
+function setSaveStatus(message, tone = 'idle') {
+  elements.saveStatus.textContent = message;
+  elements.saveStatus.dataset.tone = tone;
+}
+
+function setDocumentTitle(title) {
+  document.title = title ? `${title} · Writer Studio` : 'Writer Studio · IntelliPharma Hub';
+}
+
 function articlePreviewDocument(metadata, article) {
   return `<!doctype html><html lang="zh"><head><meta charset="utf-8"><style>
     :root{color:#4a4845;background:#fbfaf7;font-family:Georgia,'Microsoft YaHei',serif}
     body{max-width:720px;margin:0 auto;padding:54px 44px 100px;line-height:1.9}
     .meta{margin-bottom:42px;padding-bottom:30px;border-bottom:1px solid #ded8d1}
     h1{margin:0 0 14px;font-size:34px;line-height:1.28;font-weight:500;letter-spacing:-.02em}
-    .date{color:#8b847c;font:11px ui-monospace,monospace;letter-spacing:.08em}
+    .date{color:#8b847c;font:12px ui-monospace,monospace;letter-spacing:.08em}
     .description{color:#777069;font:14px/1.7 ui-sans-serif,system-ui;margin-top:16px}
     article{font-size:17px} article h1{font-size:30px;margin-top:2.2em} article h2{font-size:25px;margin-top:2em}
     article h3{font-size:20px;margin-top:1.8em} p{margin:1.25em 0} strong{color:#383633}
     code{padding:2px 5px;border-radius:4px;background:#ece7e1;font:14px ui-monospace,monospace}
     a{color:#526e77} blockquote{margin:1.6em 0;padding:2px 0 2px 22px;border-left:3px solid #9cafb7;color:#6f6963}
     hr{margin:42px 0;border:0;border-top:1px solid #ded8d1} li{margin:.5em 0}
-    .mdx-note{margin:28px 0;padding:14px;border:1px dashed #b8a492;border-radius:8px;background:#f4efe9;color:#756c64;font:11px ui-monospace,monospace}
+    .mdx-imports{margin:0 0 26px;padding:9px 13px;border:1px dashed #cfc8c0;border-radius:8px;background:#f4efe9;color:#8b847c;font:12px/1.6 ui-monospace,monospace}
+    .mdx-figure{margin:30px 0}
+    .mdx-figure-box{display:grid;min-height:170px;place-items:center;gap:6px;border:1px solid #d5cec6;border-radius:10px;background:repeating-linear-gradient(45deg,#f1ece5,#f1ece5 12px,#ede8e1 12px,#ede8e1 24px);color:#8b847c}
+    .mdx-figure-box span{font-size:30px}
+    .mdx-figure-box small{font:12px ui-monospace,monospace;letter-spacing:.05em}
+    .mdx-figure figcaption{margin:10px 2px 0;color:#777069;font:13px/1.65 ui-sans-serif,system-ui}
+    .mdx-figure-source{display:block;margin-top:3px;color:#8b847c;font-size:12px}
+    .mdx-note{margin:28px 0;padding:14px;border:1px dashed #b8a492;border-radius:8px;background:#f4efe9;color:#756c64;font:12px/1.7 ui-monospace,monospace}
     .mdx-note pre{overflow:auto;white-space:pre-wrap;margin:8px 0 0}
   </style></head><body><header class="meta"><h1>${escapeHtml(
     metadata.title || '无标题文章'
@@ -502,17 +609,19 @@ function renderDraftList() {
 async function deleteDraft(id) {
   const draft = state.drafts.find((entry) => entry.id === id);
   const label = draft?.title || id;
-  if (
-    !confirm(`确认删除草稿「${label}」吗？\n.drafts/blog/${id}/ 将被彻底移除，此操作不可恢复。`)
-  ) {
-    return;
-  }
+  const confirmed = await requestConfirm(
+    '删除草稿',
+    `确认删除草稿「${label}」吗？\n.drafts/blog/${id}/ 将被彻底移除，此操作不可恢复。`,
+    { confirmLabel: '删除草稿', danger: true }
+  );
+  if (!confirmed) return;
   try {
     await api(`/api/drafts/${encodeURIComponent(id)}`, { method: 'DELETE' });
   } catch (error) {
-    alert(`删除失败：${error.message}`);
+    showToast(`删除失败：${error.message}`);
     return;
   }
+  showToast(`草稿「${label}」已删除`);
   if (state.activeId === id && !isSiteMode()) {
     state.activeId = '';
     state.editingSource = { kind: 'draft' };
@@ -593,6 +702,7 @@ async function refreshActiveSiteArticleAssets() {
       ...(state.activeSiteArticle || {}),
       assets: payload.assets || [],
     };
+    renderAssets();
   } catch {
     // 图片列表刷新失败时保留旧清单
   }
@@ -615,6 +725,7 @@ async function openSiteArticle(id, preferredLanguage = 'cn') {
     state.workspace = null;
 
     elements.documentTitle.textContent = entry.title || id;
+    setDocumentTitle(entry.title || id);
     elements.documentPath.textContent = `src/content/blog/${id}/${state.language}.mdx`;
     elements.emptyState.classList.add('hidden');
     elements.writingArea.classList.remove('hidden');
@@ -646,18 +757,25 @@ function renderStages() {
   }
   const taskMetadataReady =
     !state.workspace.taskMetadata || state.workspace.taskMetadata.status === 'ready';
-  const activeIndex = state.workspace.stages.findIndex(
-    (stage) => stage.id === state.workspace.task.stage
-  );
-  elements.stageList.innerHTML = state.workspace.stages
-    .map(
-      (stage, index) =>
-        `<button class="stage-button ${index < activeIndex ? 'done' : ''} ${
-          index === activeIndex ? 'active' : ''
-        }" data-stage="${stage.id}" type="button" ${taskMetadataReady ? '' : 'disabled'}>${escapeHtml(
-          stage.label
-        )}</button>`
-    )
+  const stages = state.workspace.stages;
+  const taskIndex = stages.findIndex((stage) => stage.id === state.workspace.task.stage);
+  const viewStageId = sectionStageMap[state.section] || state.workspace.task.stage;
+  const viewIndex = stages.findIndex((stage) => stage.id === viewStageId);
+  elements.stageList.innerHTML = stages
+    .map((stage, index) => {
+      const classes = [
+        'stage-button',
+        index < taskIndex ? 'done' : '',
+        index === taskIndex ? 'task' : '',
+        index === viewIndex ? 'viewing' : '',
+      ]
+        .filter(Boolean)
+        .join(' ');
+      const viewingHint = index === viewIndex ? '正在查看；' : '';
+      return `<button class="${classes}" data-stage="${stage.id}" type="button" title="${viewingHint}点击把任务进度标记为「${escapeHtml(
+        stage.label
+      )}」" ${taskMetadataReady ? '' : 'disabled'}>${escapeHtml(stage.label)}</button>`;
+    })
     .join('');
 }
 
@@ -702,7 +820,7 @@ function renderIdeas() {
     ? `<div class="ideas-warning">检测到 ${state.invalidIdeaRecords.length} 条无法读取的 Idea 记录。原文件已保留且没有被改写，请在本地检查其 JSON 结构。</div>`
     : '';
   if (!filtered.length) {
-    elements.ideasList.innerHTML = `${invalidNotice}<div class="ideas-empty">这里还没有符合当前筛选条件的 Idea。先记录一句问题、一条判断，或两个原本没有被连接起来的概念。</div>`;
+    elements.ideasList.innerHTML = `${invalidNotice}<div class="ideas-empty">这里还没有符合当前筛选条件的 Idea。先记录一句问题、一条判断，或两个原本没有被连接起来的概念。<button class="button secondary" data-jump-capture type="button">记一条新想法</button></div>`;
     return;
   }
   const statusOptions = (selected) =>
@@ -794,8 +912,8 @@ function resetIdeaForm() {
   elements.cancelIdeaEdit.classList.add('hidden');
 }
 
-function startEditingIdea(id) {
-  if (!confirmDiscardIdeaForm()) return;
+async function startEditingIdea(id) {
+  if (!(await confirmDiscardIdeaForm())) return;
   const idea = state.ideas.find((item) => item.id === id);
   if (!idea) return;
   state.editingIdeaId = id;
@@ -815,13 +933,16 @@ function startEditingIdea(id) {
 
 function confirmDiscardIdeaForm() {
   if (!state.ideaFormDirty) return true;
-  return confirm('当前 Idea 还没有保存。确认放弃这些改动吗？');
+  return requestConfirm('放弃未保存的 Idea', '当前 Idea 还没有保存。确认放弃这些改动吗？', {
+    confirmLabel: '放弃改动',
+    danger: true,
+  });
 }
 
 async function setMode(mode) {
   if (!['writing', 'ideas'].includes(mode)) return;
   if (state.mode === 'writing' && mode !== 'writing' && !(await saveCurrent())) return false;
-  if (state.mode === 'ideas' && mode !== 'ideas' && !confirmDiscardIdeaForm()) return false;
+  if (state.mode === 'ideas' && mode !== 'ideas' && !(await confirmDiscardIdeaForm())) return false;
   if (state.mode === 'ideas' && mode !== 'ideas') resetIdeaForm();
   state.mode = mode;
   document.querySelectorAll('.studio-mode-tab').forEach((tab) => {
@@ -836,6 +957,8 @@ async function setMode(mode) {
   if (ideasMode) {
     elements.emptyState.classList.add('hidden');
     elements.writingArea.classList.add('hidden');
+    elements.sourceBanner.classList.add('hidden');
+    setDocumentTitle(`${currentColumn()?.name || 'Ideas'} · Ideas`);
     await refreshIdeas();
     return true;
   }
@@ -845,13 +968,16 @@ async function setMode(mode) {
   ) {
     elements.emptyState.classList.add('hidden');
     elements.writingArea.classList.remove('hidden');
+    updateWritingModeChrome();
+    updateSourceBanner();
   } else {
     elements.emptyState.classList.remove('hidden');
     elements.writingArea.classList.add('hidden');
     const column = currentColumn();
     elements.documentPath.textContent = `.drafts/ideas/${state.activeColumnId}/`;
     elements.documentTitle.textContent = column?.name || 'Writer Studio';
-    elements.saveStatus.textContent = '等待写作任务';
+    setDocumentTitle(column?.name || '');
+    setSaveStatus('等待写作任务');
     elements.syncStatus.textContent = '当前栏目尚无固定格式';
     elements.stageList.innerHTML = '';
     elements.saveButton.disabled = true;
@@ -903,7 +1029,7 @@ function setEditorContent(content, pathLabel, hash = '') {
   elements.documentPath.textContent = pathLabel;
   elements.editorLabel.textContent = sectionLabels[state.section];
   elements.previewLabel.textContent = '阅读预览';
-  elements.saveStatus.textContent = '已载入';
+  setSaveStatus('已载入');
   elements.saveButton.textContent = '保存';
   elements.saveButton.disabled = false;
   updateStats();
@@ -941,6 +1067,7 @@ async function loadSection(section, options = {}) {
     }
     state.section = section;
     if (section === 'article') state.language = requestedLanguage;
+    if (!isSiteMode()) renderStages();
     document.querySelectorAll('.section-tab').forEach((tab) => {
       setTabState(tab, tab.dataset.section === section);
     });
@@ -957,6 +1084,7 @@ async function loadSection(section, options = {}) {
           assets: payload.assets || [],
           missing: Boolean(payload.missing),
         };
+        renderAssets();
       }
       setEditorContent(
         payload.content,
@@ -1007,6 +1135,7 @@ async function loadDraft(id, preferredLanguage = state.language) {
       ? 'article'
       : 'outline';
     elements.documentTitle.textContent = draft?.title || id;
+    setDocumentTitle(draft?.title || id);
     elements.emptyState.classList.add('hidden');
     elements.writingArea.classList.remove('hidden');
     elements.validateButton.disabled = false;
@@ -1053,7 +1182,7 @@ async function saveSnapshot(manual) {
     revision: state.editRevision,
     baseHash: state.baseHash,
   };
-  elements.saveStatus.textContent = manual ? '正在手动保存…' : '正在自动保存…';
+  setSaveStatus(manual ? '正在手动保存…' : '正在自动保存…', 'busy');
   try {
     let result;
     if (snapshot.section === 'article') {
@@ -1090,11 +1219,10 @@ async function saveSnapshot(manual) {
       state.content = snapshot.content;
       state.dirty =
         state.editRevision !== snapshot.revision || elements.editor.value !== snapshot.content;
-      elements.saveStatus.textContent = state.dirty
-        ? '保存期间出现新改动，继续保存…'
-        : manual
-          ? '已手动保存'
-          : '已自动保存';
+      setSaveStatus(
+        state.dirty ? '保存期间出现新改动，继续保存…' : manual ? '已手动保存' : '已自动保存',
+        state.dirty ? 'busy' : 'saved'
+      );
     }
     return true;
   } catch (error) {
@@ -1102,10 +1230,11 @@ async function saveSnapshot(manual) {
       state.saveConflict = { currentHash: error.payload.currentHash };
       state.dirty = true;
       elements.saveButton.textContent = '解决冲突';
-      elements.saveStatus.textContent = '保存冲突：磁盘已有新版本，当前输入仍保留';
+      setSaveStatus('保存冲突：磁盘已有新版本，当前输入仍保留', 'error');
       showToast('Codex 或外部编辑器已修改此文件；浏览器内容没有覆盖磁盘');
     } else if (isCurrentDocument(snapshot)) {
-      elements.saveStatus.textContent = `保存失败：${error.message}`;
+      setSaveStatus(`保存失败：${error.message}`, 'error');
+      showToast(`保存失败：${error.message}`);
       const detail = error.payload?.details?.errors?.[0];
       if (detail) showToast(`保存被拦截：${detail.replace(/^(cn|en):\s*/, '')}`);
     }
@@ -1119,8 +1248,10 @@ async function saveCurrent(options = {}) {
 
   if (state.saveConflict) {
     if (!manual) return false;
-    const overwrite = confirm(
-      'Codex 或外部编辑器已在磁盘写入新版本。\n\n确定：用当前浏览器内容覆盖该版本。\n取消：保持两边内容不变，先手动复制并比较。'
+    const overwrite = await requestConfirm(
+      '保存冲突',
+      'Codex 或外部编辑器已在磁盘写入新版本。\n\n选择「覆盖磁盘」将用当前浏览器内容替换该版本；选择「取消」则两边内容都保持不变，先手动复制并比较。',
+      { confirmLabel: '覆盖磁盘版本', danger: true }
     );
     if (!overwrite) return false;
     state.baseHash = state.saveConflict.currentHash;
@@ -1133,7 +1264,7 @@ async function saveCurrent(options = {}) {
     if (!saved) return false;
     if (state.dirty) return saveCurrent(options);
     if (manual) {
-      elements.saveStatus.textContent = '内容已保存';
+      setSaveStatus('内容已保存', 'saved');
       showToast('当前内容已经保存');
     }
     return true;
@@ -1141,7 +1272,7 @@ async function saveCurrent(options = {}) {
 
   if (!state.dirty) {
     if (manual) {
-      elements.saveStatus.textContent = '内容已保存';
+      setSaveStatus('内容已保存', 'saved');
       showToast('当前内容已经保存');
     }
     return true;
@@ -1207,6 +1338,11 @@ async function syncFromDisk() {
 }
 
 function showResult(title, payload) {
+  state.resultMode = 'info';
+  elements.cancelResult.classList.add('hidden');
+  elements.confirmResult.textContent = '知道了';
+  elements.confirmResult.classList.remove('danger');
+  elements.resultEyebrow.textContent = 'ARTICLE CHECK';
   elements.resultTitle.textContent = title;
   if (payload.ok && !payload.warnings?.length) {
     elements.resultContent.innerHTML =
@@ -1232,6 +1368,27 @@ function showResult(title, payload) {
       `<div class="result-success">${escapeHtml(payload.message || '操作完成。')}</div>`;
   }
   elements.resultDialog.showModal();
+}
+
+function requestConfirm(title, message, { confirmLabel = '确认', danger = false } = {}) {
+  return new Promise((resolve) => {
+    state.resultMode = 'confirm';
+    state.confirmResolver = resolve;
+    elements.cancelResult.classList.remove('hidden');
+    elements.confirmResult.textContent = confirmLabel;
+    elements.confirmResult.classList.toggle('danger', danger);
+    elements.resultEyebrow.textContent = '确认操作';
+    elements.resultTitle.textContent = title;
+    elements.resultContent.innerHTML = `<div class="confirm-message">${escapeHtml(message)}</div>`;
+    elements.resultDialog.showModal();
+  });
+}
+
+function settleConfirm(result) {
+  if (state.resultMode !== 'confirm' || !state.confirmResolver) return;
+  const resolve = state.confirmResolver;
+  state.confirmResolver = null;
+  resolve(result);
 }
 
 async function uploadAsset(file) {
@@ -1555,7 +1712,7 @@ elements.siteArticleSearch.addEventListener('input', () => {
 elements.columnSelect.addEventListener('change', async () => {
   const previousColumnId = state.activeColumnId;
   const nextColumnId = elements.columnSelect.value;
-  if (state.mode === 'ideas' && !confirmDiscardIdeaForm()) {
+  if (state.mode === 'ideas' && !(await confirmDiscardIdeaForm())) {
     elements.columnSelect.value = previousColumnId;
     return;
   }
@@ -1611,6 +1768,12 @@ elements.ideasList.addEventListener('change', async (event) => {
 });
 
 elements.ideasList.addEventListener('click', (event) => {
+  const jump = event.target.closest('[data-jump-capture]');
+  if (jump) {
+    elements.ideaForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    elements.ideaForm.elements.body.focus();
+    return;
+  }
   const button = event.target.closest('[data-edit-idea]');
   if (button) startEditingIdea(button.dataset.editIdea);
 });
@@ -1655,7 +1818,7 @@ elements.editor.addEventListener('input', () => {
   state.content = elements.editor.value;
   state.editRevision += 1;
   state.dirty = true;
-  elements.saveStatus.textContent = '尚未保存';
+  setSaveStatus('尚未保存', 'dirty');
   updateStats();
   updatePreview();
   clearTimeout(state.saveTimer);
@@ -1691,6 +1854,7 @@ document.querySelectorAll('.view-tab').forEach((tab) => {
     document.querySelectorAll('.view-tab').forEach((item) => item.classList.remove('active'));
     tab.classList.add('active');
     elements.writingArea.classList.remove('write-view', 'preview-view');
+    elements.appShell.classList.toggle('focus-mode', tab.dataset.view === 'write');
     if (tab.dataset.view !== 'split') {
       elements.writingArea.classList.add(`${tab.dataset.view}-view`);
     }
@@ -1815,7 +1979,12 @@ elements.validateButton.addEventListener('click', async () => {
 });
 
 elements.publishButton.addEventListener('click', async () => {
-  if (!confirm('确认把正文和文章图片复制到正式站点内容目录吗？')) return;
+  const confirmed = await requestConfirm(
+    '发布到站点',
+    '确认把正文和文章图片复制到正式站点内容目录吗？发布是创建式操作，不会覆盖已有文章。',
+    { confirmLabel: '发布', danger: false }
+  );
+  if (!confirmed) return;
   if (!(await saveCurrent())) return;
   try {
     const result = await api(`/api/drafts/${encodeURIComponent(state.activeId)}/publish`, {
@@ -1864,8 +2033,19 @@ function openNewDraftDialog() {
 elements.newDraftButton.addEventListener('click', openNewDraftDialog);
 elements.closeDialog.addEventListener('click', () => elements.newDraftDialog.close());
 elements.cancelDialog.addEventListener('click', () => elements.newDraftDialog.close());
-elements.closeResult.addEventListener('click', () => elements.resultDialog.close());
-elements.confirmResult.addEventListener('click', () => elements.resultDialog.close());
+elements.closeResult.addEventListener('click', () => {
+  settleConfirm(false);
+  elements.resultDialog.close();
+});
+elements.cancelResult.addEventListener('click', () => {
+  settleConfirm(false);
+  elements.resultDialog.close();
+});
+elements.confirmResult.addEventListener('click', () => {
+  settleConfirm(true);
+  elements.resultDialog.close();
+});
+elements.resultDialog.addEventListener('close', () => settleConfirm(false));
 elements.closeSkill.addEventListener('click', () => elements.skillDialog.close());
 elements.confirmSkill.addEventListener('click', () => elements.skillDialog.close());
 elements.closePublicationPackage.addEventListener('click', () =>
@@ -1874,7 +2054,7 @@ elements.closePublicationPackage.addEventListener('click', () =>
 
 elements.newDraftForm.addEventListener('submit', async (event) => {
   event.preventDefault();
-  if (state.mode === 'ideas' && !confirmDiscardIdeaForm()) return;
+  if (state.mode === 'ideas' && !(await confirmDiscardIdeaForm())) return;
   const discardIdeaAfterCreate = state.mode === 'ideas';
   const input = Object.fromEntries(new FormData(elements.newDraftForm));
   try {

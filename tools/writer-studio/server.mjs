@@ -138,7 +138,16 @@ function parseFrontmatter(content) {
   const scalar = (key) => {
     const value = frontmatter.match(new RegExp(`^${key}:\\s*(.+)$`, 'm'))?.[1]?.trim();
     if (!value) return '';
-    return value.replace(/^(?:"([\s\S]*)"|'([\s\S]*)')$/, '$1$2');
+    const doubleQuoted = value.match(/^"([\s\S]*)"$/);
+    if (doubleQuoted) {
+      return doubleQuoted[1].replace(
+        /\\(["\\nt])/g,
+        (_, escaped) => ({ n: '\n', t: '\t' })[escaped] ?? escaped
+      );
+    }
+    const singleQuoted = value.match(/^'([\s\S]*)'$/);
+    if (singleQuoted) return singleQuoted[1].replaceAll("''", "'");
+    return value;
   };
 
   return {
